@@ -1,0 +1,153 @@
+/* ============================================================
+   PANEL HUD — Cyber Noir & Gold (Syne + Plus Jakarta)
+   Escopado sob .hud-scope para não afetar telas fora do painel.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+.hud-scope {
+  --hud-bg: 10 10 15;               /* #0a0a0f */
+  --hud-panel: 20 20 32;            /* #141420 */
+  --hud-line: 40 34 20;
+  --hud-gold: 201 168 76;           /* #c9a84c */
+  --hud-gold-soft: 240 215 140;     /* #f0d78c */
+  --hud-text: 234 226 200;
+
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  color: rgb(var(--hud-text));
+  background:
+    radial-gradient(1200px 600px at 15% -10%, rgba(201,168,76,0.10), transparent 60%),
+    radial-gradient(900px 500px at 100% 100%, rgba(201,168,76,0.05), transparent 60%),
+    linear-gradient(180deg, rgb(var(--hud-bg)) 0%, #05050a 100%);
+}
+
+.hud-scope h1,
+.hud-scope h2,
+.hud-scope h3,
+.hud-scope .hud-display {
+  font-family: 'Syne', 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.hud-scope .hud-eyebrow {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  color: rgb(var(--hud-gold));
+}
+
+/* Glass panel */
+.hud-scope .hud-card {
+  position: relative;
+  background: linear-gradient(160deg, rgba(20,20,32,0.75), rgba(10,10,15,0.85));
+  border: 1px solid rgba(201,168,76,0.18);
+  border-radius: 14px;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  box-shadow:
+    0 1px 0 rgba(240,215,140,0.06) inset,
+    0 20px 60px -20px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(0,0,0,0.4);
+  overflow: hidden;
+  transition: border-color .35s ease, transform .35s ease, box-shadow .35s ease;
+}
+.hud-scope .hud-card::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, transparent, rgba(201,168,76,0.35), transparent) top / 100% 1px no-repeat;
+  pointer-events: none;
+}
+.hud-scope .hud-card:hover {
+  border-color: rgba(201,168,76,0.45);
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 1px rgba(201,168,76,0.15),
+    0 30px 80px -25px rgba(0,0,0,0.85);
+}
+
+.hud-scope .hud-chip {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .28rem .65rem; border-radius: 999px;
+  border: 1px solid rgba(201,168,76,0.35);
+  background: rgba(201,168,76,0.08);
+  color: rgb(var(--hud-gold-soft));
+  font-size: .7rem; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
+}
+
+.hud-scope .hud-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.35), transparent);
+}
+
+/* Corner brackets HUD */
+.hud-scope .hud-brackets { position: relative; }
+.hud-scope .hud-brackets::before,
+.hud-scope .hud-brackets::after {
+  content: ""; position: absolute; width: 14px; height: 14px;
+  border: 1.5px solid rgba(201,168,76,0.6);
+}
+.hud-scope .hud-brackets::before { top: 6px; left: 6px; border-right: 0; border-bottom: 0; }
+.hud-scope .hud-brackets::after  { bottom: 6px; right: 6px; border-left: 0; border-top: 0; }
+
+/* Scanline sweep on hover */
+@keyframes hud-scan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+.hud-scope .hud-scan {
+  position: absolute; inset: 0; pointer-events: none;
+  overflow: hidden; border-radius: inherit;
+}
+.hud-scope .hud-scan::after {
+  content: ""; position: absolute; top: 0; left: 0; width: 40%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(240,215,140,0.10), transparent);
+  animation: hud-scan 3.6s linear infinite;
+}
+
+/* 3D icon plate */
+.hud-scope .hud-icon-3d {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 56px; height: 56px; border-radius: 14px;
+  background: linear-gradient(160deg, rgba(201,168,76,0.14), rgba(0,0,0,0.4));
+  border: 1px solid rgba(201,168,76,0.28);
+  box-shadow: 0 10px 30px -12px rgba(201,168,76,0.35), inset 0 1px 0 rgba(240,215,140,0.15);
+}
+.hud-scope .hud-icon-3d img { width: 78%; height: 78%; object-fit: contain;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.6)); }
+
+/* Grid overlay removido para fundo limpo */
+.hud-scope .hud-grid-bg {
+  background-image: none;
+}
+
+/* Full-page photorealistic backdrop with Noir & Gold overlay */
+.hud-scope.hud-page-bg { position: relative; isolation: isolate; }
+.hud-scope.hud-page-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: var(--hud-bg-url);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.28;
+  filter: saturate(0.85) contrast(1.05);
+  pointer-events: none;
+}
+.hud-scope.hud-page-bg::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(1200px 700px at 20% 0%, rgba(201,168,76,0.12), transparent 60%),
+    radial-gradient(900px 600px at 100% 100%, rgba(201,168,76,0.08), transparent 60%),
+    linear-gradient(180deg, rgba(5,5,10,0.82) 0%, rgba(5,5,10,0.92) 100%);
+  pointer-events: none;
+}
