@@ -1,4 +1,9 @@
 -- =============================================================================
+-- NOTA DE SEGURANÇA: GRANTs são obrigatórios após cada CREATE TABLE no schema
+-- public. Sem eles, a Data API (PostgREST) retorna erro de permissão.
+-- =============================================================================
+
+-- =============================================================================
 -- PLANTÃO PRO - MIGRAÇÃO COMPLETA PARA SUPABASE EXTERNO
 -- Sistema de Gestão de Plantões para Segurança Pública
 -- Versão: 2.0 | Data: 2026-01-14
@@ -36,6 +41,9 @@ CREATE TABLE public.units (
   coordinator_name TEXT,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.units TO authenticated;
+GRANT ALL ON public.units TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: agents (Agentes)
@@ -74,6 +82,9 @@ CREATE TABLE public.agents (
   UNIQUE(cpf),
   UNIQUE(matricula)
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.agents TO authenticated;
+GRANT ALL ON public.agents TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: profiles (Perfis de Usuário Auth)
@@ -86,6 +97,9 @@ CREATE TABLE public.profiles (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.profiles TO authenticated;
+GRANT ALL ON public.profiles TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: user_roles (Roles de Usuário)
@@ -97,6 +111,9 @@ CREATE TABLE public.user_roles (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   UNIQUE(user_id, role)
 );
+GRANT SELECT ON public.user_roles TO authenticated;
+GRANT ALL ON public.user_roles TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: master_admin (Administrador Master)
@@ -107,6 +124,8 @@ CREATE TABLE public.master_admin (
   password_hash TEXT NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT ALL ON public.master_admin TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: master_session_tokens (Tokens de Sessão Master)
@@ -118,6 +137,8 @@ CREATE TABLE public.master_session_tokens (
   expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT ALL ON public.master_session_tokens TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: agent_shifts (Plantões dos Agentes)
@@ -138,6 +159,9 @@ CREATE TABLE public.agent_shifts (
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   UNIQUE(agent_id, shift_date)
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.agent_shifts TO authenticated;
+GRANT ALL ON public.agent_shifts TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: shifts (Escala Global - Legado)
@@ -153,6 +177,9 @@ CREATE TABLE public.shifts (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.shifts TO authenticated;
+GRANT ALL ON public.shifts TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: overtime_bank (Banco de Horas)
@@ -165,6 +192,9 @@ CREATE TABLE public.overtime_bank (
   description TEXT,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.overtime_bank TO authenticated;
+GRANT ALL ON public.overtime_bank TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: agent_events (Eventos/Agenda do Agente)
@@ -184,6 +214,9 @@ CREATE TABLE public.agent_events (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.agent_events TO authenticated;
+GRANT ALL ON public.agent_events TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: agent_leaves (Folgas/Licenças)
@@ -201,6 +234,9 @@ CREATE TABLE public.agent_leaves (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.agent_leaves TO authenticated;
+GRANT ALL ON public.agent_leaves TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: shift_alerts (Alertas de Plantão)
@@ -217,6 +253,9 @@ CREATE TABLE public.shift_alerts (
   sent_at TIMESTAMP WITH TIME ZONE,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.shift_alerts TO authenticated;
+GRANT ALL ON public.shift_alerts TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: shift_planner_configs (Configurações do Planejador)
@@ -232,6 +271,9 @@ CREATE TABLE public.shift_planner_configs (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.shift_planner_configs TO authenticated;
+GRANT ALL ON public.shift_planner_configs TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: transfer_requests (Solicitações de Transferência)
@@ -250,6 +292,9 @@ CREATE TABLE public.transfer_requests (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.transfer_requests TO authenticated;
+GRANT ALL ON public.transfer_requests TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: payments (Pagamentos/Licenças)
@@ -265,6 +310,9 @@ CREATE TABLE public.payments (
   registered_by UUID,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.payments TO authenticated;
+GRANT ALL ON public.payments TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: access_logs (Logs de Acesso)
@@ -277,6 +325,9 @@ CREATE TABLE public.access_logs (
   user_agent TEXT,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.access_logs TO authenticated;
+GRANT ALL ON public.access_logs TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: login_attempts (Tentativas de Login)
@@ -288,6 +339,8 @@ CREATE TABLE public.login_attempts (
   ip_address TEXT,
   attempt_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT ALL ON public.login_attempts TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: chat_rooms (Salas de Chat)
@@ -300,6 +353,9 @@ CREATE TABLE public.chat_rooms (
   team TEXT,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.chat_rooms TO authenticated;
+GRANT ALL ON public.chat_rooms TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: chat_room_members (Membros das Salas)
@@ -311,6 +367,9 @@ CREATE TABLE public.chat_room_members (
   joined_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   UNIQUE(room_id, agent_id)
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.chat_room_members TO authenticated;
+GRANT ALL ON public.chat_room_members TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: chat_messages (Mensagens do Chat)
@@ -323,6 +382,9 @@ CREATE TABLE public.chat_messages (
   is_deleted BOOLEAN NOT NULL DEFAULT false,
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.chat_messages TO authenticated;
+GRANT ALL ON public.chat_messages TO service_role;
+
 
 -- -----------------------------------------------------------------------------
 -- TABELA: deleted_messages (Mensagens Excluídas por Usuário)
@@ -334,6 +396,9 @@ CREATE TABLE public.deleted_messages (
   created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
   UNIQUE(message_id, agent_id)
 );
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.deleted_messages TO authenticated;
+GRANT ALL ON public.deleted_messages TO service_role;
+
 
 -- =============================================================================
 -- PARTE 4: ÍNDICES
@@ -820,13 +885,11 @@ ALTER TABLE public.deleted_messages ENABLE ROW LEVEL SECURITY;
 -- =============================================================================
 
 -- ----- UNITS -----
-CREATE POLICY "Units are viewable by everyone" ON public.units FOR SELECT USING (true);
 CREATE POLICY "Authenticated users can view units" ON public.units FOR SELECT USING (auth.uid() IS NOT NULL);
 CREATE POLICY "Admins can manage units" ON public.units FOR ALL USING (is_admin_or_master(auth.uid()));
 
 -- ----- AGENTS -----
-CREATE POLICY "Allow public CPF lookup" ON public.agents FOR SELECT USING (true);
-CREATE POLICY "Authenticated users can view all agents" ON public.agents FOR SELECT USING (true);
+CREATE POLICY "Authenticated users can view agents" ON public.agents FOR SELECT TO authenticated USING (auth.uid() IS NOT NULL);
 CREATE POLICY "Agents can view own record" ON public.agents FOR SELECT USING ((cpf = split_part(auth.email(), '@', 1)) OR is_admin_or_master(auth.uid()));
 CREATE POLICY "Allow agent registration" ON public.agents FOR INSERT WITH CHECK ((id = auth.uid()) OR is_admin_or_master(auth.uid()));
 CREATE POLICY "Agents can update own record" ON public.agents FOR UPDATE USING ((cpf = split_part(auth.email(), '@', 1)) OR is_admin_or_master(auth.uid()));
@@ -836,11 +899,11 @@ CREATE POLICY "Admins can delete agents" ON public.agents FOR DELETE USING (is_a
 CREATE POLICY "Users can delete their own agent record" ON public.agents FOR DELETE USING (cpf = split_part(auth.email(), '@', 1));
 
 -- ----- PROFILES -----
-CREATE POLICY "Anyone can view profiles" ON public.profiles FOR SELECT USING (true);
+CREATE POLICY "Authenticated users can view profiles" ON public.profiles FOR SELECT TO authenticated USING (auth.uid() IS NOT NULL);
 CREATE POLICY "Users can update own profile" ON public.profiles FOR UPDATE USING (auth.uid() = user_id);
 
 -- ----- USER_ROLES -----
-CREATE POLICY "Anyone can view roles" ON public.user_roles FOR SELECT USING (true);
+CREATE POLICY "Authenticated users can view roles" ON public.user_roles FOR SELECT TO authenticated USING (auth.uid() IS NOT NULL);
 CREATE POLICY "Admins can manage roles" ON public.user_roles FOR ALL USING (has_role(auth.uid(), 'master'));
 
 -- ----- MASTER_ADMIN -----
@@ -864,7 +927,7 @@ CREATE POLICY "Admins can manage shifts" ON public.shifts FOR ALL USING (is_admi
 CREATE POLICY "Users can delete own shifts" ON public.shifts FOR DELETE USING (auth.uid() IS NOT NULL);
 
 -- ----- OVERTIME_BANK -----
-CREATE POLICY "Anyone can view overtime" ON public.overtime_bank FOR SELECT USING (true);
+CREATE POLICY "Authenticated users can view overtime" ON public.overtime_bank FOR SELECT TO authenticated USING (auth.uid() IS NOT NULL);
 CREATE POLICY "Agents can insert their own overtime" ON public.overtime_bank FOR INSERT WITH CHECK (EXISTS (SELECT 1 FROM agents a WHERE a.id = overtime_bank.agent_id AND a.cpf = split_part(auth.email(), '@', 1)));
 CREATE POLICY "Agents can update their own overtime" ON public.overtime_bank FOR UPDATE USING (EXISTS (SELECT 1 FROM agents a WHERE a.id = overtime_bank.agent_id AND a.cpf = split_part(auth.email(), '@', 1)));
 CREATE POLICY "Agents can delete their own overtime" ON public.overtime_bank FOR DELETE USING (EXISTS (SELECT 1 FROM agents a WHERE a.id = overtime_bank.agent_id AND a.cpf = split_part(auth.email(), '@', 1)));
@@ -894,7 +957,7 @@ CREATE POLICY "Users can update planner configs" ON public.shift_planner_configs
 CREATE POLICY "Users can delete planner configs" ON public.shift_planner_configs FOR DELETE USING (auth.uid() IS NOT NULL);
 
 -- ----- TRANSFER_REQUESTS -----
-CREATE POLICY "Anyone can view transfer requests" ON public.transfer_requests FOR SELECT USING (true);
+CREATE POLICY "Authenticated users can view transfer requests" ON public.transfer_requests FOR SELECT TO authenticated USING (auth.uid() IS NOT NULL);
 CREATE POLICY "Authenticated users can create transfer requests" ON public.transfer_requests FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
 CREATE POLICY "Admins can update transfer requests" ON public.transfer_requests FOR UPDATE USING (EXISTS (SELECT 1 FROM user_roles WHERE user_roles.user_id = auth.uid() AND user_roles.role = ANY (ARRAY['admin'::app_role, 'master'::app_role])));
 
