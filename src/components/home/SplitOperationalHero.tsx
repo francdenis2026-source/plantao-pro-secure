@@ -12,6 +12,10 @@ import { useVisitorPresence } from '@/hooks/useVisitorPresence';
 
 
 
+import teamAlfaPhoto from '@/assets/midias/team-alfa.png';
+import teamBravoPhoto from '@/assets/midias/team-bravo.png';
+import teamCharliePhoto from '@/assets/midias/team-charlie.png';
+import teamDeltaPhoto from '@/assets/midias/team-delta.png';
 import agent3dWebp from '@/assets/hero/agent-ise-3d.local.webp';
 import agent3d_ptr from '@/assets/hero/agent-ise-3d.local.png.asset.json';
 const agent3d = (agent3d_ptr as {url:string}).url;
@@ -107,12 +111,13 @@ interface Props {
 
 import { TEAM_COLORS, type TeamKey } from '@/lib/teamColors';
 
-// Fotografias reais (Unsplash, licença livre) usadas como pôster de fundo dos
-// cards de equipe — substituem os assets quebrados do CDN do Lovable.
+// Pôsteres institucionais oficiais por equipe (fornecidos pelo usuário) —
+// usados como fundo dos cards de seleção de equipe.
 const TEAM_PHOTOS = {
-  guard: 'https://images.unsplash.com/photo-1485230405346-71acb9518d9c?w=480&h=600&q=75&fm=jpg&fit=crop',
-  vehicle: 'https://images.unsplash.com/photo-1758956929717-e657fc784606?w=480&h=600&q=75&fm=jpg&fit=crop',
-  control: 'https://images.unsplash.com/photo-1636868240132-442d20fd00e7?w=480&h=600&q=75&fm=jpg&fit=crop',
+  ALFA: teamAlfaPhoto,
+  BRAVO: teamBravoPhoto,
+  CHARLIE: teamCharliePhoto,
+  DELTA: teamDeltaPhoto,
 };
 
 // Accents alinhados com src/lib/teamColors.ts (mesma paleta usada pelo Gestor de Ronda)
@@ -127,10 +132,10 @@ const TEAMS: {
   bg: string;
   bgAvif: string;
 }[] = [
-  { key: 'ALFA',    motto: 'Escudo · Guarda',      op: 'OP-01', role: 'Contenção',    accent: TEAM_COLORS.ALFA.hsl,    obj: objAlfa,    objWebp: objAlfaWebp,    bg: TEAM_PHOTOS.guard,   bgAvif: TEAM_PHOTOS.guard },
-  { key: 'BRAVO',   motto: 'Capacete · Intervenção Tática', op: 'OP-02', role: 'Intervenção Tática', accent: TEAM_COLORS.BRAVO.hsl,   obj: objBravo,   objWebp: objBravoWebp,   bg: TEAM_PHOTOS.vehicle, bgAvif: TEAM_PHOTOS.vehicle },
-  { key: 'CHARLIE', motto: 'Óptica · Vigília',     op: 'OP-03', role: 'Vigilância',   accent: TEAM_COLORS.CHARLIE.hsl, obj: objCharlie, objWebp: objCharlieWebp, bg: TEAM_PHOTOS.control, bgAvif: TEAM_PHOTOS.control },
-  { key: 'DELTA',   motto: 'Rádio · Comando',      op: 'OP-04', role: 'Comando',      accent: TEAM_COLORS.DELTA.hsl,   obj: objDelta,   objWebp: objDeltaWebp,   bg: TEAM_PHOTOS.guard,   bgAvif: TEAM_PHOTOS.guard },
+  { key: 'ALFA',    motto: 'Escudo · Guarda',      op: 'OP-01', role: 'Contenção',    accent: TEAM_COLORS.ALFA.hsl,    obj: objAlfa,    objWebp: objAlfaWebp,    bg: TEAM_PHOTOS.ALFA,    bgAvif: TEAM_PHOTOS.ALFA },
+  { key: 'BRAVO',   motto: 'Capacete · Intervenção Tática', op: 'OP-02', role: 'Intervenção Tática', accent: TEAM_COLORS.BRAVO.hsl,   obj: objBravo,   objWebp: objBravoWebp,   bg: TEAM_PHOTOS.BRAVO,   bgAvif: TEAM_PHOTOS.BRAVO },
+  { key: 'CHARLIE', motto: 'Óptica · Vigília',     op: 'OP-03', role: 'Vigilância',   accent: TEAM_COLORS.CHARLIE.hsl, obj: objCharlie, objWebp: objCharlieWebp, bg: TEAM_PHOTOS.CHARLIE, bgAvif: TEAM_PHOTOS.CHARLIE },
+  { key: 'DELTA',   motto: 'Rádio · Comando',      op: 'OP-04', role: 'Comando',      accent: TEAM_COLORS.DELTA.hsl,   obj: objDelta,   objWebp: objDeltaWebp,   bg: TEAM_PHOTOS.DELTA,   bgAvif: TEAM_PHOTOS.DELTA },
 ];
 
 

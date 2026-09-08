@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import heroAgentesViatura from "@/assets/midias/hero-agentes-viatura.png";
 
-// Foto real (Unsplash, licença livre) — substitui o asset quebrado do CDN do
-// Lovable, que não é acessível fora da plataforma deles.
-const IMG_URL = "https://images.unsplash.com/photo-1758956929717-e657fc784606?w=1600&q=80&fm=jpg&fit=crop";
+// Foto institucional oficial (fornecida pelo usuário) — equipe e viatura do
+// Sistema Socioeducativo do Acre.
+const IMG_URL = heroAgentesViatura;
 
 interface CinematicBrandHeroProps {
   onScrollToLogin?: () => void;

@@ -35,6 +35,7 @@ const AgentPanel = lazy(() => import("./pages/AgentPanel"));
 const AgentProfileEdit = lazy(() => import("./pages/AgentProfileEdit"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Overtime = lazy(() => import("./pages/Overtime"));
+const RondasCommand = lazy(() => import("./pages/RondasCommand"));
 const Units = lazy(() => import("./pages/Units"));
 const UnitsAudit = lazy(() => import("./pages/UnitsAudit"));
 const Settings = lazy(() => import("./pages/Settings"));
@@ -180,6 +181,14 @@ const App = () => (
                       <Route path="/agents/:id" element={<AgentProfile />} />
 
                       <Route path="/overtime" element={<Overtime />} />
+                      <Route
+                        path="/rondas"
+                        element={
+                          <RequireAuth mode="redirect" redirectTo="/">
+                            <RondasCommand />
+                          </RequireAuth>
+                        }
+                      />
                       <Route path="/units" element={<Units />} />
                       <Route
                         path="/admin/units-audit"
