@@ -249,7 +249,7 @@ export function ShiftEditDialog({ open, onOpenChange, shiftDate, shift, agentId,
       }}>
         <DialogContent className="w-[calc(100vw-1rem)] max-w-md max-h-[calc(100dvh-1rem)] overflow-y-auto bg-slate-900 border-slate-700 text-slate-100 p-4 sm:p-6">
           <DialogHeader>
-            <DialogTitle className="text-amber-300 capitalize">
+            <DialogTitle className="text-primary capitalize">
               {isNew ? 'Cadastrar plantão' : 'Editar plantão'} — {format(shiftDate, "dd/MM/yyyy", { locale: ptBR })}
             </DialogTitle>
             <DialogDescription className="text-slate-400 text-xs">
@@ -304,14 +304,14 @@ export function ShiftEditDialog({ open, onOpenChange, shiftDate, shift, agentId,
                     Marque a confirmação abaixo somente se realmente for uma folga/férias/licença deste agente.
                   </span>
                 </div>
-                <label className="flex items-start gap-2 cursor-pointer rounded border border-amber-500/40 bg-slate-900/60 px-2.5 py-2">
+                <label className="flex items-start gap-2 cursor-pointer rounded border border-primary/40 bg-slate-900/60 px-2.5 py-2">
                   <input
                     type="checkbox"
                     checked={vacationAck}
                     onChange={(e) => setVacationAck(e.target.checked)}
-                    className="mt-0.5 h-4 w-4 accent-amber-500"
+                    className="mt-0.5 h-4 w-4 accent-primary"
                   />
-                  <span className="text-[12px] text-amber-50">
+                  <span className="text-[12px] text-primary">
                     Confirmo que este dia é realmente <strong>folga / férias / licença</strong> deste agente.
                   </span>
                 </label>
@@ -319,11 +319,11 @@ export function ShiftEditDialog({ open, onOpenChange, shiftDate, shift, agentId,
             )}
 
             <div
-              className="text-[12px] leading-snug rounded border border-amber-500/30 bg-amber-500/5 px-3 py-2 text-amber-100"
+              className="text-[12px] leading-snug rounded border border-primary/30 bg-primary/5 px-3 py-2 text-primary"
               aria-live="polite"
               data-testid="shift-range-summary"
             >
-              <span className="uppercase tracking-wide text-[10px] text-amber-300/80 block mb-0.5">Resumo</span>
+              <span className="uppercase tracking-wide text-[10px] text-primary/80 block mb-0.5">Resumo</span>
               {rangeSummary}
             </div>
 
@@ -350,9 +350,9 @@ export function ShiftEditDialog({ open, onOpenChange, shiftDate, shift, agentId,
             )}
 
             {confirmOpen && (
-              <div className="rounded-md border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-xs text-amber-100">
-                <p className="font-semibold text-amber-300">Confirmar alteração do plantão?</p>
-                <p className="mt-1 text-amber-100/90">{KIND_LABEL[kind]} · {rangeSummary}</p>
+              <div className="rounded-md border border-primary/40 bg-primary/10 px-3 py-2 text-xs text-primary">
+                <p className="font-semibold text-primary">Confirmar alteração do plantão?</p>
+                <p className="mt-1 text-primary/90">{KIND_LABEL[kind]} · {rangeSummary}</p>
               </div>
             )}
           </div>
@@ -384,7 +384,7 @@ export function ShiftEditDialog({ open, onOpenChange, shiftDate, shift, agentId,
                   size="sm"
                   onClick={performSave}
                   disabled={saving}
-                  className="bg-amber-500 text-black hover:bg-amber-400 min-h-11"
+                  className="bg-primary text-black hover:bg-primary min-h-11"
                 >
                   {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Confirmar'}
                 </Button>
@@ -404,7 +404,7 @@ export function ShiftEditDialog({ open, onOpenChange, shiftDate, shift, agentId,
                   size="sm"
                   onClick={() => setConfirmOpen(true)}
                   disabled={saving || (kind === 'vacation' && !vacationAck)}
-                  className="bg-amber-500 text-black hover:bg-amber-400 min-h-11"
+                  className="bg-primary text-black hover:bg-primary min-h-11"
                 >
                   Salvar alterações
                 </Button>

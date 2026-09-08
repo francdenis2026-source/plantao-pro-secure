@@ -306,11 +306,11 @@ export function NextShiftCountdown({ agentId, agentName, agentUnitId, agentTeam,
           title: `JORNADA DE HOJE • ${todayTimeline.restHours}h DESCANSO → ${shiftMeta.shiftLabel.toUpperCase()}`,
           value: inRest ? `Descanso • plantão ${shiftInLabel}` : `Plantão iniciando`,
           subtitle: `☀ Folga ${todayTimeline.restStartStr}–${todayTimeline.restEndStr} • ${shiftMeta.isNight ? '🌙' : '☀'} Plantão ${shiftMeta.startStr}–${shiftMeta.endStr} • Escala ${shiftMeta.scaleLabel}`,
-          colorClass: 'text-amber-300',
+          colorClass: 'text-primary',
           bgClass: shiftMeta.isNight
-            ? 'bg-gradient-to-br from-amber-500 via-orange-600 to-indigo-700'
-            : 'bg-gradient-to-br from-amber-400 via-orange-500 to-sky-600',
-          borderClass: 'border-amber-500/60 bg-gradient-to-r from-amber-500/20 via-orange-500/15 to-indigo-500/20 shadow-lg shadow-amber-500/25',
+            ? 'bg-gradient-to-br from-primary via-orange-600 to-indigo-700'
+            : 'bg-gradient-to-br from-primary via-orange-500 to-sky-600',
+          borderClass: 'border-primary/60 bg-gradient-to-r from-primary/20 via-orange-500/15 to-indigo-500/20 shadow-lg shadow-primary/25',
           animate: true,
         });
       }
@@ -488,9 +488,9 @@ export function NextShiftCountdown({ agentId, agentName, agentUnitId, agentTeam,
         high: {
           priority: 3,
           icon: <Bell className="h-5 w-5 text-white" />,
-          colorClass: 'text-amber-400',
-          bgClass: 'bg-gradient-to-br from-amber-500 to-orange-600',
-          borderClass: 'border-amber-500/50 bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-amber-500/15 shadow-lg shadow-amber-500/15',
+          colorClass: 'text-primary',
+          bgClass: 'bg-gradient-to-br from-primary to-orange-600',
+          borderClass: 'border-primary/50 bg-gradient-to-r from-primary/15 via-orange-500/10 to-primary/15 shadow-lg shadow-primary/15',
           animate: true,
         },
         normal: {
@@ -574,7 +574,7 @@ export function NextShiftCountdown({ agentId, agentName, agentUnitId, agentTeam,
       {/* Floating name badge - Professional style */}
       {firstName && (
         <div className="absolute top-1 right-2 z-10">
-          <span className="text-[9px] font-bold tracking-widest text-amber-400/80 uppercase bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent px-2 py-0.5 rounded-full border border-amber-500/20">
+          <span className="text-[9px] font-bold tracking-widest text-primary/80 uppercase bg-gradient-to-r from-primary/10 via-primary/5 to-transparent px-2 py-0.5 rounded-full border border-primary/20">
             {firstName}
           </span>
         </div>
@@ -587,7 +587,7 @@ export function NextShiftCountdown({ agentId, agentName, agentUnitId, agentTeam,
             onClick={goToPrev}
             className="flex-shrink-0 p-1 rounded-md bg-gradient-to-br from-slate-700/80 to-slate-800/80 hover:from-slate-600/80 hover:to-slate-700/80 border border-slate-600/50 shadow-md transition-all duration-200 hover:scale-110 active:scale-95"
           >
-            <ChevronLeft className="h-3.5 w-3.5 text-amber-400" />
+            <ChevronLeft className="h-3.5 w-3.5 text-primary" />
           </button>
         )}
 
@@ -640,7 +640,7 @@ export function NextShiftCountdown({ agentId, agentName, agentUnitId, agentTeam,
                 className={cn(
                   "w-1.5 h-1.5 rounded-full transition-all duration-300 shadow-sm",
                   idx === activeIndex 
-                    ? "bg-gradient-to-br from-amber-400 to-orange-500 scale-125 shadow-amber-500/50" 
+                    ? "bg-gradient-to-br from-primary to-orange-500 scale-125 shadow-primary/50" 
                     : "bg-slate-600 hover:bg-slate-500"
                 )}
               />
@@ -654,7 +654,7 @@ export function NextShiftCountdown({ agentId, agentName, agentUnitId, agentTeam,
             onClick={goToNext}
             className="flex-shrink-0 p-1 rounded-md bg-gradient-to-br from-slate-700/80 to-slate-800/80 hover:from-slate-600/80 hover:to-slate-700/80 border border-slate-600/50 shadow-md transition-all duration-200 hover:scale-110 active:scale-95"
           >
-            <ChevronRight className="h-3.5 w-3.5 text-amber-400" />
+            <ChevronRight className="h-3.5 w-3.5 text-primary" />
           </button>
         )}
       </div>

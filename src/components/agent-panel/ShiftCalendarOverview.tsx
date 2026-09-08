@@ -461,7 +461,7 @@ export function ShiftCalendarOverview({ agentId }: ShiftCalendarOverviewProps) {
                 <TooltipTrigger asChild>
                   <button
                     type="button"
-                    className="text-slate-400 hover:text-amber-300 transition-colors"
+                    className="text-slate-400 hover:text-primary transition-colors"
                     aria-label="Ajuda do calendário"
                   >
                     <Info className="h-3.5 w-3.5" />
@@ -495,11 +495,11 @@ export function ShiftCalendarOverview({ agentId }: ShiftCalendarOverviewProps) {
                     <p className="font-semibold text-yellow-300 mb-1">
                       {divergences.length} divergência(s) detectada(s) pelo backend
                     </p>
-                    <p className="text-slate-300 mb-1.5">Comparação: <code className="text-amber-300">first_shift_date</code> + ciclo de 4 dias × plantões cadastrados (fuso America/Rio_Branco).</p>
+                    <p className="text-slate-300 mb-1.5">Comparação: <code className="text-primary">first_shift_date</code> + ciclo de 4 dias × plantões cadastrados (fuso America/Rio_Branco).</p>
                     <ul className="space-y-0.5 max-h-40 overflow-y-auto text-slate-200">
                       {divergences.slice(0, 8).map((d, i) => (
                         <li key={i} className="flex items-start gap-1">
-                          <span className={d.divergence_type === 'unexpected_shift' ? 'text-rose-300' : 'text-amber-300'}>
+                          <span className={d.divergence_type === 'unexpected_shift' ? 'text-rose-300' : 'text-primary'}>
                             {d.divergence_type === 'unexpected_shift' ? '✕' : '○'}
                           </span>
                           <span>
@@ -523,7 +523,7 @@ export function ShiftCalendarOverview({ agentId }: ShiftCalendarOverviewProps) {
                   type="button"
                   onClick={() => setFilter(f)}
                   className={`px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider rounded transition-colors ${
-                    filter === f ? 'bg-amber-500/30 text-amber-300' : 'text-slate-400 hover:text-amber-300'
+                    filter === f ? 'bg-primary/30 text-primary' : 'text-slate-400 hover:text-primary'
                   }`}
                 >
                   {f === 'all' ? 'Todos' : f === 'shift' ? 'Plantão' : 'Folga'}
@@ -658,8 +658,8 @@ export function ShiftCalendarOverview({ agentId }: ShiftCalendarOverviewProps) {
                         type="button"
                         onClick={() => openDay(day)}
                         aria-label={`Abrir jornada de ${format(day, "d 'de' MMMM", { locale: ptBR })}`}
-                        className={`relative h-7 sm:h-8 w-full rounded border flex flex-col items-center justify-center text-[10px] font-medium transition-all cursor-pointer hover:brightness-125 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${dayColors} ${filterDimClass} ${
-                          isTodayDay ? 'ring-2 ring-amber-400 ring-offset-1 ring-offset-slate-900 shadow-lg shadow-amber-500/30' : ''
+                        className={`relative h-7 sm:h-8 w-full rounded border flex flex-col items-center justify-center text-[10px] font-medium transition-all cursor-pointer hover:brightness-125 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${dayColors} ${filterDimClass} ${
+                          isTodayDay ? 'ring-2 ring-primary ring-offset-1 ring-offset-slate-900 shadow-lg shadow-primary/30' : ''
                         }`}
                       >
 
@@ -680,7 +680,7 @@ export function ShiftCalendarOverview({ agentId }: ShiftCalendarOverviewProps) {
                         {isTodayDay && (
                           <span
                             aria-hidden
-                            className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.9)] animate-pulse"
+                            className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-primary shadow-[0_0_6px_rgba(251,191,36,0.9)] animate-pulse"
                           />
                         )}
                         {isShiftDone && !isTodayDay && (
@@ -697,9 +697,9 @@ export function ShiftCalendarOverview({ agentId }: ShiftCalendarOverviewProps) {
                     </TooltipTrigger>
                     <TooltipContent side="top" className="max-w-[260px] bg-slate-900 border-slate-700 p-2.5">
                       <div className="space-y-1.5 text-xs">
-                        <div className="flex items-center gap-1.5 font-bold text-amber-300 pb-1 border-b border-slate-700 capitalize">
+                        <div className="flex items-center gap-1.5 font-bold text-primary pb-1 border-b border-slate-700 capitalize">
                           {format(day, "EEEE, dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
-                          {isTodayDay && <span className="text-[9px] text-amber-400/80">(hoje)</span>}
+                          {isTodayDay && <span className="text-[9px] text-primary/80">(hoje)</span>}
                         </div>
 
                         {/* Bloco de status do plantão — sempre visível quando há plantão */}
@@ -865,7 +865,7 @@ export function ShiftCalendarOverview({ agentId }: ShiftCalendarOverviewProps) {
             return (
               <>
                 <DialogHeader>
-                  <DialogTitle className="flex items-center gap-2 capitalize text-amber-300">
+                  <DialogTitle className="flex items-center gap-2 capitalize text-primary">
                     {nightShift ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
                     {format(date, "EEEE, dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
                   </DialogTitle>
@@ -944,7 +944,7 @@ export function ShiftCalendarOverview({ agentId }: ShiftCalendarOverviewProps) {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="border-amber-500/40 text-amber-300 hover:bg-amber-500/10"
+                      className="border-primary/40 text-primary hover:bg-primary/10"
                       onClick={() => {
                         setShiftModalOpen(false);
                         document.body.style.pointerEvents = '';
@@ -958,7 +958,7 @@ export function ShiftCalendarOverview({ agentId }: ShiftCalendarOverviewProps) {
                     </Button>
                     <Button
                       size="sm"
-                      className="bg-amber-500 text-black hover:bg-amber-400"
+                      className="bg-primary text-black hover:bg-primary"
                       onClick={() => setShiftModalOpen(false)}
                     >
                       Fechar

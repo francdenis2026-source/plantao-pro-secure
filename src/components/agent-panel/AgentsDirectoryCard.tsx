@@ -153,13 +153,13 @@ export function AgentsDirectoryCard({
 
   return (
     <>
-      <Card className="tactical-cards border-amber-500/25 bg-slate-900/70 backdrop-blur-xl">
+      <Card className="tactical-cards border-primary/25 bg-slate-900/70 backdrop-blur-xl">
         <CardHeader className="pb-2 pt-3 px-3">
           <div className="flex items-start justify-between gap-2 flex-wrap">
             <div className="min-w-0">
               <CardTitle className="flex items-center gap-2 text-sm">
-                <div className="p-1 rounded-md bg-gradient-to-br from-amber-500/30 to-amber-600/10 border border-amber-500/40">
-                  <Users className="h-3.5 w-3.5 text-amber-400" />
+                <div className="p-1 rounded-md bg-gradient-to-br from-primary/30 to-primary/10 border border-primary/40">
+                  <Users className="h-3.5 w-3.5 text-primary" />
                 </div>
                 {title ?? (scope === 'team' ? `Equipe ${myTeam ?? '—'}` : scope === 'system' ? 'Diretório do Sistema' : 'Diretório de Agentes')}
               </CardTitle>
@@ -240,7 +240,7 @@ export function AgentsDirectoryCard({
                   action={
                     <a
                       href="/"
-                      className="inline-flex items-center gap-1.5 rounded-md border border-amber-500/50 bg-amber-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-amber-300 transition-all hover:bg-amber-500/20 hover:border-amber-400/70 focus-ring-primary"
+                      className="inline-flex items-center gap-1.5 rounded-md border border-primary/50 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-primary transition-all hover:bg-primary/20 hover:border-primary/70 focus-ring-primary"
                     >
                       <UserPlus className="h-3.5 w-3.5" />
                       Cadastrar primeiro agente
@@ -282,14 +282,14 @@ export function AgentsDirectoryCard({
                     <li
                       key={a.id}
                       className={cn(
-                        'flex items-center gap-2.5 px-2.5 py-1.5 hover:bg-amber-500/5 transition-colors',
-                        isMe && 'bg-amber-500/10'
+                        'flex items-center gap-2.5 px-2.5 py-1.5 hover:bg-primary/5 transition-colors',
+                        isMe && 'bg-primary/10'
                       )}
                     >
                       <div className="relative shrink-0">
                         <Avatar className="h-8 w-8 border border-slate-700">
                           <AvatarImage src={a.avatar_url || undefined} alt={a.name} />
-                          <AvatarFallback className="bg-slate-800 text-amber-300 text-[10px] font-bold">
+                          <AvatarFallback className="bg-slate-800 text-primary text-[10px] font-bold">
                             {initials(a.name)}
                           </AvatarFallback>
                         </Avatar>
@@ -307,7 +307,7 @@ export function AgentsDirectoryCard({
                           <p className="font-semibold text-[13px] text-zinc-100 truncate leading-tight">
                             {a.name}
                             {isMe && (
-                              <span className="ml-1.5 text-[9px] font-bold text-amber-400 uppercase tracking-wider">
+                              <span className="ml-1.5 text-[9px] font-bold text-primary uppercase tracking-wider">
                                 (você)
                               </span>
                             )}
@@ -341,7 +341,7 @@ export function AgentsDirectoryCard({
                         <Button
                           size="icon"
                           variant="ghost"
-                          className="h-7 w-7 hover:bg-amber-500/20 hover:text-amber-300"
+                          className="h-7 w-7 hover:bg-primary/20 hover:text-primary"
                           onClick={() => setSelectedAgent(a.id)}
                           title="Ver detalhes"
                         >

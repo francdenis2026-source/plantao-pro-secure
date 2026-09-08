@@ -198,7 +198,7 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
   const getRoleIcon = (role: string | null) => {
     switch (role) {
       case 'team_leader':
-        return <Crown className="h-3 w-3 text-amber-500" />;
+        return <Crown className="h-3 w-3 text-primary" />;
       case 'support':
         return <Shield className="h-3 w-3 text-blue-500" />;
       default:
@@ -268,9 +268,9 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
 
   return (
     <>
-      <Card className="card-night-amber w-full min-w-0 bg-gradient-to-br from-[hsl(222,60%,3%)] via-[hsl(222,55%,5%)] to-[hsl(38,40%,8%)] border-2 border-amber-500/40 overflow-visible transition-all duration-300 hover:border-amber-400/60 group relative">
+      <Card className="card-night-amber w-full min-w-0 bg-gradient-to-br from-[hsl(222,60%,3%)] via-[hsl(222,55%,5%)] to-[hsl(38,40%,8%)] border-2 border-primary/40 overflow-visible transition-all duration-300 hover:border-primary/60 group relative">
         {/* Subtle Glow Effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-amber-500/3 via-transparent to-amber-500/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/3 via-transparent to-primary/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         
         <Collapsible open={isExpanded} onOpenChange={setIsExpanded}>
           <CardHeader className="pb-2 pt-2.5 px-3 relative">
@@ -281,18 +281,18 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
                     <TeamEmblem team={team} size="lg" />
                   </div>
                   <div className="flex items-center gap-2 min-w-0 flex-1 flex-wrap">
-                    <span className="font-black text-lg md:text-xl bg-gradient-to-r from-amber-200 to-orange-300 bg-clip-text text-transparent truncate leading-tight">
+                    <span className="font-black text-lg md:text-xl bg-gradient-to-r from-primary to-orange-300 bg-clip-text text-transparent truncate leading-tight">
                       Equipe {team}
                     </span>
-                    <Badge className="text-[11px] bg-amber-500/20 text-amber-200 border-amber-500/40 px-2 py-0 h-5 shrink-0 font-bold">
+                    <Badge className="text-[11px] bg-primary/20 text-primary border-primary/40 px-2 py-0 h-5 shrink-0 font-bold">
                       {members.length} {members.length === 1 ? 'agente' : 'agentes'}
                     </Badge>
                   </div>
-                  <div className="p-1.5 rounded-md bg-slate-800/60 border border-amber-500/20 group-hover/btn:bg-amber-500/15 transition-all duration-200 shrink-0">
+                  <div className="p-1.5 rounded-md bg-slate-800/60 border border-primary/20 group-hover/btn:bg-primary/15 transition-all duration-200 shrink-0">
                     {isExpanded ? (
-                      <ChevronUp className="h-3.5 w-3.5 text-amber-400" />
+                      <ChevronUp className="h-3.5 w-3.5 text-primary" />
                     ) : (
-                      <ChevronDown className="h-3.5 w-3.5 text-amber-400" />
+                      <ChevronDown className="h-3.5 w-3.5 text-primary" />
                     )}
                   </div>
                 </button>
@@ -306,7 +306,7 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
                       variant="ghost"
                       size="sm"
                       onClick={() => setShowTeamManagement(true)}
-                      className="ml-1.5 h-7 w-7 p-0 text-slate-400 hover:text-amber-400 hover:bg-amber-500/15 shrink-0"
+                      className="ml-1.5 h-7 w-7 p-0 text-slate-400 hover:text-primary hover:bg-primary/15 shrink-0"
                     >
                       <Settings className="h-3.5 w-3.5" />
                     </Button>
@@ -386,7 +386,7 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
                                   type="button"
                                   key={leave.id}
                                   onClick={() => setSelectedLeave(leave)}
-                                  className="text-xs px-2 py-1 rounded-lg bg-slate-700/60 text-slate-200 flex items-center gap-1.5 border border-slate-600/50 hover:border-amber-400/50 hover:bg-slate-700 active:scale-[0.98] transition"
+                                  className="text-xs px-2 py-1 rounded-lg bg-slate-700/60 text-slate-200 flex items-center gap-1.5 border border-slate-600/50 hover:border-primary/50 hover:bg-slate-700 active:scale-[0.98] transition"
                                   aria-label={`Ver detalhes da folga programada de ${leave.agent_name}`}
                                 >
                                   {info.icon}
@@ -425,7 +425,7 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
 
               {isLoading ? (
                 <div className="flex items-center justify-center py-4">
-                  <Loader2 className="h-5 w-5 animate-spin text-amber-500" />
+                  <Loader2 className="h-5 w-5 animate-spin text-primary" />
                 </div>
               ) : members.length === 0 ? (
                 <div className="text-center py-4">
@@ -444,8 +444,8 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
                         onClick={() => handleMemberClick(member)}
                           className={`relative w-full min-w-0 text-left rounded-xl border p-2.5 sm:p-3 transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] shadow-sm ${
                           isCurrentAgent
-                            ? 'bg-gradient-to-br from-amber-500/20 via-amber-500/10 to-transparent border-amber-500/50'
-                            : 'bg-slate-800/60 border-slate-600/50 hover:border-amber-400/50 hover:bg-slate-700/60'
+                            ? 'bg-gradient-to-br from-primary/20 via-primary/10 to-transparent border-primary/50'
+                            : 'bg-slate-800/60 border-slate-600/50 hover:border-primary/50 hover:bg-slate-700/60'
                         } ${hasBirthday ? 'ring-2 ring-pink-500/50' : ''}`}
                       >
                         {/* Birthday indicator */}
@@ -458,7 +458,7 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
                         <div className="flex flex-col items-center text-center sm:flex-row sm:text-left gap-2 sm:gap-2.5">
                           {/* Avatar */}
                           <Avatar className={`h-12 w-12 sm:h-12 sm:w-12 border-2 shrink-0 shadow-sm ${
-                            member.role === 'team_leader' ? 'border-amber-500' :
+                            member.role === 'team_leader' ? 'border-primary' :
                             member.role === 'support' ? 'border-blue-500' : 'border-slate-500'
                           }`}>
                             {member.avatar_url && <AvatarImage src={member.avatar_url} alt={member.name} />}
@@ -470,12 +470,12 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
                           <div className="flex-1 min-w-0 w-full">
                             <div className="flex items-center justify-center sm:justify-start gap-1.5 flex-wrap">
                               <span className={`font-bold text-sm truncate max-w-full leading-tight ${
-                                isCurrentAgent ? 'text-amber-200' : 'text-slate-100'
+                                isCurrentAgent ? 'text-primary' : 'text-slate-100'
                               }`}>
                                 {member.name.split(' ')[0]}
                               </span>
                               {isCurrentAgent && (
-                                <Badge className="bg-amber-500/25 text-amber-200 border-0 text-[9px] px-1.5 py-0 h-4">Você</Badge>
+                                <Badge className="bg-primary/25 text-primary border-0 text-[9px] px-1.5 py-0 h-4">Você</Badge>
                               )}
                             </div>
                             
@@ -583,7 +583,7 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
                 <div className="space-y-4 mt-2">
                   {/* Profissional */}
                   <div className="flex items-center gap-3 p-3 rounded-lg bg-slate-800/60 border border-slate-700">
-                    <Avatar className="h-12 w-12 border-2 border-amber-500/60">
+                    <Avatar className="h-12 w-12 border-2 border-primary/60">
                       {member?.avatar_url && <AvatarImage src={member.avatar_url} alt={selectedLeave.agent_name} />}
                       <AvatarFallback className="bg-slate-700 text-slate-200 font-bold">
                         {selectedLeave.agent_name.charAt(0).toUpperCase()}

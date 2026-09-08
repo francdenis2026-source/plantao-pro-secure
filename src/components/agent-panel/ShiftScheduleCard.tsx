@@ -73,7 +73,7 @@ function getShiftIcon(shift: AgentShift) {
   if (hour >= 12 && hour < 18) return { icon: Coffee, color: 'text-orange-400', bg: 'bg-orange-500/20' };
   if (hour >= 18 || hour < 6) return { icon: Moon, color: 'text-indigo-400', bg: 'bg-indigo-500/20' };
   
-  return { icon: Briefcase, color: 'text-amber-400', bg: 'bg-amber-500/20' };
+  return { icon: Briefcase, color: 'text-primary', bg: 'bg-primary/20' };
 }
 
 export function ShiftScheduleCard({ agentId }: ShiftScheduleCardProps) {
@@ -280,7 +280,7 @@ export function ShiftScheduleCard({ agentId }: ShiftScheduleCardProps) {
       case 'vacation':
         return { color: 'bg-purple-500/20', icon: Palmtree, label: 'Férias', textColor: 'text-purple-400', dotColor: 'bg-purple-500' };
       default:
-        return { color: 'bg-amber-500/20', icon: Star, label: 'Agendado', textColor: 'text-amber-400', dotColor: 'bg-amber-500' };
+        return { color: 'bg-primary/20', icon: Star, label: 'Agendado', textColor: 'text-primary', dotColor: 'bg-primary' };
     }
   };
 
@@ -314,7 +314,7 @@ export function ShiftScheduleCard({ agentId }: ShiftScheduleCardProps) {
             <Button
               size="sm"
               onClick={() => setShowConfig(true)}
-              className="h-6 px-2 text-[10px] bg-amber-500 hover:bg-amber-600 text-black shrink-0"
+              className="h-6 px-2 text-[10px] bg-primary hover:bg-primary text-black shrink-0"
             >
               Renovar
             </Button>
@@ -325,14 +325,14 @@ export function ShiftScheduleCard({ agentId }: ShiftScheduleCardProps) {
         <CardHeader className="py-2.5 px-4 border-b border-slate-700/50 bg-slate-800/50">
           <div className="flex items-center justify-between">
             <CollapsibleTrigger className="flex-1 flex items-center gap-2 cursor-pointer hover:opacity-80 transition-all">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-orange-600 flex items-center justify-center shadow-lg">
                 <CalendarIcon className="h-4 w-4 text-white" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold text-slate-100">Meus Plantões</span>
                   {isFromCache && (
-                    <Badge variant="outline" className="text-[8px] px-1 py-0 border-amber-500/50 text-amber-400">
+                    <Badge variant="outline" className="text-[8px] px-1 py-0 border-primary/50 text-primary">
                       <WifiOff className="h-2 w-2 mr-0.5" />
                       offline
                     </Badge>
@@ -358,7 +358,7 @@ export function ShiftScheduleCard({ agentId }: ShiftScheduleCardProps) {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="h-7 w-7 p-0 text-slate-400 hover:text-amber-400 hover:bg-slate-700/50 ml-1"
+                  className="h-7 w-7 p-0 text-slate-400 hover:text-primary hover:bg-slate-700/50 ml-1"
                 >
                   {shifts.length === 0 ? (
                     <Plus className="h-4 w-4" />
@@ -370,7 +370,7 @@ export function ShiftScheduleCard({ agentId }: ShiftScheduleCardProps) {
               <DialogContent className="bg-slate-900 border-slate-700 max-w-xs">
                 <DialogHeader>
                   <DialogTitle className="flex items-center gap-2 text-base">
-                    <CalendarIcon className="h-4 w-4 text-amber-500" />
+                    <CalendarIcon className="h-4 w-4 text-primary" />
                     Configurar Escala
                   </DialogTitle>
                   <DialogDescription className="text-xs">
@@ -386,8 +386,8 @@ export function ShiftScheduleCard({ agentId }: ShiftScheduleCardProps) {
                   />
 
                   {firstShiftDate && (
-                    <div className="p-2.5 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                      <p className="text-xs text-amber-400 font-medium">
+                    <div className="p-2.5 bg-primary/10 border border-primary/30 rounded-lg">
+                      <p className="text-xs text-primary font-medium">
                         {format(firstShiftDate, "dd/MM/yyyy (EEEE)", { locale: ptBR })}
                       </p>
                     </div>
@@ -396,7 +396,7 @@ export function ShiftScheduleCard({ agentId }: ShiftScheduleCardProps) {
                   <Button 
                     onClick={generateShifts} 
                     disabled={!firstShiftDate || isGenerating}
-                    className="w-full bg-amber-500 hover:bg-amber-600 text-black font-bold h-9"
+                    className="w-full bg-primary hover:bg-primary text-black font-bold h-9"
                   >
                     {isGenerating ? (
                       <>
@@ -417,7 +417,7 @@ export function ShiftScheduleCard({ agentId }: ShiftScheduleCardProps) {
           <CardContent className="p-3 space-y-3">
             {isLoading ? (
               <div className="flex items-center justify-center py-6">
-                <Loader2 className="h-5 w-5 animate-spin text-amber-500" />
+                <Loader2 className="h-5 w-5 animate-spin text-primary" />
               </div>
             ) : shifts.length === 0 ? (
               <div className="text-center py-5">
@@ -434,7 +434,7 @@ export function ShiftScheduleCard({ agentId }: ShiftScheduleCardProps) {
             {/* Upcoming Shifts - New Timeline Design */}
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <Clock className="h-3.5 w-3.5 text-amber-500" />
+                <Clock className="h-3.5 w-3.5 text-primary" />
                 <h4 className="text-xs font-semibold text-slate-300 uppercase tracking-wide">Próximos</h4>
               </div>
               
@@ -654,7 +654,7 @@ export function ShiftScheduleCard({ agentId }: ShiftScheduleCardProps) {
                 onClick={handleSaveShift}
                 disabled={isSaving}
                 size="sm"
-                className="bg-amber-500 hover:bg-amber-600 text-black h-8"
+                className="bg-primary hover:bg-primary text-black h-8"
               >
                 {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Salvar'}
               </Button>
