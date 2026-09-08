@@ -76,6 +76,8 @@ import { DraggableHomeCard } from '@/components/home/DraggableHomeCard';
 import { useHomeCardOrder, type HomeCardId } from '@/hooks/useHomeCardOrder';
 
 import { CommandRoomBackground } from '@/components/home/CommandRoomBackground';
+import { BrasaoSentinela } from '@/components/BrasaoSentinela';
+import { OperatorHeaderControls } from '@/components/layout/OperatorHeaderControls';
 
 import { useTheme } from '@/contexts/ThemeContext';
 import { setMasterToken } from '@/lib/masterSession';
@@ -1406,6 +1408,20 @@ export default function Index() {
         {/* Sober command-room background — SVG only, no posters */}
         <CommandRoomBackground />
 
+        {/* Barra fixa do topo — marca + rádio, tema e ferramentas do operador,
+            sempre visíveis mesmo com a página rolada. `fixed` (não `sticky`)
+            porque um ancestral usa overflow-x-clip, o que quebra sticky. */}
+        <div className="fixed inset-x-0 top-0 z-40 flex h-14 shrink-0 items-center justify-between border-b border-border/60 bg-background/80 px-3 backdrop-blur-md sm:px-5">
+          <div className="flex items-center gap-2">
+            <BrasaoSentinela size={30} title="PlantãoPro" />
+            <span className="font-display text-sm font-bold tracking-wide text-foreground">
+              Plantão<span className="text-primary">Pro</span>
+            </span>
+          </div>
+          <OperatorHeaderControls />
+        </div>
+        <div className="h-14 shrink-0" aria-hidden />
+
         {/* (Selo movido para próximo do rodapé, em posição visível) */}
 
 
@@ -1427,7 +1443,6 @@ export default function Index() {
         )}
 
 
-      {/* Header is rendered by AppShell layout */}
       <header className="relative z-20 flex min-h-0 flex-1 lg:flex-none flex-col overflow-visible">
         {user && (
           <div

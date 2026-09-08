@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { ClipboardList, Users2, Building2, Radio } from 'lucide-react';
+import { ClipboardList, Users2, Building2, Radio, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { OperationalStatusRibbon } from './OperationalStatusRibbon';
 import { RoundsManagerLazy as RoundsManager } from './RoundsManagerLazy';
@@ -7,8 +7,8 @@ import { useOperationalMetrics } from '@/hooks/useOperationalMetrics';
 import { useOnlineAgents } from '@/hooks/useOnlineAgents';
 import { useVisitorPresence } from '@/hooks/useVisitorPresence';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
-import { OperatorHeaderControls } from '@/components/layout/OperatorHeaderControls';
 
+import heroBanner from '@/assets/midias/hero-banner.png';
 import teamAlfaPhoto from '@/assets/midias/team-alfa.png';
 import teamBravoPhoto from '@/assets/midias/team-bravo.png';
 import teamCharliePhoto from '@/assets/midias/team-charlie.png';
@@ -27,13 +27,16 @@ const TEAM_PHOTOS: Record<TeamKey, string> = {
   DELTA: teamDeltaPhoto,
 };
 
-const TEAMS: { key: TeamKey; role: string }[] = [
-  { key: 'ALFA', role: 'Contenção' },
-  { key: 'BRAVO', role: 'Intervenção' },
-  { key: 'CHARLIE', role: 'Vigilância' },
-  { key: 'DELTA', role: 'Comando' },
+const TEAMS: { key: TeamKey }[] = [
+  { key: 'ALFA' },
+  { key: 'BRAVO' },
+  { key: 'CHARLIE' },
+  { key: 'DELTA' },
 ];
 
+// Cards oficiais (equipe_*_card.png) já trazem brasão, nome da equipe e
+// lema aplicados pelo design — o card só precisa exibir a arte e sinalizar
+// seleção, sem duplicar texto por cima.
 function TeamCard({
   team, isSelected, onSelect,
 }: { team: (typeof TEAMS)[number]; isSelected: boolean; onSelect: (k: TeamKey) => void }) {
@@ -43,36 +46,35 @@ function TeamCard({
       type="button"
       data-team={team.key}
       aria-pressed={isSelected}
+      aria-label={`Selecionar equipe ${team.key}`}
       onClick={() => onSelect(team.key)}
       className={cn(
-        'group relative flex aspect-[4/5] w-full flex-col overflow-hidden rounded-2xl border text-left transition-all duration-300',
+        'group relative flex aspect-[3/2] w-full flex-col overflow-hidden rounded-2xl border-2 text-left transition-all duration-300',
         isSelected
-          ? 'border-primary shadow-lg shadow-primary/20 -translate-y-1'
-          : 'border-border hover:-translate-y-0.5 hover:shadow-md',
+          ? 'border-primary shadow-lg shadow-primary/25 -translate-y-1'
+          : 'border-border/60 hover:-translate-y-0.5 hover:border-border hover:shadow-md',
       )}
     >
       <img
         src={TEAM_PHOTOS[team.key]}
-        alt=""
-        aria-hidden
+        alt={`Equipe ${team.key}`}
         loading="lazy"
         decoding="async"
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         draggable={false}
       />
+      {/* Leve escurecimento uniforme — melhora contraste em qualquer tema sem esconder a arte */}
+      <span aria-hidden className="pointer-events-none absolute inset-0 bg-black/10 transition-opacity group-hover:bg-black/0" />
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/25 to-slate-950/10"
-      />
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-1"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-1.5"
         style={{ background: `hsl(${accent})` }}
       />
-      <div className="relative z-10 mt-auto flex flex-col gap-0.5 p-3.5">
-        <span className="text-base font-bold tracking-wide text-white">{team.key}</span>
-        <span className="text-[11px] font-medium uppercase tracking-wider text-white/70">{team.role}</span>
-      </div>
+      {isSelected && (
+        <span className="absolute right-2.5 top-2.5 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md">
+          <CheckCircle2 className="h-4 w-4" />
+        </span>
+      )}
     </button>
   );
 }
@@ -94,38 +96,43 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
   return (
     <section className="mx-auto w-full max-w-6xl">
       {/* Institutional banner */}
-      <div
-        className="relative overflow-hidden rounded-2xl border border-border"
-        style={{ background: 'linear-gradient(120deg, hsl(222 47% 9%) 0%, hsl(213 60% 16%) 55%, hsl(205 70% 20%) 100%)' }}
-      >
+      <div className="relative overflow-hidden rounded-2xl border border-border">
+        <img
+          src={heroBanner}
+          alt=""
+          aria-hidden
+          loading="eager"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover object-[70%_center]"
+          draggable={false}
+        />
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"
-          style={{ background: 'radial-gradient(120% 100% at 100% 0%, transparent 30%, hsl(222 47% 8% / 0.55) 100%)' }}
+          style={{
+            background:
+              'linear-gradient(100deg, hsl(222 47% 6% / 0.97) 0%, hsl(222 47% 8% / 0.90) 40%, hsl(213 55% 14% / 0.55) 72%, hsl(205 60% 18% / 0.35) 100%)',
+          }}
         />
 
         <div className="relative z-10 flex flex-col gap-6 px-6 py-8 sm:px-10 sm:py-12">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex items-start gap-4 sm:gap-5">
-              <BrasaoSentinela
-                size={60}
-                className="shrink-0"
-                title="Instituto Socioeducativo do Acre"
-              />
-              <div className="max-w-lg">
-                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                  Sistema Socioeducativo · Acre
-                </span>
-                <h1 className="mt-2 text-2xl font-bold leading-tight text-white sm:text-3xl">
-                  Gestão de plantões e rondas para agentes socioeducativos
-                </h1>
-                <p className="mt-2 text-sm text-white/70">
-                  Escalas, banco de horas e rondas georreferenciadas em um único lugar.
-                </p>
-              </div>
+          <div className="flex items-start gap-4 sm:gap-5">
+            <BrasaoSentinela
+              size={60}
+              className="shrink-0"
+              title="Instituto Socioeducativo do Acre"
+            />
+            <div className="max-w-lg">
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                Sistema Socioeducativo · Acre
+              </span>
+              <h1 className="mt-2 text-2xl font-bold leading-tight text-white sm:text-3xl">
+                Gestão de plantões e rondas para agentes socioeducativos
+              </h1>
+              <p className="mt-2 text-sm text-white/70">
+                Escalas, banco de horas e rondas georreferenciadas em um único lugar.
+              </p>
             </div>
-
-            <OperatorHeaderControls className="shrink-0" />
           </div>
 
           <OperationalStatusRibbon />

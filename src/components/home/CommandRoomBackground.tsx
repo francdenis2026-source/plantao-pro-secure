@@ -1,19 +1,29 @@
 /**
- * Fundo institucional — camada única, discreta, sem elementos decorativos
- * militares (sem radar, brasão, bússola ou laurel). Apenas um gradiente
- * sutil em ardósia com uma grade de pontos muito leve para dar textura.
+ * Fundo institucional — camada única e discreta. Usa a arte oficial
+ * fornecida pela Socioeducação do Acre (agente + unidade) como textura de
+ * fundo, bem escurecida, sob um gradiente em ardósia + grade de pontos.
  */
 import { memo } from 'react';
+import sectionBackground from '@/assets/midias/section-background.png';
 
 export const CommandRoomBackground = memo(function CommandRoomBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden>
+      {/* Arte institucional oficial — bem escurecida, só textura */}
+      <img
+        src={sectionBackground}
+        alt=""
+        loading="eager"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover opacity-[0.16]"
+      />
+
       {/* Wash tonal — ardósia neutra, sem tons quentes */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse at top, hsl(222 18% 11% / 0.72) 0%, hsl(222 20% 6% / 0.82) 60%, hsl(222 22% 4% / 0.9) 100%)',
+            'radial-gradient(ellipse at top, hsl(222 18% 11% / 0.78) 0%, hsl(222 20% 6% / 0.86) 60%, hsl(222 22% 4% / 0.92) 100%)',
         }}
       />
 
