@@ -1429,9 +1429,9 @@ export default function Index() {
           />
 
           <div className="relative flex items-center gap-2.5">
-            <BrasaoSentinela size={46} title="PlantãoPro" />
+            <BrasaoSentinela size={56} title="PlantãoPro AC" />
             <span className="font-display text-base font-bold tracking-wide text-foreground sm:text-lg">
-              Plantão<span className="text-primary">Pro</span>
+              Plantão<span className="text-primary">Pro</span> <span className="text-xs text-muted-foreground">AC</span>
             </span>
           </div>
           <div className="relative">

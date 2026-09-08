@@ -169,7 +169,7 @@ export function RecentRegistrationsAudit({ daysWindow = 30, onChange }: Props) {
               new Notification(title, {
                 body,
                 tag: 'audit-new-agent',
-                icon: '/favicon.ico',
+                icon: '/icon-192.png',
               });
             } catch { /* ignore */ }
           }

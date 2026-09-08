@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { pushDiagEvent } from "@/lib/diagLog";
 import splashAsset from "@/assets/brand/plantaopro-splash.webp.asset.json";
-import logoUrl_ptr from "@/assets/brand/plantaopro-logo.png.asset.json";
+import logoUrl_ptr from "@/assets/brand/plantaopro-ac-icon.png.asset.json";
 const logoUrl = (logoUrl_ptr as {url:string}).url;
 
 /**
@@ -134,14 +134,14 @@ export function SplashScreen() {
               alt=""
               aria-hidden
               draggable={false}
-              className="h-14 w-14 sm:h-16 sm:w-16 object-contain drop-shadow-[0_4px_18px_rgba(244,201,116,0.35)]"
+               className="h-20 w-20 sm:h-24 sm:w-24 object-contain drop-shadow-[0_4px_18px_rgba(244,201,116,0.35)]"
             />
             <div className="flex flex-col leading-none">
               <span
                 className="font-serif font-bold text-[22px] sm:text-[30px] tracking-tight text-white"
                 style={{ textShadow: "0 2px 12px rgba(0,0,0,0.6)" }}
               >
-                Plantão<span style={{ color: "#f4c974" }}>Pro</span>
+                 Plantão<span style={{ color: "#f4c974" }}>Pro</span> AC
               </span>
               <span className="mt-1 font-mono text-[9px] sm:text-[10px] tracking-[0.38em] uppercase text-white/70">
                 Comando Operacional
