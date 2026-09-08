@@ -242,7 +242,7 @@ export default function Units() {
             <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
               {/* Page Header */}
               <div className="flex items-center gap-3">
-                <Building2 className="h-8 w-8 text-amber-500" />
+                <Building2 className="h-8 w-8 text-primary" />
                 <div>
                   <h1 className="font-tactical text-xl font-bold tracking-[0.14em] text-white">Minha Unidade</h1>
                   <p className="text-slate-400">{myUnit.name}</p>
@@ -252,7 +252,7 @@ export default function Units() {
               {/* Unit Details Card */}
               <Card className="bg-slate-800/50 border-slate-700">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-amber-400">
+                  <CardTitle className="flex items-center gap-2 text-primary">
                     <Building2 className="h-5 w-5" />
                     {myUnit.name}
                   </CardTitle>
@@ -260,7 +260,7 @@ export default function Units() {
                 <CardContent className="space-y-4">
                   {/* Location */}
                   <div className="flex items-center gap-3 text-slate-300">
-                    <MapPin className="h-5 w-5 text-amber-500" />
+                    <MapPin className="h-5 w-5 text-primary" />
                     <span>{myUnit.municipality}</span>
                   </div>
 
@@ -277,13 +277,13 @@ export default function Units() {
                   <div className="flex flex-wrap gap-4 pt-2 border-t border-slate-700">
                     {myUnit.phone && (
                       <div className="flex items-center gap-2 text-slate-300">
-                        <Phone className="h-4 w-4 text-amber-400" />
+                        <Phone className="h-4 w-4 text-primary" />
                         <span className="text-sm">{myUnit.phone}</span>
                       </div>
                     )}
                     {myUnit.email && (
                       <div className="flex items-center gap-2 text-slate-300">
-                        <Mail className="h-4 w-4 text-amber-400" />
+                        <Mail className="h-4 w-4 text-primary" />
                         <span className="text-sm">{myUnit.email}</span>
                       </div>
                     )}
@@ -296,10 +296,10 @@ export default function Units() {
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     <span className="flex items-center gap-2">
-                      <Users className="h-5 w-5 text-amber-500" />
+                      <Users className="h-5 w-5 text-primary" />
                       Equipes
                     </span>
-                    <Badge className="bg-amber-500/20 text-amber-400">
+                    <Badge className="bg-primary/20 text-primary">
                       {stats.total} Agentes
                     </Badge>
                   </CardTitle>
@@ -316,14 +316,14 @@ export default function Units() {
                       return (
                         <div 
                           key={team} 
-                          className={`flex flex-col items-center p-4 rounded-xl ${config.bgColor} ${isMyTeam ? 'ring-2 ring-amber-500' : ''}`}
+                          className={`flex flex-col items-center p-4 rounded-xl ${config.bgColor} ${isMyTeam ? 'ring-2 ring-primary' : ''}`}
                         >
                           <config.icon className={`h-8 w-8 ${config.color}`} />
                           <span className={`text-lg font-bold mt-2 ${config.color}`}>{team}</span>
                           <span className="text-2xl font-bold text-white mt-1">{count}</span>
                           <span className="text-xs text-slate-400">agentes</span>
                           {isMyTeam && (
-                            <Badge className="mt-2 bg-amber-500 text-black text-xs">
+                            <Badge className="mt-2 bg-primary text-black text-xs">
                               Sua Equipe
                             </Badge>
                           )}
@@ -393,7 +393,7 @@ export default function Units() {
                 <div className="grid grid-cols-2 md:flex md:items-center gap-2">
                   <Select value={cityFilter} onValueChange={setCityFilter}>
                     <SelectTrigger className="h-11 md:w-[190px] bg-slate-900/60 border-slate-700 text-sm text-white">
-                      <MapPin className="h-3.5 w-3.5 mr-1.5 text-amber-400" />
+                      <MapPin className="h-3.5 w-3.5 mr-1.5 text-primary" />
                       <SelectValue placeholder="Cidade" />
                     </SelectTrigger>
                     <SelectContent className="bg-slate-900 border-slate-700 text-slate-100">
@@ -406,7 +406,7 @@ export default function Units() {
 
                   <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as any)}>
                     <SelectTrigger className="h-11 md:w-[170px] bg-slate-900/60 border-slate-700 text-sm text-white">
-                      <Users className="h-3.5 w-3.5 mr-1.5 text-amber-400" />
+                      <Users className="h-3.5 w-3.5 mr-1.5 text-primary" />
                       <SelectValue placeholder="Status" />
                     </SelectTrigger>
                     <SelectContent className="bg-slate-900 border-slate-700 text-slate-100">
@@ -430,7 +430,7 @@ export default function Units() {
               </div>
 
               <p className="mt-2 text-[11px] text-slate-400 tabular-nums px-1">
-                Exibindo <span className="text-amber-300 font-semibold">{filteredUnits.length}</span> de {units.length} unidades
+                Exibindo <span className="text-primary font-semibold">{filteredUnits.length}</span> de {units.length} unidades
               </p>
             </div>
 
@@ -449,7 +449,7 @@ export default function Units() {
                 {Object.entries(groupedUnits).map(([municipality, municipalityUnits]) => (
                   <div key={municipality}>
                     <div className="flex items-center gap-2 mb-3 md:mb-4">
-                      <MapPin className="h-4 w-4 md:h-5 md:w-5 text-amber-500" />
+                      <MapPin className="h-4 w-4 md:h-5 md:w-5 text-primary" />
                       <h2 className="text-base md:text-lg font-semibold text-white truncate">{municipality}</h2>
                       <Badge variant="secondary" className="ml-1 text-[10px]">
                         {municipalityUnits.length} {municipalityUnits.length === 1 ? 'unidade' : 'unidades'}
@@ -490,7 +490,7 @@ export default function Units() {
                                   <Users className="h-4 w-4 text-slate-400 shrink-0" />
                                   <span className="text-xs md:text-sm text-slate-300 truncate">Agentes ativos</span>
                                 </div>
-                                <Badge className={`shrink-0 ${stats.total > 0 ? 'bg-amber-500/20 text-amber-400' : 'bg-slate-700/50 text-slate-400'}`}>
+                                <Badge className={`shrink-0 ${stats.total > 0 ? 'bg-primary/20 text-primary' : 'bg-slate-700/50 text-slate-400'}`}>
                                   {stats.total}
                                 </Badge>
                               </div>
@@ -518,7 +518,7 @@ export default function Units() {
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                className="w-full h-9 text-xs md:text-sm text-amber-400 hover:text-amber-300 hover:bg-amber-500/10"
+                                className="w-full h-9 text-xs md:text-sm text-primary hover:text-primary hover:bg-primary/10"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   navigate(`/unit/${unit.id}`);

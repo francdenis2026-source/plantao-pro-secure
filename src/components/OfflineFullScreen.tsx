@@ -243,7 +243,7 @@ export function OfflineFullScreen() {
             textShadow: '0 2px 12px rgba(0,0,0,0.85)',
           }}
         >
-          Sistema <span className="italic text-amber-300">Socioeducativo</span> · Modo Offline
+          Sistema <span className="italic text-primary">Socioeducativo</span> · Modo Offline
         </h1>
 
         <p className="mt-3 text-sm sm:text-base text-slate-300/95 leading-relaxed max-w-xl mx-auto">
@@ -297,7 +297,7 @@ export function OfflineFullScreen() {
             type="button"
             onClick={handleRetry}
             disabled={retrying}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-400 disabled:opacity-70 disabled:cursor-wait text-slate-950 font-bold tracking-wider uppercase text-[13px] px-6 py-3 transition-all shadow-[0_10px_30px_-8px_rgba(245,158,11,0.55)] active:scale-[0.98]"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-primary via-primary to-primary hover:from-primary hover:to-primary disabled:opacity-70 disabled:cursor-wait text-slate-950 font-bold tracking-wider uppercase text-[13px] px-6 py-3 transition-all shadow-[0_10px_30px_-8px_rgba(245,158,11,0.55)] active:scale-[0.98]"
           >
             {retrying ? (
               <>
@@ -314,7 +314,7 @@ export function OfflineFullScreen() {
           <button
             type="button"
             onClick={() => go('/')}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-amber-500/40 bg-amber-500/5 hover:bg-amber-500/15 text-amber-200 font-semibold tracking-wider uppercase text-[13px] px-6 py-3 transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-primary/40 bg-primary/5 hover:bg-primary/15 text-primary font-semibold tracking-wider uppercase text-[13px] px-6 py-3 transition-colors"
           >
             Ir para o Painel
           </button>
@@ -356,9 +356,9 @@ function OfflineTool({
     <button
       type="button"
       onClick={onClick}
-      className="group flex items-center gap-2.5 rounded-lg border border-amber-500/25 bg-slate-950/70 hover:border-amber-400/70 hover:bg-slate-900 px-3 py-2.5 text-left backdrop-blur transition-all active:scale-[0.98]"
+      className="group flex items-center gap-2.5 rounded-lg border border-primary/25 bg-slate-950/70 hover:border-primary/70 hover:bg-slate-900 px-3 py-2.5 text-left backdrop-blur transition-all active:scale-[0.98]"
     >
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-amber-500/30 bg-amber-500/10 text-amber-300 group-hover:text-amber-200">
+      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-primary/30 bg-primary/10 text-primary group-hover:text-primary">
         <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden>
           {icon}
         </svg>

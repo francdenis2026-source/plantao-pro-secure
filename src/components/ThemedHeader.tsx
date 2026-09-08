@@ -26,12 +26,12 @@ interface ThemedHeaderProps {
 // Theme-specific header configurations
 const headerStyles = {
   tactical: {
-    bg: 'from-amber-950/95 via-slate-900/98 to-amber-950/95',
-    border: 'border-amber-500/40',
-    accent: 'text-amber-400',
-    glow: 'shadow-amber-500/20',
-    statusBg: 'bg-amber-500/10 border-amber-500/40',
-    statusText: 'text-amber-400',
+    bg: 'from-primary/95 via-slate-900/98 to-primary/95',
+    border: 'border-primary/40',
+    accent: 'text-primary',
+    glow: 'shadow-primary/20',
+    statusBg: 'bg-primary/10 border-primary/40',
+    statusText: 'text-primary',
     operationalText: 'TÁTICO',
   },
   cyber: {
@@ -63,7 +63,7 @@ const headerStyles = {
   },
   // NEW: Sovereign - Premium gold institutional
   sovereign: {
-    bg: 'from-yellow-950/95 via-stone-900/98 to-amber-950/95',
+    bg: 'from-yellow-950/95 via-stone-900/98 to-primary/95',
     border: 'border-yellow-500/40',
     accent: 'text-yellow-400',
     glow: 'shadow-yellow-500/25',
@@ -131,25 +131,25 @@ export function ThemedHeader({ selectedTeam }: ThemedHeaderProps) {
       case 'tactical':
         // Military-style gauge meter
         return (
-          <div className="flex items-center gap-3 px-4 py-1.5 rounded-lg bg-gradient-to-r from-amber-900/30 to-amber-800/20 border border-amber-500/30">
+          <div className="flex items-center gap-3 px-4 py-1.5 rounded-lg bg-gradient-to-r from-primary/30 to-primary/20 border border-primary/30">
             <div className="flex items-center gap-1">
-              <Gauge className="h-5 w-5 text-amber-400" />
+              <Gauge className="h-5 w-5 text-primary" />
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
                   <div 
                     key={i}
                     className={cn(
                       "w-1.5 h-4 rounded-sm transition-all duration-300",
-                      i < 4 ? "bg-amber-400" : "bg-amber-400/30"
+                      i < 4 ? "bg-primary" : "bg-primary/30"
                     )}
                   />
                 ))}
               </div>
             </div>
-            <div className="h-4 w-px bg-amber-500/30" />
+            <div className="h-4 w-px bg-primary/30" />
             <div className="flex items-center gap-1.5">
-              <Shield className="h-4 w-4 text-amber-300" />
-              <span className="text-[10px] font-bold text-amber-300 tracking-wider">PRONTO</span>
+              <Shield className="h-4 w-4 text-primary" />
+              <span className="text-[10px] font-bold text-primary tracking-wider">PRONTO</span>
             </div>
           </div>
         );
@@ -224,7 +224,7 @@ export function ThemedHeader({ selectedTeam }: ThemedHeaderProps) {
       case 'sovereign':
         // Premium gold institutional meter
         return (
-          <div className="flex items-center gap-3 px-4 py-1.5 rounded-lg bg-gradient-to-r from-yellow-900/40 to-amber-800/30 border border-yellow-500/40">
+          <div className="flex items-center gap-3 px-4 py-1.5 rounded-lg bg-gradient-to-r from-yellow-900/40 to-primary/30 border border-yellow-500/40">
             <Crown className="h-5 w-5 text-yellow-400" />
             <div className="flex items-center gap-1.5">
               <span className="text-xs font-bold text-yellow-300 tracking-wider">AUTORIDADE</span>

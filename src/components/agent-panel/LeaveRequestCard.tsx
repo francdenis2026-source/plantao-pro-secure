@@ -516,7 +516,7 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
             variant="outline"
             size="sm"
             onClick={handleExportPDF}
-            className="border-amber-500/40 text-amber-300 hover:bg-amber-500/10 gap-1.5"
+            className="border-primary/40 text-primary hover:bg-primary/10 gap-1.5"
           >
             <FileDown className="h-4 w-4" />
             <span className="hidden sm:inline">Exportar PDF</span>
@@ -540,7 +540,7 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
             {/* Calendar for clicking dates */}
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <CalendarPlus className="h-4 w-4 text-amber-500" />
+                <CalendarPlus className="h-4 w-4 text-primary" />
                 <span className="text-sm font-medium text-slate-300">Clique na data para registrar folga ou ver detalhes</span>
               </div>
               <div className="bg-slate-700/30 rounded-lg p-2">
@@ -565,7 +565,7 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
               </div>
               <div className="flex items-center gap-4 text-xs">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-amber-500/50" />
+                  <div className="w-3 h-3 rounded-full bg-primary/50" />
                   <span className="text-slate-400">Dias com folga registrada</span>
                 </div>
               </div>
@@ -574,7 +574,7 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
             {/* Leaves List */}
             {isLoading ? (
               <div className="flex items-center justify-center py-4">
-                <Loader2 className="h-6 w-6 animate-spin text-amber-500" />
+                <Loader2 className="h-6 w-6 animate-spin text-primary" />
               </div>
             ) : leaves.length === 0 ? (
               <EmptyState
@@ -817,7 +817,7 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
                             <div className="flex items-center gap-3 min-w-0">
                               <Avatar className="h-9 w-9 border border-slate-600/60 shrink-0">
                                 {leave.agent_avatar_url && <AvatarImage src={leave.agent_avatar_url} alt={leave.agent_name} />}
-                                <AvatarFallback className="bg-slate-800 text-amber-300 text-[11px] font-semibold">
+                                <AvatarFallback className="bg-slate-800 text-primary text-[11px] font-semibold">
                                   {leave.agent_name?.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase() || '?'}
                                 </AvatarFallback>
                               </Avatar>
@@ -856,7 +856,7 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
                           <div className="flex items-center gap-3 min-w-0">
                             <Avatar className="h-9 w-9 border border-slate-600/60 shrink-0">
                               {leave.agent_avatar_url && <AvatarImage src={leave.agent_avatar_url} alt={leave.agent_name} />}
-                              <AvatarFallback className="bg-slate-800 text-amber-300 text-[11px] font-semibold">
+                              <AvatarFallback className="bg-slate-800 text-primary text-[11px] font-semibold">
                                 {leave.agent_name?.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase() || '?'}
                               </AvatarFallback>
                             </Avatar>
@@ -894,7 +894,7 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
           {/* Header */}
           <DialogHeader className="relative px-4 py-3 border-b border-slate-800/80 bg-slate-950/50 backdrop-blur-sm shrink-0">
             <div className="flex items-center gap-2.5">
-              <svg viewBox="0 0 24 24" className="h-5 w-5 text-amber-400 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <svg viewBox="0 0 24 24" className="h-5 w-5 text-primary shrink-0" fill="none" stroke="currentColor" strokeWidth="1.8">
                 <rect x="3" y="5" width="18" height="16" rx="2" />
                 <path d="M8 3v4M16 3v4M3 10h18" />
                 <circle cx="12" cy="15" r="1.5" fill="currentColor" />
@@ -904,7 +904,7 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
                   Registrar Folga
                 </DialogTitle>
                 {selectedDate && (
-                  <DialogDescription className="text-[11px] text-amber-300/80 font-mono mt-0.5 truncate">
+                  <DialogDescription className="text-[11px] text-primary/80 font-mono mt-0.5 truncate">
                     {format(selectedDate, "EEE, dd/MM/yyyy", { locale: ptBR })}
                   </DialogDescription>
                 )}
@@ -930,7 +930,7 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
                           onClick={() => setSelectedType(type.value)}
                           className={`flex items-center gap-2 rounded-md border px-2.5 py-2 text-left transition-all ${
                             active
-                              ? `border-amber-500/70 ${type.bgColor}`
+                              ? `border-primary/70 ${type.bgColor}`
                               : 'border-slate-700 hover:border-slate-600 bg-slate-800/40'
                           }`}
                         >
@@ -963,7 +963,7 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
                           onClick={() => setSelectedPeriod(p.v)}
                           className={`flex flex-col items-center gap-0.5 rounded-md border px-1.5 py-2 transition-all ${
                             active
-                              ? 'border-amber-500/70 bg-amber-500/15 text-amber-300'
+                              ? 'border-primary/70 bg-primary/15 text-primary'
                               : 'border-slate-700 bg-slate-800/40 text-slate-400 hover:border-slate-600'
                           }`}
                         >
@@ -1008,7 +1008,7 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
               size="sm"
               onClick={handleConfirmLeave}
               disabled={isSubmitting}
-              className="bg-amber-500 hover:bg-amber-600 text-black font-semibold h-9 text-xs min-w-[130px]"
+              className="bg-primary hover:bg-primary text-black font-semibold h-9 text-xs min-w-[130px]"
             >
               {isSubmitting ? (
                 <><Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />Registrando...</>
@@ -1097,7 +1097,7 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
                       </div>
                       <div className="text-center">
                         <p className="text-[9px] uppercase tracking-wider text-slate-500 font-semibold">Horas</p>
-                        <p className="text-xs font-mono text-amber-300 mt-0.5">{hours != null ? `${hours}h` : '-'}</p>
+                        <p className="text-xs font-mono text-primary mt-0.5">{hours != null ? `${hours}h` : '-'}</p>
                       </div>
                     </div>
 
@@ -1115,7 +1115,7 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
                       {leave.status === 'pending' && (
                         confirmCancelId === leave.id ? (
                           <div className="flex items-center gap-1.5">
-                            <span className="text-[10px] text-amber-300 font-medium">Confirmar?</span>
+                            <span className="text-[10px] text-primary font-medium">Confirmar?</span>
                             <Button
                               variant="ghost"
                               size="sm"

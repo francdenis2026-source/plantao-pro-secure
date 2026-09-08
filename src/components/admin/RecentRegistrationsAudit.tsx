@@ -375,10 +375,10 @@ export function RecentRegistrationsAudit({ daysWindow = 30, onChange }: Props) {
 
       <CardContent className="p-5 space-y-5">
         {/* Info banner */}
-        <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20 flex gap-3">
-          <Sparkles className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-          <div className="text-sm text-amber-200/90 leading-relaxed">
-            <strong className="text-amber-400">Aprovação automática ativa.</strong> Novos agentes entram no sistema imediatamente após o cadastro.
+        <div className="p-4 rounded-lg bg-primary/10 border border-primary/20 flex gap-3">
+          <Sparkles className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+          <div className="text-sm text-primary/90 leading-relaxed">
+            <strong className="text-primary">Aprovação automática ativa.</strong> Novos agentes entram no sistema imediatamente após o cadastro.
             Use este painel para <strong>auditar</strong> — se identificar cadastro suspeito, clique em <strong>Bloquear</strong> (impede acesso mas mantém dados) ou <strong>Excluir</strong> (remove permanentemente).
           </div>
         </div>
@@ -489,7 +489,7 @@ export function RecentRegistrationsAudit({ daysWindow = 30, onChange }: Props) {
                           variant="outline"
                           onClick={() => setConfirm({ open: true, kind: 'block', agent })}
                           disabled={processing === agent.id}
-                          className="border-amber-500/50 text-amber-400 hover:bg-amber-500/10 h-10 px-4"
+                          className="border-primary/50 text-primary hover:bg-primary/10 h-10 px-4"
                         >
                           <Lock className="w-4 h-4 mr-2" />
                           Bloquear

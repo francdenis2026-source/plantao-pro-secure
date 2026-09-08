@@ -172,13 +172,13 @@ function UnitBadge({ unitId, prominent = false }: { unitId: string; prominent?: 
   if (!unitName) return null;
   if (prominent) {
     return (
-      <div className="flex items-center gap-2.5 pl-2 pr-3.5 py-1.5 rounded-lg bg-gradient-to-br from-slate-950/90 to-slate-900/70 border-2 border-amber-500/50 shadow-[0_2px_10px_-2px_rgba(0,0,0,.6)] font-['IBM_Plex_Mono',_monospace]">
-        <div className="p-1 rounded-md bg-amber-500/15 border border-amber-500/40">
-          <IconBuilding className="h-4 w-4 text-amber-300" />
+      <div className="flex items-center gap-2.5 pl-2 pr-3.5 py-1.5 rounded-lg bg-gradient-to-br from-slate-950/90 to-slate-900/70 border-2 border-primary/50 shadow-[0_2px_10px_-2px_rgba(0,0,0,.6)] font-['IBM_Plex_Mono',_monospace]">
+        <div className="p-1 rounded-md bg-primary/15 border border-primary/40">
+          <IconBuilding className="h-4 w-4 text-primary" />
         </div>
         <div className="leading-tight min-w-0">
           <div className="text-[8.5px] tracking-[0.25em] uppercase text-slate-400 font-semibold">Unidade</div>
-          <div className="text-[13px] font-black text-amber-200 tracking-[0.10em] uppercase truncate max-w-[200px] md:max-w-[280px]">
+          <div className="text-[13px] font-black text-primary tracking-[0.10em] uppercase truncate max-w-[200px] md:max-w-[280px]">
             {unitName}
           </div>
         </div>
@@ -186,9 +186,9 @@ function UnitBadge({ unitId, prominent = false }: { unitId: string; prominent?: 
     );
   }
   return (
-    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-950/70 border border-amber-500/40 font-['IBM_Plex_Mono',_monospace]">
-      <IconBuilding className="h-3.5 w-3.5 text-amber-400" />
-      <span className="text-[10.5px] font-bold text-amber-300 tracking-[0.15em] uppercase truncate max-w-[140px] md:max-w-[220px]">
+    <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-950/70 border border-primary/40 font-['IBM_Plex_Mono',_monospace]">
+      <IconBuilding className="h-3.5 w-3.5 text-primary" />
+      <span className="text-[10.5px] font-bold text-primary tracking-[0.15em] uppercase truncate max-w-[140px] md:max-w-[220px]">
         {unitName}
       </span>
     </div>
@@ -292,7 +292,7 @@ export function AgentPanelHeader({ agent, isOnline, onReactivateShiftBanner, isS
       </svg>
 
       {/* gold top accent (chevron ribbon removed for less vertical space) */}
-      <div className="relative h-[2px] bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
+      <div className="relative h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent" />
 
       <div className={cn('relative', compact ? 'px-2 py-1.5 md:px-2.5 md:py-1.5' : 'px-2.5 py-1.5 md:px-3 md:py-2')}>
         <div className="flex items-center justify-between gap-2 flex-wrap">
@@ -313,13 +313,13 @@ export function AgentPanelHeader({ agent, isOnline, onReactivateShiftBanner, isS
                 </defs>
                 <circle cx="24" cy="24" r="22" fill="none" stroke="url(#ringGold)" strokeWidth="1.5" strokeDasharray="3 3" opacity=".7" />
               </svg>
-              <Avatar className={cn('border-2 border-amber-500/70', compact ? 'w-9 h-9 md:w-10 md:h-10' : 'w-10 h-10 md:w-11 md:h-11')}>
+              <Avatar className={cn('border-2 border-primary/70', compact ? 'w-9 h-9 md:w-10 md:h-10' : 'w-10 h-10 md:w-11 md:h-11')}>
                 {agent.avatar_url && <AvatarImage src={agent.avatar_url} alt={agent.name} className="object-cover" />}
-                <AvatarFallback className="bg-gradient-to-br from-amber-400 to-orange-700 text-sm font-black text-slate-950">
+                <AvatarFallback className="bg-gradient-to-br from-primary to-orange-700 text-sm font-black text-slate-950">
                   {agent.name.charAt(0).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <svg viewBox="0 0 24 12" className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-2.5 w-6 text-amber-400 drop-shadow">
+              <svg viewBox="0 0 24 12" className="absolute -bottom-1 left-1/2 -translate-x-1/2 h-2.5 w-6 text-primary drop-shadow">
                 <path d="M2 8 L12 2 L22 8" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M4 10 L12 5 L20 10" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" opacity=".7" />
               </svg>
@@ -327,13 +327,13 @@ export function AgentPanelHeader({ agent, isOnline, onReactivateShiftBanner, isS
 
             <div className="min-w-0 leading-tight">
               <div className="flex items-center gap-1.5">
-                <IconShieldStar className="h-3 w-3 text-amber-400/80" />
-                <span className="text-[9px] tracking-[0.25em] uppercase text-amber-400/80 font-['IBM_Plex_Mono',_monospace]">
+                <IconShieldStar className="h-3 w-3 text-primary/80" />
+                <span className="text-[9px] tracking-[0.25em] uppercase text-primary/80 font-['IBM_Plex_Mono',_monospace]">
                   Agente
                 </span>
               </div>
               <h1 className={cn(
-                'font-bold text-slate-50 truncate tracking-wide font-[\'Libre_Baskerville\',_serif] group-hover:text-amber-200 transition-colors',
+                'font-bold text-slate-50 truncate tracking-wide font-[\'Libre_Baskerville\',_serif] group-hover:text-primary transition-colors',
                 compact ? 'text-[13px] md:text-sm' : 'text-sm md:text-[15px]'
               )}>
                 {agent.name}
@@ -446,7 +446,7 @@ export function AgentPanelHeader({ agent, isOnline, onReactivateShiftBanner, isS
         {/* ── Faixa de destaque: UNIDADE + EQUIPE ── */}
         {(agent.unit_id || agent.team) && (
           <div className={cn(
-            'flex flex-wrap items-center gap-1.5 border-t border-amber-500/20',
+            'flex flex-wrap items-center gap-1.5 border-t border-primary/20',
             compact ? 'mt-1 pt-1' : 'mt-1.5 pt-1.5'
           )}>
             {agent.unit_id && <UnitBadge unitId={agent.unit_id} prominent />}
@@ -457,7 +457,7 @@ export function AgentPanelHeader({ agent, isOnline, onReactivateShiftBanner, isS
       </div>
 
       {/* bottom gold accent */}
-      <div className="relative h-[2px] bg-gradient-to-r from-transparent via-amber-500/60 to-transparent" />
+      <div className="relative h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
     </div>
   );
 }

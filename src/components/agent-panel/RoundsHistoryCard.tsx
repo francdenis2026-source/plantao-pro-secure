@@ -52,7 +52,7 @@ const eventMeta = (log: RoundLog) => {
   if (ev === 'rounds_started' || log.action === 'create') {
     return {
       label: 'Ronda iniciada',
-      color: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+      color: 'bg-primary/20 text-primary border-primary/40',
       Icon: PlayCircle,
     };
   }
@@ -116,7 +116,7 @@ export function RoundsHistoryCard({ agentId }: Props) {
           <div className="flex items-center justify-between gap-2 md:gap-3">
             <div className="min-w-0">
               <CardTitle className="flex items-center gap-1.5 md:gap-2 text-sm md:text-base">
-                <Radio className="h-4 w-4 md:h-5 md:w-5 text-amber-400 shrink-0" />
+                <Radio className="h-4 w-4 md:h-5 md:w-5 text-primary shrink-0" />
                 <span className="truncate">Histórico de Rondas</span>
               </CardTitle>
               <CardDescription className="text-[10px] md:text-xs">
@@ -152,7 +152,7 @@ export function RoundsHistoryCard({ agentId }: Props) {
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
                   }}
-                  className="inline-flex items-center gap-1.5 rounded-md border border-amber-500/50 bg-amber-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-amber-300 transition-all hover:bg-amber-500/20 hover:border-amber-400/70 focus-ring-primary"
+                  className="inline-flex items-center gap-1.5 rounded-md border border-primary/50 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-primary transition-all hover:bg-primary/20 hover:border-primary/70 focus-ring-primary"
                 >
                   <Zap className="h-3.5 w-3.5" />
                   Iniciar primeira ronda
@@ -171,10 +171,10 @@ export function RoundsHistoryCard({ agentId }: Props) {
                   <button
                     key={log.id}
                     onClick={() => setSelected(log)}
-                    className="w-full text-left flex items-start gap-2 md:gap-3 p-2 md:p-3 rounded-lg bg-muted/30 border border-border/50 hover:border-amber-500/40 hover:bg-amber-500/5 transition-colors"
+                    className="w-full text-left flex items-start gap-2 md:gap-3 p-2 md:p-3 rounded-lg bg-muted/30 border border-border/50 hover:border-primary/40 hover:bg-primary/5 transition-colors"
                   >
-                    <div className="p-1.5 md:p-2 rounded-full bg-amber-500/10 shrink-0">
-                      <meta.Icon className="h-3.5 w-3.5 md:h-4 md:w-4 text-amber-400" />
+                    <div className="p-1.5 md:p-2 rounded-full bg-primary/10 shrink-0">
+                      <meta.Icon className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
                     </div>
                     <div className="flex-1 min-w-0">
                       {/* Metadata row: horizontal scroll on small screens, no wrap */}
@@ -183,7 +183,7 @@ export function RoundsHistoryCard({ agentId }: Props) {
                           {meta.label}
                         </Badge>
                         {team && (
-                          <span className="text-[11px] md:text-xs font-semibold text-amber-200 shrink-0">
+                          <span className="text-[11px] md:text-xs font-semibold text-primary shrink-0">
                             EQUIPE {team}
                           </span>
                         )}
@@ -274,12 +274,12 @@ function RoundDetailsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl bg-slate-900 border-amber-500/30 text-slate-100">
+      <DialogContent className="max-w-2xl bg-slate-900 border-primary/30 text-slate-100">
         {log && meta && (
           <>
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
-                <meta.Icon className="h-5 w-5 text-amber-400" />
+                <meta.Icon className="h-5 w-5 text-primary" />
                 Detalhes da Ronda
               </DialogTitle>
               <DialogDescription className="text-slate-400">
@@ -335,7 +335,7 @@ function RoundDetailsDialog({
                 {/* Lista de agentes */}
                 {agents.length > 0 && (
                   <div className="space-y-2">
-                    <div className="text-xs uppercase tracking-wider text-amber-300/80 font-bold">
+                    <div className="text-xs uppercase tracking-wider text-primary/80 font-bold">
                       Agentes escalados ({agents.length})
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
@@ -357,7 +357,7 @@ function RoundDetailsDialog({
                 {/* Interpretação profissional */}
                 <div className="p-3 rounded-lg bg-slate-800/60 border border-slate-700 text-xs text-slate-300 space-y-1">
                   <div className="font-bold text-slate-200 flex items-center gap-1">
-                    <Info className="h-3.5 w-3.5 text-amber-400" /> Como interpretar
+                    <Info className="h-3.5 w-3.5 text-primary" /> Como interpretar
                   </div>
                   <p>
                     <b>Ronda iniciada</b> registra o momento em que a sessão foi ativada no Gestor de Rondas,
@@ -371,7 +371,7 @@ function RoundDetailsDialog({
 
                 {/* Debug/raw fallback for extra fields */}
                 <details className="text-[10px] text-muted-foreground">
-                  <summary className="cursor-pointer hover:text-amber-300">
+                  <summary className="cursor-pointer hover:text-primary">
                     Ver metadados brutos
                   </summary>
                   <pre className="mt-2 p-2 rounded bg-slate-950 border border-slate-800 overflow-x-auto">

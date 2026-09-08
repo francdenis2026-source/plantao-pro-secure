@@ -53,16 +53,16 @@ export function MasterPasswordRecoveryDialog({ trigger }: MasterPasswordRecovery
         {trigger || (
           <button
             type="button"
-            className="text-xs text-amber-400/70 hover:text-amber-300 transition-colors flex items-center gap-1"
+            className="text-xs text-primary/70 hover:text-primary transition-colors flex items-center gap-1"
           >
             <HelpCircle className="h-3 w-3" />
             Esqueci a senha
           </button>
         )}
       </DialogTrigger>
-      <DialogContent className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-2 border-amber-500/30 max-w-sm">
+      <DialogContent className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-2 border-primary/30 max-w-sm">
         <DialogHeader className="pb-3 border-b border-slate-700/50">
-          <DialogTitle className="flex items-center gap-2 text-amber-400">
+          <DialogTitle className="flex items-center gap-2 text-primary">
             <Shield className="h-5 w-5" />
             Recuperação de Acesso Master
           </DialogTitle>
@@ -89,15 +89,15 @@ export function MasterPasswordRecoveryDialog({ trigger }: MasterPasswordRecovery
               <p className="text-xs font-semibold text-slate-300">Procedimento:</p>
               <div className="space-y-1.5 text-xs text-slate-400">
                 <div className="flex items-start gap-2 p-2 bg-slate-800/50 rounded-lg border border-slate-700/50">
-                  <span className="w-5 h-5 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">1</span>
+                  <span className="w-5 h-5 bg-primary/20 text-primary rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">1</span>
                   <span>Entre em contato com o desenvolvedor</span>
                 </div>
                 <div className="flex items-start gap-2 p-2 bg-slate-800/50 rounded-lg border border-slate-700/50">
-                  <span className="w-5 h-5 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">2</span>
+                  <span className="w-5 h-5 bg-primary/20 text-primary rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">2</span>
                   <span>Forneça dados de verificação (nome da unidade, dados cadastrais)</span>
                 </div>
                 <div className="flex items-start gap-2 p-2 bg-slate-800/50 rounded-lg border border-slate-700/50">
-                  <span className="w-5 h-5 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">3</span>
+                  <span className="w-5 h-5 bg-primary/20 text-primary rounded-full flex items-center justify-center text-[10px] font-bold shrink-0">3</span>
                   <span>Receba as novas credenciais de forma segura</span>
                 </div>
               </div>
@@ -105,7 +105,7 @@ export function MasterPasswordRecoveryDialog({ trigger }: MasterPasswordRecovery
 
             <Button
               onClick={() => setStep('contact')}
-              className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-900 font-semibold text-xs"
+              className="w-full bg-gradient-to-r from-primary to-primary hover:from-primary hover:to-primary text-slate-900 font-semibold text-xs"
             >
               <KeyRound className="h-3.5 w-3.5 mr-1.5" />
               Ver Contatos de Recuperação
@@ -123,10 +123,10 @@ export function MasterPasswordRecoveryDialog({ trigger }: MasterPasswordRecovery
 
             {/* Contact Options */}
             <div className="space-y-2">
-              <div className="p-3 bg-slate-800/70 rounded-lg border border-slate-600/50 group hover:border-amber-500/50 transition-colors">
+              <div className="p-3 bg-slate-800/70 rounded-lg border border-slate-600/50 group hover:border-primary/50 transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-amber-400" />
+                    <Mail className="h-4 w-4 text-primary" />
                     <div>
                       <p className="text-[10px] text-slate-400 uppercase tracking-wide">Email Principal</p>
                       <p className="text-xs text-white font-mono">plantaopro@proton.me</p>
@@ -143,7 +143,7 @@ export function MasterPasswordRecoveryDialog({ trigger }: MasterPasswordRecovery
                 </div>
               </div>
 
-              <div className="p-3 bg-slate-800/70 rounded-lg border border-slate-600/50 group hover:border-amber-500/50 transition-colors">
+              <div className="p-3 bg-slate-800/70 rounded-lg border border-slate-600/50 group hover:border-primary/50 transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Mail className="h-4 w-4 text-blue-400" />

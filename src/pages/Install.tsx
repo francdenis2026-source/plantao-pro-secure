@@ -35,7 +35,7 @@ export default function Install() {
     if (success) {
       toast.success('App instalado com sucesso!', {
         description: 'O PlantãoPro foi adicionado à sua tela inicial.',
-        icon: <PartyPopper className="h-5 w-5 text-amber-500" />,
+        icon: <PartyPopper className="h-5 w-5 text-primary" />,
       });
     }
   };
@@ -64,16 +64,16 @@ export default function Install() {
         {/* Hero Section */}
         <div className="text-center space-y-6">
           {/* App Icon */}
-          <div className="inline-flex p-1 rounded-3xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 border border-amber-500/30">
+          <div className="inline-flex p-1 rounded-3xl bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/30">
             <img 
               src="/icon-512.png" 
               alt="PlantãoPro" 
-              className="w-24 h-24 rounded-2xl shadow-2xl shadow-amber-500/20"
+              className="w-24 h-24 rounded-2xl shadow-2xl shadow-primary/20"
             />
           </div>
 
           <div>
-            <h2 className="text-3xl font-black bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">
+            <h2 className="text-3xl font-black bg-gradient-to-r from-primary to-primary bg-clip-text text-transparent">
               PlantãoPro
             </h2>
             <p className="text-muted-foreground mt-2">
@@ -88,7 +88,7 @@ export default function Install() {
               App Instalado
             </Badge>
           ) : (
-            <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 px-4 py-2">
+            <Badge className="bg-primary/20 text-primary border-primary/30 px-4 py-2">
               <Download className="h-4 w-4 mr-2" />
               Disponível para Instalação
             </Badge>
@@ -99,8 +99,8 @@ export default function Install() {
         <div className="grid grid-cols-2 gap-3">
           <Card className="bg-slate-800/50 border-slate-700">
             <CardContent className="p-4 flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-amber-500/20">
-                <Zap className="h-5 w-5 text-amber-400" />
+              <div className="p-2 rounded-lg bg-primary/20">
+                <Zap className="h-5 w-5 text-primary" />
               </div>
               <div>
                 <p className="font-medium text-sm">Acesso Rápido</p>
@@ -152,19 +152,19 @@ export default function Install() {
             <h3 className="font-bold text-lg">O que você pode fazer:</h3>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <Clock className="h-5 w-5 text-amber-500" />
+                <Clock className="h-5 w-5 text-primary" />
                 <span className="text-sm">Controle de plantões em tempo real</span>
               </div>
               <div className="flex items-center gap-3">
-                <Users className="h-5 w-5 text-amber-500" />
+                <Users className="h-5 w-5 text-primary" />
                 <span className="text-sm">Gerenciamento de equipe</span>
               </div>
               <div className="flex items-center gap-3">
-                <Bell className="h-5 w-5 text-amber-500" />
+                <Bell className="h-5 w-5 text-primary" />
                 <span className="text-sm">Notificações de aniversários</span>
               </div>
               <div className="flex items-center gap-3">
-                <CheckCircle2 className="h-5 w-5 text-amber-500" />
+                <CheckCircle2 className="h-5 w-5 text-primary" />
                 <span className="text-sm">Banco de horas automatizado</span>
               </div>
             </div>
@@ -177,7 +177,7 @@ export default function Install() {
             <Button
               onClick={handleInstall}
               disabled={!isInstallable && !isIOS}
-              className="w-full h-14 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-black font-bold text-lg shadow-lg shadow-amber-500/30"
+              className="w-full h-14 bg-gradient-to-r from-primary to-primary hover:from-primary hover:to-primary text-black font-bold text-lg shadow-lg shadow-primary/30"
             >
               <Download className="h-5 w-5 mr-2" />
               {isIOS ? 'Como Instalar' : 'Instalar App'}
@@ -193,17 +193,17 @@ export default function Install() {
 
         {/* iOS Instructions */}
         {isIOS && !isInstalled && (
-          <Card id="ios-instructions" className="bg-gradient-to-br from-slate-800 to-slate-800/50 border-amber-500/30">
+          <Card id="ios-instructions" className="bg-gradient-to-br from-slate-800 to-slate-800/50 border-primary/30">
             <CardContent className="p-5 space-y-4">
               <div className="flex items-center gap-2">
-                <Smartphone className="h-5 w-5 text-amber-500" />
+                <Smartphone className="h-5 w-5 text-primary" />
                 <h3 className="font-bold text-lg">Instruções para iPhone/iPad</h3>
               </div>
               
               <div className="space-y-4">
                 {/* Step 1 */}
                 <div className="flex items-start gap-3 p-3 bg-slate-700/50 rounded-lg">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center">
                     <span className="text-black font-bold">1</span>
                   </div>
                   <div className="flex-1">
@@ -218,7 +218,7 @@ export default function Install() {
 
                 {/* Step 2 */}
                 <div className="flex items-start gap-3 p-3 bg-slate-700/50 rounded-lg">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center">
                     <span className="text-black font-bold">2</span>
                   </div>
                   <div className="flex-1">

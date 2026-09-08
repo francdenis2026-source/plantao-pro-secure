@@ -741,7 +741,7 @@ Documento gerado automaticamente pelo PlantãoPro
       <CardHeader className="pb-4 relative">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <CardTitle className="flex items-center gap-3 text-xl md:text-2xl">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-orange-500/30 to-amber-500/20 border border-orange-500/40">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-orange-500/30 to-primary/20 border border-orange-500/40">
               <ArrowRightLeft className="h-6 w-6 md:h-7 md:w-7 text-orange-400" />
             </div>
             <span className="font-bold bg-gradient-to-r from-orange-200 to-amber-300 bg-clip-text text-transparent">
@@ -828,7 +828,7 @@ Documento gerado automaticamente pelo PlantãoPro
                   {/* Shift Selection */}
                   <div className="space-y-2">
                     <Label className="text-slate-300 flex items-center gap-2">
-                      <CalendarDays className="h-4 w-4 text-amber-400" />
+                      <CalendarDays className="h-4 w-4 text-primary" />
                       Meu Plantão
                     </Label>
                     <Select value={selectedShift} onValueChange={setSelectedShift}>
@@ -917,7 +917,7 @@ Documento gerado automaticamente pelo PlantãoPro
                   <Button
                     onClick={createSwapRequest}
                     disabled={!selectedShift || !selectedAgent || isSubmitting}
-                    className="bg-amber-500 hover:bg-amber-600 text-black"
+                    className="bg-primary hover:bg-primary text-black"
                   >
                     {isSubmitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
                     Solicitar Permuta
@@ -933,13 +933,13 @@ Documento gerado automaticamente pelo PlantãoPro
         {/* Pending requests for me */}
         {pendingForMe.length > 0 && (
           <div>
-            <h4 className="text-sm font-medium text-amber-400 mb-2 flex items-center gap-2">
+            <h4 className="text-sm font-medium text-primary mb-2 flex items-center gap-2">
               <Clock className="h-4 w-4" />
               Aguardando sua resposta
             </h4>
             <div className="space-y-2">
               {pendingForMe.map((request) => (
-                <div key={request.id} className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                <div key={request.id} className="p-3 bg-primary/10 border border-primary/30 rounded-lg">
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
                       <p className="text-sm text-white">
@@ -1142,7 +1142,7 @@ Documento gerado automaticamente pelo PlantãoPro
         <DialogContent className="bg-slate-800 border-slate-700 max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-white">
-              <FileText className="h-5 w-5 text-amber-400" />
+              <FileText className="h-5 w-5 text-primary" />
               Documento de Permuta
             </DialogTitle>
             <DialogDescription className="text-slate-400">
@@ -1183,7 +1183,7 @@ Documento gerado automaticamente pelo PlantãoPro
                     <button
                       type="button"
                       onClick={() => setEditableDocumentText(generateFormalDocument(previewRequest))}
-                      className="text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1"
+                      className="text-xs text-primary hover:text-primary flex items-center gap-1"
                     >
                       <ArrowLeft className="h-3 w-3" />
                       Restaurar texto original
@@ -1200,7 +1200,7 @@ Documento gerado automaticamente pelo PlantãoPro
               
               {/* Digital Signatures Section */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm font-medium text-amber-400">
+                <div className="flex items-center gap-2 text-sm font-medium text-primary">
                   <PenTool className="h-4 w-4" />
                   Assinaturas Digitais
                 </div>
