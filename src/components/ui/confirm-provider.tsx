@@ -62,7 +62,7 @@ export function ConfirmProvider({ children }: { children: React.ReactNode }) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2">
-              <AlertTriangle className={opts.destructive ? 'h-5 w-5 text-destructive' : 'h-5 w-5 text-amber-500'} />
+              <AlertTriangle className={opts.destructive ? 'h-5 w-5 text-destructive' : 'h-5 w-5 text-primary'} />
               {opts.title ?? 'Confirmar ação'}
             </AlertDialogTitle>
             <AlertDialogDescription>

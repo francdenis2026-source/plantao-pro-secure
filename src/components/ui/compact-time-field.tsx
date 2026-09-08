@@ -71,7 +71,7 @@ export function CompactTimeField({
         onPick={(n) => emit(n, m)}
         disabled={disabled}
       />
-      <span aria-hidden className="text-amber-400 font-mono font-bold text-lg leading-none pb-0.5">
+      <span aria-hidden className="text-primary font-mono font-bold text-lg leading-none pb-0.5">
         :
       </span>
       <Segment
@@ -98,7 +98,7 @@ function Chevron({ dir }: { dir: "up" | "down" }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
-      className="text-amber-400"
+      className="text-primary"
     >
       <path
         d={dir === "up" ? "M2 8 L7 3 L12 8" : "M2 2 L7 7 L12 2"}
@@ -148,7 +148,7 @@ function Segment({
   };
 
   const btnCls =
-    "flex items-center justify-center h-5 w-6 rounded hover:bg-amber-500/15 active:bg-amber-500/25 focus:outline-none focus:ring-1 focus:ring-amber-400/60 transition-colors";
+    "flex items-center justify-center h-5 w-6 rounded hover:bg-primary/15 active:bg-primary/25 focus:outline-none focus:ring-1 focus:ring-primary/60 transition-colors";
 
   return (
     <div className="flex flex-col items-center select-none">
@@ -183,7 +183,7 @@ function Segment({
             }
           }}
           disabled={disabled}
-          className="w-9 bg-transparent text-slate-100 font-mono tabular-nums text-lg font-semibold text-center focus:outline-none focus:ring-2 focus:ring-amber-400/60 rounded"
+          className="w-9 bg-transparent text-slate-100 font-mono tabular-nums text-lg font-semibold text-center focus:outline-none focus:ring-2 focus:ring-primary/60 rounded"
         />
         {/* Dropdown nativo sobreposto — abre lista de opções rápidas ao tocar/clicar.
             Fica invisível mas cobre o input para permitir seleção pelo picker do SO. */}

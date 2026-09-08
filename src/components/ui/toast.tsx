@@ -28,7 +28,7 @@ const toastVariants = cva(
     variants: {
       variant: {
         default:
-          "border-amber-500/30 bg-zinc-950/95 text-zinc-100 [--toast-accent:theme(colors.amber.400)]",
+          "border-primary/30 bg-zinc-950/95 text-zinc-100 [--toast-accent:theme(colors.blue.400)]",
         success:
           "border-emerald-500/40 bg-zinc-950/95 text-zinc-100 [--toast-accent:theme(colors.emerald.400)]",
         warning:
@@ -118,7 +118,7 @@ const ToastAction = React.forwardRef<
   <ToastPrimitives.Action
     ref={ref}
     className={cn(
-      "inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-amber-500/30 bg-transparent px-3 text-xs font-semibold uppercase tracking-wider text-amber-300 ring-offset-background transition-colors hover:bg-amber-500/10 focus:outline-none focus:ring-2 focus:ring-amber-400 disabled:pointer-events-none disabled:opacity-50",
+      "inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-primary/30 bg-transparent px-3 text-xs font-semibold uppercase tracking-wider text-primary ring-offset-background transition-colors hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary disabled:pointer-events-none disabled:opacity-50",
       className,
     )}
     {...props}
@@ -133,7 +133,7 @@ const ToastClose = React.forwardRef<
   <ToastPrimitives.Close
     ref={ref}
     className={cn(
-      "absolute right-2 top-2 rounded-md p-1 text-zinc-400 opacity-70 transition-opacity hover:text-zinc-100 hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-amber-400",
+      "absolute right-2 top-2 rounded-md p-1 text-zinc-400 opacity-70 transition-opacity hover:text-zinc-100 hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-primary",
       className,
     )}
     toast-close=""

@@ -26,8 +26,8 @@ const SelectTrigger = React.forwardRef<
       "placeholder:text-slate-400",
       // Focus states
       "ring-offset-background transition-all duration-200",
-      "focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:ring-offset-2 focus:ring-offset-slate-900",
-      "focus:border-amber-500/70",
+      "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-slate-900",
+      "focus:border-primary/70",
       // Hover state
       "hover:bg-slate-700/90 hover:border-slate-500/70",
       // Disabled state
@@ -35,14 +35,14 @@ const SelectTrigger = React.forwardRef<
       // Icon alignment
       "[&>span]:line-clamp-1 [&>span]:text-left [&>span]:flex-1",
       // Data states
-      "data-[state=open]:border-amber-500/70 data-[state=open]:ring-2 data-[state=open]:ring-amber-500/30",
+      "data-[state=open]:border-primary/70 data-[state=open]:ring-2 data-[state=open]:ring-primary/30",
       className,
     )}
     {...props}
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 shrink-0 text-amber-400/70 transition-transform duration-200 data-[state=open]:rotate-180" />
+      <ChevronDown className="h-4 w-4 shrink-0 text-primary/70 transition-transform duration-200 data-[state=open]:rotate-180" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
@@ -56,7 +56,7 @@ const SelectScrollUpButton = React.forwardRef<
     ref={ref}
     className={cn(
       "flex cursor-pointer items-center justify-center py-2",
-      "text-amber-400 hover:text-amber-300 transition-colors",
+      "text-primary hover:text-primary transition-colors",
       "bg-gradient-to-b from-slate-800 to-transparent",
       className
     )}
@@ -75,7 +75,7 @@ const SelectScrollDownButton = React.forwardRef<
     ref={ref}
     className={cn(
       "flex cursor-pointer items-center justify-center py-2",
-      "text-amber-400 hover:text-amber-300 transition-colors",
+      "text-primary hover:text-primary transition-colors",
       "bg-gradient-to-t from-slate-800 to-transparent",
       className
     )}
@@ -137,7 +137,7 @@ const SelectLabel = React.forwardRef<
     ref={ref} 
     className={cn(
       "py-2 pl-3 pr-2 text-xs font-semibold uppercase tracking-wider",
-      "text-amber-400/80",
+      "text-primary/80",
       className
     )} 
     {...props} 
@@ -159,12 +159,12 @@ const SelectItem = React.forwardRef<
       // Default state
       "text-slate-200",
       // Hover/Focus state
-      "focus:bg-amber-500/20 focus:text-amber-100",
+      "focus:bg-primary/20 focus:text-primary-foreground",
       "hover:bg-slate-700/80",
       // Highlighted state (keyboard navigation)
-      "data-[highlighted]:bg-amber-500/20 data-[highlighted]:text-amber-100",
+      "data-[highlighted]:bg-primary/20 data-[highlighted]:text-primary-foreground",
       // Selected state
-      "data-[state=checked]:bg-amber-500/30 data-[state=checked]:text-amber-100",
+      "data-[state=checked]:bg-primary/30 data-[state=checked]:text-primary-foreground",
       // Disabled state
       "data-[disabled]:pointer-events-none data-[disabled]:opacity-40",
       className,
@@ -173,7 +173,7 @@ const SelectItem = React.forwardRef<
   >
     <span className="absolute left-2.5 flex h-4 w-4 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <Check className="h-4 w-4 text-amber-400" />
+        <Check className="h-4 w-4 text-primary" />
       </SelectPrimitive.ItemIndicator>
     </span>
 

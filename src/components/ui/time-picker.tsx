@@ -90,7 +90,7 @@ export function TimePicker({
           )}
         >
           <span className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-amber-500" />
+            <Clock className="h-4 w-4 text-primary" />
             {value ? formatDisplayTime(value) : placeholder}
           </span>
           <span className="text-xs text-slate-400 font-mono">{value || "--:--"}</span>
@@ -108,7 +108,7 @@ export function TimePicker({
               <button
                 type="button"
                 onClick={incrementHours}
-                className="text-amber-400 hover:text-amber-300 p-1"
+                className="text-primary hover:text-primary p-1"
               >
                 ▲
               </button>
@@ -123,21 +123,21 @@ export function TimePicker({
               <button
                 type="button"
                 onClick={decrementHours}
-                className="text-amber-400 hover:text-amber-300 p-1"
+                className="text-primary hover:text-primary p-1"
               >
                 ▼
               </button>
               <span className="text-xs text-slate-500 mt-1">Hora</span>
             </div>
             
-            <span className="text-2xl font-bold text-amber-400">:</span>
+            <span className="text-2xl font-bold text-primary">:</span>
             
             {/* Minutes */}
             <div className="flex flex-col items-center">
               <button
                 type="button"
                 onClick={incrementMinutes}
-                className="text-amber-400 hover:text-amber-300 p-1"
+                className="text-primary hover:text-primary p-1"
               >
                 ▲
               </button>
@@ -152,7 +152,7 @@ export function TimePicker({
               <button
                 type="button"
                 onClick={decrementMinutes}
-                className="text-amber-400 hover:text-amber-300 p-1"
+                className="text-primary hover:text-primary p-1"
               >
                 ▼
               </button>
@@ -173,8 +173,8 @@ export function TimePicker({
                 className={cn(
                   "px-2 py-1 text-xs rounded transition-colors",
                   value === preset
-                    ? "bg-amber-500 text-black font-medium"
-                    : "bg-slate-700 text-slate-300 hover:bg-amber-500/20 hover:text-amber-400"
+                    ? "bg-primary text-primary-foreground font-medium"
+                    : "bg-slate-700 text-slate-300 hover:bg-primary/20 hover:text-primary"
                 )}
               >
                 {preset}
@@ -184,7 +184,7 @@ export function TimePicker({
           
           <Button
             size="sm"
-            className="w-full bg-amber-500 hover:bg-amber-600 text-black"
+            className="w-full bg-primary hover:bg-primary text-primary-foreground"
             onClick={() => setOpen(false)}
           >
             Confirmar

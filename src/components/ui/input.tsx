@@ -33,16 +33,16 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
           "placeholder:text-slate-400",
           // Focus states
           "ring-offset-background transition-all duration-200",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900",
-          "focus-visible:border-amber-500/70",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900",
+          "focus-visible:border-primary/70",
           // Hover state
           "hover:bg-slate-700/90 hover:border-slate-500/70",
           // Disabled state
           "disabled:cursor-not-allowed disabled:opacity-50",
           // File input styles
-          "file:border-0 file:bg-amber-500/20 file:text-amber-300 file:text-sm file:font-medium",
+          "file:border-0 file:bg-primary/20 file:text-primary file:text-sm file:font-medium",
           "file:mr-4 file:py-2 file:px-4 file:rounded-md file:cursor-pointer",
-          "file:hover:bg-amber-500/30 file:transition-colors",
+          "file:hover:bg-primary/30 file:transition-colors",
           // Number input - hide spinners
           "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
           className,

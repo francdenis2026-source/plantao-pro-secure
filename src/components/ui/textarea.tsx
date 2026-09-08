@@ -17,8 +17,8 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(({ classNa
         "placeholder:text-slate-400",
         // Focus states
         "ring-offset-background transition-all duration-200",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900",
-        "focus-visible:border-amber-500/70",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900",
+        "focus-visible:border-primary/70",
         // Hover state
         "hover:bg-slate-700/90 hover:border-slate-500/70",
         // Disabled state
