@@ -243,7 +243,7 @@ export const themes: Record<ThemeType, ThemeConfig> = {
       scanlineOpacity: 0.02,
     },
     cardStyle: {
-      gradient: 'from-yellow-950/90 via-amber-950/85 to-stone-950/95',
+      gradient: 'from-yellow-950/90 via-primary/85 to-stone-950/95',
       border: 'border-yellow-600/50',
       shadow: 'shadow-yellow-500/25',
       hoverShadow: 'hover:shadow-yellow-400/50',
@@ -362,10 +362,10 @@ export const themes: Record<ThemeType, ThemeConfig> = {
       scanlineOpacity: 0.03,
     },
     cardStyle: {
-      gradient: 'from-amber-950/90 via-orange-950/80 to-slate-950/95',
-      border: 'border-amber-500/40',
-      shadow: 'shadow-amber-500/20',
-      hoverShadow: 'hover:shadow-amber-400/40',
+      gradient: 'from-primary/90 via-orange-950/80 to-slate-950/95',
+      border: 'border-primary/40',
+      shadow: 'shadow-primary/20',
+      hoverShadow: 'hover:shadow-primary/40',
     },
   },
 };

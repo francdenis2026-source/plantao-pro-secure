@@ -283,8 +283,8 @@ export function AgentSettingsCard({
       <CardHeader className="pb-1.5 pt-2 px-2 md:pb-2 md:pt-3 md:px-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-1.5 md:gap-2 text-xs md:text-sm">
-            <div className="p-1 md:p-1.5 rounded-md bg-amber-500/15 border border-amber-500/30">
-              <User className="h-3.5 w-3.5 md:h-4 md:w-4 text-amber-400" />
+            <div className="p-1 md:p-1.5 rounded-md bg-primary/15 border border-primary/30">
+              <User className="h-3.5 w-3.5 md:h-4 md:w-4 text-primary" />
             </div>
             <span className="font-semibold text-zinc-100">Configurações</span>
           </CardTitle>
@@ -304,16 +304,16 @@ export function AgentSettingsCard({
         {/* Avatar Upload - Always visible */}
         <div className="flex items-center gap-2 md:gap-3 p-1.5 md:p-2 bg-zinc-800/50 rounded-lg border border-zinc-700/40">
           <div className="relative shrink-0">
-            <Avatar className="h-10 w-10 md:h-12 md:w-12 border-2 border-amber-500/40">
+            <Avatar className="h-10 w-10 md:h-12 md:w-12 border-2 border-primary/40">
               {avatarUrl && <AvatarImage src={avatarUrl} alt={agentName} />}
-              <AvatarFallback className="bg-zinc-700 text-base md:text-lg font-bold text-amber-400">
+              <AvatarFallback className="bg-zinc-700 text-base md:text-lg font-bold text-primary">
                 {agentName.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
             <button
               onClick={() => fileInputRef.current?.click()}
               disabled={isUploading}
-              className="absolute -bottom-0.5 -right-0.5 p-1 bg-amber-500 rounded-full hover:bg-amber-600 transition-colors disabled:opacity-50 shadow"
+              className="absolute -bottom-0.5 -right-0.5 p-1 bg-primary rounded-full hover:bg-primary transition-colors disabled:opacity-50 shadow"
             >
               {isUploading ? (
                 <Loader2 className="h-2.5 w-2.5 text-black animate-spin" />
@@ -467,7 +467,7 @@ export function AgentSettingsCard({
                   </Button>
                 </div>
                 {birthDate && (
-                  <p className="text-[9px] text-amber-400">{getAgeDisplay()}</p>
+                  <p className="text-[9px] text-primary">{getAgeDisplay()}</p>
                 )}
               </div>
             </div>

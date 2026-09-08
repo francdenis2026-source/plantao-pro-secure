@@ -32,17 +32,17 @@ const AuthLoader: React.FC<{ debugTag?: string }> = ({ debugTag }) => {
       aria-live="polite"
       aria-busy="true"
       data-auth-loader={debugTag ?? "1"}
-      className="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-4 bg-background text-amber-100/85"
+      className="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-4 bg-background text-primary/85"
     >
       <div className="relative h-12 w-12">
-        <span className="absolute inset-0 rounded-full border-2 border-amber-400/25" />
-        <span className="absolute inset-0 rounded-full border-2 border-transparent border-t-amber-400 animate-spin" />
+        <span className="absolute inset-0 rounded-full border-2 border-primary/25" />
+        <span className="absolute inset-0 rounded-full border-2 border-transparent border-t-primary animate-spin" />
       </div>
       <div className="flex flex-col items-center gap-1 text-center">
-        <span className="text-[11px] font-mono uppercase tracking-[0.35em] text-amber-300/80">
+        <span className="text-[11px] font-mono uppercase tracking-[0.35em] text-primary/80">
           Autenticando
         </span>
-        <span className="text-xs text-amber-100/60">
+        <span className="text-xs text-primary/60">
           Validando sessão segura…
         </span>
       </div>
