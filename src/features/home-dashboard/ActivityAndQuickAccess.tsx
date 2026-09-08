@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { History, LayoutGrid, CalendarDays, ArrowLeftRight, Users, MessageCircle } from 'lucide-react';
+import { History, LayoutGrid, CalendarDays, ArrowLeftRight, Users, MessageCircle, ShieldCheck, HelpCircle } from 'lucide-react';
 import type { ActivityRow } from './useHomeDashboardData';
 
 function fmtRelative(iso: string): string {
@@ -28,6 +28,8 @@ export function ActivityAndQuickAccess({ activity }: { activity: ActivityRow[] }
     { label: 'Trocas', icon: ArrowLeftRight, href: '/agent-panel?tab=permutas' },
     { label: 'Equipe', icon: Users, href: '/agent-panel?tab=equipe' },
     { label: 'Chat', icon: MessageCircle, href: '/agent-panel?tab=chat' },
+    { label: 'Rondas', icon: ShieldCheck, href: '/rondas' },
+    { label: 'Ajuda', icon: HelpCircle, href: '/about' },
   ];
 
   return (

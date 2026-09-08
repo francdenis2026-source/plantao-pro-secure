@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useAgentProfile } from '@/hooks/useAgentProfile';
 import { RestrictedAccessDialog } from '@/components/auth/RestrictedAccessDialog';
 import plantaoproLogo from '@/assets/logo-ise-socioeducativo.png';
+import institutionalArt from '@/assets/midias/section-background.png';
 
 import {
   Users,
@@ -115,6 +116,30 @@ export const Sidebar = forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>
             </>
           )}
         </nav>
+
+        {/* Institutional footer — arte oficial + lema, reforça a identidade
+            da Socioeducação do Acre abaixo da navegação. */}
+        <div className="relative shrink-0 overflow-hidden border-t border-sidebar-border/60 px-5 py-4">
+          <img
+            src={institutionalArt}
+            alt=""
+            aria-hidden
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover opacity-25"
+          />
+          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-sidebar via-sidebar/85 to-sidebar/60" />
+          <div className="relative">
+            <p className="text-[10px] font-bold uppercase leading-tight tracking-[0.15em] text-foreground">
+              Agentes Socioeducativos
+              <br />do Acre
+            </p>
+            <p className="mt-1.5 text-[9px] italic leading-snug text-muted-foreground">
+              Disciplina · Respeito · Sociedade
+              <br />Mais Oportunidades
+            </p>
+          </div>
+        </div>
 
         {/* Footer */}
         <div className="px-5 py-3 border-t border-sidebar-border/60 flex items-center justify-between">
