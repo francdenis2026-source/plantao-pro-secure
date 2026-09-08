@@ -191,7 +191,7 @@ export default function Admin() {
   if (!hasMasterAccess && (isLoading || loadingPermissions || (!!user && !isRoleResolved))) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-900">
-        <Loader2 className="h-8 w-8 animate-spin text-amber-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -346,7 +346,7 @@ export default function Admin() {
                     {permissions?.can_manage_announcements && (
                       <TabsTrigger 
                         value="announcements" 
-                        className="px-4 py-2 data-[state=active]:bg-amber-600 data-[state=active]:text-white rounded-md whitespace-nowrap"
+                        className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-white rounded-md whitespace-nowrap"
                       >
                         <Bell className="h-4 w-4 mr-2" />
                         Avisos
@@ -375,7 +375,7 @@ export default function Admin() {
 
                     <TabsTrigger
                       value="rondas"
-                      className="px-4 py-2 data-[state=active]:bg-amber-600 data-[state=active]:text-slate-950 rounded-md whitespace-nowrap"
+                      className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-md whitespace-nowrap"
                     >
                       <CalendarClock className="h-4 w-4 mr-2" />
                       Rondas
