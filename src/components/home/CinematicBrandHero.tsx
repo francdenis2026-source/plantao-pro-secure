@@ -43,51 +43,11 @@ export function CinematicBrandHero({
   return (
     <section
       aria-label="PlantãoPro — Sistema de gestão de plantões"
-      className="relative w-full overflow-hidden isolate"
-      style={{
-        minHeight: "clamp(440px, 64vh, 720px)",
-        background: "hsl(222 20% 6%)",
-      }}
+      className="relative w-full overflow-hidden isolate grid grid-cols-1 lg:grid-cols-[1.15fr_1fr]"
+      style={{ background: "hsl(222 20% 6%)" }}
     >
-      <img
-        src={IMG_URL}
-        alt=""
-        aria-hidden
-        draggable={false}
-        loading="eager"
-        decoding="sync"
-        // @ts-expect-error – fetchpriority é atributo HTML válido não tipado no React 18
-        fetchpriority="high"
-        className="absolute inset-0 w-full h-full select-none pointer-events-none origin-right sm:scale-[1.2] lg:scale-[1.28]"
-        style={{
-          objectFit: "cover",
-          objectPosition: "center right",
-          transformOrigin: "right center",
-          filter: "saturate(0.85) contrast(1.02)",
-        }}
-      />
-
-      {/* Overlay para legibilidade do texto */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(90deg, hsl(222 22% 4% / 0.96) 0%, hsl(222 20% 5% / 0.88) 32%, hsl(222 20% 5% / 0.55) 58%, hsl(222 20% 5% / 0.18) 80%, transparent 100%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-x-0 top-0 h-20 pointer-events-none"
-        style={{ background: "linear-gradient(180deg, hsl(222 22% 4% / 0.85), transparent)" }}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-x-0 bottom-0 h-20 pointer-events-none"
-        style={{ background: "linear-gradient(0deg, hsl(222 22% 4% / 0.85), transparent)" }}
-      />
-
-      <div className="relative z-10 mx-auto max-w-7xl h-full min-h-[inherit] px-6 sm:px-10 lg:px-14 py-10 sm:py-12 lg:py-14 flex flex-col justify-center">
+      {/* Coluna de texto — fundo sólido, nunca compete com a foto */}
+      <div className="relative z-10 order-2 flex flex-col justify-center px-6 py-10 sm:px-10 sm:py-12 lg:order-1 lg:px-14 lg:py-14">
         <div className="max-w-2xl">
           <div
             className="inline-flex items-center gap-2 rounded-md border border-primary/30 bg-primary/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/90 animate-fade-in"
@@ -150,6 +110,30 @@ export function CinematicBrandHero({
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Coluna de imagem — recortada para focar nos agentes, sem repetir a
+          logomarca do Governo do Acre (já visível no cabeçalho fixo). */}
+      <div className="relative order-1 h-56 sm:h-72 lg:order-2 lg:h-auto lg:min-h-[440px]">
+        <img
+          src={IMG_URL}
+          alt="Agentes da Socioeducação do Acre em frente à unidade e viatura oficial"
+          draggable={false}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full select-none object-cover"
+          style={{ objectPosition: "38% 50%", filter: "saturate(0.9) contrast(1.02)" }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 left-0 w-16 lg:w-24"
+          style={{ background: "linear-gradient(90deg, hsl(222 20% 6%) 0%, transparent 100%)" }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-10 lg:hidden"
+          style={{ background: "linear-gradient(180deg, hsl(222 20% 6%) 0%, transparent 100%)" }}
+        />
       </div>
     </section>
   );

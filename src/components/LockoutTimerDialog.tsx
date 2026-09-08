@@ -82,7 +82,7 @@ export function LockoutTimerDialog({
 
   return (
     <Dialog open={open} onOpenChange={(o) => !o && isExpired && onClose()}>
-      <DialogContent className={cn(
+      <DialogContent data-tactical-dark className={cn(
         "w-[94vw] max-w-lg p-0 gap-0 border-2 overflow-hidden",
         "bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950",
         isExpired ? "border-green-500/50" : "border-red-500/50",

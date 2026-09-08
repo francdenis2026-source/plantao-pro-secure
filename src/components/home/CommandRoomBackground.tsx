@@ -9,13 +9,15 @@ import sectionBackground from '@/assets/midias/section-background.png';
 export const CommandRoomBackground = memo(function CommandRoomBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden>
-      {/* Arte institucional oficial — bem escurecida, só textura */}
+      {/* Arte institucional oficial — bem escurecida, só textura. Posição
+          enquadrando a unidade/torre (fica mais interessante no recorte
+          estreito do mobile do que o topo do céu). */}
       <img
         src={sectionBackground}
         alt=""
         loading="eager"
         decoding="async"
-        className="absolute inset-0 h-full w-full object-cover opacity-[0.16]"
+        className="absolute inset-0 h-full w-full object-cover object-[center_35%] opacity-[0.26] sm:opacity-[0.18]"
       />
 
       {/* Wash tonal — ardósia neutra, sem tons quentes */}
@@ -23,7 +25,7 @@ export const CommandRoomBackground = memo(function CommandRoomBackground() {
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse at top, hsl(222 18% 11% / 0.78) 0%, hsl(222 20% 6% / 0.86) 60%, hsl(222 22% 4% / 0.92) 100%)',
+            'radial-gradient(ellipse at top, hsl(222 18% 11% / 0.62) 0%, hsl(222 20% 6% / 0.74) 60%, hsl(222 22% 4% / 0.85) 100%)',
         }}
       />
 

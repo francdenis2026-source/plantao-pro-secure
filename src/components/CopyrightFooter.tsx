@@ -80,9 +80,6 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
               <span className="hidden min-[360px]:inline">© {year}</span>
               {rightSlot}
             </div>
-
-            {/* Assinatura do desenvolvedor — sempre visível, inclusive no mobile */}
-            <DeveloperSignature compact />
           </div>
 
 

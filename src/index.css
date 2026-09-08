@@ -1035,6 +1035,19 @@ div[style*="bottom: 0"][style*="right: 0"][style*="fixed"] {
 .via-slate-900, .via-slate-800 { --tw-gradient-stops: var(--tw-gradient-from), hsl(var(--card)) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
 .to-slate-900, .to-slate-800 { --tw-gradient-to: hsl(var(--background)) var(--tw-gradient-to-position) !important; }
 
+/* AuthDialog (login/CPF/master) é propositalmente escuro — tema tático —
+   em qualquer modo do site. Sem isso, o remap acima usa --card/--background
+   do tema ativo, que no modo claro são brancos, "quebrando" o diálogo com
+   faixas brancas no meio de um card que deveria ser sempre escuro. */
+[data-tactical-dark] {
+  --background: 222 47% 4%;
+  --card: 217 33% 17%;
+  --foreground: 210 40% 98%;
+  --muted-foreground: 215 20% 65%;
+  --border: 215 25% 27%;
+  --muted: 217 33% 17%;
+}
+
 /* Emerald "ativo" → success institucional */
 .text-emerald-400, .text-emerald-500 { color: hsl(var(--success)) !important; }
 .bg-emerald-500\/10, .bg-emerald-500\/20 { background-color: hsl(var(--success) / 0.15) !important; }
@@ -1785,40 +1798,36 @@ img, svg, picture, video {
 .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 .no-scrollbar::-webkit-scrollbar { width: 0; height: 0; display: none; }
 
-/* Scrollbar global — ultrafina, quase invisível em repouso e revelando
-   o tom âmbar tático apenas ao hover. Preserva usabilidade total
-   (mouse, trackpad, teclado, touch) sem competir visualmente com o UI. */
-html {
-  scrollbar-width: thin;                                  /* Firefox */
-  scrollbar-color: rgba(244, 201, 116, 0.18) transparent; /* thumb / track */
+/* Scrollbar global — ultrafina e profissional em QUALQUER contêiner com
+   rolagem no site (não só html/body), usando as variáveis do tema ativo
+   (acompanha tema institucional e modo claro/escuro automaticamente).
+   Preserva usabilidade total (mouse, trackpad, teclado, touch). */
+* {
+  scrollbar-width: thin;                                          /* Firefox */
+  scrollbar-color: hsl(var(--primary) / 0.35) transparent;        /* thumb / track */
 }
-html::-webkit-scrollbar,
-body::-webkit-scrollbar,
-.home-typo::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
-html::-webkit-scrollbar-track,
-body::-webkit-scrollbar-track,
-.home-typo::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
   background: transparent;
 }
-html::-webkit-scrollbar-thumb,
-body::-webkit-scrollbar-thumb,
-.home-typo::-webkit-scrollbar-thumb {
-  background-color: rgba(244, 201, 116, 0.22);
+*::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--primary) / 0.35);
   border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
   transition: background-color 180ms ease;
 }
-html:hover::-webkit-scrollbar-thumb,
-body:hover::-webkit-scrollbar-thumb,
-.home-typo:hover::-webkit-scrollbar-thumb {
-  background-color: rgba(244, 201, 116, 0.4);
+*::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--primary) / 0.6);
 }
-html::-webkit-scrollbar-thumb:hover,
-body::-webkit-scrollbar-thumb:hover,
-.home-typo::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(244, 201, 116, 0.65);
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+.no-scrollbar {
+  scrollbar-width: none;
 }
 html::-webkit-scrollbar-corner,
 body::-webkit-scrollbar-corner {

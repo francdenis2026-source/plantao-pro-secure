@@ -113,6 +113,7 @@ export function AuthDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
+        data-tactical-dark
         className={cn(
           "w-[94vw] p-0 gap-0 overflow-hidden",
           variant === 'register' ? "max-w-[480px]" : "max-w-[440px]",

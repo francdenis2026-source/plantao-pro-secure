@@ -12,7 +12,7 @@ interface PendingApprovalDialogProps {
 export function PendingApprovalDialog({ open, onClose, agentName }: PendingApprovalDialogProps) {
   return (
     <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-primary/30 w-[94vw] max-w-lg p-0 overflow-hidden">
+      <DialogContent data-tactical-dark className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-primary/30 w-[94vw] max-w-lg p-0 overflow-hidden">
         {/* Animated background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-primary/5 blur-3xl animate-pulse" />

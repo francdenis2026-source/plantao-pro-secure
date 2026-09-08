@@ -6,7 +6,6 @@ import { RoundsManagerLazy as RoundsManager } from './RoundsManagerLazy';
 import { useOperationalMetrics } from '@/hooks/useOperationalMetrics';
 import { useOnlineAgents } from '@/hooks/useOnlineAgents';
 import { useVisitorPresence } from '@/hooks/useVisitorPresence';
-import { BrasaoSentinela } from '@/components/BrasaoSentinela';
 
 import heroBanner from '@/assets/midias/hero-banner.png';
 import teamAlfaPhoto from '@/assets/midias/team-alfa.png';
@@ -95,47 +94,50 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
 
   return (
     <section className="mx-auto w-full max-w-6xl">
-      {/* Institutional banner */}
-      <div className="relative overflow-hidden rounded-2xl border border-border">
-        <img
-          src={heroBanner}
-          alt=""
-          aria-hidden
-          loading="eager"
-          decoding="async"
-          className="absolute inset-0 h-full w-full object-cover object-[70%_center]"
-          draggable={false}
-        />
+      {/* Institutional banner — layout dividido de verdade: texto e imagem
+          em colunas separadas, então nunca podem se sobrepor. No mobile a
+          imagem vira uma faixa acima do texto (nunca atrás dele). */}
+      <div className="relative overflow-hidden rounded-2xl border border-border grid grid-cols-1 sm:grid-cols-[1.3fr_1fr]">
         <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(100deg, hsl(222 47% 6% / 0.97) 0%, hsl(222 47% 8% / 0.90) 40%, hsl(213 55% 14% / 0.55) 72%, hsl(205 60% 18% / 0.35) 100%)',
-          }}
-        />
-
-        <div className="relative z-10 flex flex-col gap-6 px-6 py-8 sm:px-10 sm:py-12">
-          <div className="flex items-start gap-4 sm:gap-5">
-            <BrasaoSentinela
-              size={60}
-              className="shrink-0"
-              title="Instituto Socioeducativo do Acre"
-            />
-            <div className="max-w-lg">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                Sistema Socioeducativo · Acre
-              </span>
-              <h1 className="mt-2 text-2xl font-bold leading-tight text-white sm:text-3xl">
-                Gestão de plantões e rondas para agentes socioeducativos
-              </h1>
-              <p className="mt-2 text-sm text-white/70">
-                Escalas, banco de horas e rondas georreferenciadas em um único lugar.
-              </p>
-            </div>
+          className="relative z-10 order-2 flex flex-col justify-center gap-6 px-6 py-7 sm:order-1 sm:px-10 sm:py-12"
+          style={{ background: 'linear-gradient(160deg, hsl(222 47% 8%) 0%, hsl(213 55% 13%) 100%)' }}
+        >
+          <div className="max-w-lg">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              Sistema Socioeducativo · Acre
+            </span>
+            <h1 className="mt-2 text-2xl font-bold leading-tight text-white sm:text-3xl">
+              Gestão de plantões e rondas para agentes socioeducativos
+            </h1>
+            <p className="mt-2 text-sm text-white/70">
+              Escalas, banco de horas e rondas georreferenciadas em um único lugar.
+            </p>
           </div>
 
           <OperationalStatusRibbon />
+        </div>
+
+        <div className="relative order-1 h-40 sm:order-2 sm:h-auto sm:min-h-[280px]">
+          <img
+            src={heroBanner}
+            alt="Agente da Socioeducação do Acre em unidade operacional"
+            loading="eager"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover object-[60%_65%]"
+            draggable={false}
+          />
+          {/* Transição suave para o painel de texto — sem gradiente cobrindo
+              a imagem inteira, só a costura entre as duas colunas. */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-24"
+            style={{ background: 'linear-gradient(90deg, hsl(213 55% 13%) 0%, transparent 100%)' }}
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-10 sm:hidden"
+            style={{ background: 'linear-gradient(180deg, hsl(222 47% 8%) 0%, transparent 100%)' }}
+          />
         </div>
       </div>
 

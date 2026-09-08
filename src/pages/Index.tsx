@@ -78,7 +78,6 @@ import { useHomeCardOrder, type HomeCardId } from '@/hooks/useHomeCardOrder';
 import { CommandRoomBackground } from '@/components/home/CommandRoomBackground';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
 import { OperatorHeaderControls } from '@/components/layout/OperatorHeaderControls';
-import headerBg from '@/assets/midias/hero-banner.png';
 
 import { useTheme } from '@/contexts/ThemeContext';
 import { setMasterToken } from '@/lib/masterSession';
@@ -1413,15 +1412,21 @@ export default function Index() {
             sempre visíveis mesmo com a página rolada. `fixed` (não `sticky`)
             porque um ancestral usa overflow-x-clip, o que quebra sticky. */}
         <div className="fixed inset-x-0 top-0 z-40 flex h-16 shrink-0 items-center justify-between overflow-hidden border-b border-border/60 bg-background/90 px-3 backdrop-blur-md sm:px-5">
-          <img
-            src={headerBg}
-            alt=""
+          {/* Textura tática discreta — grade de pontos + brilho radial, sem
+              repetir a mesma foto usada na hero logo abaixo. */}
+          <div
             aria-hidden
-            loading="eager"
-            decoding="async"
-            className="absolute inset-0 h-full w-full object-cover opacity-[0.14]"
+            className="pointer-events-none absolute inset-0 opacity-[0.5]"
+            style={{
+              backgroundImage: 'radial-gradient(hsl(var(--primary) / 0.35) 1px, transparent 1px)',
+              backgroundSize: '18px 18px',
+            }}
           />
-          <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{ background: 'radial-gradient(60% 140% at 15% 50%, hsl(var(--primary) / 0.10) 0%, transparent 70%)' }}
+          />
 
           <div className="relative flex items-center gap-2.5">
             <BrasaoSentinela size={46} title="PlantãoPro" />

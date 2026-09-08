@@ -111,7 +111,7 @@ export function ForgotPasswordDialog() {
           Esqueceu sua senha?
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-slate-800 border-slate-700 max-w-md">
+      <DialogContent data-tactical-dark className="bg-slate-800 border-slate-700 max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-white">
             <ShieldAlert className="h-5 w-5 text-amber-400" />

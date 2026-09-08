@@ -60,7 +60,7 @@ export function MasterPasswordRecoveryDialog({ trigger }: MasterPasswordRecovery
           </button>
         )}
       </DialogTrigger>
-      <DialogContent className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-2 border-primary/30 max-w-sm">
+      <DialogContent data-tactical-dark className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-2 border-primary/30 max-w-sm">
         <DialogHeader className="pb-3 border-b border-slate-700/50">
           <DialogTitle className="flex items-center gap-2 text-primary">
             <Shield className="h-5 w-5" />
