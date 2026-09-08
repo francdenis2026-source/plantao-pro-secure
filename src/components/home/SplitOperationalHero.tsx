@@ -96,36 +96,6 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
         className="relative overflow-hidden rounded-2xl border border-border"
         style={{ background: 'linear-gradient(120deg, hsl(222 47% 9%) 0%, hsl(213 60% 16%) 55%, hsl(205 70% 20%) 100%)' }}
       >
-        <svg
-          aria-hidden
-          className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.16]"
-          preserveAspectRatio="xMidYMid slice"
-          viewBox="0 0 800 320"
-        >
-          <defs>
-            <pattern id="hero-grid" width="34" height="34" patternUnits="userSpaceOnUse">
-              <path d="M 34 0 L 0 0 0 34" fill="none" stroke="white" strokeWidth="0.5" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hero-grid)" />
-        </svg>
-        <svg
-          aria-hidden
-          className="pointer-events-none absolute -right-10 -top-16 h-[420px] w-[420px] opacity-[0.08] sm:-right-6 sm:-top-24"
-          viewBox="0 0 100 100"
-          fill="none"
-        >
-          <path
-            d="M50 4 L90 18 V48 C90 72 73 90 50 96 C27 90 10 72 10 48 V18 Z"
-            stroke="white"
-            strokeWidth="2.5"
-          />
-          <path
-            d="M50 20 L74 29 V48 C74 63 64 74 50 79 C36 74 26 63 26 48 V29 Z"
-            stroke="white"
-            strokeWidth="1.5"
-          />
-        </svg>
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"

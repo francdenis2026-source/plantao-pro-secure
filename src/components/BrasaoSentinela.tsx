@@ -1,7 +1,6 @@
 import { CSSProperties } from "react";
-// Fonte real local — o asset original (CDN do Lovable) não é acessível fora
-// da plataforma deles. Reaproveita a logo oficial do PlantãoPro.
-import brasaoAssetUrl from "@/assets/logo-plantao-pro.webp";
+// Logomarca oficial — brasão do Instituto Socioeducativo (ISE/AC).
+import brasaoAssetUrl from "@/assets/logo-ise-socioeducativo.png";
 
 interface BrasaoSentinelaProps {
   size?: number | string;
@@ -12,26 +11,26 @@ interface BrasaoSentinelaProps {
 }
 
 /**
- * Brasão Sentinela — logomarca oficial do PlantãoPro.
- * Escudo dourado com águia e galões (arte 3D). Fonte única de verdade da
- * marca: qualquer lugar que use `BrasaoSentinela` passa a exibir o brasão
- * oficial automaticamente (splash, RotatingLogo, painéis, favicons, etc.).
+ * Brasão Sentinela — logomarca oficial (brasão do Instituto Socioeducativo
+ * do Acre). Fonte única de verdade da marca: qualquer lugar que use
+ * `BrasaoSentinela` passa a exibir o brasão oficial automaticamente
+ * (splash, painéis, favicons, etc.).
  */
 export function BrasaoSentinela({
   size = 96,
   className,
   style,
   animated = false,
-  title = "PlantãoPro — Brasão oficial",
+  title = "PlantãoPro — Instituto Socioeducativo do Acre",
 }: BrasaoSentinelaProps) {
   const dim = typeof size === "number" ? `${size}px` : size;
 
   const composedStyle: CSSProperties = {
     width: dim,
     height: dim,
-    // Sombra dourada suave para dar peso institucional sobre qualquer fundo.
+    // Sombra sutil para dar peso institucional sobre qualquer fundo.
     filter:
-      "drop-shadow(0 6px 18px rgba(201,168,76,0.28)) drop-shadow(0 2px 4px rgba(0,0,0,0.35))",
+      "drop-shadow(0 6px 18px rgba(15,23,42,0.28)) drop-shadow(0 2px 4px rgba(0,0,0,0.35))",
     ...(animated
       ? {
           animation:

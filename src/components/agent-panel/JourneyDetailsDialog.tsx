@@ -10,7 +10,7 @@ import { ptBR } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from '@/hooks/use-toast';
-import logoAssetUrl from '@/assets/logo-plantao-pro.webp';
+import logoAssetUrl from '@/assets/logo-ise-socioeducativo.png';
 
 export interface JourneyDetailsData {
   targetDate: Date;

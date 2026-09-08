@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAgentProfile } from '@/hooks/useAgentProfile';
 import { RestrictedAccessDialog } from '@/components/auth/RestrictedAccessDialog';
-import plantaoproLogo from '@/assets/logo-plantao-pro.webp';
+import plantaoproLogo from '@/assets/logo-ise-socioeducativo.png';
 
 import {
   Users,
