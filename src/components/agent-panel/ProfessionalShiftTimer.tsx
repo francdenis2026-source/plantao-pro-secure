@@ -112,7 +112,7 @@ export function ProfessionalShiftTimer({ agentId, compact = false }: Professiona
       
       toast.info(message, {
         duration: 10000,
-        icon: <Bell className="h-5 w-5 text-amber-500" />,
+        icon: <Bell className="h-5 w-5 text-primary" />,
       });
       
       if (pushEnabled && areNativeNotificationsAllowed() && Notification.permission === 'granted') {
@@ -239,7 +239,7 @@ export function ProfessionalShiftTimer({ agentId, compact = false }: Professiona
     return (
       <Card className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 border-2 border-slate-700/60 shadow-xl">
         <CardContent className="flex items-center justify-center py-10">
-          <Loader2 className="h-8 w-8 animate-spin text-amber-500" />
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </CardContent>
       </Card>
     );
@@ -248,7 +248,7 @@ export function ProfessionalShiftTimer({ agentId, compact = false }: Professiona
   // COMPACT VERSION - Para a linha de stats
   if (compact) {
     return (
-      <Card className="card-night-amber bg-gradient-to-br from-[hsl(222,60%,4%)] via-[hsl(222,55%,6%)] to-[hsl(38,40%,8%)] border-2 border-amber-500/40 overflow-hidden transition-all duration-300 hover:border-amber-400/60">
+      <Card className="card-night-amber bg-gradient-to-br from-[hsl(222,60%,4%)] via-[hsl(222,55%,6%)] to-[hsl(38,40%,8%)] border-2 border-primary/40 overflow-hidden transition-all duration-300 hover:border-primary/60">
         <CardContent className="p-3 md:p-4">
           <div className="flex items-center gap-3">
             <div className={`relative p-2.5 md:p-3 rounded-xl transition-all duration-300 ${
@@ -278,8 +278,8 @@ export function ProfessionalShiftTimer({ agentId, compact = false }: Professiona
                 </p>
               ) : nextShift ? (
                 <div className="flex items-center gap-1.5">
-                  <Calendar className={`h-4 w-4 ${isShiftSoon(nextShift.shift_date) ? 'text-amber-400' : 'text-amber-400/70'}`} />
-                  <p className={`text-base md:text-lg font-bold ${isShiftSoon(nextShift.shift_date) ? 'text-amber-400' : 'text-slate-200'}`}>
+                  <Calendar className={`h-4 w-4 ${isShiftSoon(nextShift.shift_date) ? 'text-primary' : 'text-primary/70'}`} />
+                  <p className={`text-base md:text-lg font-bold ${isShiftSoon(nextShift.shift_date) ? 'text-primary' : 'text-slate-200'}`}>
                     {format(parseISO(nextShift.shift_date), "dd/MM", { locale: ptBR })} • {nextShift.start_time}
                   </p>
                 </div>
@@ -313,7 +313,7 @@ export function ProfessionalShiftTimer({ agentId, compact = false }: Professiona
 
   // FULL VERSION - Timer completo e sofisticado
   return (
-    <Card className="card-night-amber bg-gradient-to-br from-[hsl(222,60%,3%)] via-[hsl(222,55%,5%)] to-[hsl(38,40%,8%)] border-3 border-amber-500/50 overflow-hidden transition-all duration-300 hover:border-amber-400/70 group">
+    <Card className="card-night-amber bg-gradient-to-br from-[hsl(222,60%,3%)] via-[hsl(222,55%,5%)] to-[hsl(38,40%,8%)] border-3 border-primary/50 overflow-hidden transition-all duration-300 hover:border-primary/70 group">
       <CardContent className="p-0">
         {isOnDuty && currentShift ? (
           <div className="space-y-0">
@@ -336,7 +336,7 @@ export function ProfessionalShiftTimer({ agentId, compact = false }: Professiona
             {/* Data do plantão atual */}
             <div className="px-4 py-3 bg-slate-800/50 border-b border-slate-700/40">
               <div className="flex items-center justify-center gap-2 text-slate-300">
-                <Calendar className="h-4 w-4 text-amber-400" />
+                <Calendar className="h-4 w-4 text-primary" />
                 <span className="text-sm font-semibold">
                   {format(parseISO(currentShift.shift_date), "EEEE, dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
                 </span>
@@ -356,20 +356,20 @@ export function ProfessionalShiftTimer({ agentId, compact = false }: Professiona
             {/* Timer principal - Tempo decorrido */}
             <div className="p-6 space-y-5">
               <div className="text-center">
-                <p className="text-sm text-amber-400 uppercase tracking-[0.25em] font-bold mb-4">
+                <p className="text-sm text-primary uppercase tracking-[0.25em] font-bold mb-4">
                   Tempo em Serviço
                 </p>
                 <div className="flex items-center justify-center gap-3">
-                  <div className="bg-gradient-to-b from-amber-500/30 to-amber-600/15 rounded-2xl px-5 py-3 border-3 border-amber-500/50 shadow-xl shadow-amber-500/30">
-                    <span className="font-mono text-4xl md:text-5xl font-black text-amber-400 drop-shadow-lg">{formatUnit(timeElapsed.hours)}</span>
+                  <div className="bg-gradient-to-b from-primary/30 to-primary/15 rounded-2xl px-5 py-3 border-3 border-primary/50 shadow-xl shadow-primary/30">
+                    <span className="font-mono text-4xl md:text-5xl font-black text-primary drop-shadow-lg">{formatUnit(timeElapsed.hours)}</span>
                   </div>
-                  <span className="text-3xl font-black text-amber-400 animate-pulse">:</span>
-                  <div className="bg-gradient-to-b from-amber-500/30 to-amber-600/15 rounded-2xl px-5 py-3 border-3 border-amber-500/50 shadow-xl shadow-amber-500/30">
-                    <span className="font-mono text-4xl md:text-5xl font-black text-amber-400 drop-shadow-lg">{formatUnit(timeElapsed.minutes)}</span>
+                  <span className="text-3xl font-black text-primary animate-pulse">:</span>
+                  <div className="bg-gradient-to-b from-primary/30 to-primary/15 rounded-2xl px-5 py-3 border-3 border-primary/50 shadow-xl shadow-primary/30">
+                    <span className="font-mono text-4xl md:text-5xl font-black text-primary drop-shadow-lg">{formatUnit(timeElapsed.minutes)}</span>
                   </div>
-                  <span className="text-3xl font-black text-amber-400 animate-pulse">:</span>
-                  <div className="bg-gradient-to-b from-amber-500/30 to-amber-600/15 rounded-2xl px-5 py-3 border-3 border-amber-500/50 shadow-xl shadow-amber-500/30">
-                    <span className="font-mono text-4xl md:text-5xl font-black text-amber-400 drop-shadow-lg">{formatUnit(timeElapsed.seconds)}</span>
+                  <span className="text-3xl font-black text-primary animate-pulse">:</span>
+                  <div className="bg-gradient-to-b from-primary/30 to-primary/15 rounded-2xl px-5 py-3 border-3 border-primary/50 shadow-xl shadow-primary/30">
+                    <span className="font-mono text-4xl md:text-5xl font-black text-primary drop-shadow-lg">{formatUnit(timeElapsed.seconds)}</span>
                   </div>
                 </div>
                 <div className="flex justify-center gap-12 mt-3 text-sm text-slate-400 uppercase font-bold tracking-wider">
@@ -389,7 +389,7 @@ export function ProfessionalShiftTimer({ agentId, compact = false }: Professiona
                 </div>
                 <div className="flex items-center justify-between mt-3 text-sm">
                   <span className="text-slate-400 font-semibold">{currentShift.start_time}</span>
-                  <span className="text-amber-400 font-black text-lg">{progress.toFixed(0)}%</span>
+                  <span className="text-primary font-black text-lg">{progress.toFixed(0)}%</span>
                   <span className="text-slate-400 font-semibold">{currentShift.start_time}</span>
                 </div>
               </div>
@@ -444,7 +444,7 @@ export function ProfessionalShiftTimer({ agentId, compact = false }: Professiona
               <div className="flex items-center justify-between p-2.5 bg-slate-800/40 rounded-lg border border-slate-700/40">
                 <div className="flex items-center gap-2">
                   {reminderEnabled ? (
-                    <Bell className="h-4 w-4 text-amber-400" />
+                    <Bell className="h-4 w-4 text-primary" />
                   ) : (
                     <BellOff className="h-4 w-4 text-slate-500" />
                   )}
@@ -515,8 +515,8 @@ function CountdownToShift({ shift, currentTime }: { shift: Shift; currentTime: D
     <div className="space-y-3">
       {/* Header */}
       <div className="flex items-center justify-center gap-2">
-        <Clock className="h-4 w-4 text-amber-400" />
-        <span className="text-[10px] text-amber-400 font-bold uppercase tracking-wider">Próximo Plantão</span>
+        <Clock className="h-4 w-4 text-primary" />
+        <span className="text-[10px] text-primary font-bold uppercase tracking-wider">Próximo Plantão</span>
       </div>
 
       {/* Data */}
@@ -530,19 +530,19 @@ function CountdownToShift({ shift, currentTime }: { shift: Shift; currentTime: D
       {/* Countdown compacto */}
       <div className="grid grid-cols-4 gap-1.5">
         <div className="bg-slate-800/60 rounded-lg p-2 text-center border border-slate-700/40">
-          <span className="font-mono text-xl font-bold text-amber-400 block">{formatUnit(countdown.days)}</span>
+          <span className="font-mono text-xl font-bold text-primary block">{formatUnit(countdown.days)}</span>
           <span className="text-[8px] text-slate-500 uppercase">dias</span>
         </div>
         <div className="bg-slate-800/60 rounded-lg p-2 text-center border border-slate-700/40">
-          <span className="font-mono text-xl font-bold text-amber-400 block">{formatUnit(countdown.hours)}</span>
+          <span className="font-mono text-xl font-bold text-primary block">{formatUnit(countdown.hours)}</span>
           <span className="text-[8px] text-slate-500 uppercase">hrs</span>
         </div>
         <div className="bg-slate-800/60 rounded-lg p-2 text-center border border-slate-700/40">
-          <span className="font-mono text-xl font-bold text-amber-400 block">{formatUnit(countdown.minutes)}</span>
+          <span className="font-mono text-xl font-bold text-primary block">{formatUnit(countdown.minutes)}</span>
           <span className="text-[8px] text-slate-500 uppercase">min</span>
         </div>
         <div className="bg-slate-800/60 rounded-lg p-2 text-center border border-slate-700/40">
-          <span className="font-mono text-xl font-bold text-amber-400 block animate-pulse">{formatUnit(countdown.seconds)}</span>
+          <span className="font-mono text-xl font-bold text-primary block animate-pulse">{formatUnit(countdown.seconds)}</span>
           <span className="text-[8px] text-slate-500 uppercase">seg</span>
         </div>
       </div>

@@ -215,10 +215,10 @@ export function OnDutyOverlay({ agentId }: OnDutyOverlayProps) {
         onClick={toggleMinimized}
         className="fixed top-2 left-1/2 -translate-x-1/2 z-50 cursor-pointer animate-fade-in"
       >
-        <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-orange-600 border-2 border-amber-400/60 shadow-2xl shadow-amber-500/40 hover:scale-105 transition-all duration-200">
+        <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-primary via-primary to-orange-600 border-2 border-primary/60 shadow-2xl shadow-primary/40 hover:scale-105 transition-all duration-200">
           <Calendar className="h-4 w-4 text-white" />
           <span className="text-xs font-bold text-white tracking-wide">PRÓXIMO</span>
-          <span className="text-xs font-mono font-bold text-amber-100 bg-black/20 px-2 py-0.5 rounded-full">
+          <span className="text-xs font-mono font-bold text-primary bg-black/20 px-2 py-0.5 rounded-full">
             {format(parseISO(nextShift.shift_date), "dd/MM", { locale: ptBR })}
           </span>
           <Maximize2 className="h-3.5 w-3.5 text-white/80" />
@@ -419,7 +419,7 @@ export function OnDutyOverlay({ agentId }: OnDutyOverlayProps) {
               </div>
               <div>
                 <p className="text-[10px] text-slate-400 uppercase tracking-widest">Próximo Plantão</p>
-                <p className="text-base md:text-lg font-bold text-amber-400">
+                <p className="text-base md:text-lg font-bold text-primary">
                   {format(parseISO(nextShift.shift_date), "EEEE, dd 'de' MMMM", { locale: ptBR })}
                 </p>
                 <p className="text-xs text-slate-300">

@@ -66,19 +66,19 @@ export default function About() {
       />
 
       {/* Header */}
-      <header className="w-full border-b border-amber-500/20 bg-[#050810]/80 backdrop-blur-xl flex-shrink-0">
+      <header className="w-full border-b border-primary/20 bg-[#050810]/80 backdrop-blur-xl flex-shrink-0">
         <div className="container flex h-10 max-w-6xl items-center justify-between px-3">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => navigate(-1)}
-            className="h-7 gap-1.5 px-2 text-xs text-slate-200 hover:bg-amber-500/10 hover:text-amber-300"
+            className="h-7 gap-1.5 px-2 text-xs text-slate-200 hover:bg-primary/10 hover:text-primary"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             Voltar
           </Button>
           <span
-            className="text-[10px] uppercase tracking-[0.28em] text-amber-400/80"
+            className="text-[10px] uppercase tracking-[0.28em] text-primary/80"
             style={{ fontFamily: MONO }}
           >
             Sobre · PlantãoPro
@@ -88,7 +88,7 @@ export default function About() {
 
       <main className="container relative max-w-6xl px-3 py-2 pb-3 space-y-2 flex-1 sm:overflow-hidden sm:flex sm:flex-col sm:min-h-0">
         {/* HERO */}
-        <section className="relative overflow-hidden rounded-2xl border border-amber-500/25 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] flex-shrink-0">
+        <section className="relative overflow-hidden rounded-2xl border border-primary/25 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] flex-shrink-0">
           <div className="absolute inset-0">
             <img
               src={aboutHero}
@@ -109,7 +109,7 @@ export default function About() {
             />
             <div className="flex-1 min-w-0 space-y-1">
               <p
-                className="inline-block rounded-full bg-amber-400/15 px-2 py-0.5 text-[8px] uppercase tracking-[0.22em] text-amber-200 ring-1 ring-amber-400/40 md:px-2.5 md:text-[9px] md:tracking-[0.3em]"
+                className="inline-block rounded-full bg-primary/15 px-2 py-0.5 text-[8px] uppercase tracking-[0.22em] text-primary ring-1 ring-primary/40 md:px-2.5 md:text-[9px] md:tracking-[0.3em]"
                 style={{ fontFamily: MONO }}
               >
                 Segurança Pública · Acre
@@ -118,7 +118,7 @@ export default function About() {
                 className="text-xl font-normal tracking-tight text-slate-50 md:text-3xl leading-none"
                 style={{ fontFamily: SERIF }}
               >
-                Plantão<span className="text-amber-400">Pro</span>
+                Plantão<span className="text-primary">Pro</span>
               </h1>
               <p className="text-[11px] leading-snug text-slate-300 md:text-[13px] max-w-2xl">
                 Ferramenta operacional para agentes da segurança pública organizarem plantões,
@@ -127,10 +127,10 @@ export default function About() {
             </div>
 
             {/* Pillars inline */}
-            <div className="hidden md:flex flex-col gap-1.5 flex-shrink-0 pl-4 border-l border-amber-500/20">
+            <div className="hidden md:flex flex-col gap-1.5 flex-shrink-0 pl-4 border-l border-primary/20">
               {pillars.map((p) => (
                 <div key={p.text} className="flex items-center gap-1.5 text-[11px] text-slate-200">
-                  <p.icon className="h-3 w-3 text-amber-400" />
+                  <p.icon className="h-3 w-3 text-primary" />
                   <span style={{ fontFamily: MONO }} className="uppercase tracking-wider text-[10px]">
                     {p.text}
                   </span>
@@ -152,7 +152,7 @@ export default function About() {
                 Funcionalidades
               </h2>
               <span
-                className="text-[9px] uppercase tracking-[0.25em] text-amber-400/70"
+                className="text-[9px] uppercase tracking-[0.25em] text-primary/70"
                 style={{ fontFamily: MONO }}
               >
                 06 módulos
@@ -162,11 +162,11 @@ export default function About() {
               {features.map((f) => (
                 <Card
                   key={f.title}
-                  className="group border-amber-500/15 bg-[#0a1428]/70 backdrop-blur-md transition-all hover:border-amber-400/50 hover:bg-[#0f1e3a]/80"
+                  className="group border-primary/15 bg-[#0a1428]/70 backdrop-blur-md transition-all hover:border-primary/50 hover:bg-[#0f1e3a]/80"
                 >
                   <CardContent className="flex items-center gap-2 p-2 h-full md:gap-2.5 md:p-2.5">
-                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-amber-500/20 to-amber-500/5 ring-1 ring-amber-400/30 md:h-9 md:w-9">
-                      <f.icon className="h-4 w-4 text-amber-400" />
+                    <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-primary/20 to-primary/5 ring-1 ring-primary/30 md:h-9 md:w-9">
+                      <f.icon className="h-4 w-4 text-primary" />
                     </div>
                     <div className="min-w-0">
                       <h3
@@ -188,11 +188,11 @@ export default function About() {
           {/* Sidebar — Origem + Specs + Contato */}
           <section className="flex flex-col gap-2 sm:min-h-0">
             {/* Origem */}
-            <Card className="border-amber-500/15 bg-gradient-to-br from-[#0a1428]/85 via-[#0f1e3a]/75 to-[#0a1428]/85 backdrop-blur-md">
+            <Card className="border-primary/15 bg-gradient-to-br from-[#0a1428]/85 via-[#0f1e3a]/75 to-[#0a1428]/85 backdrop-blur-md">
                 <CardContent className="p-2.5 space-y-1.5 md:p-3 md:space-y-2">
                 <div className="flex items-center gap-2">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-amber-500/20 to-amber-500/5 ring-1 ring-amber-400/30">
-                    <Building2 className="h-3.5 w-3.5 text-amber-400" />
+                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-primary/20 to-primary/5 ring-1 ring-primary/30">
+                    <Building2 className="h-3.5 w-3.5 text-primary" />
                   </div>
                     <h2
                     className="text-[13px] font-normal tracking-wide text-slate-100 md:text-sm"
@@ -202,14 +202,14 @@ export default function About() {
                   </h2>
                 </div>
                 <p className="text-[11px] leading-relaxed text-slate-300 md:text-[12px]">
-                  Concebido por um <strong className="text-amber-300">Agente Socioeducativo</strong> em atuação na unidade de{' '}
-                  <strong className="text-amber-300">Feijó/AC</strong>, o PlantãoPro nasceu da vivência diária no sistema
+                  Concebido por um <strong className="text-primary">Agente Socioeducativo</strong> em atuação na unidade de{' '}
+                  <strong className="text-primary">Feijó/AC</strong>, o PlantãoPro nasceu da vivência diária no sistema
                   socioeducativo do Acre. A plataforma foi desenhada para dar suporte técnico à gestão de escalas,
                   banco de horas e comunicação operacional das equipes, unindo o rigor da rotina de segurança à
                   praticidade que o serviço exige.
                 </p>
                 <div className="flex flex-wrap gap-1.5 pt-0.5">
-                  <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-medium text-amber-300">
+                  <span className="inline-flex items-center gap-1 rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
                     <Award className="h-2.5 w-2.5" />
                     Por quem entende
                   </span>
@@ -222,11 +222,11 @@ export default function About() {
             </Card>
 
             {/* Specs */}
-            <Card className="border-amber-500/15 bg-[#0a1428]/70 backdrop-blur-md flex-none overflow-hidden lg:flex-1 lg:min-h-0">
+            <Card className="border-primary/15 bg-[#0a1428]/70 backdrop-blur-md flex-none overflow-hidden lg:flex-1 lg:min-h-0">
               <CardContent className="p-2.5 flex flex-col gap-1.5 md:p-3 md:gap-2 lg:h-full">
                 <div className="flex items-center justify-between">
                   <h3
-                    className="text-[11px] uppercase tracking-[0.22em] text-amber-400/80"
+                    className="text-[11px] uppercase tracking-[0.22em] text-primary/80"
                     style={{ fontFamily: MONO }}
                   >
                     Especificações
@@ -242,7 +242,7 @@ export default function About() {
                   {specs.map((s) => (
                     <div
                       key={s.label}
-                      className="rounded-md border border-amber-500/10 bg-[#050810]/60 px-2 py-1.5 min-w-0"
+                      className="rounded-md border border-primary/10 bg-[#050810]/60 px-2 py-1.5 min-w-0"
                     >
                       <div
                         className="text-[9px] uppercase tracking-wider text-slate-500 truncate"
@@ -264,15 +264,15 @@ export default function About() {
             </Card>
 
             {/* Contato */}
-            <Card className="border-amber-500/15 bg-[#0a1428]/70 backdrop-blur-md">
+            <Card className="border-primary/15 bg-[#0a1428]/70 backdrop-blur-md">
               <CardContent className="flex items-center justify-between gap-2 p-2 md:p-2.5">
                 <div className="flex items-center gap-2 min-w-0">
-                  <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-amber-500/20 to-amber-500/5 ring-1 ring-amber-400/30">
-                    <Mail className="h-3.5 w-3.5 text-amber-400" />
+                  <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-primary/20 to-primary/5 ring-1 ring-primary/30">
+                    <Mail className="h-3.5 w-3.5 text-primary" />
                   </div>
                   <a
                     href="mailto:plantaopro@proton.me"
-                    className="text-[11px] font-medium text-slate-100 hover:text-amber-300 transition-colors truncate"
+                    className="text-[11px] font-medium text-slate-100 hover:text-primary transition-colors truncate"
                     style={{ fontFamily: MONO }}
                   >
                     plantaopro@proton.me
@@ -281,7 +281,7 @@ export default function About() {
                 <Button
                   asChild
                   size="sm"
-                  className="h-7 gap-1 bg-amber-500 text-[#050810] text-[10px] px-2.5 font-semibold hover:bg-amber-400"
+                  className="h-7 gap-1 bg-primary text-[#050810] text-[10px] px-2.5 font-semibold hover:bg-primary"
                 >
                   <a href="mailto:plantaopro@proton.me">Enviar</a>
                 </Button>
@@ -291,9 +291,9 @@ export default function About() {
         </div>
 
         {/* Footer */}
-        <footer className="border-t border-amber-500/15 pt-2 text-center flex-shrink-0 space-y-1.5">
+        <footer className="border-t border-primary/15 pt-2 text-center flex-shrink-0 space-y-1.5">
           <p className="hidden text-[10.5px] leading-relaxed text-slate-400/90 max-w-3xl mx-auto px-3 sm:block">
-            <strong className="text-amber-400/90 font-semibold">PlantãoPro</strong> é uma plataforma corporativa e independente
+            <strong className="text-primary/90 font-semibold">PlantãoPro</strong> é uma plataforma corporativa e independente
             de gestão operacional voltada a profissionais do sistema socioeducativo. O aplicativo é mantido de forma autônoma
             e <em className="text-slate-300 not-italic">não possui vínculo, afiliação, endosso ou patrocínio de qualquer
             entidade governamental, órgão público ou instituição oficial</em>. Todo o conteúdo aqui gerenciado é de
@@ -301,20 +301,20 @@ export default function About() {
           </p>
           <p className="text-[10px] text-slate-400 flex items-center justify-center gap-2 flex-wrap">
             <span
-              className="uppercase tracking-[0.25em] text-amber-400/60"
+              className="uppercase tracking-[0.25em] text-primary/60"
               style={{ fontFamily: MONO }}
             >
               dev
             </span>
             <span
-              className="font-black bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 bg-clip-text text-transparent tracking-wide"
+              className="font-black bg-gradient-to-r from-primary via-primary to-primary bg-clip-text text-transparent tracking-wide"
               style={{ fontFamily: SERIF }}
             >
               FRANC D'NIS
             </span>
-            <span className="text-amber-500/40">·</span>
+            <span className="text-primary/40">·</span>
             <span className="text-slate-400">Feijó / AC</span>
-            <span className="text-amber-500/40">·</span>
+            <span className="text-primary/40">·</span>
             <span className="text-slate-500">© {new Date().getFullYear()} · QSL, Feijó!</span>
           </p>
         </footer>

@@ -449,10 +449,10 @@ export function ShiftBriefingCard({
 
   return (
     <>
-      <Card className="bg-slate-900/60 border-amber-500/30 overflow-hidden">
+      <Card className="bg-slate-900/60 border-primary/30 overflow-hidden">
         <CardHeader className="pb-2 pt-3 px-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <CardTitle className="flex items-center gap-2 text-sm text-amber-300">
+            <CardTitle className="flex items-center gap-2 text-sm text-primary">
               <ClipboardCheck className="h-4 w-4" />
               Checklist de Entrada
               <Badge className={cn(
@@ -487,7 +487,7 @@ export function ShiftBriefingCard({
                     ? 'bg-slate-800 hover:bg-slate-700 text-slate-400 border border-slate-700'
                     : finalized
                       ? 'bg-slate-700 hover:bg-slate-600 text-slate-100'
-                      : 'bg-amber-500 hover:bg-amber-600 text-slate-950'
+                      : 'bg-primary hover:bg-primary text-slate-950'
                 )}
               >
                 {!hasCurrentShift ? (
@@ -553,17 +553,17 @@ export function ShiftBriefingCard({
                     </div>
 
                     {missingSummary.length > 0 && (
-                      <div className="mt-2 rounded-md border border-amber-500/40 bg-amber-500/10 px-3 py-2 flex items-start gap-2">
-                        <ShieldAlert className="h-3.5 w-3.5 text-amber-300 mt-0.5 flex-shrink-0" />
+                      <div className="mt-2 rounded-md border border-primary/40 bg-primary/10 px-3 py-2 flex items-start gap-2">
+                        <ShieldAlert className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
                         <div className="flex-1 min-w-0">
-                          <p className="text-[10px] uppercase tracking-widest text-amber-300 font-semibold">
+                          <p className="text-[10px] uppercase tracking-widest text-primary font-semibold">
                             Pendências para envio
                           </p>
                           <div className="mt-1 flex flex-wrap gap-1">
                             {missingSummary.map((m) => (
                               <span
                                 key={m.key}
-                                className="text-[10px] px-1.5 py-0.5 rounded border border-amber-500/40 bg-amber-500/15 text-amber-200"
+                                className="text-[10px] px-1.5 py-0.5 rounded border border-primary/40 bg-primary/15 text-primary"
                               >
                                 {m.label}
                               </span>
@@ -675,9 +675,9 @@ export function ShiftBriefingCard({
 
       {/* ---------- Dialog ---------- */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-2xl bg-slate-900 border-amber-500/30 text-slate-100 p-0 overflow-hidden">
-          <DialogHeader className="px-6 pt-5 pb-3 border-b border-slate-800 bg-gradient-to-r from-amber-500/10 to-transparent">
-            <DialogTitle className="flex items-center gap-2 text-amber-300">
+        <DialogContent className="max-w-2xl bg-slate-900 border-primary/30 text-slate-100 p-0 overflow-hidden">
+          <DialogHeader className="px-6 pt-5 pb-3 border-b border-slate-800 bg-gradient-to-r from-primary/10 to-transparent">
+            <DialogTitle className="flex items-center gap-2 text-primary">
               <ClipboardCheck className="h-5 w-5" />
               Checklist do Plantão {currentShift && format(parseISO(currentShift.shift_date), 'dd/MM/yyyy', { locale: ptBR })}
             </DialogTitle>
@@ -698,7 +698,7 @@ export function ShiftBriefingCard({
               {/* 1. Adolescentes */}
               <ChecklistRow
                 order={1} done={itemsStatus.adolescents}
-                icon={<Users className="h-4 w-4 text-amber-400" />}
+                icon={<Users className="h-4 w-4 text-primary" />}
                 title="Contagem de adolescentes"
                 subtitle="Total de acautelados presentes no início do plantão."
               >
@@ -708,7 +708,7 @@ export function ShiftBriefingCard({
               {/* 2. Algemas */}
               <ChecklistRow
                 order={2} done={itemsStatus.handcuffs}
-                icon={<ShieldAlert className="h-4 w-4 text-amber-400" />}
+                icon={<ShieldAlert className="h-4 w-4 text-primary" />}
                 title="Contagem das algemas"
                 subtitle="Total de algemas conferidas e disponíveis para uso."
               >
@@ -718,7 +718,7 @@ export function ShiftBriefingCard({
               {/* 3. Chaves de algemas */}
               <ChecklistRow
                 order={3} done={itemsStatus.handcuff_keys}
-                icon={<KeyRound className="h-4 w-4 text-amber-400" />}
+                icon={<KeyRound className="h-4 w-4 text-primary" />}
                 title="Contagem das chaves de algemas"
                 subtitle="Total de chaves conferidas e sob custódia."
               >
@@ -728,7 +728,7 @@ export function ShiftBriefingCard({
               {/* 4. Tonfas */}
               <ChecklistRow
                 order={4} done={itemsStatus.tonfas}
-                icon={<Swords className="h-4 w-4 text-amber-400" />}
+                icon={<Swords className="h-4 w-4 text-primary" />}
                 title="Contagem das tonfas"
                 subtitle="Total de tonfas conferidas e disponíveis para uso."
               >
@@ -747,7 +747,7 @@ export function ShiftBriefingCard({
               {/* 5. Rádios carregados */}
               <ChecklistRow
                 order={5} done={itemsStatus.radios}
-                icon={<Radio className="h-4 w-4 text-amber-400" />}
+                icon={<Radio className="h-4 w-4 text-primary" />}
                 title="Rádios carregados"
                 subtitle="Informe quantos rádios estão carregados e prontos para uso."
               >
@@ -766,7 +766,7 @@ export function ShiftBriefingCard({
               {/* 6. Passagem de plantão */}
               <ChecklistRow
                 order={6} done={itemsStatus.handover}
-                icon={<ArrowLeftRight className="h-4 w-4 text-amber-400" />}
+                icon={<ArrowLeftRight className="h-4 w-4 text-primary" />}
                 title="Passagem de plantão"
                 subtitle="Confirme que a passagem foi feita com a equipe anterior."
               >
@@ -815,15 +815,15 @@ export function ShiftBriefingCard({
 
       {/* ---------- Bloqueio profissional: fora do plantão ---------- */}
       <Dialog open={lockedOpen} onOpenChange={setLockedOpen}>
-        <DialogContent className="max-w-md bg-slate-950 border-amber-500/40 text-slate-100 p-0 overflow-hidden">
-          <div className="relative px-6 pt-6 pb-4 bg-gradient-to-br from-amber-500/10 via-slate-950 to-slate-950">
+        <DialogContent className="max-w-md bg-slate-950 border-primary/40 text-slate-100 p-0 overflow-hidden">
+          <div className="relative px-6 pt-6 pb-4 bg-gradient-to-br from-primary/10 via-slate-950 to-slate-950">
             <div className="flex flex-col items-center text-center">
               <div className="relative">
-                <span aria-hidden className="absolute inset-0 rounded-full bg-amber-500/20 blur-2xl animate-pulse" />
+                <span aria-hidden className="absolute inset-0 rounded-full bg-primary/20 blur-2xl animate-pulse" />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 64 64"
-                  className="relative h-20 w-20 text-amber-400"
+                  className="relative h-20 w-20 text-primary"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2.5"
@@ -839,7 +839,7 @@ export function ShiftBriefingCard({
                 </svg>
               </div>
               <DialogHeader className="mt-4 space-y-1">
-                <DialogTitle className="text-amber-300 text-base font-semibold tracking-wide uppercase">
+                <DialogTitle className="text-primary text-base font-semibold tracking-wide uppercase">
                   Acesso restrito ao plantão em curso
                 </DialogTitle>
                 <DialogDescription className="text-slate-400 text-[12.5px] leading-relaxed">
@@ -852,7 +852,7 @@ export function ShiftBriefingCard({
           </div>
           <div className="px-6 pb-5 pt-2 space-y-2">
             <div className="rounded-md border border-slate-800 bg-slate-900/60 px-3 py-2.5 text-[11.5px] text-slate-300 flex items-start gap-2">
-              <ShieldAlert className="h-3.5 w-3.5 text-amber-400 mt-0.5 flex-shrink-0" />
+              <ShieldAlert className="h-3.5 w-3.5 text-primary mt-0.5 flex-shrink-0" />
               <span>
                 Liberação automática no <strong className="text-slate-100">dia e horário</strong> do
                 plantão registrado para <strong className="text-slate-100">{agentName}</strong>.
@@ -860,7 +860,7 @@ export function ShiftBriefingCard({
             </div>
             <Button
               onClick={() => setLockedOpen(false)}
-              className="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold"
+              className="w-full bg-primary hover:bg-primary text-slate-950 font-semibold"
             >
               Entendido
             </Button>
@@ -877,19 +877,19 @@ function MiniStat({ icon, label, value, missing }: { icon: React.ReactNode; labe
     <div className={cn(
       'rounded-md border px-2 py-1.5 transition-colors',
       missing
-        ? 'border-amber-500/50 bg-amber-500/10'
+        ? 'border-primary/50 bg-primary/10'
         : 'border-slate-800 bg-slate-950/60'
     )}>
       <div className={cn(
         'text-[9px] uppercase flex items-center justify-center gap-1',
-        missing ? 'text-amber-300' : 'text-slate-500'
+        missing ? 'text-primary' : 'text-slate-500'
       )}>
         {icon}
         {label}
       </div>
       <div className={cn(
         'font-mono text-sm mt-0.5',
-        missing ? 'text-amber-200' : 'text-slate-100'
+        missing ? 'text-primary' : 'text-slate-100'
       )}>{value}</div>
     </div>
   );
@@ -969,13 +969,13 @@ function NumberField({
  */
 function OffDutyNotice() {
   return (
-    <div className="relative overflow-hidden rounded-lg border border-amber-500/25 bg-gradient-to-br from-slate-950 via-slate-900/60 to-slate-950 p-4">
+    <div className="relative overflow-hidden rounded-lg border border-primary/25 bg-gradient-to-br from-slate-950 via-slate-900/60 to-slate-950 p-4">
       <div className="flex items-start gap-3">
-        <div className="flex-shrink-0 rounded-md bg-amber-500/10 border border-amber-500/30 p-2">
+        <div className="flex-shrink-0 rounded-md bg-primary/10 border border-primary/30 p-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 48 48"
-            className="h-8 w-8 text-amber-400"
+            className="h-8 w-8 text-primary"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
@@ -990,10 +990,10 @@ function OffDutyNotice() {
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-amber-400/90">
+            <span className="text-[10px] font-mono uppercase tracking-[0.24em] text-primary/90">
               Briefing bloqueado
             </span>
-            <span className="inline-flex h-1.5 w-1.5 rounded-full bg-amber-400 shadow-[0_0_8px_hsl(45_100%_55%/0.8)]" />
+            <span className="inline-flex h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_hsl(45_100%_55%/0.8)]" />
           </div>
           <h4 className="mt-1 text-sm font-semibold text-slate-100 leading-tight">
             Aguardando início do plantão

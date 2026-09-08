@@ -42,7 +42,7 @@ const HOUR_OPTIONS = [
 ];
 
 const DEFAULT_SHIFT_OPTIONS = [
-  { value: 'day', label: 'Diurno', icon: Sun, startTime: '07:00', endTime: '19:00', hours: 12, color: 'text-amber-400' },
+  { value: 'day', label: 'Diurno', icon: Sun, startTime: '07:00', endTime: '19:00', hours: 12, color: 'text-primary' },
   { value: 'night', label: 'Noturno', icon: Moon, startTime: '19:00', endTime: '07:00', hours: 12, color: 'text-blue-400' },
   { value: 'full', label: 'Dia Inteiro', icon: Clock, startTime: '07:00', endTime: '07:00', hours: 24, color: 'text-green-400' },
 ];
@@ -189,7 +189,7 @@ function BHEvolutionChart({ entries, hourlyRate }: { entries: OvertimeEntry[]; h
         className="w-full border-slate-600 text-slate-300 hover:bg-slate-700"
         onClick={() => setShowChart(true)}
       >
-        <BarChart3 className="h-4 w-4 mr-2 text-amber-500" />
+        <BarChart3 className="h-4 w-4 mr-2 text-primary" />
         Ver Evolução Mensal
       </Button>
     );
@@ -199,7 +199,7 @@ function BHEvolutionChart({ entries, hourlyRate }: { entries: OvertimeEntry[]; h
     <div className="p-3 bg-slate-700/30 border border-slate-600/50 rounded-lg space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <BarChart3 className="h-4 w-4 text-amber-500" />
+          <BarChart3 className="h-4 w-4 text-primary" />
           <span className="text-sm font-medium text-slate-300">Evolução - Últimos 6 Meses</span>
         </div>
         <Button 
@@ -350,7 +350,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
           // Show toast
           toast.warning(message, {
             duration: 8000,
-            icon: <Timer className="h-4 w-4 text-amber-400" />
+            icon: <Timer className="h-4 w-4 text-primary" />
           });
           
           // Show push notification if enabled
@@ -559,7 +559,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
         `Atenção: Sua quinzena está em ${currentFortnightBalance.toFixed(1)}h (${((currentFortnightBalance / limit) * 100).toFixed(0)}% do limite)`,
         {
           duration: 5000,
-          icon: <Bell className="h-4 w-4 text-amber-400" />,
+          icon: <Bell className="h-4 w-4 text-primary" />,
         }
       );
     }
@@ -965,7 +965,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
           {/* Compact Fortnight Indicators */}
           <div className="flex items-center justify-between pt-2 border-t border-slate-700/50">
             <div className="flex items-center gap-1.5">
-              <Shield className="h-3 w-3 text-amber-400" />
+              <Shield className="h-3 w-3 text-primary" />
               <span className="text-[10px] font-semibold text-slate-400">Quinzenas</span>
             </div>
             <div className="flex items-center gap-2">
@@ -1005,7 +1005,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
               variant="ghost"
               size="sm"
               onClick={() => saveAlertSettings(!alertsEnabled, alertDaysBefore)}
-              className={`h-8 w-8 p-0 ${alertsEnabled ? 'text-amber-400 hover:text-amber-300' : 'text-slate-400 hover:text-slate-300'}`}
+              className={`h-8 w-8 p-0 ${alertsEnabled ? 'text-primary hover:text-primary' : 'text-slate-400 hover:text-slate-300'}`}
             >
               {alertsEnabled ? <Bell className="h-4 w-4" /> : <BellOff className="h-4 w-4" />}
             </Button>
@@ -1026,11 +1026,11 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
       <CardContent className="space-y-3 px-3 pb-3">
         {/* Alert Settings */}
         {alertsEnabled && (
-          <div className="flex items-center justify-between p-2 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+          <div className="flex items-center justify-between p-2 bg-primary/10 border border-primary/30 rounded-lg">
             <div className="flex items-center gap-2">
-              <Bell className="h-3.5 w-3.5 text-amber-400" />
+              <Bell className="h-3.5 w-3.5 text-primary" />
               <div>
-                <span className="text-xs text-amber-400">Alertas de quinzena ativados</span>
+                <span className="text-xs text-primary">Alertas de quinzena ativados</span>
                 {pushEnabled && (
                   <span className="text-[10px] text-slate-500 block leading-tight">Push notifications ativo</span>
                 )}
@@ -1057,7 +1057,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
         {/* Fortnight Summary with Independent Bars */}
         <div className="space-y-2">
           <div className="flex items-center gap-2 mb-1">
-            <Shield className="h-3.5 w-3.5 text-amber-500" />
+            <Shield className="h-3.5 w-3.5 text-primary" />
             <span className="text-xs font-semibold text-slate-200 uppercase tracking-wide">Resumo por Quinzena</span>
           </div>
           
@@ -1118,7 +1118,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
           {/* Hourly Rate Info */}
           <div className="flex items-center justify-between px-2 py-1.5 bg-slate-700/30 rounded-md">
             <span className="text-[11px] text-slate-400">Valor por hora:</span>
-            <span className="text-xs font-medium text-amber-300 tabular-nums">R$ {hourlyRate.toFixed(2)}</span>
+            <span className="text-xs font-medium text-primary tabular-nums">R$ {hourlyRate.toFixed(2)}</span>
           </div>
           
           {/* Limit Source Indicator */}
@@ -1188,7 +1188,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
         {/* Fortnight Scale Visual */}
         <div className="space-y-2">
           <div className="flex items-center gap-2 mb-2">
-            <Shield className="h-4 w-4 text-amber-500" />
+            <Shield className="h-4 w-4 text-primary" />
             <span className="text-sm font-medium text-slate-300">Dias com BH Registrado</span>
           </div>
           
@@ -1316,7 +1316,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
               <span className="text-slate-400">Com BH</span>
             </div>
             <div className="flex items-center gap-1">
-              <div className="w-2.5 h-2.5 rounded-sm bg-amber-500/30" />
+              <div className="w-2.5 h-2.5 rounded-sm bg-primary/30" />
               <span className="text-slate-400">Sem BH</span>
             </div>
             <div className="flex items-center gap-1">
@@ -1327,22 +1327,22 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
         </div>
 
         {/* Active Fortnight Alert */}
-        <div className="p-3 bg-gradient-to-r from-amber-500/20 to-amber-600/10 border border-amber-500/30 rounded-lg">
+        <div className="p-3 bg-gradient-to-r from-primary/20 to-primary/10 border border-primary/30 rounded-lg">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="p-1.5 bg-amber-500/30 rounded-md">
-                <CalendarPlus className="h-4 w-4 text-amber-400" />
+              <div className="p-1.5 bg-primary/30 rounded-md">
+                <CalendarPlus className="h-4 w-4 text-primary" />
               </div>
               <div>
-                <p className="text-sm font-medium text-amber-400">{fortnightInfo.label} Ativa</p>
+                <p className="text-sm font-medium text-primary">{fortnightInfo.label} Ativa</p>
                 <p className="text-xs text-slate-400">{fortnightInfo.range}</p>
               </div>
             </div>
-            <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">
+            <Badge className="bg-primary/20 text-primary border-primary/30">
               Em aberto
             </Badge>
           </div>
-          <div className="mt-2 pt-2 border-t border-amber-500/20">
+          <div className="mt-2 pt-2 border-t border-primary/20">
             <p className="text-[10px] text-slate-400 flex items-center gap-1">
               <Lock className="h-3 w-3" />
               Quinzenas anteriores estão bloqueadas para edição
@@ -1412,7 +1412,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
           <DialogContent className="bg-slate-900 border-slate-700">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
-                <Shield className="h-4 w-4 text-amber-500" />
+                <Shield className="h-4 w-4 text-primary" />
                 {fortnightDialog === 1 ? '1ª Quinzena (01-15)' : '2ª Quinzena (16+)' }
               </DialogTitle>
               <DialogDescription>
@@ -1544,7 +1544,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
           })()}
           
           <div className="flex items-center gap-2">
-            <CalendarPlus className="h-4 w-4 text-amber-500" />
+            <CalendarPlus className="h-4 w-4 text-primary" />
             <span className="text-sm font-medium text-slate-300">Clique na data para registrar BH</span>
           </div>
           <div className="bg-slate-700/30 rounded-lg p-2">
@@ -1707,7 +1707,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <button className="text-slate-500 hover:text-amber-400 transition-colors">
+                    <button className="text-slate-500 hover:text-primary transition-colors">
                       <HelpCircle className="h-3.5 w-3.5" />
                     </button>
                   </TooltipTrigger>
@@ -1716,7 +1716,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
                     className="max-w-xs bg-slate-900 border-slate-700 text-slate-200 p-3"
                   >
                     <div className="space-y-2">
-                      <p className="font-semibold text-amber-400">Sistema de Quinzenas</p>
+                      <p className="font-semibold text-primary">Sistema de Quinzenas</p>
                       <p className="text-xs leading-relaxed">
                         O mês é dividido em duas quinzenas:
                       </p>
@@ -1725,7 +1725,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
                         <li>• <strong className="text-purple-400">2ª Quinzena:</strong> Dias 16 ao final do mês</li>
                       </ul>
                       <p className="text-xs leading-relaxed pt-1 border-t border-slate-700">
-                        <strong className="text-amber-400">Regra:</strong> Você só pode registrar e editar BH na quinzena atual. 
+                        <strong className="text-primary">Regra:</strong> Você só pode registrar e editar BH na quinzena atual. 
                         Quinzenas anteriores ficam bloqueadas para edição, permitindo apenas visualização.
                       </p>
                     </div>
@@ -1788,7 +1788,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
                       <div className="flex items-center gap-2">
                         {/* Day of week */}
                         {dayOfWeek && (
-                          <span className="text-xs font-semibold text-amber-400 capitalize">
+                          <span className="text-xs font-semibold text-primary capitalize">
                             {dayOfWeek}
                           </span>
                         )}
@@ -1887,7 +1887,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
                             htmlFor={`period-${shift.value}`}
                             className={`flex flex-col items-center justify-center rounded-lg border-2 p-2 cursor-pointer transition-all text-center
                               ${selectedPeriod === shift.value 
-                                ? 'border-amber-500 bg-amber-500/20' 
+                                ? 'border-primary bg-primary/20' 
                                 : 'border-slate-600 hover:border-slate-500'
                               }`}
                           >
@@ -1909,7 +1909,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
                       <Switch
                         checked={useCustomHours}
                         onCheckedChange={setUseCustomHours}
-                        className="data-[state=checked]:bg-amber-500"
+                        className="data-[state=checked]:bg-primary"
                       />
                       <span className="text-xs text-slate-400">Personalizado</span>
                     </div>
@@ -1973,14 +1973,14 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
                     </div>
                     <div>
                       <p className="text-xs text-slate-400 mb-1">Valor</p>
-                      <p className="text-xl font-bold text-amber-400">
+                      <p className="text-xl font-bold text-primary">
                         R$ {(getEffectiveHours() * hourlyRate).toFixed(2)}
                       </p>
                     </div>
                   </div>
                   <div className="pt-2 border-t border-slate-700">
                     <p className="text-sm text-slate-400">
-                      Turno: <span className="text-amber-400 font-medium">{DEFAULT_SHIFT_OPTIONS.find(p => p.value === selectedPeriod)?.label}</span>
+                      Turno: <span className="text-primary font-medium">{DEFAULT_SHIFT_OPTIONS.find(p => p.value === selectedPeriod)?.label}</span>
                     </p>
                     <p className="text-sm text-slate-400">
                       Novo saldo (na quinzena):{' '}
@@ -2062,11 +2062,11 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
                           }}
                           className={`p-3 rounded-lg border transition-all flex flex-col items-center gap-1 ${
                             active
-                              ? 'bg-amber-500/15 border-amber-500/60 text-amber-300'
+                              ? 'bg-primary/15 border-primary/60 text-primary'
                               : 'bg-slate-700/40 border-slate-600/50 text-slate-300 hover:bg-slate-700/60'
                           }`}
                         >
-                          <Icon className={`h-5 w-5 ${active ? 'text-amber-400' : opt.color}`} />
+                          <Icon className={`h-5 w-5 ${active ? 'text-primary' : opt.color}`} />
                           <span className="text-xs font-semibold">{opt.label}</span>
                           <span className="text-[10px] text-slate-400">{opt.startTime}–{opt.endTime}</span>
                         </button>
@@ -2090,9 +2090,9 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
                   </div>
                 </div>
 
-                <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                <div className="p-3 bg-primary/10 border border-primary/30 rounded-lg">
                   <p className="text-sm text-slate-400">
-                    Valor atualizado: <span className="text-amber-400 font-bold">R$ {((parseFloat(editHours) || 0) * hourlyRate).toFixed(2)}</span>
+                    Valor atualizado: <span className="text-primary font-bold">R$ {((parseFloat(editHours) || 0) * hourlyRate).toFixed(2)}</span>
                   </p>
                 </div>
               </>
@@ -2185,9 +2185,9 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
                     })()}
 
                     {/* Impact on Balance */}
-                    <div className="p-2 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                    <div className="p-2 bg-primary/10 border border-primary/30 rounded-lg">
                       <p className="text-xs text-slate-400 text-center">Novo saldo após alteração</p>
-                      <p className="text-center font-bold text-amber-400">
+                      <p className="text-center font-bold text-primary">
                         {(balance - editingEntry.hours + (parseFloat(editHours) || 0)).toFixed(1)}h
                       </p>
                     </div>
@@ -2245,7 +2245,7 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
                       <Badge variant="outline" className="text-red-400 border-red-500/50">
                         {entryToDelete.operation_type === 'credit' ? '+' : '-'}{entryToDelete.hours}h
                       </Badge>
-                      <span className="text-xs text-amber-400">
+                      <span className="text-xs text-primary">
                         (R$ {(entryToDelete.hours * hourlyRate).toFixed(2)})
                       </span>
                     </div>
