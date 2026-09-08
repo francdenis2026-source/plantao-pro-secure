@@ -841,12 +841,12 @@ export function ChatPanel({ agentId, unitId, team, agentName, agentRole, agentAv
                     className={`flex gap-2 group ${isOwn ? 'flex-row-reverse' : ''}`}
                   >
                     <Avatar className={`h-6 w-6 md:h-7 md:w-7 flex-shrink-0 border ${
-                      isLeaderRole ? 'border-amber-500/50' : 'border-zinc-600/50'
+                      isLeaderRole ? 'border-primary/50' : 'border-zinc-600/50'
                     }`}>
                       <AvatarImage src={(msg.sender as any)?.avatar_url} />
                       <AvatarFallback className={`text-[9px] md:text-[10px] font-bold ${
                         isOwn ? `${currentBubbleStyle.own} ${currentBubbleStyle.ownText}` : 
-                        isLeaderRole ? 'bg-amber-600 text-white' :
+                        isLeaderRole ? 'bg-primary text-white' :
                         'bg-zinc-700 text-zinc-200'
                       }`}>
                         {(msg.sender?.name || 'A').charAt(0).toUpperCase()}
@@ -856,7 +856,7 @@ export function ChatPanel({ agentId, unitId, team, agentName, agentRole, agentAv
 
                       {!isOwn && (
                         <div className="mb-0.5 px-1 flex items-center gap-1">
-                          {isLeaderRole && <Crown className="h-2.5 w-2.5 text-amber-500" />}
+                          {isLeaderRole && <Crown className="h-2.5 w-2.5 text-primary" />}
                           <span className="text-[10px] font-medium text-zinc-400">
                             {msg.sender?.name || 'Agente'}
                           </span>
@@ -937,7 +937,7 @@ export function ChatPanel({ agentId, unitId, team, agentName, agentRole, agentAv
               onClick={sendMessage}
               disabled={!newMessage.trim() || isSending}
               size="icon"
-              className="bg-amber-500 hover:bg-amber-600 text-black h-8 w-8"
+              className="bg-primary hover:bg-primary text-black h-8 w-8"
             >
               {isSending ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -994,7 +994,7 @@ export function ChatPanel({ agentId, unitId, team, agentName, agentRole, agentAv
               className={
                 deleteTarget?.scope === 'all'
                   ? 'bg-rose-600 hover:bg-rose-500 text-white'
-                  : 'bg-amber-500 hover:bg-amber-400 text-black'
+                  : 'bg-primary hover:bg-primary text-black'
               }
             >
               {isDeleting ? (
@@ -1013,7 +1013,7 @@ export function ChatPanel({ agentId, unitId, team, agentName, agentRole, agentAv
       <AlertDialog open={clearAllOpen} onOpenChange={(o) => !isDeleting && setClearAllOpen(o)}>
         <AlertDialogContent className="bg-zinc-900 border-zinc-700 text-zinc-100 max-w-md">
           <AlertDialogHeader>
-            <div className="mx-auto mb-3 grid place-items-center h-16 w-16 rounded-full bg-gradient-to-br from-amber-500/20 to-amber-500/5 ring-1 ring-amber-500/40">
+            <div className="mx-auto mb-3 grid place-items-center h-16 w-16 rounded-full bg-gradient-to-br from-primary/20 to-primary/5 ring-1 ring-primary/40">
               <svg viewBox="0 0 24 24" width="34" height="34" fill="none" aria-hidden="true">
                 <path
                   d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"
@@ -1043,7 +1043,7 @@ export function ChatPanel({ agentId, unitId, team, agentName, agentRole, agentAv
             <AlertDialogAction
               disabled={isDeleting}
               onClick={(e) => { e.preventDefault(); clearConversationForMe(); }}
-              className="bg-amber-500 hover:bg-amber-400 text-black"
+              className="bg-primary hover:bg-primary text-black"
             >
               {isDeleting ? (
                 <><Loader2 className="h-3.5 w-3.5 mr-2 animate-spin" />Limpando…</>

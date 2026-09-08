@@ -110,7 +110,7 @@ export default function AgentProfileEdit() {
   if (isAuthLoading || isAgentLoading) {
     return (
       <div className="flex-1 min-h-0 w-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-amber-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -141,16 +141,16 @@ export default function AgentProfileEdit() {
     >
       <form onSubmit={handleSubmit} className="max-w-6xl mx-auto px-3 py-3 md:px-6 md:py-4 space-y-3">
         {/* HERO */}
-        <div className="relative overflow-hidden rounded-xl border border-amber-500/20 bg-gradient-to-r from-slate-900 via-slate-800/80 to-slate-900 shadow-lg shadow-amber-500/5">
+        <div className="relative overflow-hidden rounded-xl border border-primary/20 bg-gradient-to-r from-slate-900 via-slate-800/80 to-slate-900 shadow-lg shadow-primary/5">
           <div className="absolute inset-0 opacity-[0.07] bg-[radial-gradient(circle_at_20%_50%,#f59e0b_0%,transparent_50%)]" />
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-500/60 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
           <div className="relative flex items-center gap-3 md:gap-5 p-3 md:p-4">
             <Button
               type="button"
               variant="ghost"
               size="icon"
               onClick={() => navigate('/agent-panel')}
-              className="text-slate-400 hover:text-amber-400 shrink-0 h-8 w-8"
+              className="text-slate-400 hover:text-primary shrink-0 h-8 w-8"
             >
               <ArrowLeft className="h-4 w-4" />
             </Button>
@@ -167,8 +167,8 @@ export default function AgentProfileEdit() {
 
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 mb-0.5">
-                <Shield className="h-3.5 w-3.5 text-amber-500 shrink-0" />
-                <span className="font-tactical text-[10px] md:text-xs tracking-[0.2em] text-amber-500/90 uppercase">Meu Perfil</span>
+                <Shield className="h-3.5 w-3.5 text-primary shrink-0" />
+                <span className="font-tactical text-[10px] md:text-xs tracking-[0.2em] text-primary/90 uppercase">Meu Perfil</span>
               </div>
               <h1 className="font-tactical text-sm md:text-lg font-bold text-white truncate leading-tight">
                 {agent.name}
@@ -198,7 +198,7 @@ export default function AgentProfileEdit() {
                 type="submit"
                 size="sm"
                 disabled={isSaving}
-                className="bg-amber-600 hover:bg-amber-700 text-white h-8 shadow-md shadow-amber-900/40"
+                className="bg-primary hover:bg-primary text-white h-8 shadow-md shadow-primary/40"
               >
                 {isSaving ? <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" /> : <Save className="h-3.5 w-3.5 mr-1.5" />}
                 Salvar
@@ -211,7 +211,7 @@ export default function AgentProfileEdit() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {/* Contato */}
           <section className="rounded-xl border border-slate-700/60 bg-slate-800/40 backdrop-blur p-3 md:p-4">
-            <h2 className="font-tactical text-[11px] tracking-[0.18em] text-amber-500/90 uppercase mb-3 flex items-center gap-2">
+            <h2 className="font-tactical text-[11px] tracking-[0.18em] text-primary/90 uppercase mb-3 flex items-center gap-2">
               <Phone className="h-3.5 w-3.5" /> Contato
             </h2>
             <div className="space-y-3">
@@ -262,7 +262,7 @@ export default function AgentProfileEdit() {
 
           {/* Pessoal */}
           <section className="rounded-xl border border-slate-700/60 bg-slate-800/40 backdrop-blur p-3 md:p-4">
-            <h2 className="font-tactical text-[11px] tracking-[0.18em] text-amber-500/90 uppercase mb-3 flex items-center gap-2">
+            <h2 className="font-tactical text-[11px] tracking-[0.18em] text-primary/90 uppercase mb-3 flex items-center gap-2">
               <User className="h-3.5 w-3.5" /> Pessoal
             </h2>
             <div className="space-y-3">
@@ -323,7 +323,7 @@ export default function AgentProfileEdit() {
           <Button
             type="submit"
             disabled={isSaving}
-            className="flex-1 bg-amber-600 hover:bg-amber-700 text-white h-11 shadow-md shadow-amber-900/40"
+            className="flex-1 bg-primary hover:bg-primary text-white h-11 shadow-md shadow-primary/40"
           >
             {isSaving ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
             Salvar

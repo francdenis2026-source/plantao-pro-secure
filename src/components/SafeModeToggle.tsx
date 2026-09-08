@@ -103,7 +103,7 @@ export function SafeModeToggle({ variant = 'full' }: SafeModeToggleProps) {
             <AlertDialogContent>
               <AlertDialogHeader>
                 <AlertDialogTitle className="flex items-center gap-2">
-                  <ShieldAlert className="h-5 w-5 text-amber-500" />
+                  <ShieldAlert className="h-5 w-5 text-primary" />
                   Ativar Modo Seguro?
                 </AlertDialogTitle>
                 <AlertDialogDescription className="space-y-2">
@@ -130,7 +130,7 @@ export function SafeModeToggle({ variant = 'full' }: SafeModeToggleProps) {
                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={enableSafeMode}
-                  className="bg-amber-500 text-black hover:bg-amber-400"
+                  className="bg-primary text-black hover:bg-primary"
                 >
                   Ativar Modo Seguro
                 </AlertDialogAction>
@@ -149,7 +149,7 @@ export function SafeModeToggle({ variant = 'full' }: SafeModeToggleProps) {
           <Button
             variant={isSafeMode ? 'default' : 'outline'}
             size="sm"
-            className={isSafeMode ? 'bg-amber-500 text-black hover:bg-amber-400' : ''}
+            className={isSafeMode ? 'bg-primary text-black hover:bg-primary' : ''}
           >
             {isSafeMode ? (
               <>
@@ -239,7 +239,7 @@ export function SafeModeToggle({ variant = 'full' }: SafeModeToggleProps) {
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle className="flex items-center gap-2">
-                <ShieldAlert className="h-5 w-5 text-amber-500" />
+                <ShieldAlert className="h-5 w-5 text-primary" />
                 Ativar Modo Seguro?
               </AlertDialogTitle>
               <AlertDialogDescription className="space-y-2">
@@ -263,7 +263,7 @@ export function SafeModeToggle({ variant = 'full' }: SafeModeToggleProps) {
               <AlertDialogCancel>Cancelar</AlertDialogCancel>
               <AlertDialogAction
                 onClick={enableSafeMode}
-                className="bg-amber-500 text-black hover:bg-amber-400"
+                className="bg-primary text-black hover:bg-primary"
               >
                 Ativar Modo Seguro
               </AlertDialogAction>

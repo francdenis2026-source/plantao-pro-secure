@@ -193,9 +193,9 @@ export function ShiftMiniCalendar({
                   className={cn(
                     "h-5 md:h-6 w-full rounded text-[9px] md:text-[10px] font-semibold tabular-nums transition-colors",
                     !inMonth && "opacity-30",
-                    today && "ring-1 ring-amber-400/70",
+                    today && "ring-1 ring-primary/70",
                     shiftId
-                      ? "bg-amber-500/25 text-amber-200 hover:bg-amber-500/40"
+                      ? "bg-primary/25 text-primary hover:bg-primary/40"
                       : "bg-slate-800/40 text-slate-400 hover:bg-slate-700/60"
                   )}
                 >
@@ -210,11 +210,11 @@ export function ShiftMiniCalendar({
       {/* Legend */}
       <div className="flex items-center justify-center gap-2 md:gap-4 mt-1.5 md:mt-2 text-[8px] md:text-[9px] whitespace-nowrap overflow-x-auto scrollbar-none -mx-1 px-1">
         <div className="flex items-center gap-1 shrink-0">
-          <div className="w-1.5 h-1.5 md:w-2.5 md:h-2.5 rounded-sm bg-amber-500/25 border border-amber-500/50" />
+          <div className="w-1.5 h-1.5 md:w-2.5 md:h-2.5 rounded-sm bg-primary/25 border border-primary/50" />
           <span className="text-slate-400">Plantão</span>
         </div>
         <div className="flex items-center gap-1 shrink-0">
-          <div className="w-1.5 h-1.5 md:w-2.5 md:h-2.5 rounded-sm ring-1 ring-amber-400/70" />
+          <div className="w-1.5 h-1.5 md:w-2.5 md:h-2.5 rounded-sm ring-1 ring-primary/70" />
           <span className="text-slate-400">Hoje</span>
         </div>
       </div>
@@ -326,9 +326,9 @@ export function SimpleDatePicker({
               className={cn(
                 "h-7 md:h-8 w-full rounded-md text-[11px] md:text-xs font-semibold tabular-nums transition-all",
                 !inMonth && "opacity-30",
-                today && !isSelected && "ring-1 ring-amber-400/60",
+                today && !isSelected && "ring-1 ring-primary/60",
                 isSelected
-                  ? "bg-amber-500 text-black font-black shadow-lg shadow-amber-500/30"
+                  ? "bg-primary text-black font-black shadow-lg shadow-primary/30"
                   : "bg-slate-700/50 text-slate-200 hover:bg-slate-600/70",
               )}
             >

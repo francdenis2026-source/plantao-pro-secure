@@ -437,7 +437,7 @@ export function AgentBHManagement({ onDataChange }: Props) {
             <Button
               variant="outline"
               onClick={() => setBulkDialogOpen(true)}
-              className="border-amber-500/50 text-amber-400 hover:bg-amber-500/10"
+              className="border-primary/50 text-primary hover:bg-primary/10"
             >
               <Users className="h-4 w-4 mr-1" />
               Alterar Lote
@@ -538,7 +538,7 @@ export function AgentBHManagement({ onDataChange }: Props) {
                         variant="ghost"
                         size="sm"
                         onClick={() => openEditDialog(summary.agent, summary.balance)}
-                        className="text-amber-400 hover:text-amber-300 hover:bg-amber-500/10"
+                        className="text-primary hover:text-primary hover:bg-primary/10"
                         title="Editar Saldo"
                       >
                         <Edit3 className="h-4 w-4" />
@@ -616,7 +616,7 @@ export function AgentBHManagement({ onDataChange }: Props) {
         <DialogContent className="bg-slate-800 border-slate-700">
           <DialogHeader>
             <DialogTitle className="text-white flex items-center gap-2">
-              <Edit3 className="h-5 w-5 text-amber-400" />
+              <Edit3 className="h-5 w-5 text-primary" />
               Ajustar Saldo de BH
             </DialogTitle>
             <DialogDescription>
@@ -647,7 +647,7 @@ export function AgentBHManagement({ onDataChange }: Props) {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label className="text-slate-300 flex items-center gap-2">
-                  <DollarSign className="h-3 w-3 text-amber-400" />
+                  <DollarSign className="h-3 w-3 text-primary" />
                   Valor por Hora (R$)
                 </Label>
                 <Input
@@ -764,7 +764,7 @@ export function AgentBHManagement({ onDataChange }: Props) {
             <Button
               onClick={handleSaveBalance}
               disabled={isSaving}
-              className="bg-amber-600 hover:bg-amber-700"
+              className="bg-primary hover:bg-primary"
             >
               {isSaving ? (
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
@@ -782,7 +782,7 @@ export function AgentBHManagement({ onDataChange }: Props) {
         <DialogContent className="bg-slate-800 border-slate-700">
           <DialogHeader>
             <DialogTitle className="text-white flex items-center gap-2">
-              <Users className="h-5 w-5 text-amber-400" />
+              <Users className="h-5 w-5 text-primary" />
               Alterar Limites em Lote
             </DialogTitle>
             <DialogDescription>
@@ -844,7 +844,7 @@ export function AgentBHManagement({ onDataChange }: Props) {
             <Button
               onClick={handleBulkUpdate}
               disabled={isBulkSaving || !bulkTeam}
-              className="bg-amber-600 hover:bg-amber-700"
+              className="bg-primary hover:bg-primary"
             >
               {isBulkSaving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Users className="h-4 w-4 mr-2" />}
               {isBulkSaving ? 'Salvando...' : 'Aplicar em Lote'}

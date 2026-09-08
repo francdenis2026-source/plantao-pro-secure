@@ -158,15 +158,15 @@ export function PendingApprovalsManager({ onApprovalChange }: PendingApprovalsMa
   };
 
   return (
-    <Card className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-amber-500/30 shadow-xl shadow-amber-500/5">
-      <CardHeader className="border-b border-amber-500/20 bg-gradient-to-r from-amber-500/10 to-transparent">
+    <Card className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-primary/30 shadow-xl shadow-primary/5">
+      <CardHeader className="border-b border-primary/20 bg-gradient-to-r from-primary/10 to-transparent">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-3 rounded-xl bg-amber-500/20 border border-amber-500/30">
-              <Bell className="w-6 h-6 text-amber-400" />
+            <div className="p-3 rounded-xl bg-primary/20 border border-primary/30">
+              <Bell className="w-6 h-6 text-primary" />
             </div>
             <div>
-              <CardTitle className="text-xl font-bold text-amber-400">
+              <CardTitle className="text-xl font-bold text-primary">
                 Aprovação de Cadastros
               </CardTitle>
               <p className="text-sm text-slate-400 mt-0.5">
@@ -229,8 +229,8 @@ export function PendingApprovalsManager({ onApprovalChange }: PendingApprovalsMa
                 className={cn(
                   "p-5 rounded-xl border transition-all duration-300",
                   "bg-gradient-to-r from-slate-800/80 to-slate-800/40",
-                  "border-amber-500/20 hover:border-amber-500/40",
-                  "hover:shadow-lg hover:shadow-amber-500/5"
+                  "border-primary/20 hover:border-primary/40",
+                  "hover:shadow-lg hover:shadow-primary/5"
                 )}
               >
                 <div className="flex items-start justify-between gap-5">
@@ -243,7 +243,7 @@ export function PendingApprovalsManager({ onApprovalChange }: PendingApprovalsMa
                       <span className="font-bold text-white text-lg">
                         {agent.name}
                       </span>
-                      <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 text-sm px-2.5 py-0.5">
+                      <Badge className="bg-primary/20 text-primary border-primary/30 text-sm px-2.5 py-0.5">
                         <Clock className="w-3.5 h-3.5 mr-1.5" />
                         PENDENTE
                       </Badge>

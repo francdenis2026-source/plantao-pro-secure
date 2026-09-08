@@ -246,14 +246,14 @@ export function ScheduledRoundsManager() {
       <CardHeader className="flex flex-row items-start justify-between gap-3">
         <div>
           <CardTitle className="flex items-center gap-2 text-slate-100">
-            <CalendarIcon className="h-5 w-5 text-amber-400" />
+            <CalendarIcon className="h-5 w-5 text-primary" />
             Agendamento de Rondas
           </CardTitle>
           <CardDescription>
-            Programe o disparo automático de rondas por unidade e equipe — ou use <strong className="text-amber-300">Disparar agora</strong> para acionar manualmente sem esperar o agendamento.
+            Programe o disparo automático de rondas por unidade e equipe — ou use <strong className="text-primary">Disparar agora</strong> para acionar manualmente sem esperar o agendamento.
           </CardDescription>
         </div>
-        <Button onClick={openNew} className="bg-amber-600 hover:bg-amber-700 text-slate-950 font-semibold">
+        <Button onClick={openNew} className="bg-primary hover:bg-primary text-slate-950 font-semibold">
           <Plus className="h-4 w-4 mr-2" />
           Novo agendamento
         </Button>
@@ -272,7 +272,7 @@ export function ScheduledRoundsManager() {
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-semibold text-slate-100 truncate max-w-full">{r.name}</span>
-                      <Badge variant="outline" className="border-amber-500/40 text-amber-300 gap-1">
+                      <Badge variant="outline" className="border-primary/40 text-primary gap-1">
                         {modeIcon(r.mode)} {modeLabel(r.mode)}
                       </Badge>
                       <Badge variant="outline" className="border-blue-500/40 text-blue-300">
@@ -295,7 +295,7 @@ export function ScheduledRoundsManager() {
                       variant="outline"
                       onClick={() => fireNow(r)}
                       disabled={firingId === r.id}
-                      className="h-8 gap-1 border-amber-500/50 text-amber-300 hover:bg-amber-500/10"
+                      className="h-8 gap-1 border-primary/50 text-primary hover:bg-primary/10"
                       title="Disparar agora (programação manual)"
                     >
                       <Zap className="h-3.5 w-3.5" />
@@ -414,7 +414,7 @@ export function ScheduledRoundsManager() {
                                 type="button"
                                 onClick={() => toggleWeekday(i)}
                                 className={`w-9 h-9 rounded-md text-xs font-semibold border transition ${
-                                  active ? 'bg-amber-600 text-slate-950 border-amber-500' : 'bg-slate-800 text-slate-400 border-slate-700'
+                                  active ? 'bg-primary text-slate-950 border-primary' : 'bg-slate-800 text-slate-400 border-slate-700'
                                 }`}
                               >{d}</button>
                             );
@@ -516,7 +516,7 @@ export function ScheduledRoundsManager() {
 
           <DialogFooter className="px-4 sm:px-5 py-2.5 border-t border-slate-800 shrink-0 gap-2 sm:gap-0">
             <Button variant="outline" onClick={() => setOpenForm(false)}>Cancelar</Button>
-            <Button className="bg-amber-600 hover:bg-amber-700 text-slate-950 font-semibold" onClick={save}>
+            <Button className="bg-primary hover:bg-primary text-slate-950 font-semibold" onClick={save}>
               Salvar agendamento
             </Button>
           </DialogFooter>

@@ -196,7 +196,7 @@ export function ChatAndAlertSettings({ agentId, onClose }: ChatAndAlertSettingsP
         {/* Shift Reminder Time */}
         <div className="space-y-3 pt-2 border-t border-slate-700/50">
           <Label className="text-slate-200 flex items-center gap-2 text-sm font-medium">
-            <Bell className="h-4 w-4 text-amber-400" />
+            <Bell className="h-4 w-4 text-primary" />
             Antecedência do Lembrete de Plantão
           </Label>
           <RadioGroup 
@@ -209,20 +209,20 @@ export function ChatAndAlertSettings({ agentId, onClose }: ChatAndAlertSettingsP
                 key={option.value}
                 className={`flex items-center space-x-3 p-3 rounded-lg border transition-all ${
                   shiftReminderHours === option.value 
-                    ? 'bg-amber-500/10 border-amber-500/50' 
+                    ? 'bg-primary/10 border-primary/50' 
                     : 'bg-slate-800/30 border-slate-600/50 hover:border-slate-500'
                 }`}
               >
                 <RadioGroupItem 
                   value={String(option.value)} 
                   id={`reminder-${option.value}`}
-                  className="border-amber-500 text-amber-500"
+                  className="border-primary text-primary"
                 />
                 <div className="flex-1">
                   <Label 
                     htmlFor={`reminder-${option.value}`}
                     className={`text-sm font-medium cursor-pointer ${
-                      shiftReminderHours === option.value ? 'text-amber-300' : 'text-slate-300'
+                      shiftReminderHours === option.value ? 'text-primary' : 'text-slate-300'
                     }`}
                   >
                     <div className="flex items-center gap-2">
@@ -324,7 +324,7 @@ export function ChatAndAlertSettings({ agentId, onClose }: ChatAndAlertSettingsP
                 variant="ghost"
                 size="sm"
                 onClick={() => previewSound(reminderSounds.leave)}
-                className="h-7 px-2 text-xs text-amber-400 hover:text-amber-300 hover:bg-amber-500/10"
+                className="h-7 px-2 text-xs text-primary hover:text-primary hover:bg-primary/10"
               >
                 <Play className="h-3 w-3 mr-1" />
                 Testar
@@ -338,7 +338,7 @@ export function ChatAndAlertSettings({ agentId, onClose }: ChatAndAlertSettingsP
                   onClick={() => handleSoundChange('leave', option.value)}
                   className={`p-2 rounded-md border text-center transition-all ${
                     reminderSounds.leave === option.value
-                      ? 'bg-amber-500/20 border-amber-500/60 text-amber-300'
+                      ? 'bg-primary/20 border-primary/60 text-primary'
                       : 'bg-slate-700/30 border-slate-600/50 text-slate-400 hover:border-slate-500'
                   }`}
                 >
