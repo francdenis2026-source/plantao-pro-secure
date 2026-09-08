@@ -40,7 +40,7 @@ export function OfflineIndicator({
             )}
           </div>
         ) : (
-          <div className="flex items-center gap-1 text-amber-500">
+          <div className="flex items-center gap-1 text-primary">
             <WifiOff className="h-3 w-3" />
             <span className="text-[9px]">Offline</span>
           </div>
@@ -63,10 +63,10 @@ export function OfflineIndicator({
       <div className="flex items-center gap-2">
         {!isOnline ? (
           <>
-            <CloudOff className="h-4 w-4 text-amber-400" />
+            <CloudOff className="h-4 w-4 text-primary" />
             <div>
-              <p className="text-xs font-medium text-amber-400">Modo Offline</p>
-              <p className="text-[10px] text-amber-300/80">
+              <p className="text-xs font-medium text-primary">Modo Offline</p>
+              <p className="text-[10px] text-primary/80">
                 Exibindo dados salvos localmente
               </p>
             </div>

@@ -459,8 +459,8 @@ export function HomeAgentInfoBanner() {
                   <span className="text-primary/60 font-medium text-lg animate-pulse">:</span>
                   {/* Minutes */}
                   <div className="flex flex-col items-center">
-                    <div className="bg-slate-800/80 border border-amber-500/40 rounded-lg px-2 py-1 min-w-[36px] text-center">
-                      <span className="text-lg sm:text-xl font-semibold text-amber-400 font-mono tracking-tight">
+                    <div className="bg-slate-800/80 border border-primary/40 rounded-lg px-2 py-1 min-w-[36px] text-center">
+                      <span className="text-lg sm:text-xl font-semibold text-primary font-mono tracking-tight">
                         {String(countdown.minutes).padStart(2, '0')}
                       </span>
                     </div>

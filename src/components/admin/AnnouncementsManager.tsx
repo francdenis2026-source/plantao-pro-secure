@@ -332,7 +332,7 @@ export function AnnouncementsManager() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <Loader2 className="h-8 w-8 animate-spin text-amber-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -368,7 +368,7 @@ export function AnnouncementsManager() {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl shadow-lg">
+          <div className="p-2.5 bg-gradient-to-br from-primary to-orange-600 rounded-xl shadow-lg">
             <Megaphone className="h-5 w-5 text-black" />
           </div>
           <div>
@@ -378,7 +378,7 @@ export function AnnouncementsManager() {
         </div>
         <Button
           onClick={openCreateDialog}
-          className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-black font-bold shadow-lg"
+          className="bg-gradient-to-r from-primary to-orange-600 hover:from-primary hover:to-orange-700 text-black font-bold shadow-lg"
         >
           <Plus className="h-4 w-4 mr-2" />
           Nova Comunicação
@@ -572,7 +572,7 @@ export function AnnouncementsManager() {
         <DialogContent className="sm:max-w-[440px] max-h-[90vh] overflow-y-auto bg-slate-900 border-slate-700 p-4">
           <DialogHeader>
             <DialogTitle className="text-white flex items-center gap-2">
-              <Megaphone className="h-5 w-5 text-amber-400" />
+              <Megaphone className="h-5 w-5 text-primary" />
               {editingAnnouncement ? 'Editar Aviso' : 'Novo Aviso'}
             </DialogTitle>
             <DialogDescription className="text-slate-400">
@@ -760,7 +760,7 @@ export function AnnouncementsManager() {
             <Button
               onClick={handleSave}
               disabled={isSaving}
-              className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-black font-bold"
+              className="bg-gradient-to-r from-primary to-orange-600 hover:from-primary hover:to-orange-700 text-black font-bold"
             >
               {isSaving ? (
                 <>

@@ -136,7 +136,7 @@ export function AgentDetailsDialog({ agentId, open, onClose, canManage = false, 
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent className="max-w-2xl bg-zinc-900 border-zinc-700 text-zinc-100">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-amber-400">
+          <DialogTitle className="flex items-center gap-2 text-primary">
             <Shield className="h-5 w-5" /> Ficha do Agente
           </DialogTitle>
           <DialogDescription className="text-zinc-400">
@@ -146,15 +146,15 @@ export function AgentDetailsDialog({ agentId, open, onClose, canManage = false, 
 
         {loading || !agent ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-6 w-6 animate-spin text-amber-500" />
+            <Loader2 className="h-6 w-6 animate-spin text-primary" />
           </div>
         ) : (
           <div className="space-y-4">
             {/* Header */}
             <div className="flex items-start gap-4 rounded-lg border border-zinc-700 bg-zinc-950/60 p-4">
-              <Avatar className="h-16 w-16 border-2 border-amber-500/40">
+              <Avatar className="h-16 w-16 border-2 border-primary/40">
                 <AvatarImage src={agent.avatar_url ?? undefined} />
-                <AvatarFallback className="bg-zinc-800 text-amber-400 font-bold">
+                <AvatarFallback className="bg-zinc-800 text-primary font-bold">
                   {initials}
                 </AvatarFallback>
               </Avatar>
@@ -218,7 +218,7 @@ export function AgentDetailsDialog({ agentId, open, onClose, canManage = false, 
                         Congelar
                       </Button>
                     )}
-                    <Button size="sm" variant="outline" className="border-amber-500/40 text-amber-400 hover:bg-amber-500/10" disabled={actionLoading === 'extend'} onClick={() => handleExtend(1)}>
+                    <Button size="sm" variant="outline" className="border-primary/40 text-primary hover:bg-primary/10" disabled={actionLoading === 'extend'} onClick={() => handleExtend(1)}>
                       {actionLoading === 'extend' ? <Loader2 className="h-3 w-3 mr-1 animate-spin" /> : <Shield className="h-3 w-3 mr-1" />}
                       +1 Mês
                     </Button>
@@ -248,7 +248,7 @@ export function AgentDetailsDialog({ agentId, open, onClose, canManage = false, 
 function InfoRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div className="flex items-start gap-2 rounded-md border border-zinc-800 bg-zinc-950/40 px-3 py-2">
-      <div className="text-amber-500 mt-0.5">{icon}</div>
+      <div className="text-primary mt-0.5">{icon}</div>
       <div className="min-w-0 flex-1">
         <p className="text-[10px] uppercase tracking-wider text-zinc-500">{label}</p>
         <p className="text-sm text-zinc-100 truncate">{value}</p>

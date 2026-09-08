@@ -72,7 +72,7 @@ export function CommandStrip() {
       />
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
       />
 
       <div className="relative flex flex-wrap sm:flex-nowrap items-center gap-x-4 gap-y-1 px-3 sm:px-4 lg:px-6 py-2 sm:py-0 sm:h-14 min-h-12">
@@ -82,10 +82,10 @@ export function CommandStrip() {
             type="button"
             onClick={handleShieldClick}
             aria-label="Comando Operacional"
-            className="text-left leading-tight focus:outline-none focus-visible:ring-1 focus-visible:ring-amber-400/60 rounded-sm"
+            className="text-left leading-tight focus:outline-none focus-visible:ring-1 focus-visible:ring-primary/60 rounded-sm"
           >
-            <span className="block font-tactical text-[13px] sm:text-[14px] font-semibold text-amber-50 whitespace-nowrap tracking-[0.1em]">
-              Comando <span className="text-amber-400 drop-shadow-[0_0_8px_hsl(42_85%_55%/0.35)]">Operacional</span>
+            <span className="block font-tactical text-[13px] sm:text-[14px] font-semibold text-primary whitespace-nowrap tracking-[0.1em]">
+              Comando <span className="text-primary drop-shadow-[0_0_8px_hsl(42_85%_55%/0.35)]">Operacional</span>
             </span>
             <span className="hidden md:block font-mono-mil text-[10px] text-muted-foreground/80 tracking-[0.18em] uppercase whitespace-nowrap">
               Gestão inteligente de plantões
@@ -97,10 +97,10 @@ export function CommandStrip() {
         {/* Relógio + radar + status */}
         <div className="flex items-center gap-2 sm:gap-4 ml-auto shrink-0">
           <div className="text-right leading-tight tabular-nums shrink-0">
-            <div className="font-mono text-[15px] sm:text-[16px] font-semibold text-amber-50 tracking-tight whitespace-nowrap">
+            <div className="font-mono text-[15px] sm:text-[16px] font-semibold text-primary tracking-tight whitespace-nowrap">
               {time}
             </div>
-            <div className="text-[11px] uppercase tracking-[0.18em] text-amber-200/70 font-mono whitespace-nowrap">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-primary/70 font-mono whitespace-nowrap">
               {date}
             </div>
           </div>

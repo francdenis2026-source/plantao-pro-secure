@@ -80,20 +80,20 @@ export function ProfileCompletionAlert({ agentId, agentName }: ProfileCompletion
   };
 
   return (
-    <Alert className="bg-gradient-to-r from-amber-900/40 to-slate-800/60 border-amber-500/50 relative overflow-hidden">
+    <Alert className="bg-gradient-to-r from-primary/40 to-slate-800/60 border-primary/50 relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(251,191,36,0.1),transparent_50%)]" />
       
       <div className="relative z-10">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-start gap-3 flex-1">
-            <div className="p-2 rounded-full bg-amber-500/20 mt-0.5">
-              <User className="h-4 w-4 text-amber-400" />
+            <div className="p-2 rounded-full bg-primary/20 mt-0.5">
+              <User className="h-4 w-4 text-primary" />
             </div>
             
             <div className="flex-1 space-y-2">
               <div className="flex items-center gap-2">
-                <AlertCircle className="h-4 w-4 text-amber-400" />
-                <span className="font-semibold text-amber-300 text-sm">
+                <AlertCircle className="h-4 w-4 text-primary" />
+                <span className="font-semibold text-primary text-sm">
                   Complete seu perfil
                 </span>
               </div>
@@ -108,7 +108,7 @@ export function ProfileCompletionAlert({ agentId, agentName }: ProfileCompletion
               <div className="space-y-1">
                 <div className="flex items-center justify-between text-xs">
                   <span className="text-slate-400">Progresso</span>
-                  <span className="text-amber-400 font-medium">{completionPercent}%</span>
+                  <span className="text-primary font-medium">{completionPercent}%</span>
                 </div>
                 <Progress 
                   value={completionPercent} 
@@ -119,7 +119,7 @@ export function ProfileCompletionAlert({ agentId, agentName }: ProfileCompletion
               <Button
                 size="sm"
                 onClick={() => navigate('/agent-profile-edit')}
-                className="bg-amber-500 hover:bg-amber-600 text-black font-medium text-xs h-7 mt-1"
+                className="bg-primary hover:bg-primary text-black font-medium text-xs h-7 mt-1"
               >
                 Completar Agora
                 <ChevronRight className="h-3 w-3 ml-1" />

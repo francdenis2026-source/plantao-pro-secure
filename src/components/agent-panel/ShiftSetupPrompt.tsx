@@ -67,9 +67,9 @@ export function ShiftSetupPrompt({ agentId, agentName, hasShifts, onComplete }: 
 
   return (
     <Dialog open={showPrompt} onOpenChange={setShowPrompt}>
-      <DialogContent className="bg-slate-800 border-amber-500/50 max-w-md">
+      <DialogContent className="bg-slate-800 border-primary/50 max-w-md">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-amber-400">
+          <DialogTitle className="flex items-center gap-2 text-primary">
             <CalendarClock className="h-5 w-5" />
             Configure Sua Escala
           </DialogTitle>
@@ -78,10 +78,10 @@ export function ShiftSetupPrompt({ agentId, agentName, hasShifts, onComplete }: 
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 pt-2">
-          <div className="flex items-start gap-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-            <AlertCircle className="h-5 w-5 text-amber-400 mt-0.5 shrink-0" />
+          <div className="flex items-start gap-3 p-3 bg-primary/10 border border-primary/30 rounded-lg">
+            <AlertCircle className="h-5 w-5 text-primary mt-0.5 shrink-0" />
             <div>
-              <p className="text-sm text-amber-400 font-medium">
+              <p className="text-sm text-primary font-medium">
                 Olá, {agentName.split(' ')[0]}!
               </p>
               <p className="text-sm text-slate-300 mt-1">
@@ -124,7 +124,7 @@ export function ShiftSetupPrompt({ agentId, agentName, hasShifts, onComplete }: 
             <Button
               onClick={generateShifts}
               disabled={!firstShiftDate || isGenerating}
-              className="flex-1 bg-amber-500 hover:bg-amber-600 text-black"
+              className="flex-1 bg-primary hover:bg-primary text-black"
             >
               {isGenerating ? (
                 <>
