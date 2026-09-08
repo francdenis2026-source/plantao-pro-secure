@@ -94,9 +94,9 @@ const headerStyles = {
 
 // Team-specific messages
 const teamMessages = {
-  ALFA: { text: 'ALFA', icon: Shield, color: 'text-red-400' },
-  BRAVO: { text: 'BRAVO', icon: Target, color: 'text-blue-400' },
-  CHARLIE: { text: 'CHARLIE', icon: Crosshair, color: 'text-green-400' },
+  ALFA: { text: 'ALFA', icon: Shield, color: 'text-emerald-400' },
+  BRAVO: { text: 'BRAVO', icon: Target, color: 'text-orange-400' },
+  CHARLIE: { text: 'CHARLIE', icon: Crosshair, color: 'text-blue-400' },
   DELTA: { text: 'DELTA', icon: Radio, color: 'text-amber-400' },
 };
 

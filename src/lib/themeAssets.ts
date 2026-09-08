@@ -67,9 +67,9 @@ export const themeAssets: Record<ThemeType, ThemeAssets> = {
       DELTA: Target,
     },
     teamColors: {
-      ALFA: { color: 'text-amber-400', bgGradient: 'from-amber-950/95 via-orange-900/80 to-slate-950', borderColor: 'border-amber-500/60', glowColor: 'shadow-amber-500/40' },
-      BRAVO: { color: 'text-orange-400', bgGradient: 'from-orange-950/95 via-red-900/80 to-slate-950', borderColor: 'border-orange-500/60', glowColor: 'shadow-orange-500/40' },
-      CHARLIE: { color: 'text-yellow-400', bgGradient: 'from-yellow-950/95 via-amber-900/80 to-slate-950', borderColor: 'border-yellow-500/60', glowColor: 'shadow-yellow-500/40' },
+      ALFA: { color: 'text-emerald-400', bgGradient: 'from-emerald-950/95 via-emerald-900/80 to-slate-950', borderColor: 'border-emerald-500/60', glowColor: 'shadow-emerald-500/40' },
+      BRAVO: { color: 'text-orange-400', bgGradient: 'from-orange-950/95 via-orange-900/80 to-slate-950', borderColor: 'border-orange-500/60', glowColor: 'shadow-orange-500/40' },
+      CHARLIE: { color: 'text-blue-400', bgGradient: 'from-blue-950/95 via-blue-900/80 to-slate-950', borderColor: 'border-blue-500/60', glowColor: 'shadow-blue-500/40' },
       DELTA: { color: 'text-amber-300', bgGradient: 'from-amber-900/95 via-yellow-900/80 to-slate-950', borderColor: 'border-amber-400/60', glowColor: 'shadow-amber-400/40' },
     },
     teamDescriptions: {

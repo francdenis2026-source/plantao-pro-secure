@@ -35,10 +35,10 @@ interface UnitStats {
 }
 
 const teamConfigs = {
-  ALFA: { icon: Shield, color: 'text-blue-400', bgColor: 'bg-blue-500/20' },
-  BRAVO: { icon: Sword, color: 'text-red-400', bgColor: 'bg-red-500/20' },
-  CHARLIE: { icon: Target, color: 'text-green-400', bgColor: 'bg-green-500/20' },
-  DELTA: { icon: Users, color: 'text-purple-400', bgColor: 'bg-purple-500/20' },
+  ALFA: { icon: Shield, color: 'text-emerald-400', bgColor: 'bg-emerald-500/20' },
+  BRAVO: { icon: Sword, color: 'text-orange-400', bgColor: 'bg-orange-500/20' },
+  CHARLIE: { icon: Target, color: 'text-blue-400', bgColor: 'bg-blue-500/20' },
+  DELTA: { icon: Users, color: 'text-amber-300', bgColor: 'bg-amber-400/20' },
 };
 
 export default function Units() {

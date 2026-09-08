@@ -52,10 +52,10 @@ interface TeamStats {
 }
 
 const teamConfigs: Record<string, { icon: any; color: string; bgColor: string }> = {
-  ALFA: { icon: Shield, color: 'text-blue-400', bgColor: 'bg-blue-500/20' },
-  BRAVO: { icon: Sword, color: 'text-red-400', bgColor: 'bg-red-500/20' },
-  CHARLIE: { icon: Target, color: 'text-emerald-400', bgColor: 'bg-emerald-500/20' },
-  DELTA: { icon: Users, color: 'text-violet-400', bgColor: 'bg-violet-500/20' },
+  ALFA: { icon: Shield, color: 'text-emerald-400', bgColor: 'bg-emerald-500/20' },
+  BRAVO: { icon: Sword, color: 'text-orange-400', bgColor: 'bg-orange-500/20' },
+  CHARLIE: { icon: Target, color: 'text-blue-400', bgColor: 'bg-blue-500/20' },
+  DELTA: { icon: Users, color: 'text-amber-300', bgColor: 'bg-amber-400/20' },
 };
 
 interface UnitHistoryEntry {

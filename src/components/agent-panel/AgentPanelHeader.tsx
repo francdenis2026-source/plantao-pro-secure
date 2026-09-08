@@ -89,11 +89,12 @@ const IconBell = ({ className = '' }: { className?: string }) => (
    Team config — tactical corps identity
    ──────────────────────────────────────────────────────────────── */
 
+// Alinhado com a fonte única de verdade em lib/teamColors.ts
 const TEAM_CONFIG: Record<string, { hex: string; accent: string; label: string }> = {
-  ALFA:    { hex: '#ef4444', accent: 'rgba(239,68,68,.55)',  label: 'ALFA' },
-  BRAVO:   { hex: '#3b82f6', accent: 'rgba(59,130,246,.55)', label: 'BRAVO' },
-  CHARLIE: { hex: '#10b981', accent: 'rgba(16,185,129,.55)', label: 'CHARLIE' },
-  DELTA:   { hex: '#f59e0b', accent: 'rgba(245,158,11,.55)', label: 'DELTA' },
+  ALFA:    { hex: '#34d399', accent: 'rgba(52,211,153,.55)',  label: 'ALFA' },
+  BRAVO:   { hex: '#fb923c', accent: 'rgba(251,146,60,.55)',  label: 'BRAVO' },
+  CHARLIE: { hex: '#60a5fa', accent: 'rgba(96,165,250,.55)',  label: 'CHARLIE' },
+  DELTA:   { hex: '#fcd34d', accent: 'rgba(252,211,77,.55)',  label: 'DELTA' },
 };
 
 function TeamInsignia({ team, prominent = false }: { team: string | null; prominent?: boolean }) {
