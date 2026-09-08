@@ -86,7 +86,7 @@ function ModuleFallback({ compact = false }: { compact?: boolean }) {
     <div
       aria-busy="true"
       className={cn(
-        'w-full rounded-xl border border-amber-500/20 bg-slate-900/60',
+        'w-full rounded-xl border border-primary/20 bg-slate-900/60',
         compact ? 'min-h-[120px]' : 'min-h-[160px]',
       )}
     >
@@ -431,10 +431,10 @@ export default function AgentPanel() {
     if (sessionMissing) {
       return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 p-4">
-          <div className="max-w-md w-full bg-zinc-900/80 backdrop-blur-xl rounded-2xl border border-amber-500/30 p-8 shadow-2xl">
+          <div className="max-w-md w-full bg-zinc-900/80 backdrop-blur-xl rounded-2xl border border-primary/30 p-8 shadow-2xl">
             <div className="flex flex-col items-center gap-6">
-              <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl">
-                <Shield className="h-10 w-10 text-amber-400" />
+              <div className="p-4 bg-primary/10 border border-primary/30 rounded-2xl">
+                <Shield className="h-10 w-10 text-primary" />
               </div>
               <div className="text-center space-y-2">
                 <h3 className="text-xl font-bold text-zinc-100">Sessão não encontrada</h3>
@@ -538,10 +538,10 @@ export default function AgentPanel() {
   if (!agent) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-950 p-4">
-        <div className="max-w-md w-full bg-zinc-900/80 backdrop-blur-xl rounded-2xl border border-amber-500/30 p-8 shadow-2xl">
+        <div className="max-w-md w-full bg-zinc-900/80 backdrop-blur-xl rounded-2xl border border-primary/30 p-8 shadow-2xl">
           <div className="flex flex-col items-center gap-6">
-            <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-2xl">
-              <User className="h-10 w-10 text-amber-400" />
+            <div className="p-4 bg-primary/10 border border-primary/30 rounded-2xl">
+              <User className="h-10 w-10 text-primary" />
             </div>
             <div className="text-center space-y-2">
               <h3 className="text-xl font-bold text-zinc-100">Perfil Não Encontrado</h3>
@@ -552,7 +552,7 @@ export default function AgentPanel() {
             <div className="flex flex-col w-full gap-3 pt-2">
               <Button
                 onClick={() => window.location.reload()}
-                className="w-full h-12 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl shadow-lg shadow-amber-500/20"
+                className="w-full h-12 bg-primary hover:bg-primary text-white font-semibold rounded-xl shadow-lg shadow-primary/20"
               >
                 Tentar Novamente
               </Button>
@@ -620,7 +620,7 @@ export default function AgentPanel() {
                   // internos já têm bg escuro próprio, então legibilidade
                   // permanece intacta.
                   'sticky top-0 z-50 relative left-1/2 -translate-x-1/2 w-screen',
-                  'focus-within:ring-1 focus-within:ring-amber-500/40',
+                  'focus-within:ring-1 focus-within:ring-primary/40',
                   'pt-0.5 pb-0.5'
                 )}
               >
@@ -652,7 +652,7 @@ export default function AgentPanel() {
                 />
 
                 {/* Control Panel Container - Modern Glass Design */}
-                <div className="relative tactical-strip bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-xl border border-amber-500/40 shadow-md overflow-hidden">
+                <div className="relative tactical-strip bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-xl border border-primary/40 shadow-md overflow-hidden">
 
                 {/* Decorative accent (removed the always-on gradient overlay to cut repaints during scroll) */}
 
@@ -660,18 +660,18 @@ export default function AgentPanel() {
                 
                 {/* Control Panel Header - Compact & Professional */}
                 <div className={cn(
-                  'relative flex items-center justify-between gap-2 border-b border-amber-500/20',
+                  'relative flex items-center justify-between gap-2 border-b border-primary/20',
                   compact ? 'px-1.5 py-0.5 md:px-2 md:py-1' : 'px-2 py-1 md:px-2.5 md:py-1.5'
                 )}>
                   <div className="flex items-center gap-1.5 md:gap-2 min-w-0">
-                    <div className="p-0.5 md:p-1 rounded-md bg-gradient-to-br from-amber-400 via-amber-500 to-orange-600 shadow-sm shadow-amber-500/30 ring-1 ring-amber-300/30 shrink-0">
+                    <div className="p-0.5 md:p-1 rounded-md bg-gradient-to-br from-primary via-primary to-orange-600 shadow-sm shadow-primary/30 ring-1 ring-primary/30 shrink-0">
                       <Shield className="h-3 w-3 md:h-3.5 md:w-3.5 text-black" />
                     </div>
                     <div className="leading-tight min-w-0">
-                      <h2 className="text-[10px] md:text-xs font-black text-amber-100 tracking-wider uppercase truncate">
+                      <h2 className="text-[10px] md:text-xs font-black text-primary-foreground tracking-wider uppercase truncate">
                         Painel de Controle
                       </h2>
-                      <p className="hidden lg:block text-[9px] md:text-[10px] text-amber-400/80 font-medium tracking-wide">
+                      <p className="hidden lg:block text-[9px] md:text-[10px] text-primary/80 font-medium tracking-wide">
                         Sistema Operacional Integrado
                       </p>
                     </div>
@@ -686,66 +686,30 @@ export default function AgentPanel() {
                 {/* Tabs Grid - Compact, readable */}
                 <div className={compact ? 'p-1 md:p-1.5' : 'p-1.5 md:p-2'}>
                   <TabsList className={cn(
-                    'bg-gradient-to-br from-slate-800/95 via-slate-900/90 to-slate-800/95 border border-amber-500/20 h-auto grid grid-cols-5 sm:grid-cols-5 lg:grid-cols-10 rounded-lg shadow-inner w-full',
+                    'bg-gradient-to-br from-slate-800/95 via-slate-900/90 to-slate-800/95 border border-primary/20 h-auto grid grid-cols-5 sm:grid-cols-5 lg:grid-cols-10 rounded-lg shadow-inner w-full',
                     compact ? 'p-0.5 gap-0.5 md:p-1 md:gap-1' : 'p-1 gap-1 md:p-1.5 md:gap-1.5'
                   )}>
 
-                    {([
-                      {
-                        value: 'equipe', label: 'Equipe', full: 'Minha Equipe', Icon: Users,
-                        trigger: 'hover:bg-amber-500/15 hover:border-amber-500/50 data-[state=active]:bg-gradient-to-br data-[state=active]:from-amber-400 data-[state=active]:via-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-black data-[state=active]:border-amber-300',
-                        icon: 'text-amber-400 group-data-[state=active]:text-black',
-                        text: 'text-amber-200 group-data-[state=active]:text-black',
-                      },
-                      {
-                        value: 'plantoes', label: 'Plantões', full: 'Meus Plantões', Icon: Calendar,
-                        trigger: 'hover:bg-orange-500/15 hover:border-orange-500/50 data-[state=active]:bg-gradient-to-br data-[state=active]:from-orange-400 data-[state=active]:via-orange-500 data-[state=active]:to-red-600 data-[state=active]:text-white data-[state=active]:border-orange-300',
-                        icon: 'text-orange-400 group-data-[state=active]:text-white',
-                        text: 'text-orange-200 group-data-[state=active]:text-white',
-                      },
-                      {
-                        value: 'bh', label: 'B.Horas', full: 'Banco de Horas', Icon: Clock,
-                        trigger: 'hover:bg-emerald-500/15 hover:border-emerald-500/50 data-[state=active]:bg-gradient-to-br data-[state=active]:from-emerald-400 data-[state=active]:via-green-500 data-[state=active]:to-teal-600 data-[state=active]:text-black data-[state=active]:border-emerald-300',
-                        icon: 'text-emerald-400 group-data-[state=active]:text-black',
-                        text: 'text-emerald-200 group-data-[state=active]:text-black',
-                      },
-                      {
-                        value: 'folgas', label: 'Folgas', full: 'Folgas e Férias', Icon: CalendarOff,
-                        trigger: 'hover:bg-purple-500/15 hover:border-purple-500/50 data-[state=active]:bg-gradient-to-br data-[state=active]:from-purple-400 data-[state=active]:via-violet-500 data-[state=active]:to-indigo-600 data-[state=active]:text-white data-[state=active]:border-purple-300',
-                        icon: 'text-purple-400 group-data-[state=active]:text-white',
-                        text: 'text-purple-200 group-data-[state=active]:text-white',
-                      },
-                      {
-                        value: 'agenda', label: 'Agenda', full: 'Agenda Operacional', Icon: CalendarDays,
-                        trigger: 'hover:bg-cyan-500/15 hover:border-cyan-500/50 data-[state=active]:bg-gradient-to-br data-[state=active]:from-cyan-400 data-[state=active]:via-sky-500 data-[state=active]:to-blue-600 data-[state=active]:text-black data-[state=active]:border-cyan-300',
-                        icon: 'text-cyan-400 group-data-[state=active]:text-black',
-                        text: 'text-cyan-200 group-data-[state=active]:text-black',
-                      },
-                      {
-                        value: 'permutas', label: 'Permutas', full: 'Permutas de Plantão', Icon: ArrowRightLeft,
-                        trigger: 'hover:bg-yellow-500/15 hover:border-yellow-500/50 data-[state=active]:bg-gradient-to-br data-[state=active]:from-yellow-400 data-[state=active]:via-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-black data-[state=active]:border-yellow-300',
-                        icon: 'text-yellow-400 group-data-[state=active]:text-black',
-                        text: 'text-yellow-200 group-data-[state=active]:text-black',
-                      },
-                      {
-                        value: 'rondas', label: 'Rondas', full: 'Histórico de Rondas', Icon: Radio,
-                        trigger: 'hover:bg-red-500/15 hover:border-red-500/50 data-[state=active]:bg-gradient-to-br data-[state=active]:from-red-400 data-[state=active]:via-rose-500 data-[state=active]:to-pink-600 data-[state=active]:text-white data-[state=active]:border-red-300',
-                        icon: 'text-red-400 group-data-[state=active]:text-white',
-                        text: 'text-red-200 group-data-[state=active]:text-white',
-                      },
-                      {
-                        value: 'chat', label: 'Chat', full: 'Chat Interno', Icon: MessageCircle,
-                        trigger: 'hover:bg-blue-500/15 hover:border-blue-500/50 data-[state=active]:bg-gradient-to-br data-[state=active]:from-blue-400 data-[state=active]:via-indigo-500 data-[state=active]:to-violet-600 data-[state=active]:text-white data-[state=active]:border-blue-300',
-                        icon: 'text-blue-400 group-data-[state=active]:text-white',
-                        text: 'text-blue-200 group-data-[state=active]:text-white',
-                      },
-                      {
-                        value: 'config', label: 'Config', full: 'Configurações', Icon: Settings,
-                        trigger: 'hover:bg-slate-500/15 hover:border-slate-400/50 data-[state=active]:bg-gradient-to-br data-[state=active]:from-slate-400 data-[state=active]:via-gray-500 data-[state=active]:to-zinc-600 data-[state=active]:text-white data-[state=active]:border-slate-300',
-                        icon: 'text-slate-400 group-data-[state=active]:text-white',
-                        text: 'text-slate-200 group-data-[state=active]:text-white',
-                      },
-                    ] as const).map(({ value, label, full, Icon, trigger, icon, text }) => (
+                    {(() => {
+                      // Acento único (Color Consistency Lock): todas as abas
+                      // compartilham o mesmo estilo ativo, só o ícone muda.
+                      const tabStyle = {
+                        trigger: 'hover:bg-primary/10 hover:border-primary/40 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary',
+                        icon: 'text-muted-foreground group-data-[state=active]:text-primary-foreground',
+                        text: 'text-muted-foreground group-data-[state=active]:text-primary-foreground',
+                      };
+                      return [
+                      { value: 'equipe', label: 'Equipe', full: 'Minha Equipe', Icon: Users, ...tabStyle },
+                      { value: 'plantoes', label: 'Plantões', full: 'Meus Plantões', Icon: Calendar, ...tabStyle },
+                      { value: 'bh', label: 'B.Horas', full: 'Banco de Horas', Icon: Clock, ...tabStyle },
+                      { value: 'folgas', label: 'Folgas', full: 'Folgas e Férias', Icon: CalendarOff, ...tabStyle },
+                      { value: 'agenda', label: 'Agenda', full: 'Agenda Operacional', Icon: CalendarDays, ...tabStyle },
+                      { value: 'permutas', label: 'Permutas', full: 'Permutas de Plantão', Icon: ArrowRightLeft, ...tabStyle },
+                      { value: 'rondas', label: 'Rondas', full: 'Histórico de Rondas', Icon: Radio, ...tabStyle },
+                      { value: 'chat', label: 'Chat', full: 'Chat Interno', Icon: MessageCircle, ...tabStyle },
+                      { value: 'config', label: 'Config', full: 'Configurações', Icon: Settings, ...tabStyle },
+                      ];
+                    })().map(({ value, label, full, Icon, trigger, icon, text }) => (
                       <TabsTrigger
                         key={value}
                         value={value}
@@ -866,15 +830,15 @@ export default function AgentPanel() {
                         /diretorio para eliminar duplicidade dentro do painel. */}
                     <a
                       href="/diretorio"
-                      className="flex items-center justify-between gap-2 rounded-lg border border-amber-500/25 bg-slate-900/70 backdrop-blur-xl px-3 py-2.5 text-xs hover:border-amber-400/50 hover:bg-slate-900/85 transition-colors"
+                      className="flex items-center justify-between gap-2 rounded-lg border border-primary/25 bg-slate-900/70 backdrop-blur-xl px-3 py-2.5 text-xs hover:border-primary/50 hover:bg-slate-900/85 transition-colors"
                     >
                       <div>
-                        <div className="font-semibold text-amber-300 text-[12.5px]">Diretório Agregado</div>
+                        <div className="font-semibold text-primary text-[12.5px]">Diretório Agregado</div>
                         <div className="text-[10.5px] text-muted-foreground leading-tight">
                           Equipe · Unidade · Sistema
                         </div>
                       </div>
-                      <span className="text-amber-400">→</span>
+                      <span className="text-primary">→</span>
                     </a>
                   </div>
                 </div>
@@ -905,7 +869,7 @@ export default function AgentPanel() {
                           className={
                             'flex-1 min-w-0 px-2 sm:px-3 py-1.5 text-[11px] sm:text-xs font-semibold uppercase tracking-widest rounded-md transition-colors ' +
                             (active
-                              ? 'bg-amber-500 text-slate-950 shadow'
+                              ? 'bg-primary text-slate-950 shadow'
                               : 'text-slate-300 hover:bg-slate-800/70')
                           }
                         >
@@ -925,7 +889,7 @@ export default function AgentPanel() {
                         <ProfessionalShiftTimer agentId={agent.id} />
                       </div>
                     </div>
-                    <div className="min-w-0 flex rounded-xl bg-gradient-to-br from-amber-500/10 via-slate-900/40 to-slate-900/10 border border-amber-500/20 p-1">
+                    <div className="min-w-0 flex rounded-xl bg-gradient-to-br from-primary/10 via-slate-900/40 to-slate-900/10 border border-primary/20 p-1">
                       <div className="w-full flex flex-col [&>*]:flex-1 [&>*]:h-full">
                         <NextShiftCountdown agentId={agent.id} agentName={agent.name} agentUnitId={agent.unit_id} agentTeam={agent.team} />
                       </div>
@@ -963,7 +927,7 @@ export default function AgentPanel() {
                   {/* Dica quando o filtro esconde blocos */}
                   {shiftsFilter === 'hoje' && (
                     <p className="text-[11px] text-slate-500 text-center italic">
-                      Mostrando apenas o plantão de hoje. Use <span className="text-amber-400">Semana</span> ou <span className="text-amber-400">Mês</span> para ver a escala completa.
+                      Mostrando apenas o plantão de hoje. Use <span className="text-primary">Semana</span> ou <span className="text-primary">Mês</span> para ver a escala completa.
                     </p>
                   )}
                 </div>
@@ -1011,14 +975,14 @@ export default function AgentPanel() {
 
               <TabsContent value="rondas" forceMount hidden={activeTab !== 'rondas'} className="space-y-4 md:space-y-3 mt-0 overflow-visible data-[state=inactive]:hidden">
                 {mountedTabs.has('rondas') && <SectionBoundary label="rondas" loadingLabel="Carregando rondas" fallback={<ModuleFallback compact={compact} />}>
-                <div className="relative z-10 w-full min-w-0 max-w-full overflow-hidden rounded-2xl border-2 border-amber-500/50 bg-gradient-to-br from-slate-900/98 via-slate-950/98 to-amber-950/35 p-3 shadow-xl shadow-amber-500/10 sm:p-4 md:p-5">
+                <div className="relative z-10 w-full min-w-0 max-w-full overflow-hidden rounded-2xl border-2 border-primary/50 bg-gradient-to-br from-slate-900/98 via-slate-950/98 to-primary/10 p-3 shadow-xl shadow-primary/10 sm:p-4 md:p-5">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                     <div className="flex min-w-0 items-start gap-3">
-                      <div className="shrink-0 rounded-xl border border-amber-500/40 bg-amber-500/15 p-2.5 sm:p-3">
-                        <Radio className="h-5 w-5 text-amber-400 sm:h-6 sm:w-6" />
+                      <div className="shrink-0 rounded-xl border border-primary/40 bg-primary/15 p-2.5 sm:p-3">
+                        <Radio className="h-5 w-5 text-primary sm:h-6 sm:w-6" />
                       </div>
                       <div className="min-w-0 flex-1 space-y-1">
-                        <h3 className="text-lg font-black leading-tight text-amber-200 tracking-tight sm:text-xl md:text-lg break-words">
+                        <h3 className="text-lg font-black leading-tight text-primary tracking-tight sm:text-xl md:text-lg break-words">
                           Gestor de Rondas
                         </h3>
                         <p className="text-xs leading-relaxed text-slate-300 sm:text-sm break-words">
@@ -1030,20 +994,20 @@ export default function AgentPanel() {
                       PRONTO PARA OPERAR
                     </div>
                   </div>
-                  <Suspense fallback={<div className="flex items-center justify-center py-6"><Loader2 className="h-5 w-5 animate-spin text-amber-500" /></div>}>
+                  <Suspense fallback={<div className="flex items-center justify-center py-6"><Loader2 className="h-5 w-5 animate-spin text-primary" /></div>}>
                     <div className="mt-4 flex w-full min-w-0 max-w-full sm:mt-5">
                       <RoundsManager
                         customTrigger={
                           <button
                             type="button"
-                            className="group flex min-h-[64px] w-full min-w-0 max-w-full items-center justify-between gap-2 rounded-xl border border-amber-500/50 bg-amber-500/15 px-3 py-3 text-left shadow-lg shadow-amber-500/10 transition-all duration-200 hover:border-amber-400/70 hover:bg-amber-500/20 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 sm:gap-3 sm:px-4"
+                            className="group flex min-h-[64px] w-full min-w-0 max-w-full items-center justify-between gap-2 rounded-xl border border-primary/50 bg-primary/15 px-3 py-3 text-left shadow-lg shadow-primary/10 transition-all duration-200 hover:border-primary/70 hover:bg-primary/20 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary sm:gap-3 sm:px-4"
                           >
                             <span className="flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3">
-                              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-amber-500/45 bg-slate-950/70 sm:h-11 sm:w-11">
-                                <Radio className="h-4 w-4 text-amber-300 sm:h-5 sm:w-5" />
+                              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-primary/45 bg-slate-950/70 sm:h-11 sm:w-11">
+                                <Radio className="h-4 w-4 text-primary sm:h-5 sm:w-5" />
                               </span>
                               <span className="min-w-0 flex-1">
-                                <span className="block text-sm font-black leading-tight text-amber-100 sm:text-base break-words">
+                                <span className="block text-sm font-black leading-tight text-primary-foreground sm:text-base break-words">
                                   Abrir Gestor de Rondas
                                 </span>
                                 <span className="block text-[11px] font-semibold text-slate-300 sm:text-xs break-words">
@@ -1051,7 +1015,7 @@ export default function AgentPanel() {
                                 </span>
                               </span>
                             </span>
-                            <Zap className="h-4 w-4 shrink-0 text-amber-300 transition-transform group-hover:scale-110 sm:h-5 sm:w-5" />
+                            <Zap className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:scale-110 sm:h-5 sm:w-5" />
                           </button>
                         }
                       />
@@ -1119,12 +1083,12 @@ export default function AgentPanel() {
 
                 {/* ══════════ SEÇÃO 2: NOTIFICAÇÕES & ALERTAS ══════════ */}
                 <Collapsible>
-                  <CollapsibleTrigger className="group w-full flex items-center justify-between gap-2 px-2.5 py-1.5 md:px-3 md:py-2 rounded-md border border-amber-500/25 bg-amber-500/[0.06] hover:bg-amber-500/[0.10] transition-colors">
-                    <span className="flex items-center gap-2 text-[11px] md:text-xs font-bold uppercase tracking-wider text-amber-300/90">
+                  <CollapsibleTrigger className="group w-full flex items-center justify-between gap-2 px-2.5 py-1.5 md:px-3 md:py-2 rounded-md border border-primary/25 bg-primary/[0.06] hover:bg-primary/[0.10] transition-colors">
+                    <span className="flex items-center gap-2 text-[11px] md:text-xs font-bold uppercase tracking-wider text-primary/90">
                       <BellRing className="h-3.5 w-3.5" />
                       Notificações &amp; Alertas
                     </span>
-                    <ChevronDown className="h-3.5 w-3.5 text-amber-300/70 transition-transform group-data-[state=open]:rotate-180" />
+                    <ChevronDown className="h-3.5 w-3.5 text-primary/70 transition-transform group-data-[state=open]:rotate-180" />
                   </CollapsibleTrigger>
                   <CollapsibleContent className="pt-1.5 md:pt-2">
                     <NotificationsAndAlertsCard agentId={agent.id} />
