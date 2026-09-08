@@ -1,18 +1,19 @@
 // Padroniza nomes de unidades para exibição no painel master e telas administrativas.
-// Baseado nas 9 unidades socioeducativas do Acre.
+// Baseado nas 8 unidades socioeducativas do Acre atualmente cadastradas.
 const UNIT_DISPLAY_MAP: Record<string, string> = {
-  'CS CZS': 'CS Cruzeiro do Sul',
+  'CS JURUÁ': 'CS Juruá',
+  'CS JURUA': 'CS Juruá',
   'CS FEIJÓ': 'CS Feijó',
   'CS FEIJO': 'CS Feijó',
   'CS ACRE': 'CS Acre',
   'CS AQUIRI': 'CS Aquiri',
   'CS BRASILÉIA': 'CS Brasiléia',
   'CS BRASILEIA': 'CS Brasiléia',
-  'CS MOCINHA': 'CS Mocinha',
+  'CS MOCINHA': 'CS Mocinha Magalhães',
+  'CS MOCINHA MAGALHÃES': 'CS Mocinha Magalhães',
   'CS SANTA JULIANA': 'CS Santa Juliana',
-  'CS SENA': 'CS Sena Madureira',
-  'UIP - RIO BRANCO': 'UIP - Rio Branco',
-  'UIP RIO BRANCO': 'UIP - Rio Branco',
+  'CS PURUS': 'CS Purus',
+  'CS SENA': 'CS Purus',
 };
 
 export function formatUnitName(raw?: string | null): string {

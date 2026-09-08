@@ -273,7 +273,7 @@ export default function Install() {
 
         {/* Footer */}
         <p className="text-center text-xs text-muted-foreground pt-4">
-          Desenvolvido por <span className="text-amber-500">CS FEIJÓ</span>
+          Desenvolvido por <span className="text-primary">CS FEIJÓ</span>
         </p>
       </main>
     </div>

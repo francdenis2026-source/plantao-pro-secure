@@ -2,6 +2,7 @@ import React, { forwardRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
+import { useAgentProfile } from '@/hooks/useAgentProfile';
 import { RestrictedAccessDialog } from '@/components/auth/RestrictedAccessDialog';
 import plantaoproLogo_ptr from '@/assets/brand/plantaopro-logo.png.asset.json';
 const plantaoproLogo = (plantaoproLogo_ptr as {url:string}).url;
@@ -50,6 +51,7 @@ const masterItems: NavItemDef[] = [
 export const Sidebar = forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
   (props, ref) => {
     const { masterSession, user, isAdmin } = useAuth();
+    const { agent } = useAgentProfile();
     const [restricted, setRestricted] = useState<string | null>(null);
     const isAuthed = !!user || !!masterSession;
 
@@ -120,7 +122,7 @@ export const Sidebar = forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>
           <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
             v1.0
           </span>
-          <span className="text-[10px] text-muted-foreground/60">CS FEIJÓ</span>
+          <span className="truncate text-[10px] text-muted-foreground/60">{agent?.unit?.name ?? (masterSession ? 'Master' : '')}</span>
         </div>
 
         <RestrictedAccessDialog
