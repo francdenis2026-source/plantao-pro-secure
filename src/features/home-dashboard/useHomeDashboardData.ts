@@ -11,14 +11,24 @@ export interface NextShift {
   shift_type: string;
 }
 
+export interface SwapShiftInfo {
+  shift_date: string;
+  start_time: string;
+  end_time: string;
+}
+
 export interface SwapRequestRow {
   id: string;
   requester_id: string;
   target_id: string;
+  requester_shift_id: string | null;
+  target_shift_id: string | null;
   status: string;
   reason: string | null;
   created_at: string;
   requester?: { name: string; avatar_url: string | null } | null;
+  requesterShift?: SwapShiftInfo | null;
+  targetShift?: SwapShiftInfo | null;
 }
 
 export interface ActivityRow {
@@ -109,7 +119,24 @@ export function usePendingSwaps(agentId: string | undefined) {
         .order('created_at', { ascending: false })
         .limit(5);
       if (error) throw error;
-      return data ?? [];
+      const swaps: SwapRequestRow[] = data ?? [];
+
+      const shiftIds = Array.from(new Set(
+        swaps.flatMap((s) => [s.requester_shift_id, s.target_shift_id]).filter(Boolean),
+      )) as string[];
+      if (shiftIds.length === 0) return swaps;
+
+      const { data: shifts } = await sb
+        .from('agent_shifts')
+        .select('id, shift_date, start_time, end_time')
+        .in('id', shiftIds);
+      const shiftById = new Map((shifts ?? []).map((s: any) => [s.id, s]));
+
+      return swaps.map((s) => ({
+        ...s,
+        requesterShift: s.requester_shift_id ? shiftById.get(s.requester_shift_id) ?? null : null,
+        targetShift: s.target_shift_id ? shiftById.get(s.target_shift_id) ?? null : null,
+      }));
     },
     enabled: !!agentId,
   });

@@ -1,29 +1,20 @@
-import { Bell } from 'lucide-react';
+import { Bell, Search } from 'lucide-react';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAgentProfile } from '@/hooks/useAgentProfile';
+import { HomeHeroBanner } from './HomeHeroBanner';
 import { NextShiftCard } from './NextShiftCard';
+import { QuickActionsCard } from './QuickActionsCard';
 import { WeekStrip } from './WeekStrip';
 import { HomeKpiRow } from './HomeKpiRow';
 import { SwapCenterCard } from './SwapCenterCard';
 import { ActivityAndQuickAccess } from './ActivityAndQuickAccess';
 import { useNextShift, useWeekShifts, useHomeCounts, usePendingSwaps, useRecentActivity } from './useHomeDashboardData';
 
-function greeting(): string {
-  const h = new Date().getHours();
-  if (h < 12) return 'Bom dia';
-  if (h < 18) return 'Boa tarde';
-  return 'Boa noite';
-}
-
-/**
- * Home autenticada — responde em segundos "qual meu próximo plantão / como
- * está minha semana / existe algo que precisa de atenção" (Seção 13).
- * Sem hero gigante: o primeiro conteúdo é o card do próximo plantão.
- */
 export function AgentHomeDashboard() {
   const { user } = useAuth();
   const { agent, isLoading: agentLoading } = useAgentProfile();
@@ -50,13 +41,18 @@ export function AgentHomeDashboard() {
       <Sidebar />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-16 shrink-0 items-center justify-between border-b border-border px-4 sm:px-6">
-          <div className="hidden sm:block" />
+        <header className="flex h-16 shrink-0 items-center justify-between gap-4 border-b border-border px-4 sm:px-6">
+          <div className="relative hidden max-w-sm flex-1 sm:block">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input placeholder="Buscar por colega, data ou unidade..." className="pl-9" />
+          </div>
           <div className="flex items-center gap-3">
             <button className="relative rounded-lg p-2 text-muted-foreground hover:bg-muted" aria-label="Notificações">
               <Bell className="h-5 w-5" />
               {(countsQ.data?.notices ?? 0) > 0 && (
-                <span className="absolute right-1.5 top-1.5 flex h-2 w-2 rounded-full bg-destructive" />
+                <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[9px] font-bold text-destructive-foreground">
+                  {countsQ.data?.notices}
+                </span>
               )}
             </button>
             <div className="flex items-center gap-2">
@@ -73,23 +69,23 @@ export function AgentHomeDashboard() {
         </header>
 
         <main className="min-w-0 flex-1 space-y-5 overflow-y-auto p-4 pb-24 sm:p-6 lg:pb-6">
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">{greeting()}, {firstName}!</h1>
-            <p className="text-sm text-muted-foreground">
-              {(countsQ.data?.today ?? 0) > 0 ? 'Você tem um plantão hoje.' : 'Sua escala está tranquila hoje.'}
-            </p>
-          </div>
+          <HomeHeroBanner
+            firstName={firstName}
+            subtitle={(countsQ.data?.today ?? 0) > 0 ? 'Você tem um plantão hoje.' : 'Sua escala está tranquila hoje.'}
+          />
 
-          <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <NextShiftCard shift={nextShiftQ.data} unitName={agent?.unit?.name ?? null} team={agent?.team ?? null} />
             </div>
-            <SwapCenterCard swaps={swapsQ.data ?? []} />
+            <QuickActionsCard />
           </div>
 
           <HomeKpiRow counts={countsQ.data ?? { today: 0, upcoming: 0, swaps: 0, notices: 0 }} />
 
-          <WeekStrip shifts={weekShiftsQ.data ?? []} />
+          <WeekStrip shifts={weekShiftsQ.data ?? []} unitName={agent?.unit?.name} team={agent?.team} />
+
+          <SwapCenterCard swaps={swapsQ.data ?? []} agentId={agent?.id} />
 
           <ActivityAndQuickAccess activity={activityQ.data ?? []} />
         </main>
