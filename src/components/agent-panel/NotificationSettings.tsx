@@ -66,7 +66,7 @@ export function NotificationSettings() {
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center justify-between text-lg">
           <div className="flex items-center gap-2">
-            <BellRing className="h-5 w-5 text-amber-500" />
+            <BellRing className="h-5 w-5 text-primary" />
             <span>Notificações Push</span>
           </div>
           {getStatusBadge()}
@@ -94,15 +94,15 @@ export function NotificationSettings() {
           </div>
         ) : !isEnabled ? (
           <div className="space-y-3">
-            <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-              <p className="text-sm text-amber-400">
+            <div className="p-3 bg-primary/10 border border-primary/30 rounded-lg">
+              <p className="text-sm text-primary">
                 Ative as notificações para receber lembretes 24h antes de cada plantão.
               </p>
             </div>
             <Button
               onClick={handleEnableNotifications}
               disabled={isRequesting}
-              className="w-full bg-amber-500 hover:bg-amber-600 text-black"
+              className="w-full bg-primary hover:bg-primary text-black"
             >
               {isRequesting ? (
                 'Solicitando permissão...'
@@ -134,7 +134,7 @@ export function NotificationSettings() {
                     Lembretes de plantão
                   </Label>
                 </div>
-                <Switch id="shift-alerts" defaultChecked disabled className="data-[state=checked]:bg-amber-500" />
+                <Switch id="shift-alerts" defaultChecked disabled className="data-[state=checked]:bg-primary" />
               </div>
             </div>
 

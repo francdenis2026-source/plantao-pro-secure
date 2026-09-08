@@ -165,7 +165,7 @@ export function ExternalDatabaseConfig() {
     return (
       <Card className="bg-slate-800/50 border-slate-700">
         <CardContent className="flex items-center justify-center py-8">
-          <Loader2 className="h-6 w-6 animate-spin text-amber-500" />
+          <Loader2 className="h-6 w-6 animate-spin text-primary" />
         </CardContent>
       </Card>
     );
@@ -176,7 +176,7 @@ export function ExternalDatabaseConfig() {
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Database className="h-5 w-5 text-amber-500" />
+            <Database className="h-5 w-5 text-primary" />
             <div>
               <CardTitle className="text-white">Bancos de Dados Externos</CardTitle>
               <CardDescription className="text-slate-400">
@@ -186,7 +186,7 @@ export function ExternalDatabaseConfig() {
           </div>
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
-              <Button size="sm" className="bg-amber-500 hover:bg-amber-600 text-slate-900">
+              <Button size="sm" className="bg-primary hover:bg-primary text-slate-900">
                 <Plus className="h-4 w-4 mr-2" />
                 Adicionar
               </Button>
@@ -244,7 +244,7 @@ export function ExternalDatabaseConfig() {
                 <Button
                   onClick={handleAddConfig}
                   disabled={isSaving}
-                  className="bg-amber-500 hover:bg-amber-600 text-slate-900"
+                  className="bg-primary hover:bg-primary text-slate-900"
                 >
                   {isSaving ? (
                     <>
@@ -314,7 +314,7 @@ export function ExternalDatabaseConfig() {
         
         <div className="pt-4 border-t border-slate-700">
           <p className="text-xs text-slate-500">
-            <strong className="text-amber-500">Nota:</strong> A funcionalidade de banco externo está em desenvolvimento.
+            <strong className="text-primary">Nota:</strong> A funcionalidade de banco externo está em desenvolvimento.
             As configurações serão usadas em futuras versões para sincronização de dados.
           </p>
         </div>

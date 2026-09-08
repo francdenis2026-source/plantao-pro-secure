@@ -119,7 +119,7 @@ export function SingleDeviceGuard() {
 
   return (
     <AlertDialog open={kicked}>
-      <AlertDialogContent className="max-w-md border-amber-500/40 bg-slate-950/95 backdrop-blur">
+      <AlertDialogContent className="max-w-md border-primary/40 bg-slate-950/95 backdrop-blur">
         <AlertDialogHeader className="items-center text-center">
           <div className="mb-2 flex h-24 w-24 items-center justify-center">
             <svg viewBox="0 0 120 120" className="h-24 w-24 drop-shadow-[0_0_18px_rgba(245,158,11,0.55)]">
@@ -155,17 +155,17 @@ export function SingleDeviceGuard() {
               <rect x="58.5" y="70" width="3" height="8" fill="#fbbf24" />
             </svg>
           </div>
-          <AlertDialogTitle className="font-serif text-xl tracking-wide text-amber-400">
+          <AlertDialogTitle className="font-serif text-xl tracking-wide text-primary">
             SESSÃO ENCERRADA
           </AlertDialogTitle>
           <AlertDialogDescription className="space-y-2 text-center text-slate-300">
             <span className="block text-sm">
-              Detectamos um novo acesso à sua conta em <strong className="text-amber-300">outro dispositivo</strong>.
+              Detectamos um novo acesso à sua conta em <strong className="text-primary">outro dispositivo</strong>.
             </span>
             <span className="block text-xs text-slate-400">
               Por segurança operacional, apenas um dispositivo pode permanecer ativo por vez.
             </span>
-            <span className="mt-3 block rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 font-mono text-xs text-amber-200">
+            <span className="mt-3 block rounded-md border border-primary/30 bg-primary/10 px-3 py-2 font-mono text-xs text-primary">
               Encerrando esta sessão em {countdown}s…
             </span>
           </AlertDialogDescription>
@@ -173,7 +173,7 @@ export function SingleDeviceGuard() {
         <AlertDialogFooter>
           <AlertDialogAction
             onClick={performLogout}
-            className="w-full bg-amber-500 text-slate-950 hover:bg-amber-400"
+            className="w-full bg-primary text-slate-950 hover:bg-primary"
           >
             Sair agora
           </AlertDialogAction>

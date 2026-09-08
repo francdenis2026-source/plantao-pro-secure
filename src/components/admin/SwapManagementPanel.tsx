@@ -247,7 +247,7 @@ Documento gerado automaticamente pelo PlantãoPro
     switch (status) {
       case 'pending':
         return (
-          <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">
+          <Badge className="bg-primary/20 text-primary border-primary/30">
             <Clock className="h-3 w-3 mr-1" />
             Pendente
           </Badge>
@@ -283,7 +283,7 @@ Documento gerado automaticamente pelo PlantãoPro
       <CardHeader>
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-orange-500/30 to-amber-500/20 border border-orange-500/40">
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-orange-500/30 to-primary/20 border border-orange-500/40">
               <ArrowRightLeft className="h-6 w-6 text-orange-400" />
             </div>
             <div>
@@ -496,10 +496,10 @@ Documento gerado automaticamente pelo PlantãoPro
               </div>
 
               {/* Shift Info */}
-              <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+              <div className="p-3 bg-primary/10 border border-primary/30 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <Calendar className="h-4 w-4 text-amber-400" />
-                  <span className="text-amber-400 text-xs font-semibold uppercase">Plantão</span>
+                  <Calendar className="h-4 w-4 text-primary" />
+                  <span className="text-primary text-xs font-semibold uppercase">Plantão</span>
                 </div>
                 <p className="text-white font-medium">
                   {selectedSwap.requester_shift?.shift_date
