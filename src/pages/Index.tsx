@@ -78,6 +78,7 @@ import { useHomeCardOrder, type HomeCardId } from '@/hooks/useHomeCardOrder';
 import { CommandRoomBackground } from '@/components/home/CommandRoomBackground';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
 import { OperatorHeaderControls } from '@/components/layout/OperatorHeaderControls';
+import headerBg from '@/assets/midias/hero-banner.png';
 
 import { useTheme } from '@/contexts/ThemeContext';
 import { setMasterToken } from '@/lib/masterSession';
@@ -1411,14 +1412,26 @@ export default function Index() {
         {/* Barra fixa do topo — marca + rádio, tema e ferramentas do operador,
             sempre visíveis mesmo com a página rolada. `fixed` (não `sticky`)
             porque um ancestral usa overflow-x-clip, o que quebra sticky. */}
-        <div className="fixed inset-x-0 top-0 z-40 flex h-16 shrink-0 items-center justify-between border-b border-border/60 bg-background/80 px-3 backdrop-blur-md sm:px-5">
-          <div className="flex items-center gap-2.5">
+        <div className="fixed inset-x-0 top-0 z-40 flex h-16 shrink-0 items-center justify-between overflow-hidden border-b border-border/60 bg-background/90 px-3 backdrop-blur-md sm:px-5">
+          <img
+            src={headerBg}
+            alt=""
+            aria-hidden
+            loading="eager"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover opacity-[0.14]"
+          />
+          <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/40" />
+
+          <div className="relative flex items-center gap-2.5">
             <BrasaoSentinela size={46} title="PlantãoPro" />
             <span className="font-display text-base font-bold tracking-wide text-foreground sm:text-lg">
               Plantão<span className="text-primary">Pro</span>
             </span>
           </div>
-          <OperatorHeaderControls />
+          <div className="relative">
+            <OperatorHeaderControls />
+          </div>
         </div>
         <div className="h-16 shrink-0" aria-hidden />
 

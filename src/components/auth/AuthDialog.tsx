@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import logoShieldUrl from '@/assets/logo-ise-socioeducativo.png';
 const logoShield = logoShieldUrl;
 const logoShieldWebp = logoShieldUrl;
-import { getTeamPoster, getTeamEmblem, getTeamColors } from '@/lib/teamAssets';
+import { getTeamPoster, getTeamColors } from '@/lib/teamAssets';
 
 type AuthDialogVariant = 'agent' | 'master' | 'admin' | 'register' | 'check';
 type TeamName = 'ALFA' | 'BRAVO' | 'CHARLIE' | 'DELTA';
@@ -106,7 +106,6 @@ export function AuthDialog({
   const styles = variantStyles[variant];
   const teamKey = team ? String(team).toUpperCase() : null;
   const teamPoster = teamKey ? getTeamPoster(teamKey) : null;
-  const teamEmblem = teamKey ? getTeamEmblem(teamKey) : null;
   const teamColor = teamKey ? getTeamColors(teamKey) : null;
   const teamPattern = teamColor ? buildTeamPattern(teamColor.primary) : null;
   const teamBranded = Boolean(teamPoster && teamColor);
@@ -181,24 +180,15 @@ export function AuthDialog({
               <span className="hidden sm:inline text-[9px] sm:text-[10px] tracking-[0.2em] font-mono text-white/45 shrink-0">CLASSIFIED</span>
             </div>
 
-            {/* Emblem + title — horizontal compact */}
-            <div className="absolute bottom-0 inset-x-0 px-3 sm:px-4 pb-2.5 sm:pb-3 flex items-end gap-2.5 sm:gap-3">
-              {teamEmblem && (
-                <img src={teamEmblem} alt=""
-                  className="h-9 w-9 sm:h-11 sm:w-11 md:h-12 md:w-12 object-contain shrink-0 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" />
+            {/* Title — o pôster já identifica a equipe (nome + emblema
+                embutidos na arte), então não repetimos aqui. */}
+            <div className="absolute bottom-0 inset-x-0 px-3 sm:px-4 pb-2.5 sm:pb-3">
+              <h2 className="text-[15px] sm:text-lg md:text-xl font-bold tracking-tight text-white leading-tight font-stencil line-clamp-1">
+                {title}
+              </h2>
+              {subtitle && (
+                <p className="text-[10px] sm:text-[11px] text-white/70 leading-snug mt-0.5 line-clamp-2 sm:line-clamp-1">{subtitle}</p>
               )}
-              <div className="min-w-0 flex-1">
-                <div className="text-[9px] sm:text-[10px] tracking-[0.28em] sm:tracking-[0.32em] font-mono font-bold uppercase leading-none"
-                     style={{ color: teamColor!.primary }}>
-                  Equipe {teamKey}
-                </div>
-                <h2 className="text-[15px] sm:text-lg md:text-xl font-bold tracking-tight text-white leading-tight mt-1 font-stencil line-clamp-1">
-                  {title}
-                </h2>
-                {subtitle && (
-                  <p className="text-[10px] sm:text-[11px] text-white/70 leading-snug mt-0.5 line-clamp-2 sm:line-clamp-1">{subtitle}</p>
-                )}
-              </div>
             </div>
 
             <div className="absolute bottom-0 inset-x-0 h-px"
