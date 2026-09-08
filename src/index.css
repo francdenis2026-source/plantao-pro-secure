@@ -1,0 +1,2886 @@
+/* Fontes carregadas via <link rel="preload"> em index.html (evita render-blocking @import).
+   Fallbacks system-ui/Georgia definidos em tailwind.config.ts font-family stacks. */
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ================================
+       PLANTÃOPRO — Sistema Institucional v3
+       Identidade profissional sóbria: ardósia neutra + azul institucional único.
+       Sem dourado, sem HUD tático, sem heráldica decorativa.
+       ================================ */
+    --background: 222 18% 8%;
+    --foreground: 210 20% 96%;
+
+    --card: 222 16% 11%;
+    --card-foreground: 210 20% 96%;
+
+    --popover: 222 18% 9%;
+    --popover-foreground: 210 20% 96%;
+
+    /* Primary — Azul institucional único (confiança, segurança pública) */
+    --primary: 205 88% 46%;
+    --primary-foreground: 210 20% 99%;
+    --primary-glow: 205 88% 58%;
+
+    --secondary: 222 14% 17%;
+    --secondary-foreground: 210 20% 94%;
+
+    --muted: 222 14% 15%;
+    --muted-foreground: 216 12% 65%;
+
+    --accent: 205 88% 46%;
+    --accent-foreground: 210 20% 99%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 152 55% 42%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 80% 52%;
+    --warning-foreground: 222 18% 8%;
+
+    --border: 222 13% 21%;
+    --input: 222 14% 16%;
+    --ring: 205 88% 46%;
+
+    --sidebar-background: 222 20% 6%;
+    --sidebar-foreground: 210 18% 92%;
+    --sidebar-primary: 205 88% 50%;
+    --sidebar-primary-foreground: 210 20% 99%;
+    --sidebar-accent: 222 14% 13%;
+    --sidebar-accent-foreground: 210 18% 92%;
+    --sidebar-border: 222 13% 17%;
+    --sidebar-ring: 205 88% 50%;
+
+    --radius: 0.625rem;
+
+    /* Viewport contracts */
+    --app-header-height: 4rem;
+    --safe-dvh: 100dvh;
+    --home-viewport-height: calc(var(--safe-dvh) - var(--app-header-height));
+
+    /* Gradientes institucionais — ardósia + azul único */
+    --gradient-primary: linear-gradient(135deg, hsl(205 88% 46%) 0%, hsl(217 85% 38%) 100%);
+    --gradient-dark: radial-gradient(ellipse at top, hsl(222 18% 11%) 0%, hsl(222 20% 6%) 100%);
+    --gradient-navy-depth: linear-gradient(160deg, hsl(222 16% 12%) 0%, hsl(222 18% 8%) 55%, hsl(222 20% 5%) 100%);
+    --gradient-hero-overlay: linear-gradient(120deg, hsl(222 20% 6% / 0.94) 0%, hsl(222 18% 9% / 0.72) 55%, hsl(205 60% 20% / 0.20) 100%);
+
+    /* Sombras */
+    --shadow-command: 0 24px 60px -20px hsl(222 25% 2% / 0.85), 0 2px 8px hsl(205 88% 46% / 0.16);
+    --shadow-elevated: 0 30px 60px -20px hsl(222 25% 2% / 0.85), 0 0 0 1px hsl(222 13% 24% / 0.6);
+    --glow-primary: 0 0 0 1px hsl(205 88% 46% / 0.45), 0 12px 32px -12px hsl(205 88% 46% / 0.35);
+  }
+
+
+
+
+
+  html {
+    font-size: 16px;
+  }
+
+  @media (max-width: 640px) {
+    html {
+      font-size: 15px;
+    }
+  }
+
+  html, body, #root {
+    min-height: 100dvh;
+    background-color: hsl(var(--background));
+  }
+
+  body {
+    @apply text-foreground antialiased;
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    /* BG global do site — gradiente tático neutro (espelha o ThemedPanelBackground). */
+    background:
+      linear-gradient(160deg,
+        hsl(222 47% 8%) 0%,
+        hsl(222 47% 12%) 50%,
+        hsl(220 47% 6%) 100%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-feature-settings: 'kern', 'liga', 'calt', 'ss01';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    line-height: 1.6;
+    letter-spacing: -0.003em;
+  }
+
+  /* HUD grid overlay removido para fundo limpo. */
+
+  #root {
+    background: transparent;
+    position: relative;
+    z-index: 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Libre Baskerville', 'Georgia', serif;
+    letter-spacing: -0.018em;
+    font-weight: 700;
+    line-height: 1.18;
+  }
+
+  h1 { font-weight: 700; letter-spacing: -0.028em; line-height: 1.05; }
+  h2 { letter-spacing: -0.022em; line-height: 1.12; }
+  h3 { letter-spacing: -0.016em; }
+
+  p { line-height: 1.7; }
+
+  strong, b { font-weight: 600; }
+
+  label {
+    @apply text-sm font-semibold;
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    letter-spacing: 0.015em;
+  }
+
+  input, select, textarea, button {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    letter-spacing: -0.003em;
+  }
+
+  code, kbd, pre, samp, .font-mono {
+    font-family: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, monospace;
+    font-feature-settings: 'zero', 'ss01';
+  }
+
+  /* Números tabulares (relógios, contadores, tabelas) */
+  .tabular-nums, time, [data-tabular] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum', 'zero';
+  }
+
+  /* Eyebrow / uppercase institucional */
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
+  }
+}
+
+
+
+/* ================================
+   INSTITUTIONAL UTILITIES
+   ================================ */
+@layer components {
+  .hero-cinematic {
+    background: var(--gradient-navy-depth);
+    box-shadow: var(--shadow-elevated);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .institutional-card {
+    @apply rounded-2xl border border-border/60 bg-card/80 backdrop-blur-md;
+    background-image: linear-gradient(135deg, hsl(var(--card) / 0.9) 0%, hsl(217 45% 12% / 0.7) 100%);
+    box-shadow: var(--shadow-elevated);
+    transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease, border-color .35s ease;
+  }
+
+  .institutional-card:hover {
+    transform: translateY(-3px);
+    border-color: hsl(var(--primary) / 0.45);
+    box-shadow: var(--shadow-command);
+  }
+
+  .command-badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.22em];
+    background: hsl(var(--primary) / 0.12);
+    color: hsl(var(--primary));
+    border: 1px solid hsl(var(--primary) / 0.35);
+    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.05);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .tactical-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, hsl(var(--primary) / 0.5) 50%, transparent 100%);
+  }
+
+  .text-glow-amber {
+    text-shadow: none;
+  }
+
+  .glow-ring-amber {
+    box-shadow: var(--glow-primary);
+  }
+
+  /* ===== ARMED-FORCES TYPOGRAPHY ===== */
+  .font-stencil {
+    /* Carregada com font-display:block em index.html — evita flash de Impact atrás do nome das equipes */
+    font-family: 'Stardos Stencil', serif;
+    letter-spacing: 0.04em;
+  }
+
+  .font-tactical {
+    font-family: 'IBM Plex Mono', 'JetBrains Mono', 'Courier New', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .font-mono-mil {
+    font-family: 'IBM Plex Mono', 'JetBrains Mono', 'Courier New', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  .font-display {
+    font-family: 'Libre Baskerville', 'Georgia', serif;
+    letter-spacing: -0.02em;
+  }
+
+  .bg-scanlines {
+    background-image: repeating-linear-gradient(
+      0deg,
+      hsl(var(--primary) / 0.04) 0px,
+      hsl(var(--primary) / 0.04) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  }
+
+  @keyframes scan-line-y {
+    0% { transform: translateY(-10%); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(110%); opacity: 0; }
+  }
+  .scan-line-y { animation: scan-line-y 5s linear infinite; }
+
+  @keyframes radar-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .radar-rotate { animation: radar-rotate 8s linear infinite; transform-origin: center; }
+}
+
+
+/* ================================
+   THEME-SPECIFIC SECURITY ANIMATIONS
+   ================================ */
+
+/* Tactical - Radar Sweep */
+@keyframes radarSweep {
+  0% { top: 0%; opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes tacticalPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); box-shadow: 0 0 4px rgba(251,191,36,0.3); }
+  50% { opacity: 1; transform: scale(1.5); box-shadow: 0 0 15px rgba(251,191,36,0.6); }
+}
+
+/* Cyber - Matrix Lines */
+@keyframes matrixLine {
+  0% { top: -100%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Crimson - Emergency Effects */
+@keyframes emergencyPulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes alarmFlash {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); box-shadow: 0 0 20px rgba(239,68,68,0.8); }
+}
+
+@keyframes alertScan {
+  0%, 100% { top: 0%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Arctic - Frost Effects */
+@keyframes frostShimmer {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.25; }
+}
+
+@keyframes frostLine {
+  0% { top: 0%; opacity: 0; }
+  10% { opacity: 0.5; }
+  90% { opacity: 0.5; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Sovereign - Royal Shimmer */
+@keyframes royalShimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes crownGlow {
+  0%, 100% { opacity: 0.5; box-shadow: 0 0 4px rgba(234,179,8,0.3); }
+  50% { opacity: 1; box-shadow: 0 0 12px rgba(234,179,8,0.7); }
+}
+
+/* Nexus - Circuit Effects */
+@keyframes circuitPulseH {
+  0%, 100% { top: 0%; opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes circuitPulseV {
+  0%, 100% { left: 0%; opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+/* Ember - Fire Effects */
+@keyframes emberGlow {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.45; }
+}
+
+@keyframes emberSweep {
+  0% { top: 0%; opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+@keyframes emberFlare {
+  0%, 100% { opacity: 0.5; transform: scale(1); box-shadow: 0 0 8px rgba(234,88,12,0.4); }
+  50% { opacity: 1; transform: scale(1.6); box-shadow: 0 0 20px rgba(234,88,12,0.8); }
+}
+
+/* Gradient Text Animation */
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 3s ease infinite;
+}
+
+@keyframes hud-scan-x {
+  0%   { transform: translateX(-45%); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(240%); opacity: 0; }
+}
+
+/* ================================
+   OFFLINE MODE - PREVENT PULL TO REFRESH
+   ================================ */
+html, body {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100dvh;
+  touch-action: pan-y pinch-zoom;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+/* Full viewport usage */
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+  min-width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  touch-action: pan-y pinch-zoom;
+}
+
+#root {
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overscroll-behavior-x: none;
+  touch-action: pan-y pinch-zoom;
+}
+
+/* Mobile: trava viewport (barra de endereço estável, sem redimensionamento). */
+@media (max-width: 767px) {
+  #root {
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+  }
+}
+
+
+
+@supports (height: 100svh) {
+  :root {
+    --safe-dvh: 100svh;
+  }
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --safe-dvh: 100dvh;
+  }
+}
+
+@supports (overflow: clip) {
+  html,
+  body,
+  #root {
+    overflow-x: clip;
+  }
+}
+
+.home-viewport-shell {
+  height: var(--home-viewport-height);
+  min-height: var(--home-viewport-height);
+  max-height: var(--home-viewport-height);
+  overflow: hidden;
+  contain: layout paint;
+  overscroll-behavior: none;
+  touch-action: pan-x pan-y pinch-zoom;
+}
+
+/* ============================================================
+   DESKTOP HOMEPAGE — hierarquia protagonista dos cards de equipe
+   Objetivo: título+briefing compactos, cena contida, cards grandes,
+   rodapé slim. Tudo dentro de uma tela sem cortes/esmagamento.
+   ============================================================ */
+
+/* Baseline desktop (≥1024px): destaca os cards e slim o rodapé */
+@media (min-width: 1024px) {
+  .pp-scene-stage {
+    min-height: clamp(150px, 20vh, 200px) !important;
+  }
+  .pp-scene-composite {
+    height: clamp(150px, 20vh, 200px) !important;
+  }
+  .pp-team-selector {
+    padding-top: 0.25rem !important;
+  }
+  .pp-team-grid {
+    gap: 1.25rem !important;
+    align-items: stretch !important;
+  }
+  .pp-team-card-footer {
+    padding: 0.35rem 0.55rem !important;
+  }
+  .pp-team-card-role {
+    font-size: 0.6875rem !important;
+    letter-spacing: 0.18em !important;
+  }
+  .pp-team-card-op {
+    font-size: 0.6875rem !important;
+    letter-spacing: 0.14em !important;
+    padding: 0.1rem 0.35rem !important;
+  }
+  .pp-compliance-strip {
+    margin-top: 0.5rem !important;
+    padding-top: 0.35rem !important;
+    gap: 0.75rem !important;
+  }
+}
+
+/* Desktop baixo (max-height:760px): mantém tudo em 1 viewport sem cortar cards. */
+@media (min-width: 640px) and (max-height: 760px) {
+  .pp-home-hero {
+    max-height: calc(100dvh - var(--app-header-height) - 4px);
+  }
+
+  .pp-hero-top-row {
+    gap: 0.75rem !important;
+    padding-top: 0.125rem !important;
+  }
+
+  .pp-hero-left {
+    gap: 0.4rem !important;
+  }
+
+  .pp-hero-title {
+    font-size: clamp(1.25rem, 1.7vw, 1.55rem) !important;
+    line-height: 1.02 !important;
+  }
+
+  .pp-hero-subtitle {
+    font-size: 0.5625rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .pp-briefing-panel {
+    margin-top: 0 !important;
+  }
+
+  .pp-briefing-card {
+    padding: 0.5rem 0.7rem !important;
+  }
+
+  .pp-briefing-metrics {
+    gap: 0.45rem !important;
+  }
+
+  .pp-scene-stage {
+    min-height: clamp(140px, 18vh, 170px) !important;
+    padding-top: 0 !important;
+  }
+
+  .pp-scene-composite {
+    height: clamp(140px, 18vh, 170px) !important;
+  }
+
+  .pp-team-selector {
+    padding-top: 0 !important;
+    margin-top: -0.1rem !important;
+  }
+
+  .pp-team-grid {
+    gap: 1rem !important;
+  }
+
+  .pp-team-grid [data-team-card] {
+    max-width: 12.5rem !important;
+  }
+
+  .pp-compliance-strip {
+    margin-top: 0.3rem !important;
+    padding-top: 0.3rem !important;
+    gap: 0.55rem !important;
+  }
+}
+
+/* Desktop MUITO baixo (max-height:670px, ex: 1360×633): compressão máxima
+   mantendo cards visíveis, legíveis e protagonistas. */
+@media (min-width: 1024px) and (max-height: 670px) {
+  .pp-home-hero {
+    border-radius: 0.875rem !important;
+  }
+
+  .pp-hero-title {
+    font-size: clamp(1.15rem, 1.55vw, 1.4rem) !important;
+  }
+
+  .pp-briefing-card {
+    padding-top: 0.4rem !important;
+    padding-bottom: 0.4rem !important;
+  }
+
+  .pp-scene-stage {
+    min-height: clamp(125px, 16vh, 150px) !important;
+  }
+
+  .pp-scene-composite {
+    height: clamp(125px, 16vh, 150px) !important;
+  }
+
+  .pp-team-grid {
+    gap: 0.85rem !important;
+  }
+
+  .pp-team-grid [data-team-card] {
+    max-width: 11.5rem !important;
+  }
+
+  .pp-team-card-footer {
+    padding: 0.28rem 0.45rem !important;
+  }
+
+  .pp-team-card-role {
+    font-size: 0.625rem !important;
+    letter-spacing: 0.14em !important;
+  }
+
+  .pp-team-card-op {
+    font-size: 0.625rem !important;
+    letter-spacing: 0.1em !important;
+    padding: 0.08rem 0.3rem !important;
+  }
+}
+
+
+@media (max-width: 640px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .home-viewport-shell {
+    height: var(--home-viewport-height);
+    min-height: var(--home-viewport-height);
+    max-height: var(--home-viewport-height);
+    overflow: hidden;
+    contain: layout paint;
+    touch-action: pan-x pan-y pinch-zoom;
+    overscroll-behavior: none;
+  }
+
+
+  .hero-cinematic {
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    flex: 0 0 auto !important;
+    touch-action: pan-y pinch-zoom;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Mobile: garantir que o boneco e a viatura capturem o toque (arraste),
+     sobrepondo o pan-y do container hero. */
+  .hero-cinematic .agent-figure,
+  .hero-cinematic .police-vehicle {
+    touch-action: none !important;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    z-index: 60;
+  }
+
+
+  .home-viewport-shell > * {
+    flex: 0 0 auto;
+  }
+
+  .agent-figure,
+  .police-vehicle,
+  .team-card-3d,
+  .team-icon-3d {
+    will-change: auto;
+  }
+
+  .animate-team-float,
+  .animate-team-shield,
+  .animate-team-helmet,
+  .animate-team-radio,
+  .animate-team-handcuffs,
+  .police-vehicle {
+    animation: none !important;
+  }
+
+
+  .team-card-3d:hover,
+  .team-card-3d:active,
+  .team-card-3d:hover .team-icon-3d,
+  .team-card-3d:active .team-icon-3d {
+    transform: none;
+  }
+}
+
+
+.offline-lock {
+  touch-action: pan-y pinch-zoom;
+  overscroll-behavior: none;
+}
+
+/* Prevent swipe/scroll issues in app */
+.no-overscroll {
+  overscroll-behavior: none;
+  touch-action: pan-y pinch-zoom;
+}
+
+/* Block swipe-back gesture on all panels */
+.no-swipe-back {
+  touch-action: pan-y pinch-zoom;
+  overscroll-behavior-x: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* GPU-accelerated scrolling containers */
+.smooth-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: auto;
+  transform: translateZ(0);
+  will-change: scroll-position;
+  touch-action: pan-y pinch-zoom;
+}
+
+/* Optimize animations - run only once */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ================================
+   PHASE 6 — Global motion primitives (Navy + Amber)
+   ================================ */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  will-change: transform;
+}
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-command);
+  border-color: hsl(var(--primary) / 0.55);
+}
+
+@keyframes amber-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0.55), 0 0 0 0 hsl(var(--primary) / 0.0); }
+  50% { box-shadow: 0 0 0 6px hsl(var(--primary) / 0.0), 0 0 24px 4px hsl(var(--primary) / 0.35); }
+}
+.amber-pulse {
+  animation: amber-pulse 2.6s ease-in-out infinite;
+}
+
+/* Tactical command strip — top accent for institutional panels */
+.tactical-strip {
+  position: relative;
+}
+.tactical-strip::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: var(--gradient-primary);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hover-lift, .amber-pulse, .animate-fade-in, .animate-fade-in-scale {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ================================
+   BLOQUEIO FINAL DO SELO LOVABLE
+   ================================ */
+#lovable-badge, 
+.lovable-badge,
+[id*="lovable"],
+[class*="lovable"],
+a[href*="lovable.dev"],
+div[style*="bottom: 0"][style*="right: 0"][style*="fixed"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: -9999 !important;
+}
+
+/* 3D Team Icons — Idle Float */
+@keyframes team-icon-float {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50%      { transform: translateY(-6px) rotate(1deg); }
+}
+.animate-team-float {
+  animation: team-icon-float 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Shield — sway suave */
+@keyframes team-shield-sway {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50%      { transform: translateY(-2px) rotate(4deg); }
+}
+.animate-team-shield {
+  animation: team-shield-sway 6s ease-in-out infinite;
+  transform-origin: 50% 15%;
+  will-change: transform;
+}
+
+/* Helmet — inclinação sutil */
+@keyframes team-helmet-tilt {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50%      { transform: translateY(-2px) rotate(3deg); }
+}
+.animate-team-helmet {
+  animation: team-helmet-tilt 6.5s ease-in-out infinite;
+  transform-origin: 50% 60%;
+  will-change: transform;
+}
+
+/* Radio — respiração leve */
+@keyframes team-radio-pulse {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50%      { transform: translateY(-2px) rotate(1deg); }
+}
+.animate-team-radio {
+  animation: team-radio-pulse 5.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Handcuffs — swing discreto */
+@keyframes team-handcuffs-swing {
+  0%, 100% { transform: rotate(-5deg); }
+  50%      { transform: rotate(5deg) translateY(-1px); }
+}
+.animate-team-handcuffs {
+  animation: team-handcuffs-swing 5.8s ease-in-out infinite;
+  transform-origin: 50% 10%;
+  will-change: transform;
+}
+
+
+/* Card tático — tilt 3D realista com glare, parallax e press */
+@keyframes team-card-breathe {
+  0%, 100% { transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(var(--lift)) scale(var(--press,1)); }
+  50%      { transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(calc(var(--lift) - 1px)) scale(var(--press,1)); }
+}
+.team-card-3d {
+  position: relative;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  --tilt-x: 0deg; --tilt-y: 0deg; --lift: 0px; --press: 1; --active: 0;
+  --gx: 50%; --gy: 50%;
+  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateY(var(--lift)) scale(var(--press));
+  transition:
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 320ms ease,
+    border-color 320ms ease,
+    filter 320ms ease;
+  will-change: transform, box-shadow;
+  animation: team-card-breathe 6s ease-in-out infinite;
+}
+.team-card-3d:hover {
+  --lift: -6px;
+  border-color: hsl(var(--primary) / 0.6);
+  box-shadow:
+    0 26px 48px -22px hsl(var(--primary) / 0.42),
+    0 8px 18px -10px hsl(0 0% 0% / 0.5),
+    inset 0 1px 0 hsl(var(--primary) / 0.18);
+  filter: saturate(1.06);
+}
+/* Spotlight radial que segue o cursor */
+.team-card-3d::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(260px circle at var(--px,50%) var(--py,50%),
+              hsl(var(--primary) / 0.16), transparent 62%);
+  opacity: 0; transition: opacity 320ms ease;
+  pointer-events: none;
+  transform: translateZ(1px);
+}
+.team-card-3d:hover::after { opacity: 1; }
+/* Glare linear diagonal — reflexo tipo vidro */
+.team-card-3d::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    hsl(0 0% 100% / 0.10) 45%,
+    hsl(0 0% 100% / 0.22) 50%,
+    hsl(0 0% 100% / 0.10) 55%,
+    transparent 70%
+  );
+  background-size: 220% 220%;
+  background-position: calc(100% - var(--gx,50%)) calc(100% - var(--gy,50%));
+  mix-blend-mode: overlay;
+  opacity: calc(var(--active,0) * 0.9);
+  transition: opacity 260ms ease, background-position 120ms linear;
+  pointer-events: none;
+  transform: translateZ(2px);
+}
+.team-card-3d .team-icon-3d {
+  transition: transform 480ms cubic-bezier(0.16, 1, 0.3, 1), filter 320ms ease;
+  transform: translateZ(0);
+  will-change: transform;
+}
+.team-card-3d:hover .team-icon-3d {
+  transform: translateZ(38px) scale(1.08) rotateX(calc(var(--tilt-x) * -0.4)) rotateY(calc(var(--tilt-y) * -0.4));
+  filter: drop-shadow(0 12px 18px hsl(var(--primary) / 0.35));
+}
+/* Parallax leve nos textos internos do card */
+.team-card-3d > *:not(::before):not(::after) {
+  transform: translateZ(14px);
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-card-3d { animation: none; transition: box-shadow 200ms ease, border-color 200ms ease; transform: none !important; }
+  .team-card-3d::before { display: none; }
+  .team-card-3d .team-icon-3d { transform: none !important; }
+}
+
+/* Police vehicle — idle drift + strobe glow, nudges when team hovered */
+@keyframes police-drift {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50%      { transform: translateY(-4px) translateX(2px); }
+}
+.police-vehicle {
+  animation: police-drift 6s ease-in-out infinite;
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  filter: drop-shadow(0 18px 30px rgba(0,0,0,0.55));
+  will-change: transform, filter;
+  max-width: none;
+  right: auto;
+  transform: perspective(900px) rotateY(-14deg) rotateX(6deg);
+}
+
+.viewport-draggable-asset {
+  animation: none !important;
+  transition: none !important;
+  touch-action: none !important;
+  pointer-events: auto !important;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  will-change: transform;
+}
+
+.viewport-draggable-asset img {
+  pointer-events: none !important;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.viewport-draggable-asset.police-vehicle {
+  animation: none !important;
+  transition: none !important;
+  right: auto !important;
+  aspect-ratio: 2 / 1 !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+@media (max-width: 640px) {
+  .viewport-draggable-asset {
+    touch-action: none !important;
+    overscroll-behavior: contain;
+  }
+}
+.hero-cinematic { position: relative; --mx: 0; --my: 0; }
+.hero-cinematic .hero-team-grid { position: relative; z-index: 20; }
+
+/* Mouse parallax: viatura segue sutilmente o cursor e "olha" para ele */
+.police-vehicle--mouse {
+  transform:
+    perspective(900px)
+    rotateY(calc(-14deg + var(--mx) * 6deg))
+    rotateX(calc(6deg + var(--my) * -4deg))
+    translate3d(calc(var(--mx) * 14px), calc(var(--my) * 8px), 0);
+}
+.hero-cinematic:has(.hero-team-grid button:hover) .police-vehicle--mouse,
+.hero-cinematic:has(.hero-team-grid button:focus-visible) .police-vehicle--mouse {
+  transform:
+    perspective(900px)
+    rotateY(calc(-14deg + var(--mx) * 6deg))
+    rotateX(calc(6deg + var(--my) * -4deg))
+    translate3d(calc(var(--mx) * 14px - 18px), calc(var(--my) * 8px - 8px), 0)
+    scale(1.03);
+}
+.hero-cinematic:has(.hero-team-grid button:hover) .police-vehicle,
+.hero-cinematic:has(.hero-team-grid button:focus-visible) .police-vehicle {
+  transform: translateX(-18px) translateY(-8px) scale(1.03);
+}
+
+
+
+/* ================================
+   INSTITUTIONAL PALETTE OVERRIDES
+   Remap legacy tactical utility colors (amber/slate/zinc) to the
+   Socioeducativo Acre palette: Marinho + Caqui + Dourado.
+   ================================ */
+
+/* Amber → Dourado */
+.text-amber-300, .text-amber-400, .text-amber-500, .text-amber-600 { color: hsl(var(--accent)) !important; }
+.bg-amber-400, .bg-amber-500, .bg-amber-600, .bg-amber-700 { background-color: hsl(var(--accent)) !important; }
+.hover\:bg-amber-500:hover, .hover\:bg-amber-600:hover, .hover\:bg-amber-700:hover { background-color: hsl(var(--accent) / 0.88) !important; }
+.border-amber-400, .border-amber-500, .border-amber-600 { border-color: hsl(var(--accent) / 0.55) !important; }
+.bg-amber-500\/10, .bg-amber-500\/20, .bg-amber-400\/10 { background-color: hsl(var(--accent) / 0.14) !important; }
+.border-amber-500\/20, .border-amber-500\/30, .border-amber-500\/40, .border-amber-500\/60 { border-color: hsl(var(--accent) / 0.4) !important; }
+.from-amber-400, .from-amber-500, .from-amber-600 { --tw-gradient-from: hsl(var(--accent)) var(--tw-gradient-from-position) !important; --tw-gradient-to: hsl(var(--accent) / 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+.to-amber-400, .to-amber-500, .to-amber-600, .to-amber-700 { --tw-gradient-to: hsl(var(--accent) / 0.85) var(--tw-gradient-to-position) !important; }
+.via-amber-500 { --tw-gradient-stops: var(--tw-gradient-from), hsl(var(--accent)) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+
+/* Slate/Zinc → Marinho institucional */
+.bg-slate-900, .bg-zinc-900, .bg-slate-900\/80, .bg-zinc-900\/80 { background-color: hsl(var(--background)) !important; }
+.bg-slate-800, .bg-zinc-800, .bg-slate-800\/50, .bg-slate-800\/80, .bg-slate-800\/30, .bg-zinc-800\/50 { background-color: hsl(var(--card) / 0.85) !important; }
+.hover\:bg-zinc-700:hover, .hover\:bg-zinc-800:hover, .hover\:bg-slate-700:hover { background-color: hsl(var(--muted)) !important; }
+.border-slate-700, .border-slate-700\/50, .border-slate-800, .border-zinc-700, .border-zinc-800 { border-color: hsl(var(--border)) !important; }
+.text-slate-300, .text-slate-400, .text-zinc-300, .text-zinc-400 { color: hsl(var(--muted-foreground)) !important; }
+.text-slate-100, .text-slate-200, .text-zinc-100, .text-zinc-200 { color: hsl(var(--foreground)) !important; }
+.from-slate-900, .from-slate-800, .from-zinc-900 { --tw-gradient-from: hsl(var(--background)) var(--tw-gradient-from-position) !important; }
+.via-slate-900, .via-slate-800 { --tw-gradient-stops: var(--tw-gradient-from), hsl(var(--card)) var(--tw-gradient-via-position), var(--tw-gradient-to) !important; }
+.to-slate-900, .to-slate-800 { --tw-gradient-to: hsl(var(--background)) var(--tw-gradient-to-position) !important; }
+
+/* Emerald "ativo" → success institucional */
+.text-emerald-400, .text-emerald-500 { color: hsl(var(--success)) !important; }
+.bg-emerald-500\/10, .bg-emerald-500\/20 { background-color: hsl(var(--success) / 0.15) !important; }
+.border-emerald-500\/30, .border-emerald-500\/40 { border-color: hsl(var(--success) / 0.4) !important; }
+
+
+/* Logo sway — pêndulo 3D sutil, sem rotação completa */
+@keyframes logo-sway {
+  0%, 100% { transform: rotate(-6deg) rotateY(-8deg); }
+  50%      { transform: rotate(6deg)  rotateY(8deg); }
+}
+.animate-logo-sway {
+  animation: logo-sway 4.5s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+/* ==================== ON-DUTY PROFESSIONAL ANIMATIONS ==================== */
+@keyframes duty-glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--success) / 0.55), 0 0 40px 0 hsl(var(--success) / 0.15); }
+  50%      { box-shadow: 0 0 0 8px hsl(var(--success) / 0), 0 0 60px 4px hsl(var(--success) / 0.35); }
+}
+.animate-duty-glow { animation: duty-glow-pulse 2.4s ease-in-out infinite; }
+
+@keyframes duty-scanline {
+  0%   { transform: translateX(-100%); opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+.animate-duty-scanline { animation: duty-scanline 3s linear infinite; }
+
+@keyframes duty-radar-sweep {
+  0%   { transform: rotate(0deg); opacity: 0.9; }
+  100% { transform: rotate(360deg); opacity: 0.9; }
+}
+.animate-duty-radar { animation: duty-radar-sweep 3.5s linear infinite; transform-origin: center; }
+
+@keyframes duty-shield-beat {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px hsl(var(--success) / 0.5)); }
+  50%      { transform: scale(1.08); filter: drop-shadow(0 0 14px hsl(var(--success) / 0.85)); }
+}
+.animate-duty-shield { animation: duty-shield-beat 1.6s ease-in-out infinite; }
+
+@keyframes duty-critical-flash {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--destructive) / 0.5), 0 0 40px 0 hsl(var(--destructive) / 0.2); }
+  50%      { box-shadow: 0 0 0 6px hsl(var(--destructive) / 0), 0 0 70px 6px hsl(var(--destructive) / 0.55); }
+}
+.animate-duty-critical { animation: duty-critical-flash 1.2s ease-in-out infinite; }
+
+@keyframes duty-bar-shimmer {
+  0%   { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+.animate-duty-bar-shimmer { animation: duty-bar-shimmer 2.2s ease-in-out infinite; }
+
+@keyframes loading-orb {
+  0%, 100% { transform: translate3d(0,0,0) scale(1); opacity: 0.25; }
+  50%      { transform: translate3d(0,0,0) scale(1.15); opacity: 0.45; }
+}
+.animate-loading-orb { animation: loading-orb 6s ease-in-out infinite; will-change: transform, opacity; }
+
+
+/* ===== 3D Idle Motion for team emblems ===== */
+@keyframes float3d {
+  0%   { transform: perspective(700px) translateY(0) rotateY(-3deg) rotateX(1deg); }
+  50%  { transform: perspective(700px) translateY(-4px) rotateY(3deg) rotateX(-1deg); }
+  100% { transform: perspective(700px) translateY(0) rotateY(-3deg) rotateX(1deg); }
+}
+.animate-float3d {
+  animation: float3d 5s ease-in-out infinite;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-float3d { animation: none; }
+}
+
+/* ===== Team cards — shared halo (BRAVO/CHARLIE/DELTA) ===== */
+.team-halo {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 500ms ease, transform 500ms ease;
+  background:
+    radial-gradient(ellipse at 50% 35%, hsl(var(--team-accent) / 0.18), transparent 60%),
+    linear-gradient(180deg, transparent 60%, hsl(var(--team-accent) / 0.12) 100%);
+  box-shadow: inset 0 0 0 1px hsl(var(--team-accent) / 0.3);
+}
+.group:hover .team-halo,
+.group:focus-visible .team-halo {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
+/* ===== ALFA card — vest hover flex (exclusivo) ===== */
+@keyframes alfa-vest-flex {
+  0%   { transform: perspective(700px) rotateX(0) rotateY(0) scale(1); }
+  40%  { transform: perspective(700px) rotateX(-6deg) rotateY(3deg) scale(1.22) translateY(-4px); }
+  100% { transform: perspective(700px) rotateX(-3deg) rotateY(-2deg) scale(1.18) translateY(-2px); }
+}
+/* Trigger only on true hover devices (desktop). Touch devices ficam estáveis
+   — evita tremor no mobile causado por :hover sticky + :active re-disparando. */
+@media (hover: hover) and (pointer: fine) {
+  .group[data-team="ALFA"]:hover .alfa-vest,
+  .group[data-team="ALFA"]:focus-visible .alfa-vest {
+    animation: alfa-vest-flex 900ms cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  .group[data-team="ALFA"]:hover .alfa-halo,
+  .group[data-team="ALFA"]:focus-visible .alfa-halo {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.alfa-halo {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 500ms ease, transform 500ms ease;
+  background:
+    radial-gradient(ellipse at 50% 35%, hsl(43 96% 56% / 0.22), transparent 60%),
+    linear-gradient(180deg, transparent 60%, hsl(43 96% 56% / 0.15) 100%);
+  box-shadow: inset 0 0 0 1px hsl(43 96% 56% / 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-halo,
+  .alfa-halo {
+    transition: none !important;
+    transform: none !important;
+    opacity: 0 !important;
+  }
+  [data-team-card],
+  [data-team-card] * {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  [data-team-card]:hover,
+  [data-team-card]:focus-visible,
+  [data-team-card]:active {
+    transform: none !important;
+  }
+}
+
+
+
+/* ============================================================
+   PERFORMANCE: pause off-screen animations + skip heavy loops
+   ============================================================ */
+
+/* Pause all CSS animations when the tab is hidden */
+html.tab-hidden *,
+html.tab-hidden *::before,
+html.tab-hidden *::after {
+  animation-play-state: paused !important;
+}
+
+/* Off-screen work: lets the browser skip layout/paint for offscreen sections */
+.perf-cv {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+/* Reduced motion: kill decorative particle/matrix/frost/flame fields entirely */
+@media (prefers-reduced-motion: reduce) {
+  .themed-bg-decor {
+    display: none !important;
+  }
+  .animate-ping,
+  .animate-pulse,
+  .animate-spin,
+  .animate-float,
+  .animate-radar,
+  .animate-scan,
+  .animate-rise,
+  .animate-float3d {
+    animation: none !important;
+  }
+}
+
+/* ===== Giroflex — flash policial discreto ancorado na barra real da viatura ===== */
+.giroflex-flash {
+  position: absolute;
+  width: var(--giroflex-lens-width);
+  height: clamp(3px, 2.45%, 7px);
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 3;
+  transform: translate(-50%, -50%) rotate(-0.4deg);
+  will-change: opacity, filter, box-shadow;
+  opacity: 0;
+  mix-blend-mode: screen;
+  overflow: visible;
+}
+.giroflex-flash::before,
+.giroflex-flash::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.giroflex-flash::after {
+  inset: -60% -12%;
+  filter: blur(2px);
+  opacity: 0.6;
+}
+.giroflex-flash-blue {
+  --giroflex-lens-width: 13.4%;
+  background: rgb(191 219 254);
+  animation: giroflex-strobe-blue 2.05s steps(1, end) infinite;
+}
+.giroflex-flash-blue::before,
+.giroflex-flash-blue::after {
+  background: rgb(59 130 246);
+}
+.giroflex-flash-red {
+  --giroflex-lens-width: 18.4%;
+  background: rgb(254 202 202);
+  animation: giroflex-strobe-red 2.05s steps(1, end) infinite;
+}
+.giroflex-flash-red::before,
+.giroflex-flash-red::after {
+  background: rgb(239 68 68);
+}
+.giroflex-flash-scene-blue {
+  --giroflex-lens-width: 11.7%;
+}
+.giroflex-flash-scene-red {
+  --giroflex-lens-width: 11.3%;
+}
+/* Padrão wig-wag policial: 3 pulsos rápidos por lado, alternando */
+@keyframes giroflex-strobe-red {
+  0%, 4%   { opacity: 0.66; filter: brightness(1.22); box-shadow: 0 0 2px 0.5px rgba(239,68,68,0.42), 0 0 6px 1.5px rgba(239,68,68,0.2); }
+  5%, 10%  { opacity: 0; filter: none; box-shadow: none; }
+  11%, 15% { opacity: 0.66; filter: brightness(1.22); box-shadow: 0 0 2px 0.5px rgba(239,68,68,0.42), 0 0 6px 1.5px rgba(239,68,68,0.2); }
+  16%, 21% { opacity: 0; filter: none; box-shadow: none; }
+  22%, 26% { opacity: 0.66; filter: brightness(1.22); box-shadow: 0 0 2px 0.5px rgba(239,68,68,0.42), 0 0 6px 1.5px rgba(239,68,68,0.2); }
+  27%, 100%{ opacity: 0; filter: none; box-shadow: none; }
+}
+@keyframes giroflex-strobe-blue {
+  0%, 49%  { opacity: 0; filter: none; box-shadow: none; }
+  50%, 54% { opacity: 0.66; filter: brightness(1.22); box-shadow: 0 0 2px 0.5px rgba(59,130,246,0.42), 0 0 6px 1.5px rgba(59,130,246,0.2); }
+  55%, 60% { opacity: 0; filter: none; box-shadow: none; }
+  61%, 65% { opacity: 0.66; filter: brightness(1.22); box-shadow: 0 0 2px 0.5px rgba(59,130,246,0.42), 0 0 6px 1.5px rgba(59,130,246,0.2); }
+  66%, 71% { opacity: 0; filter: none; box-shadow: none; }
+  72%, 76% { opacity: 0.66; filter: brightness(1.22); box-shadow: 0 0 2px 0.5px rgba(59,130,246,0.42), 0 0 6px 1.5px rgba(59,130,246,0.2); }
+  77%, 100%{ opacity: 0; filter: none; box-shadow: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .giroflex-flash-blue, .giroflex-flash-red { animation: none; opacity: 0; }
+}
+
+/* Viatura mobile sem iluminação contínua: o efeito ativo vem apenas do strobo sobreposto. */
+.giroflex-pulse-mobile {
+  filter: drop-shadow(0 30px 40px rgba(0,0,0,0.9));
+}
+@media (prefers-reduced-motion: reduce) {
+  .giroflex-pulse-mobile { filter: drop-shadow(0 30px 40px rgba(0,0,0,0.9)); }
+}
+
+/* ==========================================================================
+   Standardized Card Touch Behavior (iOS Safari + Android)
+   - `.card-touch`: safe stabilization for ALL cards (prevents flicker)
+   - `.card-touch-interactive`: adds tactile feedback for clickable cards
+   ========================================================================== */
+@layer utilities {
+  .card-touch {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Promote to its own compositor layer — kills iOS Safari flicker while
+       transforms/opacity animate under the finger. */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .card-touch-interactive {
+    /* Removes the 300ms tap delay and prevents double-tap zoom on the card. */
+    touch-action: manipulation;
+    cursor: pointer;
+    /* Apple HIG minimum touch target. */
+    min-height: 44px;
+    min-width: 44px;
+    transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                box-shadow 220ms ease-out;
+    will-change: transform;
+  }
+
+  /* Tactile press feedback — instant on press, gentle on release. */
+  .card-touch-interactive:active {
+    transform: scale(0.97) translateZ(0);
+    transition-duration: 80ms;
+  }
+
+  /* Users who dislike motion get no scale — still no flicker. */
+  @media (prefers-reduced-motion: reduce) {
+    .card-touch-interactive,
+    .card-touch-interactive:active {
+      transform: translateZ(0);
+      transition: none;
+    }
+  }
+}
+
+/* ============================================
+   Reduced motion — hard override (accessibility + CPU/GPU savings)
+   Applies whenever the user (or a low-power device) has requested reduced motion.
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Neutralize decorative filters that repaint every frame */
+  .animate-float3d,
+  .animate-pulse,
+  .animate-spin,
+  .animate-ping,
+  .animate-bounce {
+    animation: none !important;
+  }
+}
+
+/* Calendar day tap feedback (mobile) — larger hit-area + immediate press feedback */
+.rdp-day,
+.rdp-button {
+  min-height: 40px;
+  min-width: 40px;
+  transition: transform 100ms ease-out, background-color 120ms ease-out;
+}
+.rdp-day:active,
+.rdp-button:active {
+  transform: scale(0.9);
+}
+@media (max-width: 390px) {
+  .rdp-day,
+  .rdp-button {
+    min-height: 44px;
+    min-width: 44px;
+    font-size: 0.9rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rdp-day,
+  .rdp-button,
+  .rdp-day:active,
+  .rdp-button:active {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ============================================
+   Reduced motion — extra safety for Radix / shadcn / homepage cards.
+   The catch-all above disables durations; these rules also neutralize
+   transform/opacity animations declared via keyframes and data-state.
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  [data-state],
+  [data-side],
+  [data-radix-popper-content-wrapper] > * {
+    animation: none !important;
+    transition: none !important;
+  }
+  /* homepage cards / hero — kill hover translations & glow pulses */
+  .card-touch-interactive,
+  .card-touch-interactive:hover,
+  .group:hover .group-hover\:scale-\[1\.12\],
+  .group:hover .group-hover\:-translate-y-1,
+  .group:hover .group-hover\:-translate-y-\[1px\],
+  .hover\:-translate-y-\[1px\]:hover {
+    transform: none !important;
+  }
+  /* homepage particle/decor layers */
+  .animate-float3d,
+  .animate-pulse,
+  .animate-spin,
+  .animate-ping,
+  .animate-bounce,
+  .animate-fade-in {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ============================================================
+   Agent Panel — mobile readability boost (≤640px)
+   Slightly upsizes very small text inside tab content only.
+   The tab pills themselves are excluded (they have their own sizing).
+   ============================================================ */
+@media (max-width: 640px) {
+  .agent-panel-inner [role="tabpanel"] .text-\[9px\]     { font-size: 10.5px !important; }
+  .agent-panel-inner [role="tabpanel"] .text-\[10px\]    { font-size: 11.5px !important; }
+  .agent-panel-inner [role="tabpanel"] .text-\[11px\]    { font-size: 12.5px !important; }
+  .agent-panel-inner [role="tabpanel"] .text-xs          { font-size: 13px !important; line-height: 1.35 !important; }
+  .agent-panel-inner [role="tabpanel"] .text-sm          { font-size: 14.5px !important; line-height: 1.4 !important; }
+}
+
+/* ============================================================
+   Tactical scrollbar — slim, professional, theme-aware
+   Apply with `tactical-scrollbar` on any scroll container.
+   ============================================================ */
+.tactical-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+.tactical-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.tactical-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-left: 1px solid hsl(var(--border) / 0.35);
+}
+.tactical-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, hsl(var(--muted-foreground) / 0.35), hsl(var(--muted-foreground) / 0.18));
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.tactical-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, hsl(var(--primary) / 0.55), hsl(var(--muted-foreground) / 0.3));
+  background-clip: padding-box;
+}
+.tactical-scrollbar::-webkit-scrollbar-corner { background: transparent; }
+
+/* ============================================================
+   Rounds dialog — mobile tap-target boost (≤640px)
+   Enlarges the clickable area of labels, badges and links
+   without changing their visual size (uses padding + min sizes).
+   ============================================================ */
+@media (max-width: 640px) {
+  .rounds-tap-boost button,
+  .rounds-tap-boost [role="button"],
+  .rounds-tap-boost a,
+  .rounds-tap-boost label,
+  .rounds-tap-boost [role="tab"],
+  .rounds-tap-boost [role="option"],
+  .rounds-tap-boost [role="checkbox"],
+  .rounds-tap-boost [role="switch"] {
+    min-height: 40px;
+    touch-action: manipulation;
+  }
+  .rounds-tap-boost button.h-6,
+  .rounds-tap-boost button.h-7,
+  .rounds-tap-boost button.h-8 {
+    padding-block: 8px;
+  }
+  /* Small pill/badge triggers — expand hit area with negative-margin padding */
+  .rounds-tap-boost .tap-boost,
+  .rounds-tap-boost [data-tap-boost="true"] {
+    position: relative;
+  }
+  .rounds-tap-boost .tap-boost::before,
+  .rounds-tap-boost [data-tap-boost="true"]::before {
+    content: "";
+    position: absolute;
+    inset: -8px -6px;
+    border-radius: inherit;
+  }
+  /* Ensure inline links inside rows are easy to hit */
+  .rounds-tap-boost a,
+  .rounds-tap-boost label {
+    padding-block: 4px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* ============================================================
+   UI/UX REFRESH v2 — utilitários globais (aditivos)
+   ============================================================
+   Objetivo: elevar consistência visual sem alterar componentes
+   existentes. Cada classe é opt-in — código antigo continua igual.
+   ============================================================ */
+
+@layer utilities {
+  /* Motion tokens — easings/durations padronizados */
+  :root {
+    --motion-fast: 150ms;
+    --motion-base: 220ms;
+    --motion-slow: 380ms;
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Tap target — garante 44x44 em touch sem afetar desktop */
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  @media (pointer: coarse) {
+    button:not([data-tap-exempt]),
+    a[role="button"]:not([data-tap-exempt]),
+    [role="button"]:not([data-tap-exempt]) {
+      min-height: 40px;
+    }
+  }
+
+  /* Card hover-lift sutil — 1 linha para elevar qualquer card interativo */
+  .card-hover-lift {
+    transition:
+      transform var(--motion-base) var(--ease-out-quart),
+      box-shadow var(--motion-base) var(--ease-in-out-soft),
+      border-color var(--motion-base) var(--ease-in-out-soft);
+    will-change: transform;
+  }
+  .card-hover-lift:hover {
+    transform: translateY(-2px);
+    border-color: hsl(var(--primary) / 0.45);
+    box-shadow:
+      0 12px 28px -14px hsl(var(--primary) / 0.28),
+      0 4px 10px -6px hsl(0 0% 0% / 0.4);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card-hover-lift { transition: none; }
+    .card-hover-lift:hover { transform: none; }
+  }
+
+  /* Focus-ring refinado — mais visível, menos intrusivo */
+  .focus-ring-primary:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px hsl(var(--background)),
+      0 0 0 4px hsl(var(--primary) / 0.65);
+    border-radius: inherit;
+  }
+
+  /* Section header — hierarquia consistente para títulos de seção */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid hsl(var(--border) / 0.5);
+    margin-bottom: 1rem;
+  }
+  .section-header::before {
+    content: "";
+    width: 3px;
+    height: 1rem;
+    background: linear-gradient(180deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.3) 100%);
+    border-radius: 2px;
+  }
+
+  /* Divisor tático horizontal moderno */
+  .divider-soft {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsl(var(--border) / 0.6) 20%,
+      hsl(var(--border) / 0.6) 80%,
+      transparent 100%
+    );
+  }
+
+  /* Content padding responsivo padronizado — usar em containers principais */
+  .content-padded {
+    padding-inline: 1rem;
+    padding-block: 1rem;
+  }
+  @media (min-width: 640px) {
+    .content-padded { padding-inline: 1.5rem; padding-block: 1.25rem; }
+  }
+  @media (min-width: 1024px) {
+    .content-padded { padding-inline: 2rem; padding-block: 1.5rem; }
+  }
+
+  /* Densidade reduzida — respiro extra em cards pesados */
+  .stack-loose > * + * { margin-top: 1.25rem; }
+  .stack-normal > * + * { margin-top: 0.875rem; }
+  .stack-tight > * + * { margin-top: 0.5rem; }
+
+  /* Interactive shimmer sutil para skeletons */
+  @keyframes skeleton-shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .skeleton-shimmer {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--muted) / 0.4) 0%,
+      hsl(var(--muted) / 0.7) 50%,
+      hsl(var(--muted) / 0.4) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.6s ease-in-out infinite;
+  }
+
+  /* Scrollbar sutil e tática (webkit) */
+  .scrollbar-tactical::-webkit-scrollbar { width: 8px; height: 8px; }
+  .scrollbar-tactical::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-tactical::-webkit-scrollbar-thumb {
+    background: hsl(var(--border) / 0.6);
+    border-radius: 4px;
+  }
+  .scrollbar-tactical::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
+  }
+}
+
+/* =========================================================
+ * Perf: mobile e reduced-motion desligam efeitos GPU pesados
+ * (backdrop-blur-xl e mix-blend) que causam repaint contínuo
+ * em telas mid-range Android. Desktop mantém o efeito.
+ * ========================================================= */
+@media (max-width: 640px), (prefers-reduced-motion: reduce) {
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl,
+  .backdrop-blur-3xl {
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+  }
+  .mix-blend-overlay,
+  .mix-blend-screen,
+  .mix-blend-multiply {
+    mix-blend-mode: normal !important;
+  }
+}
+
+
+/* =========================================================
+ * Image protection: block drag/save/select on all images.
+ * Combined with <ImageProtection /> which intercepts events.
+ * ========================================================= */
+img, svg, picture, video {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+
+/* =========================================================
+ * Homepage typography scope — Space Grotesk (headings) + DM Sans (body)
+ * Applied via `.home-typo` on the Index page root only. Removes white/light
+ * glow effects for a clean, modern, professional look.
+ * ========================================================= */
+.home-typo,
+.home-typo p,
+.home-typo span:not([class*="font-mono"]):not([class*="font-serif"]):not([class*="font-display"]):not([class*="font-heading"]),
+.home-typo button,
+.home-typo a,
+.home-typo li,
+.home-typo div:not([class*="font-mono"]):not([class*="font-serif"]):not([class*="font-display"]):not([class*="font-heading"]) {
+  font-family: 'DM Sans', 'IBM Plex Sans', system-ui, sans-serif;
+  font-feature-settings: 'ss01', 'cv01', 'cv11';
+}
+
+.home-typo h1,
+.home-typo h2,
+.home-typo h3,
+.home-typo h4,
+.home-typo h5,
+.home-typo h6 {
+  font-family: 'Space Grotesk', 'IBM Plex Sans', system-ui, sans-serif;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+
+/* Kill white/light drop-shadow glows on the homepage for a clean look.
+ * Preserves gold/amber/primary glows that give the tactical identity. */
+/* Zero-glow policy on the homepage — clean, editorial rendering.
+ * Strips all "drop-shadow-[0_0..." (glow-style filters) inside .home-typo. */
+.home-typo *[class*="drop-shadow-[0_0"] {
+  filter: none !important;
+}
+.home-typo *[class*="shadow-white"],
+.home-typo *[class*="shadow-[0_0"][class*="white"] {
+  box-shadow: none !important;
+}
+
+/* Neutralize generic text-shadow glows on light text inside the homepage. */
+.home-typo .text-white,
+.home-typo .text-slate-50,
+.home-typo .text-slate-100,
+.home-typo .text-slate-200,
+.home-typo .text-foreground {
+  text-shadow: none !important;
+}
+
+/* Tighten button/label rhythm with the new typeface. */
+.home-typo button,
+.home-typo .font-mono {
+  font-feature-settings: 'tnum', 'ss01';
+}
+
+/* --- TypeClear refinement for the homepage -------------------------------
+ * Consistent tabular numerals on all numeric UI, tighter tracking on the
+ * hero and section titles, and a modest opsz correction on small caps
+ * (mono labels). Keeps the tactical identity while removing the "many
+ * fonts" feeling. */
+.home-typo {
+  font-feature-settings: 'ss01', 'cv01', 'cv11';
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+.home-typo .tabular-nums,
+.home-typo [class*="tabular-"],
+.home-typo time,
+.home-typo .font-mono {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.home-typo h1, .home-typo h2 {
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+.home-typo h3, .home-typo h4 {
+  letter-spacing: -0.012em;
+  line-height: 1.15;
+}
+.home-typo .font-serif,
+.home-typo [class*="Libre Baskerville"] {
+  letter-spacing: -0.01em;
+}
+/* Uppercase mono labels: slightly reduced tracking on very small sizes so
+ * they read as labels, not as decoration. */
+.home-typo .font-mono.uppercase,
+.home-typo .uppercase.font-mono {
+  font-feature-settings: 'tnum', 'ss01', 'cpsp';
+}
+
+
+
+
+/* Utility: hide scrollbar while preserving scroll capability */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+/* Scrollbar global — ultrafina, quase invisível em repouso e revelando
+   o tom âmbar tático apenas ao hover. Preserva usabilidade total
+   (mouse, trackpad, teclado, touch) sem competir visualmente com o UI. */
+html {
+  scrollbar-width: thin;                                  /* Firefox */
+  scrollbar-color: rgba(244, 201, 116, 0.18) transparent; /* thumb / track */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.home-typo::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+.home-typo::-webkit-scrollbar-track {
+  background: transparent;
+}
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+.home-typo::-webkit-scrollbar-thumb {
+  background-color: rgba(244, 201, 116, 0.22);
+  border-radius: 999px;
+  transition: background-color 180ms ease;
+}
+html:hover::-webkit-scrollbar-thumb,
+body:hover::-webkit-scrollbar-thumb,
+.home-typo:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(244, 201, 116, 0.4);
+}
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+.home-typo::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(244, 201, 116, 0.65);
+}
+html::-webkit-scrollbar-corner,
+body::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox — mesmo comportamento de "quase invisível → âmbar ao hover". */
+.home-typo {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(244, 201, 116, 0.18) transparent;
+}
+.home-typo:hover,
+html:hover,
+body:hover {
+  scrollbar-color: rgba(244, 201, 116, 0.4) transparent;
+}
+
+/* ============================================================
+ * Homepage — barra de rolagem oculta, scroll 100% funcional
+ * A classe `home-route` é aplicada ao <body> pelo Index.tsx
+ * apenas enquanto o usuário está na rota "/". Esconde a
+ * scrollbar visualmente mantendo scroll via wheel/trackpad/
+ * teclado/touch em qualquer área da homepage (responsivo).
+ * ============================================================ */
+html:has(body.home-route),
+body.home-route {
+  scrollbar-width: none !important;    /* Firefox */
+  -ms-overflow-style: none !important; /* IE/Edge legado */
+}
+html:has(body.home-route)::-webkit-scrollbar,
+body.home-route::-webkit-scrollbar,
+body.home-route *::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+  background: transparent !important;
+}
+body.home-route {
+  overflow-y: auto !important;
+  overscroll-behavior-y: auto;
+}
+
+/* ============================================================
+ * Painel Master — barra de rolagem oculta, scroll 100% funcional
+ * A classe `master-route` é aplicada ao <body> pelo Master.tsx
+ * enquanto o admin master está na página. Esconde a scrollbar
+ * visualmente mantendo scroll via wheel/trackpad/teclado/touch.
+ * ============================================================ */
+html:has(body.master-route),
+body.master-route {
+  scrollbar-width: none !important;    /* Firefox */
+  -ms-overflow-style: none !important; /* IE/Edge legado */
+}
+html:has(body.master-route)::-webkit-scrollbar,
+body.master-route::-webkit-scrollbar,
+body.master-route *::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+  background: transparent !important;
+}
+body.master-route {
+  overflow-y: auto !important;
+  overscroll-behavior-y: auto;
+}
+
+
+
+
+
+/* ============================================================
+ * Modo Foco — Gestor de Rondas
+ * Quando o modal do Gestor está aberto, desfoca a homepage por
+ * trás para gerar sensação de concentração operacional.
+ * Portais do Radix (Dialog/AlertDialog) ficam fora de #root, então
+ * não são afetados pelo blur.
+ * ============================================================ */
+body.rm-focus-mode {
+  overflow: hidden !important;
+  scrollbar-width: none;
+}
+body.rm-focus-mode::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none !important; }
+body.rm-focus-mode > #root {
+  filter: blur(10px) brightness(0.55) saturate(1.05);
+  transition: filter 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  user-select: none;
+  will-change: filter;
+  scrollbar-width: none;
+}
+body.rm-focus-mode > #root::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none !important; }
+body:not(.rm-focus-mode) > #root {
+  transition: filter 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* Vinheta radial profissional por cima do conteúdo desfocado */
+body.rm-focus-mode::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  background:
+    radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.65) 100%),
+    linear-gradient(180deg, rgba(9,11,16,0.25) 0%, rgba(9,11,16,0.15) 100%);
+  opacity: 0;
+  animation: rm-vignette-in 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes rm-vignette-in {
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.rm-focus-mode > #root {
+    transition: none;
+    filter: blur(6px) brightness(0.6);
+  }
+  body.rm-focus-mode::before { animation: none; opacity: 1; }
+}
+/* Reduz a opacidade do overlay do Radix Dialog somente durante o Gestor de
+ * Rondas, para revelar o blur da homepage por trás (efeito "vidro fosco").
+ * O overlay padrão é quase opaco (0.55→0.94) e engolia o desfoque. */
+body.rm-focus-mode [data-radix-dialog-overlay],
+body.rm-focus-mode [data-state="open"][class*="fixed inset-0"] {
+  background: radial-gradient(ellipse at center,
+    hsl(0 0% 0% / 0.18) 0%,
+    hsl(0 0% 0% / 0.38) 60%,
+    hsl(0 0% 0% / 0.55) 100%) !important;
+  backdrop-filter: blur(2px) saturate(1.05);
+  -webkit-backdrop-filter: blur(2px) saturate(1.05);
+}
+
+/* ============================================================
+ * Modo baixo desempenho (rm-low-motion) — aplicado quando o
+ * dispositivo é detectado como lento ou o usuário optou por
+ * movimento reduzido. Desliga animações caras dentro do Gestor
+ * de Rondas para eliminar travamentos em PCs modestos.
+ * ============================================================ */
+body.rm-low-motion .rm-play-btn,
+body.rm-low-motion [class*="animate-ping"],
+body.rm-low-motion [class*="animate-pulse"],
+body.rm-low-motion [class*="animate-spin"] {
+  animation: none !important;
+}
+body.rm-low-motion [class*="backdrop-blur"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+body.rm-low-motion [class*="transition-"] {
+  transition-duration: 0ms !important;
+}
+body.rm-low-motion::before { animation: none !important; }
+body.rm-low-motion > #root { filter: none !important; }
+
+/* ============================================================
+ * Ampulheta tática (HourglassSVG) — animações leves via CSS.
+ * Só anima `opacity` para permanecer na camada do compositor
+ * (GPU), evitando reflow/repaint pesados em aparelhos fracos.
+ * ============================================================ */
+@keyframes pp-hg-top-fade {
+  0%, 100% { opacity: 0.9; }
+  70%      { opacity: 0.35; }
+}
+@keyframes pp-hg-bot-fill {
+  0%, 100% { opacity: 0.4; }
+  70%      { opacity: 0.9; }
+}
+@keyframes pp-hg-stream {
+  0%, 100% { opacity: 0; }
+  50%      { opacity: 0.9; }
+}
+.pp-hg-top    { animation: pp-hg-top-fade 3s ease-in-out infinite; will-change: opacity; }
+.pp-hg-bot    { animation: pp-hg-bot-fill 3s ease-in-out infinite; will-change: opacity; }
+.pp-hg-stream { animation: pp-hg-stream 1.2s ease-in-out infinite; will-change: opacity; }
+@media (prefers-reduced-motion: reduce) {
+  .pp-hg-top, .pp-hg-bot, .pp-hg-stream { animation: none !important; }
+  .pp-hg-top    { opacity: 0.85; }
+  .pp-hg-bot    { opacity: 0.7; }
+  .pp-hg-stream { opacity: 0; }
+}
+
+/* Ticker de status do hero — deslizamento horizontal contínuo */
+@keyframes pp-ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[pp-ticker_28s_linear_infinite\] { animation: none !important; }
+}
+
+/* Premium HUD — holographic platforms and scanners under vehicle/agent */
+@keyframes pp-holo-scan {
+  0%   { transform: translateY(0) scaleY(1); opacity: 0.0; }
+  20%  { opacity: 0.55; }
+  80%  { opacity: 0.55; }
+  100% { transform: translateY(-100%) scaleY(1); opacity: 0.0; }
+}
+@keyframes pp-holo-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50%      { opacity: 0.6;  transform: scale(1.04); }
+}
+@keyframes pp-holo-ring-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes pp-card-breath {
+  0%, 100% { filter: brightness(0.98); }
+  50%      { filter: brightness(1.04); }
+}
+.pp-holo-platform {
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 78%;
+  height: 22px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at center, hsl(42 92% 58% / 0.35) 0%, hsl(42 92% 58% / 0.12) 40%, transparent 72%);
+  filter: blur(2px);
+  animation: pp-holo-pulse 4.2s ease-in-out infinite;
+}
+.pp-holo-ring {
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  width: 78%;
+  aspect-ratio: 3 / 1;
+  transform: translateX(-50%);
+  pointer-events: none;
+  border-radius: 50%;
+  border: 1px solid hsl(42 92% 58% / 0.28);
+  box-shadow: inset 0 0 12px hsl(42 92% 58% / 0.18), 0 0 12px hsl(42 92% 58% / 0.14);
+}
+.pp-holo-ring::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  border: 1px dashed hsl(42 92% 58% / 0.22);
+  animation: pp-holo-ring-spin 22s linear infinite;
+}
+.pp-holo-scanner {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+  mix-blend-mode: screen;
+}
+.pp-holo-scanner::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 100%;
+  height: 40%;
+  background: linear-gradient(
+    to top,
+    transparent 0%,
+    hsl(42 92% 58% / 0.18) 45%,
+    hsl(42 92% 58% / 0.28) 55%,
+    transparent 100%
+  );
+  animation: pp-holo-scan 5.6s ease-in-out infinite;
+}
+.pp-card-glass-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  border-radius: inherit;
+  background:
+    linear-gradient(135deg,
+      hsl(0 0% 100% / 0.10) 0%,
+      hsl(0 0% 100% / 0.02) 22%,
+      transparent 45%,
+      transparent 70%,
+      hsl(0 0% 100% / 0.04) 100%);
+  mix-blend-mode: overlay;
+  opacity: 0.55;
+}
+.pp-card-brushed {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  border-radius: inherit;
+  background-image: repeating-linear-gradient(
+    90deg,
+    hsl(0 0% 100% / 0.025) 0px,
+    hsl(0 0% 100% / 0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pp-holo-platform,
+  .pp-holo-scanner::after,
+  .pp-holo-ring::before { animation: none !important; }
+}
+
+/* Briefing Operacional — hover/focus sweep (layout-safe microinteraction) */
+@keyframes pp-briefing-sweep {
+  0%   { transform: translateX(0);    opacity: 0; }
+  20%  { opacity: 1; }
+  100% { transform: translateX(500%); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .animate-\[pp-briefing-sweep_1\.4s_ease-out\],
+  .group:focus-within .animate-\[pp-briefing-sweep_1\.4s_ease-out\] { animation: none !important; }
+}
+
+/* ============================================================
+   Gestor de Rondas — legibilidade mobile.
+   Aumenta apenas o font-size das classes minúsculas dentro do
+   modal (.rm-dialog) no mobile, sem alterar padding/gap/altura.
+   Preserva o layout tático em desktop.
+   ============================================================ */
+@media (max-width: 640px) {
+  .rm-dialog [class*="text-[9px]"],
+  .rm-dialog [class*="text-[9.5px]"]   { font-size: 11px !important; line-height: 1.25 !important; }
+  .rm-dialog [class*="text-[10px]"],
+  .rm-dialog [class*="text-[10.5px]"]  { font-size: 12px !important; line-height: 1.25 !important; }
+  .rm-dialog [class*="text-[11px]"],
+  .rm-dialog [class*="text-[11.5px]"]  { font-size: 13px !important; line-height: 1.3 !important; }
+  .rm-dialog [class*="text-[12px]"],
+  .rm-dialog [class*="text-[12.5px]"]  { font-size: 13.5px !important; line-height: 1.35 !important; }
+  .rm-dialog [class*="text-[13px]"],
+  .rm-dialog [class*="text-[13.5px]"]  { font-size: 14px !important; line-height: 1.35 !important; }
+  .rm-dialog .text-xs                  { font-size: 13px !important; line-height: 1.3 !important; }
+  /* Compensar tracking excessivo em uppercase quando o tipo cresce */
+  .rm-dialog [class*="tracking-[0.22em]"],
+  .rm-dialog [class*="tracking-[0.28em]"] { letter-spacing: 0.14em !important; }
+}
+
+/* ============================================================
+   Gestor de Rondas — legibilidade noturna (desktop/tablet).
+   Aumenta tamanho de fonte sem alterar dimensões do modal,
+   melhorando leitura em turnos noturnos. Mantém padding/gap.
+   ============================================================ */
+@media (min-width: 641px) {
+  .rm-dialog [class*="text-[9px]"],
+  .rm-dialog [class*="text-[9.5px]"]   { font-size: 11.5px !important; line-height: 1.3 !important; }
+  .rm-dialog [class*="text-[10px]"],
+  .rm-dialog [class*="text-[10.5px]"]  { font-size: 12.5px !important; line-height: 1.3 !important; }
+  .rm-dialog [class*="text-[11px]"],
+  .rm-dialog [class*="text-[11.5px]"]  { font-size: 13.5px !important; line-height: 1.35 !important; }
+  .rm-dialog [class*="text-[12px]"],
+  .rm-dialog [class*="text-[12.5px]"]  { font-size: 14px !important; line-height: 1.4 !important; }
+  .rm-dialog [class*="text-[13px]"],
+  .rm-dialog [class*="text-[13.5px]"]  { font-size: 14.5px !important; line-height: 1.4 !important; }
+  .rm-dialog [class*="text-[14px]"]    { font-size: 15px !important; line-height: 1.4 !important; }
+  .rm-dialog .text-xs                  { font-size: 13.5px !important; line-height: 1.35 !important; }
+  .rm-dialog .text-sm                  { font-size: 15px !important; line-height: 1.4 !important; }
+  /* Compensar tracking excessivo em uppercase quando o tipo cresce */
+  .rm-dialog [class*="tracking-[0.22em]"],
+  .rm-dialog [class*="tracking-[0.28em]"] { letter-spacing: 0.14em !important; }
+  .rm-dialog [class*="tracking-[0.3em]"],
+  .rm-dialog [class*="tracking-[0.32em]"] { letter-spacing: 0.16em !important; }
+  /* Levemente mais peso para melhor contraste noturno */
+  .rm-dialog { font-weight: 450; }
+}
+
+/* ============================================================
+   Gestor de Rondas — modo noturno de alto contraste.
+   Reforça foco/hover/seleção, aumenta levemente ícones/chips/
+   badges e melhora line-height, sem alterar a largura do modal.
+   ============================================================ */
+.rm-dialog {
+  /* Texto mais legível à noite (mantém tokens semânticos) */
+  color: hsl(0 0% 96%);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+.rm-dialog p,
+.rm-dialog li,
+.rm-dialog label,
+.rm-dialog span:not([class*="font-mono"]) {
+  line-height: 1.5;
+}
+.rm-dialog .text-muted-foreground {
+  color: hsl(0 0% 78%) !important;
+}
+
+/* Ícones lucide/inline SVGs — leve upscale (sem mudar largura do modal) */
+.rm-dialog svg:not([class*="rm-no-scale"]) {
+  transform: scale(1.06);
+  transform-origin: center;
+}
+.rm-dialog [class*="lucide"] {
+  stroke-width: 2.1;
+}
+
+/* Chips e badges — leve upscale + contraste */
+.rm-dialog .rm-chip,
+.rm-dialog [data-slot="badge"],
+.rm-dialog .badge {
+  padding: 0.3rem 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.rm-dialog .rm-chip { min-height: 2.15rem; }
+
+/* ---------- Foco (teclado): anel accent bem visível ---------- */
+.rm-dialog :is(button, [role="button"], a, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--rm-accent, hsl(var(--primary))) !important;
+  outline-offset: 2px !important;
+  box-shadow:
+    0 0 0 4px color-mix(in oklab, var(--rm-accent, hsl(var(--primary))) 28%, transparent),
+    0 0 14px 2px var(--rm-accent-glow, transparent) !important;
+  border-radius: 0.4rem;
+  z-index: 1;
+}
+
+/* ---------- Hover: destaque sutil em botões/itens interativos ---------- */
+.rm-dialog button:not(:disabled):hover,
+.rm-dialog [role="button"]:not([aria-disabled="true"]):hover,
+.rm-dialog .rm-chip:not([disabled]):hover {
+  background-color: color-mix(in oklab, var(--rm-accent, hsl(var(--primary))) 14%, transparent);
+  border-color: color-mix(in oklab, var(--rm-accent, hsl(var(--primary))) 55%, transparent) !important;
+  color: hsl(0 0% 100%);
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+/* ---------- Selecionado / Ativo / Pressionado ---------- */
+.rm-dialog [aria-pressed="true"],
+.rm-dialog [aria-selected="true"],
+.rm-dialog [data-state="on"],
+.rm-dialog [data-state="active"],
+.rm-dialog [data-state="checked"],
+.rm-dialog .rm-chip[data-active="true"],
+.rm-dialog .rm-chip--active {
+  background: linear-gradient(180deg,
+    color-mix(in oklab, var(--rm-accent, hsl(var(--primary))) 24%, transparent),
+    color-mix(in oklab, var(--rm-accent, hsl(var(--primary))) 12%, transparent)) !important;
+  border-color: var(--rm-accent, hsl(var(--primary))) !important;
+  color: hsl(0 0% 100%) !important;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--rm-accent, hsl(var(--primary))) 60%, transparent),
+    0 0 12px -2px var(--rm-accent-glow, transparent) !important;
+}
+
+/* Disabled — mantém legível sem virar “fantasma” */
+.rm-dialog :is(button, [role="button"])[disabled],
+.rm-dialog :is(button, [role="button"])[aria-disabled="true"] {
+  opacity: 0.72;
+}
+
+/* Respeita preferências de movimento */
+@media (prefers-reduced-motion: reduce) {
+  .rm-dialog svg:not([class*="rm-no-scale"]) { transform: none; }
+}
+
+/* =========================================================
+ * TYPOCLEAR — Tipografia limpa, legível e profissional
+ * Aplicada em .home-typo (homepage) e .typoclear (painel do agente
+ * e páginas internas). Remove glow/text-shadow, suaviza tracking
+ * excessivo e neutraliza pulsos em textos — sem tocar em ícones,
+ * emblemas ou selos táticos que dependem de brilho.
+ * ========================================================= */
+.typoclear,
+.typoclear p,
+.typoclear span:not([class*="font-mono"]):not([class*="font-serif"]):not([class*="font-display"]):not([class*="font-stencil"]):not([class*="font-tactical"]),
+.typoclear button,
+.typoclear a,
+.typoclear li,
+.typoclear label,
+.typoclear input,
+.typoclear textarea,
+.typoclear select,
+.typoclear div:not([class*="font-mono"]):not([class*="font-serif"]):not([class*="font-display"]):not([class*="font-stencil"]):not([class*="font-tactical"]) {
+  font-family: 'Inter', 'DM Sans', 'IBM Plex Sans', system-ui, sans-serif;
+  font-feature-settings: 'ss01', 'cv01', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.typoclear h1,
+.typoclear h2,
+.typoclear h3,
+.typoclear h4,
+.typoclear h5,
+.typoclear h6 {
+  font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+
+/* Remove glow / text-shadow em textos (mantém em ícones/emblemas). */
+.home-typo :is(h1,h2,h3,h4,h5,h6,p,span,a,button,li,label,div),
+.typoclear :is(h1,h2,h3,h4,h5,h6,p,span,a,button,li,label,div) {
+  text-shadow: none !important;
+}
+
+/* Neutraliza drop-shadow "glow" em textos (mantém sombras direcionais). */
+.typoclear *[class*="drop-shadow-[0_0"],
+.home-typo *[class*="drop-shadow-[0_0"] {
+  filter: none !important;
+}
+
+/* Chapa qualquer drop-shadow aplicado diretamente em títulos e parágrafos
+ * dentro dos escopos limpos. Preserva sombras em imagens, cards e ícones. */
+.home-typo :is(h1,h2,h3,h4,h5,h6,p,span,a,button,li,label)[class*="drop-shadow-"],
+.typoclear :is(h1,h2,h3,h4,h5,h6,p,span,a,button,li,label)[class*="drop-shadow-"] {
+  filter: none !important;
+}
+
+
+/* Suaviza tracking excessivo em uppercase para melhor leitura. */
+.home-typo [class*="tracking-widest"],
+.typoclear [class*="tracking-widest"],
+.home-typo [class*="tracking-[0.22em]"],
+.typoclear [class*="tracking-[0.22em]"],
+.home-typo [class*="tracking-[0.28em]"],
+.typoclear [class*="tracking-[0.28em]"],
+.home-typo [class*="tracking-[0.3em]"],
+.typoclear [class*="tracking-[0.3em]"] {
+  letter-spacing: 0.08em !important;
+}
+
+/* Desativa pulsação em textos (mantém em ícones/badges com role). */
+.typoclear :is(h1,h2,h3,h4,h5,h6,p,span,a,label).animate-pulse,
+.home-typo :is(h1,h2,h3,h4,h5,h6,p,span,a,label).animate-pulse {
+  animation: none !important;
+}
+
+/* Renderização mais nítida em números tabulares (contadores, cronômetros). */
+.typoclear .font-mono,
+.typoclear [class*="tabular-nums"] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum', 'ss01';
+}
+
+/* =========================================================
+ * GESTOR DE RONDAS — Sistema tipográfico + cromático
+ * Escopo: .rm-dialog (Gestor), .rm-history (Histórico),
+ *         .rm-reminder (Reminder/Configurações).
+ * Objetivos:
+ *  - Densidade informacional com clareza (line-height + spacing)
+ *  - Tipografia responsiva (clamp)
+ *  - Estados consistentes: hover / active / disabled / loading
+ *  - Cores funcionais: âmbar (ação), ciano (info), esmeralda
+ *    (sucesso), vermelho (crítico)
+ *  - Contraste WCAG AA em dark mode + foco de teclado visível
+ * ========================================================= */
+.rm-dialog,
+.rm-history,
+.rm-reminder {
+  --rm-ink:        hsl(210 40% 98%);        /* 16.8:1 sobre surface */
+  --rm-ink-soft:   hsl(215 20% 82%);        /* 10.2:1 */
+  --rm-ink-mute:   hsl(215 15% 68%);        /* 6.1:1 — AA large */
+  /* --rm-accent pode ser injetado inline pelo container (team color).
+     Fallback: âmbar institucional. */
+  --rm-accent:     hsl(38 96% 60%);
+  --rm-accent-ink: hsl(38 100% 12%);
+  --rm-accent-hsl: 38 96% 60%;
+  --rm-accent-glow: hsl(38 96% 60% / 0.4);
+  --rm-accent-2:   hsl(190 92% 62%);
+  --rm-success:    hsl(152 68% 58%);
+  --rm-danger:     hsl(0 84% 66%);
+  --rm-warn:       hsl(38 96% 60%);
+  --rm-surface:    hsl(220 30% 8% / 0.72);
+  --rm-line:       hsl(215 22% 30% / 0.7);
+  --rm-focus:      var(--rm-accent);
+
+
+  font-family: 'Inter', 'DM Sans', 'IBM Plex Sans', system-ui, sans-serif;
+  font-feature-settings: 'ss01', 'cv01', 'cv11', 'cv02';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--rm-ink);
+  text-rendering: optimizeLegibility;
+  line-height: 1.45;
+}
+
+/* Corpo — line-height confortável mas denso */
+.rm-dialog p,  .rm-history p,  .rm-reminder p,
+.rm-dialog li, .rm-history li, .rm-reminder li,
+.rm-dialog label, .rm-history label, .rm-reminder label {
+  line-height: 1.5;
+  letter-spacing: 0.005em;
+}
+.rm-dialog span, .rm-history span, .rm-reminder span {
+  letter-spacing: 0.005em;
+}
+
+/* Espaçamento entre seções — densidade equilibrada */
+.rm-dialog section + section,
+.rm-history section + section,
+.rm-reminder section + section { margin-top: 0.75rem; }
+.rm-dialog [class*="space-y-4"] > * + *,
+.rm-history [class*="space-y-4"] > * + *,
+.rm-reminder [class*="space-y-4"] > * + * { margin-top: 0.85rem !important; }
+.rm-dialog [class*="space-y-3"] > * + *,
+.rm-history [class*="space-y-3"] > * + *,
+.rm-reminder [class*="space-y-3"] > * + * { margin-top: 0.65rem !important; }
+
+/* Títulos responsivos com clamp */
+.rm-dialog h1, .rm-history h1, .rm-reminder h1,
+.rm-dialog h2, .rm-history h2, .rm-reminder h2,
+.rm-dialog h3, .rm-history h3, .rm-reminder h3,
+.rm-dialog h4, .rm-history h4, .rm-reminder h4,
+.rm-dialog [data-dialog-title],
+.rm-history [data-dialog-title],
+.rm-reminder [data-dialog-title] {
+  font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--rm-ink);
+  line-height: 1.2;
+}
+.rm-dialog h1, .rm-history h1, .rm-reminder h1 { font-size: clamp(17px, 1.6vw + 6px, 22px); }
+.rm-dialog h2, .rm-history h2, .rm-reminder h2 { font-size: clamp(15px, 1.2vw + 6px, 19px); }
+.rm-dialog h3, .rm-history h3, .rm-reminder h3 { font-size: clamp(13.5px, 0.9vw + 6px, 16px); }
+
+/* Rótulos institucionais em uppercase */
+.rm-dialog [class*="uppercase"],
+.rm-history [class*="uppercase"],
+.rm-reminder [class*="uppercase"] {
+  letter-spacing: 0.08em !important;
+  font-weight: 600;
+}
+
+/* Hierarquia de tinta — WCAG AA */
+.rm-dialog label, .rm-history label, .rm-reminder label,
+.rm-dialog .text-muted-foreground,
+.rm-history .text-muted-foreground,
+.rm-reminder .text-muted-foreground { color: var(--rm-ink-soft) !important; }
+
+.rm-dialog .text-muted-foreground\/70,
+.rm-dialog .text-muted-foreground\/80,
+.rm-history .text-muted-foreground\/70,
+.rm-history .text-muted-foreground\/80,
+.rm-reminder .text-muted-foreground\/70,
+.rm-reminder .text-muted-foreground\/80 { color: var(--rm-ink-mute) !important; }
+
+/* Números tabulares — cronômetros e contadores */
+.rm-dialog .font-mono, .rm-history .font-mono, .rm-reminder .font-mono,
+.rm-dialog [class*="tabular-nums"],
+.rm-history [class*="tabular-nums"],
+.rm-reminder [class*="tabular-nums"] {
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum', 'ss01', 'zero';
+  letter-spacing: 0.01em;
+}
+
+/* Cores funcionais — accents inline.
+   As classes .text-amber-* passam a herdar a cor da equipe (var --rm-accent)
+   para manter o painel harmônico quando o time é trocado. */
+.rm-dialog .text-amber-300, .rm-dialog .text-amber-400, .rm-dialog .text-amber-500,
+.rm-history .text-amber-300, .rm-history .text-amber-400, .rm-history .text-amber-500,
+.rm-reminder .text-amber-300, .rm-reminder .text-amber-400, .rm-reminder .text-amber-500 {
+  color: var(--rm-accent) !important;
+}
+.rm-dialog .text-cyan-300, .rm-dialog .text-cyan-400,
+.rm-history .text-cyan-300, .rm-history .text-cyan-400,
+.rm-reminder .text-cyan-300, .rm-reminder .text-cyan-400 { color: var(--rm-accent-2) !important; }
+.rm-dialog .text-emerald-300, .rm-dialog .text-emerald-400, .rm-dialog .text-green-400,
+.rm-history .text-emerald-300, .rm-history .text-emerald-400, .rm-history .text-green-400,
+.rm-reminder .text-emerald-300, .rm-reminder .text-emerald-400, .rm-reminder .text-green-400 {
+  color: var(--rm-success) !important;
+}
+.rm-dialog .text-red-300, .rm-dialog .text-red-400, .rm-dialog .text-red-500,
+.rm-history .text-red-300, .rm-history .text-red-400, .rm-history .text-red-500,
+.rm-reminder .text-red-300, .rm-reminder .text-red-400, .rm-reminder .text-red-500 {
+  color: var(--rm-danger) !important;
+}
+
+/* Backgrounds/bordas âmbar herdando a cor da equipe */
+.rm-dialog [class*="bg-amber-500/10"],
+.rm-dialog [class*="bg-amber-500\\/10"],
+.rm-history [class*="bg-amber-500/10"],
+.rm-reminder [class*="bg-amber-500/10"] { background-color: hsl(var(--rm-accent-hsl) / 0.10) !important; }
+.rm-dialog [class*="border-amber"],
+.rm-history [class*="border-amber"],
+.rm-reminder [class*="border-amber"] { border-color: hsl(var(--rm-accent-hsl) / 0.45) !important; }
+
+/* ============ Botões — estados consistentes ============ */
+.rm-dialog button, .rm-history button, .rm-reminder button {
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: background-color 160ms ease, color 160ms ease,
+              box-shadow 200ms ease, transform 120ms ease,
+              border-color 160ms ease, opacity 160ms ease;
+}
+
+/* Primário — segue a cor da equipe (var --rm-accent).
+   Exclui Switch (role=switch) e o botão Fechar (X) para não deformar. */
+.rm-dialog button[class*="bg-primary"]:not([class*="bg-primary/"]):not([role="switch"]):not([data-radix-dialog-close]),
+.rm-dialog button[class*="bg-amber"]:not([class*="bg-amber-500/"]):not([class*="bg-amber-400/"]):not([class*="bg-amber-300/"]):not([role="switch"]):not([data-radix-dialog-close]),
+.rm-history button[class*="bg-primary"]:not([class*="bg-primary/"]):not([role="switch"]):not([data-radix-dialog-close]),
+.rm-history button[class*="bg-amber"]:not([class*="bg-amber-500/"]):not([class*="bg-amber-400/"]):not([class*="bg-amber-300/"]):not([role="switch"]):not([data-radix-dialog-close]),
+.rm-reminder button[class*="bg-primary"]:not([class*="bg-primary/"]):not([role="switch"]):not([data-radix-dialog-close]),
+.rm-reminder button[class*="bg-amber"]:not([class*="bg-amber-500/"]):not([class*="bg-amber-400/"]):not([class*="bg-amber-300/"]):not([role="switch"]):not([data-radix-dialog-close]) {
+  background-color: var(--rm-accent) !important;
+  color: var(--rm-accent-ink) !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow:
+    0 6px 22px -8px hsl(var(--rm-accent-hsl) / 0.55),
+    inset 0 1px 0 hsl(0 0% 100% / 0.18);
+}
+/* Descendentes de qualquer superfície com fundo âmbar/primary sólido
+   herdam a tinta escura — mas não afeta thumbs de Switch. */
+.rm-dialog [class*="bg-primary"]:not([class*="bg-primary/"]):not([role="switch"]) > *:not([data-radix-switch-thumb]),
+.rm-dialog [class*="bg-amber-500"]:not([class*="bg-amber-500/"]):not([role="switch"]) > *:not([data-radix-switch-thumb]),
+.rm-dialog [class*="bg-amber-400"]:not([class*="bg-amber-400/"]):not([role="switch"]) > *:not([data-radix-switch-thumb]),
+.rm-history [class*="bg-primary"]:not([class*="bg-primary/"]):not([role="switch"]) > *:not([data-radix-switch-thumb]),
+.rm-history [class*="bg-amber-500"]:not([class*="bg-amber-500/"]):not([role="switch"]) > *:not([data-radix-switch-thumb]),
+.rm-history [class*="bg-amber-400"]:not([class*="bg-amber-400/"]):not([role="switch"]) > *:not([data-radix-switch-thumb]),
+.rm-reminder [class*="bg-primary"]:not([class*="bg-primary/"]):not([role="switch"]) > *:not([data-radix-switch-thumb]),
+.rm-reminder [class*="bg-amber-500"]:not([class*="bg-amber-500/"]):not([role="switch"]) > *:not([data-radix-switch-thumb]),
+.rm-reminder [class*="bg-amber-400"]:not([class*="bg-amber-400/"]):not([role="switch"]) > *:not([data-radix-switch-thumb]) {
+  color: var(--rm-accent-ink) !important;
+}
+
+/* ============================================================
+ * CHIP DE INTERVALO (.rm-chip) — Reminder
+ * Classes dedicadas com especificidade suficiente para não serem
+ * substituídas pelas regras genéricas de bg-primary/bg-amber.
+ * Contraste WCAG AA garantido em qualquer cor de equipe.
+ * ============================================================ */
+.rm-reminder .rm-chip {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid hsl(var(--rm-line-hsl, 220 15% 25%) / 0.7);
+  background-color: hsl(220 15% 12% / 0.55);
+  color: var(--rm-ink);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 120ms ease;
+  cursor: pointer;
+}
+.rm-reminder .rm-chip .rm-chip__label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: var(--rm-ink) !important;
+}
+.rm-reminder .rm-chip .rm-chip__hint {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.68rem;
+  line-height: 1.25;
+  color: var(--rm-ink-mute) !important;
+}
+.rm-reminder .rm-chip:hover:not(:disabled) {
+  border-color: hsl(var(--rm-accent-hsl) / 0.55);
+  background-color: hsl(var(--rm-accent-hsl) / 0.08);
+  transform: translateY(-1px);
+}
+.rm-reminder .rm-chip:focus-visible {
+  outline: 2px solid var(--rm-focus);
+  outline-offset: 2px;
+}
+.rm-reminder .rm-chip.rm-chip--active,
+.rm-reminder .rm-chip[data-active="true"] {
+  background-color: hsl(var(--rm-accent-hsl) / 0.18) !important;
+  border-color: var(--rm-accent) !important;
+  box-shadow:
+    0 0 0 1px hsl(var(--rm-accent-hsl) / 0.45),
+    0 6px 18px -10px hsl(var(--rm-accent-hsl) / 0.55);
+}
+.rm-reminder .rm-chip.rm-chip--active .rm-chip__label,
+.rm-reminder .rm-chip[data-active="true"] .rm-chip__label {
+  color: var(--rm-accent) !important;
+  font-weight: 700 !important;
+}
+.rm-reminder .rm-chip.rm-chip--active .rm-chip__hint,
+.rm-reminder .rm-chip[data-active="true"] .rm-chip__hint {
+  color: var(--rm-ink-soft) !important;
+  opacity: 0.95;
+}
+
+/* ============================================================
+ * Fechar (X) do Dialog — sempre discreto, nunca âmbar cheio.
+ * Sobrescreve as regras genéricas de bg-primary/bg-amber quando
+ * o shadcn Dialog aplica classes de highlight ao close button.
+ * ============================================================ */
+.rm-dialog [data-radix-dialog-close],
+.rm-history [data-radix-dialog-close],
+.rm-reminder [data-radix-dialog-close],
+.rm-dialog button.absolute.right-4.top-4,
+.rm-history button.absolute.right-4.top-4,
+.rm-reminder button.absolute.right-4.top-4 {
+  background-color: transparent !important;
+  color: var(--rm-ink-soft) !important;
+  box-shadow: none !important;
+  filter: none !important;
+  transform: none !important;
+  width: 24px !important;
+  height: 24px !important;
+  padding: 0 !important;
+  border-radius: 6px !important;
+  font-weight: 400 !important;
+}
+.rm-dialog [data-radix-dialog-close]:hover,
+.rm-history [data-radix-dialog-close]:hover,
+.rm-reminder [data-radix-dialog-close]:hover,
+.rm-dialog button.absolute.right-4.top-4:hover,
+.rm-history button.absolute.right-4.top-4:hover,
+.rm-reminder button.absolute.right-4.top-4:hover {
+  background-color: hsl(var(--rm-accent-hsl) / 0.12) !important;
+  color: var(--rm-ink) !important;
+}
+.rm-dialog [data-radix-dialog-close] svg,
+.rm-history [data-radix-dialog-close] svg,
+.rm-reminder [data-radix-dialog-close] svg,
+.rm-dialog button.absolute.right-4.top-4 svg,
+.rm-history button.absolute.right-4.top-4 svg,
+.rm-reminder button.absolute.right-4.top-4 svg {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+/* Variante compacta — reduz padding interno do chip e do container */
+.rm-reminder.rm-compact .rm-chip {
+  padding: 0.4rem 0.55rem;
+}
+.rm-reminder.rm-compact .rm-chip .rm-chip__label {
+  font-size: 0.82rem;
+}
+.rm-reminder.rm-compact .rm-chip .rm-chip__hint {
+  font-size: 0.63rem;
+  margin-top: 1px;
+}
+
+.rm-dialog button[class*="bg-primary"]:not([role="switch"]):not([data-radix-dialog-close]):hover:not(:disabled),
+.rm-dialog button[class*="bg-amber"]:not([role="switch"]):not([data-radix-dialog-close]):hover:not(:disabled),
+.rm-history button[class*="bg-primary"]:not([role="switch"]):not([data-radix-dialog-close]):hover:not(:disabled),
+.rm-history button[class*="bg-amber"]:not([role="switch"]):not([data-radix-dialog-close]):hover:not(:disabled),
+.rm-reminder button[class*="bg-primary"]:not([role="switch"]):not([data-radix-dialog-close]):hover:not(:disabled),
+.rm-reminder button[class*="bg-amber"]:not([role="switch"]):not([data-radix-dialog-close]):hover:not(:disabled) {
+  filter: brightness(1.12);
+  box-shadow:
+    0 10px 28px -8px hsl(var(--rm-accent-hsl) / 0.7),
+    inset 0 1px 0 hsl(0 0% 100% / 0.25);
+  transform: translateY(-1px);
+}
+.rm-dialog button[class*="bg-primary"]:not([role="switch"]):not([data-radix-dialog-close]):active:not(:disabled),
+.rm-dialog button[class*="bg-amber"]:not([role="switch"]):not([data-radix-dialog-close]):active:not(:disabled),
+.rm-history button[class*="bg-primary"]:not([role="switch"]):not([data-radix-dialog-close]):active:not(:disabled),
+.rm-history button[class*="bg-amber"]:not([role="switch"]):not([data-radix-dialog-close]):active:not(:disabled),
+.rm-reminder button[class*="bg-primary"]:not([role="switch"]):not([data-radix-dialog-close]):active:not(:disabled),
+.rm-reminder button[class*="bg-amber"]:not([role="switch"]):not([data-radix-dialog-close]):active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: inset 0 2px 6px hsl(var(--rm-accent-hsl) / 0.4);
+  filter: brightness(0.92);
+}
+
+/* ============================================================
+ * SWITCH (role="switch") — proporção fixa e acabamento discreto
+ * dentro de qualquer painel .rm-*. Segue a cor da equipe quando
+ * ativo, sem herdar sombras/transforms dos botões primários.
+ * ============================================================ */
+.rm-dialog [role="switch"],
+.rm-history [role="switch"],
+.rm-reminder [role="switch"] {
+  width: 40px !important;
+  height: 22px !important;
+  min-width: 40px !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  border: 1px solid hsl(var(--rm-line-hsl, 220 15% 25%) / 0.9) !important;
+  background-color: hsl(220 15% 18% / 0.8) !important;
+  box-shadow: inset 0 1px 2px hsl(0 0% 0% / 0.35) !important;
+  filter: none !important;
+  transform: none !important;
+  font-weight: 400 !important;
+  letter-spacing: normal !important;
+  transition: background-color 160ms ease, border-color 160ms ease !important;
+}
+.rm-dialog [role="switch"][data-state="checked"],
+.rm-history [role="switch"][data-state="checked"],
+.rm-reminder [role="switch"][data-state="checked"] {
+  background-color: var(--rm-accent) !important;
+  border-color: hsl(var(--rm-accent-hsl) / 0.75) !important;
+  box-shadow:
+    inset 0 1px 2px hsl(0 0% 0% / 0.25),
+    0 0 0 2px hsl(var(--rm-accent-hsl) / 0.18) !important;
+}
+.rm-dialog [role="switch"]:hover:not(:disabled),
+.rm-history [role="switch"]:hover:not(:disabled),
+.rm-reminder [role="switch"]:hover:not(:disabled) {
+  border-color: hsl(var(--rm-accent-hsl) / 0.7) !important;
+  transform: none !important;
+  filter: none !important;
+}
+.rm-dialog [role="switch"]:focus-visible,
+.rm-history [role="switch"]:focus-visible,
+.rm-reminder [role="switch"]:focus-visible {
+  outline: 2px solid var(--rm-focus);
+  outline-offset: 2px;
+}
+.rm-dialog [role="switch"] > span,
+.rm-history [role="switch"] > span,
+.rm-reminder [role="switch"] > span {
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 999px !important;
+  background: hsl(0 0% 100%) !important;
+  box-shadow: 0 1px 2px hsl(0 0% 0% / 0.35) !important;
+  color: transparent !important;
+}
+.rm-dialog [role="switch"][data-state="checked"] > span,
+.rm-history [role="switch"][data-state="checked"] > span,
+.rm-reminder [role="switch"][data-state="checked"] > span {
+  transform: translateX(18px) !important;
+}
+.rm-dialog [role="switch"][data-state="unchecked"] > span,
+.rm-history [role="switch"][data-state="unchecked"] > span,
+.rm-reminder [role="switch"][data-state="unchecked"] > span {
+  transform: translateX(2px) !important;
+}
+
+/* Fechar (X) — foco visível para navegação por teclado */
+.rm-dialog [data-radix-dialog-close]:focus-visible,
+.rm-history [data-radix-dialog-close]:focus-visible,
+.rm-reminder [data-radix-dialog-close]:focus-visible,
+.rm-dialog button.absolute.right-4.top-4:focus-visible,
+.rm-history button.absolute.right-4.top-4:focus-visible,
+.rm-reminder button.absolute.right-4.top-4:focus-visible {
+  outline: 2px solid var(--rm-focus) !important;
+  outline-offset: 2px !important;
+}
+
+
+/* Variantes semânticas via classes utilitárias */
+.rm-dialog button[class*="bg-emerald"],
+.rm-history button[class*="bg-emerald"],
+.rm-reminder button[class*="bg-emerald"] {
+  background-color: var(--rm-success) !important;
+  color: hsl(152 100% 8%) !important;
+}
+.rm-dialog button[class*="bg-cyan"],
+.rm-history button[class*="bg-cyan"],
+.rm-reminder button[class*="bg-cyan"] {
+  background-color: var(--rm-accent-2) !important;
+  color: hsl(190 100% 8%) !important;
+}
+.rm-dialog button[class*="bg-red"],
+.rm-history button[class*="bg-red"],
+.rm-reminder button[class*="bg-red"],
+.rm-dialog button[class*="bg-destructive"],
+.rm-history button[class*="bg-destructive"],
+.rm-reminder button[class*="bg-destructive"] {
+  background-color: var(--rm-danger) !important;
+  color: hsl(0 0% 100%) !important;
+}
+.rm-dialog button[class*="bg-emerald"]:hover:not(:disabled),
+.rm-history button[class*="bg-emerald"]:hover:not(:disabled),
+.rm-reminder button[class*="bg-emerald"]:hover:not(:disabled),
+.rm-dialog button[class*="bg-cyan"]:hover:not(:disabled),
+.rm-history button[class*="bg-cyan"]:hover:not(:disabled),
+.rm-reminder button[class*="bg-cyan"]:hover:not(:disabled),
+.rm-dialog button[class*="bg-red"]:hover:not(:disabled),
+.rm-history button[class*="bg-red"]:hover:not(:disabled),
+.rm-reminder button[class*="bg-red"]:hover:not(:disabled),
+.rm-dialog button[class*="bg-destructive"]:hover:not(:disabled),
+.rm-history button[class*="bg-destructive"]:hover:not(:disabled),
+.rm-reminder button[class*="bg-destructive"]:hover:not(:disabled) { filter: brightness(1.10); transform: translateY(-1px); }
+
+/* Ghost / outline — hover suave na cor da equipe */
+.rm-dialog button[class*="variant-ghost"],
+.rm-dialog button[class*="variant-outline"],
+.rm-history button[class*="variant-ghost"],
+.rm-history button[class*="variant-outline"],
+.rm-reminder button[class*="variant-ghost"],
+.rm-reminder button[class*="variant-outline"] { color: var(--rm-ink-soft); }
+.rm-dialog button[class*="variant-ghost"]:hover:not(:disabled),
+.rm-dialog button[class*="variant-outline"]:hover:not(:disabled),
+.rm-history button[class*="variant-ghost"]:hover:not(:disabled),
+.rm-history button[class*="variant-outline"]:hover:not(:disabled),
+.rm-reminder button[class*="variant-ghost"]:hover:not(:disabled),
+.rm-reminder button[class*="variant-outline"]:hover:not(:disabled) {
+  background-color: hsl(var(--rm-accent-hsl) / 0.10) !important;
+  color: var(--rm-accent) !important;
+  border-color: hsl(var(--rm-accent-hsl) / 0.45) !important;
+}
+
+
+/* Disabled — visual neutro sem interatividade */
+.rm-dialog button:disabled,
+.rm-history button:disabled,
+.rm-reminder button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+  filter: grayscale(0.35);
+}
+
+/* Loading — data-loading="true" ou aria-busy="true" */
+.rm-dialog button[data-loading="true"],
+.rm-dialog button[aria-busy="true"],
+.rm-history button[data-loading="true"],
+.rm-history button[aria-busy="true"],
+.rm-reminder button[data-loading="true"],
+.rm-reminder button[aria-busy="true"] {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+.rm-dialog button[data-loading="true"]::after,
+.rm-dialog button[aria-busy="true"]::after,
+.rm-history button[data-loading="true"]::after,
+.rm-history button[aria-busy="true"]::after,
+.rm-reminder button[data-loading="true"]::after,
+.rm-reminder button[aria-busy="true"]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  color: var(--rm-accent-ink);
+  animation: rm-spin 720ms linear infinite;
+}
+@keyframes rm-spin { to { transform: rotate(360deg); } }
+
+/* ============ Foco de teclado (WCAG 2.4.7) ============ */
+.rm-dialog :is(button, a, input, textarea, select, [role="button"], [tabindex]):focus-visible,
+.rm-history :is(button, a, input, textarea, select, [role="button"], [tabindex]):focus-visible,
+.rm-reminder :is(button, a, input, textarea, select, [role="button"], [tabindex]):focus-visible {
+  outline: 2px solid var(--rm-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px hsl(190 92% 62% / 0.18);
+  border-radius: 6px;
+}
+
+/* Bordas e divisores */
+.rm-dialog [class*="rounded-sm"][class*="border"],
+.rm-dialog [class*="rounded-md"][class*="border"],
+.rm-history [class*="rounded-sm"][class*="border"],
+.rm-history [class*="rounded-md"][class*="border"],
+.rm-reminder [class*="rounded-sm"][class*="border"],
+.rm-reminder [class*="rounded-md"][class*="border"] { border-color: var(--rm-line); }
+
+.rm-dialog hr, .rm-history hr, .rm-reminder hr,
+.rm-dialog [class*="border-border"],
+.rm-history [class*="border-border"],
+.rm-reminder [class*="border-border"] { border-color: var(--rm-line) !important; }
+
+/* Sem pulsos em texto */
+.rm-dialog :is(h1,h2,h3,h4,p,span,label).animate-pulse,
+.rm-history :is(h1,h2,h3,h4,p,span,label).animate-pulse,
+.rm-reminder :is(h1,h2,h3,h4,p,span,label).animate-pulse { animation: none !important; }
+
+/* Reduced motion — desliga transforms */
+@media (prefers-reduced-motion: reduce) {
+  .rm-dialog button, .rm-history button, .rm-reminder button { transition: none !important; transform: none !important; }
+  @keyframes rm-spin { to { transform: rotate(0deg); } }
+}
+
+

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content" />
+    <title>Gestão de Escalas</title>
+    <meta name="description" content="Simplifique o controle de plantões CSPlantão">
+    <meta name="theme-color" content="#0B6EF3" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="PlantãoPro" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Preload backdrop de carregamento (baixo custo, ~55KB, cache-forever no CDN) -->
+    <link rel="preload" as="image" href="/__l5e/assets-v1/42788cce-196f-4a9e-ac3e-175e0f810f4e/loading-backdrop.webp" fetchpriority="low" />
+
+    <!-- Preload splash institucional (LCP): AVIF prioritário para navegadores modernos,
+         WebP como fallback. JPG fica só como último recurso via <picture>. -->
+    <link rel="preload" as="image" type="image/avif" href="/__l5e/assets-v1/b46f5fff-72fa-42e6-ab6d-399dffce6d6d/plantaopro-splash.avif" fetchpriority="high" />
+    <link rel="preload" as="image" type="image/webp" href="/__l5e/assets-v1/daa04562-bbb9-4c2c-b4e0-c99584022bc5/plantaopro-splash.webp" fetchpriority="high" />
+
+    <!-- Preload do brasão ISE/ACRE (logo do banner institucional da home) — LCP secundário.
+         WebP prioritário (~59KB); PNG serve de fallback quando o browser não suporta. -->
+    <link rel="preload" as="image" type="image/webp" href="/__l5e/assets-v1/0b354a36-5e43-46bd-84a7-dcfc853eef43/ise-acre-badge.webp" fetchpriority="high" />
+
+    
+    <!-- Preconnect Supabase para acelerar 1ª chamada (economiza ~100-300ms em 4G) -->
+    <link rel="preconnect" href="https://qxrsvstskfhcwvzithup.supabase.co" crossorigin>
+    <link rel="dns-prefetch" href="https://qxrsvstskfhcwvzithup.supabase.co">
+
+    <!-- Google Fonts — pesos reduzidos, display=swap em tudo para eliminar FOIT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Saira+Condensed:wght@600;700&family=Stardos+Stencil:wght@400;700&display=swap"
+    />
+    <!-- Preload apenas dos 2 WOFF2 críticos para LCP (corpo + display) -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="https://fonts.gstatic.com/s/librebaskerville/v14/kmKnZrc3Hgbbcjq75U4uslyuy4kn0pNeYRI4CN2V.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="https://fonts.gstatic.com/s/ibmplexsans/v19/zYX9KVElMYYaJe8bpLHnCwDKhdHeFY5rk4NKlA.woff2" />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Saira+Condensed:wght@600;700&family=Stardos+Stencil:wght@400;700&display=swap"
+      />
+    </noscript>
+
+
+
+
+    <!-- Favicon — Brasão oficial PlantãoPro (águia + escudo dourado).
+         Vários tamanhos declarados para o navegador escolher o maior
+         disponível na aba, atalhos e resultados de busca. -->
+    <link rel="icon" type="image/png" sizes="any" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="1024x1024" href="/favicon.png" fetchpriority="high" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+
+    <!-- iOS home screen / standalone — usa a maior resolução disponível -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="512x512" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="1024x1024" href="/apple-touch-icon.png" />
+
+    <!-- Windows tiles -->
+    <meta name="msapplication-TileImage" content="/favicon.png" />
+    <meta name="msapplication-TileColor" content="#0a0f1a" />
+
+
+    <meta property="og:title" content="PlantãoPro - Gestão de Escalas" />
+    <meta property="og:description" content="Simplifique o controle de plantões com o PlantãoPro." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://id-preview--b6ae9e8f-6b62-412c-986e-6387cfa7ddc2.lovable.app/" />
+    <meta property="og:site_name" content="PlantãoPro" />
+    <link rel="canonical" href="https://id-preview--b6ae9e8f-6b62-412c-986e-6387cfa7ddc2.lovable.app/" />
+
+
+    <style>
+      /* Fundo de boot — cor sólida escura antes do React montar.
+         A splash institucional é renderizada UMA VEZ pelo componente
+         <SplashScreen>. Antes usávamos a arte como background-image
+         aqui também, o que causava sensação de "splash duplicada"
+         quando o overlay animado fazia fade-out. */
+      html, body, #root {
+        background-color: #071522;
+      }
+
+      /* Trava a altura no mobile para evitar redimensionamento quando a barra de endereço aparece/some */
+      @media (max-width: 767px) {
+        html, body {
+          height: 100dvh;
+          min-height: 100dvh;
+          max-height: 100dvh;
+          overflow: hidden;
+          overscroll-behavior: none;
+          position: fixed;
+          inset: 0;
+          width: 100%;
+          touch-action: pan-y pinch-zoom;
+        }
+        #root {
+          height: 100dvh;
+          max-height: 100dvh;
+          overflow: hidden;
+        }
+      }
+      @media (min-width: 768px) {
+        html, body, #root { min-height: 100vh; }
+      }
+    </style>
+    
+  
+  
+  
+  <!-- Social share: brasão institucional PlantãoPro (1200x630) -->
+  <meta property="og:image" content="https://csplantaopro.lovable.app/__l5e/assets-v1/8b4653fd-de3b-4c3b-9bab-759bd9565133/plantaopro-og-brasao.jpg">
+  <meta property="og:image:secure_url" content="https://csplantaopro.lovable.app/__l5e/assets-v1/8b4653fd-de3b-4c3b-9bab-759bd9565133/plantaopro-og-brasao.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PlantãoPro — Brasão oficial: águia e escudo dourado. Controle de Plantão · Escala · Banco de Horas.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://csplantaopro.lovable.app/__l5e/assets-v1/8b4653fd-de3b-4c3b-9bab-759bd9565133/plantaopro-og-brasao.jpg">
+  <meta name="twitter:image:alt" content="PlantãoPro — Brasão oficial: águia e escudo dourado.">
+  <meta property="og:title" content="PlantãoPro — Controle de Plantão · Escala · Banco de Horas">
+  <meta name="twitter:title" content="PlantãoPro — Controle de Plantão · Escala · Banco de Horas">
+  <meta property="og:description" content="Sistema profissional de controle de plantão, escala e banco de horas do Sistema Socioeducativo do Acre.">
+  <meta name="twitter:description" content="Sistema profissional de controle de plantão, escala e banco de horas do Sistema Socioeducativo do Acre.">
+</head>
+
+  <body class="typoclear">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
