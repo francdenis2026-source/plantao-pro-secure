@@ -18,7 +18,7 @@ INSERT INTO public.units (id, name, municipality, address, phone, email, directo
   ('f20f1979-19e4-4662-a97a-bf2d6a3283d9', 'CS Brasiléia', 'Brasiléia', 'Rua Raimundo Chaar, 100 - Centro', '(68) 3546-0001', 'cs.brasileia@ise.ac.gov.br', 'Dr. Marcos Dias', 'Fernanda Cruz');
 
 -- =============================================================================
--- INSERIR MASTER ADMIN (usuário único)
+-- INSERIR MASTER ADMIN (Senha: master123)
 -- =============================================================================
 
 INSERT INTO public.master_admin (username, password_hash) VALUES

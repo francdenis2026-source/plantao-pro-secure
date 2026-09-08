@@ -9,82 +9,72 @@
 @layer base {
   :root {
     /* ================================
-       SOCIOEDUCATIVO ACRE — Institutional v2
-       Marinho profundo (camisa) + Caqui/Areia (calça) + Dourado (brasão)
+       PLANTÃOPRO — Sistema Institucional v3
+       Identidade profissional sóbria: ardósia neutra + azul institucional único.
+       Sem dourado, sem HUD tático, sem heráldica decorativa.
        ================================ */
+    --background: 222 18% 8%;
+    --foreground: 210 20% 96%;
 
-    /* INSTITUCIONAL AMAZÔNICO — Verde-Amazônia + Cobre Institucional + Creme Oficial
-       Referência: Sistema Socioeducativo do Acre. Autoridade, floresta e artesania. */
+    --card: 222 16% 11%;
+    --card-foreground: 210 20% 96%;
 
-    /* MIDNIGHT STEEL — Navy abissal + Aço + Ouro institucional */
-    --background: 217 62% 4%;
-    --foreground: 210 25% 94%;
+    --popover: 222 18% 9%;
+    --popover-foreground: 210 20% 96%;
 
-    --card: 213 52% 8%;
-    --card-foreground: 210 25% 94%;
+    /* Primary — Azul institucional único (confiança, segurança pública) */
+    --primary: 205 88% 46%;
+    --primary-foreground: 210 20% 99%;
+    --primary-glow: 205 88% 58%;
 
-    --popover: 215 55% 6%;
-    --popover-foreground: 210 25% 94%;
+    --secondary: 222 14% 17%;
+    --secondary-foreground: 210 20% 94%;
 
-    /* Primary — Âmbar institucional ISE Acre (laranja socioeducativo) */
-    --primary: 28 92% 55%;
-    --primary-foreground: 217 62% 5%;
-    --primary-glow: 32 96% 62%;
+    --muted: 222 14% 15%;
+    --muted-foreground: 216 12% 65%;
 
-    /* Secondary — Steel navy */
-    --secondary: 213 45% 14%;
-    --secondary-foreground: 210 25% 94%;
+    --accent: 205 88% 46%;
+    --accent-foreground: 210 20% 99%;
 
-    --muted: 214 40% 11%;
-    --muted-foreground: 210 18% 70%;
-
-    /* Accent — Steel blue (2E5C8A) */
-    --accent: 210 50% 36%;
-    --accent-foreground: 210 25% 96%;
-
-    --destructive: 0 72% 48%;
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 152 60% 42%;
+    --success: 152 55% 42%;
     --success-foreground: 0 0% 100%;
 
-    --warning: 38 92% 55%;
-    --warning-foreground: 217 62% 5%;
+    --warning: 38 80% 52%;
+    --warning-foreground: 222 18% 8%;
 
-    --border: 212 40% 18%;
-    --input: 213 45% 13%;
-    --ring: 28 92% 55%;
+    --border: 222 13% 21%;
+    --input: 222 14% 16%;
+    --ring: 205 88% 46%;
 
-    --sidebar-background: 222 44% 4%;
-    --sidebar-foreground: 30 30% 92%;
-    --sidebar-primary: 28 92% 58%;
-    --sidebar-primary-foreground: 222 60% 6%;
-    --sidebar-accent: 220 34% 12%;
-    --sidebar-accent-foreground: 30 30% 92%;
-    --sidebar-border: 220 30% 16%;
-    --sidebar-ring: 28 96% 66%;
+    --sidebar-background: 222 20% 6%;
+    --sidebar-foreground: 210 18% 92%;
+    --sidebar-primary: 205 88% 50%;
+    --sidebar-primary-foreground: 210 20% 99%;
+    --sidebar-accent: 222 14% 13%;
+    --sidebar-accent-foreground: 210 18% 92%;
+    --sidebar-border: 222 13% 17%;
+    --sidebar-ring: 205 88% 50%;
 
-    --radius: 0.375rem;
+    --radius: 0.625rem;
 
     /* Viewport contracts */
     --app-header-height: 4rem;
     --safe-dvh: 100dvh;
     --home-viewport-height: calc(var(--safe-dvh) - var(--app-header-height));
 
-    /* Gradientes institucionais — Navy + Gold */
-    --gradient-primary: linear-gradient(140deg, hsl(42 78% 56%) 0%, hsl(38 68% 38%) 100%);
-    --gradient-dark: radial-gradient(ellipse at top, hsl(220 45% 10%) 0%, hsl(222 55% 3%) 100%);
-    --gradient-navy-depth: linear-gradient(160deg, hsl(220 45% 12%) 0%, hsl(222 55% 6%) 55%, hsl(222 65% 3%) 100%);
-    --gradient-amber-command: linear-gradient(135deg, hsl(42 78% 56%) 0%, hsl(44 92% 66%) 100%);
-    --gradient-khaki-band: linear-gradient(90deg, hsl(42 78% 56% / 0) 0%, hsl(42 78% 56% / 0.30) 50%, hsl(42 78% 56% / 0) 100%);
-    --gradient-hero-overlay: linear-gradient(120deg, hsl(222 60% 4% / 0.92) 0%, hsl(220 45% 10% / 0.65) 55%, hsl(42 60% 30% / 0.22) 100%);
+    /* Gradientes institucionais — ardósia + azul único */
+    --gradient-primary: linear-gradient(135deg, hsl(205 88% 46%) 0%, hsl(217 85% 38%) 100%);
+    --gradient-dark: radial-gradient(ellipse at top, hsl(222 18% 11%) 0%, hsl(222 20% 6%) 100%);
+    --gradient-navy-depth: linear-gradient(160deg, hsl(222 16% 12%) 0%, hsl(222 18% 8%) 55%, hsl(222 20% 5%) 100%);
+    --gradient-hero-overlay: linear-gradient(120deg, hsl(222 20% 6% / 0.94) 0%, hsl(222 18% 9% / 0.72) 55%, hsl(205 60% 20% / 0.20) 100%);
 
-    /* Sombras / glows */
-    --shadow-command: 0 24px 60px -20px hsl(222 70% 2% / 0.9), 0 2px 8px hsl(42 78% 56% / 0.20);
-    --shadow-elevated: 0 30px 60px -20px hsl(222 70% 2% / 0.9), 0 0 0 1px hsl(220 35% 22% / 0.6);
-    --glow-amber: 0 0 0 1px hsl(42 78% 56% / 0.5), 0 12px 32px -12px hsl(42 78% 56% / 0.45);
-    --glow-navy: 0 12px 32px -12px hsl(222 70% 2% / 0.95);
-    --glow-khaki: 0 10px 28px -10px hsl(42 60% 40% / 0.5);
+    /* Sombras */
+    --shadow-command: 0 24px 60px -20px hsl(222 25% 2% / 0.85), 0 2px 8px hsl(205 88% 46% / 0.16);
+    --shadow-elevated: 0 30px 60px -20px hsl(222 25% 2% / 0.85), 0 0 0 1px hsl(222 13% 24% / 0.6);
+    --glow-primary: 0 0 0 1px hsl(205 88% 46% / 0.45), 0 12px 32px -12px hsl(205 88% 46% / 0.35);
   }
 
 
@@ -227,7 +217,7 @@
   }
 
   .glow-ring-amber {
-    box-shadow: var(--glow-amber);
+    box-shadow: var(--glow-primary);
   }
 
   /* ===== ARMED-FORCES TYPOGRAPHY ===== */
@@ -777,7 +767,7 @@ body {
   position: absolute;
   inset: 0 0 auto 0;
   height: 2px;
-  background: var(--gradient-amber-command);
+  background: var(--gradient-primary);
   opacity: 0.85;
   pointer-events: none;
 }

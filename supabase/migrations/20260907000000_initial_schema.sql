@@ -663,7 +663,7 @@ CREATE OR REPLACE FUNCTION public.verify_master_admin(p_username TEXT, p_passwor
 RETURNS BOOLEAN
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public, extensions
+SET search_path = public
 AS $$
 DECLARE
   stored_hash TEXT;
@@ -676,7 +676,7 @@ BEGIN
     RETURN FALSE;
   END IF;
 
-  RETURN stored_hash = extensions.crypt(p_password, stored_hash);
+  RETURN stored_hash = crypt(p_password, stored_hash);
 END;
 $$;
 

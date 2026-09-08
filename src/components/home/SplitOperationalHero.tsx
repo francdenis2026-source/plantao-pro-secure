@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { Radio, ShieldCheck, Activity, Radar, MapPin } from 'lucide-react';
+import { Radio, ShieldCheck, Activity, MapPin, ClipboardList } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { teamEmblems } from '@/lib/teamAssets';
 import { OperationalStatusRibbon } from './OperationalStatusRibbon';
@@ -18,8 +18,9 @@ const agent3d = (agent3d_ptr as {url:string}).url;
 import vehicle3dWebp from '@/assets/hero/vehicle-ise-3d.local.webp';
 import vehicle3d_ptr from '@/assets/hero/vehicle-ise-3d.local.png.asset.json';
 const vehicle3d = (vehicle3d_ptr as {url:string}).url;
-import agentVehicleProAsset from '@/assets/hero/agent-vehicle-pro-scene-v5.png.asset.json';
-const agentVehiclePro = agentVehicleProAsset.url;
+// Foto real (Unsplash, licença livre) usada no painel fotográfico da cena —
+// substitui o asset quebrado do CDN do Lovable.
+const SCENE_PHOTO = 'https://images.unsplash.com/photo-1758956929717-e657fc784606?w=900&h=1120&q=80&fm=jpg&fit=crop';
 
 
 
@@ -106,6 +107,14 @@ interface Props {
 
 import { TEAM_COLORS, type TeamKey } from '@/lib/teamColors';
 
+// Fotografias reais (Unsplash, licença livre) usadas como pôster de fundo dos
+// cards de equipe — substituem os assets quebrados do CDN do Lovable.
+const TEAM_PHOTOS = {
+  guard: 'https://images.unsplash.com/photo-1485230405346-71acb9518d9c?w=480&h=600&q=75&fm=jpg&fit=crop',
+  vehicle: 'https://images.unsplash.com/photo-1758956929717-e657fc784606?w=480&h=600&q=75&fm=jpg&fit=crop',
+  control: 'https://images.unsplash.com/photo-1636868240132-442d20fd00e7?w=480&h=600&q=75&fm=jpg&fit=crop',
+};
+
 // Accents alinhados com src/lib/teamColors.ts (mesma paleta usada pelo Gestor de Ronda)
 const TEAMS: {
   key: TeamKey;
@@ -118,10 +127,10 @@ const TEAMS: {
   bg: string;
   bgAvif: string;
 }[] = [
-  { key: 'ALFA',    motto: 'Escudo · Guarda',      op: 'OP-01', role: 'Contenção',    accent: TEAM_COLORS.ALFA.hsl,    obj: objAlfa,    objWebp: objAlfaWebp,    bg: bgAlfa,    bgAvif: bgAlfa },
-  { key: 'BRAVO',   motto: 'Capacete · Intervenção Tática', op: 'OP-02', role: 'Intervenção Tática', accent: TEAM_COLORS.BRAVO.hsl,   obj: objBravo,   objWebp: objBravoWebp,   bg: bgBravo,   bgAvif: bgBravo },
-  { key: 'CHARLIE', motto: 'Óptica · Vigília',     op: 'OP-03', role: 'Vigilância',   accent: TEAM_COLORS.CHARLIE.hsl, obj: objCharlie, objWebp: objCharlieWebp, bg: bgCharlie, bgAvif: bgCharlie },
-  { key: 'DELTA',   motto: 'Rádio · Comando',      op: 'OP-04', role: 'Comando',      accent: TEAM_COLORS.DELTA.hsl,   obj: objDelta,   objWebp: objDeltaWebp,   bg: bgDelta,   bgAvif: bgDelta },
+  { key: 'ALFA',    motto: 'Escudo · Guarda',      op: 'OP-01', role: 'Contenção',    accent: TEAM_COLORS.ALFA.hsl,    obj: objAlfa,    objWebp: objAlfaWebp,    bg: TEAM_PHOTOS.guard,   bgAvif: TEAM_PHOTOS.guard },
+  { key: 'BRAVO',   motto: 'Capacete · Intervenção Tática', op: 'OP-02', role: 'Intervenção Tática', accent: TEAM_COLORS.BRAVO.hsl,   obj: objBravo,   objWebp: objBravoWebp,   bg: TEAM_PHOTOS.vehicle, bgAvif: TEAM_PHOTOS.vehicle },
+  { key: 'CHARLIE', motto: 'Óptica · Vigília',     op: 'OP-03', role: 'Vigilância',   accent: TEAM_COLORS.CHARLIE.hsl, obj: objCharlie, objWebp: objCharlieWebp, bg: TEAM_PHOTOS.control, bgAvif: TEAM_PHOTOS.control },
+  { key: 'DELTA',   motto: 'Rádio · Comando',      op: 'OP-04', role: 'Comando',      accent: TEAM_COLORS.DELTA.hsl,   obj: objDelta,   objWebp: objDeltaWebp,   bg: TEAM_PHOTOS.guard,   bgAvif: TEAM_PHOTOS.guard },
 ];
 
 
@@ -231,8 +240,8 @@ function TeamCard({ team: t, idx, isSelected, onSelect, className }: TeamCardPro
             'absolute inset-0 h-full w-full object-cover object-center select-none',
             'transition-all duration-500 ease-out',
             isSelected
-              ? 'opacity-100 scale-[1.03] saturate-125 contrast-110'
-              : 'opacity-95 saturate-110 contrast-105 group-hover:opacity-100 group-hover:scale-[1.02] group-hover:saturate-125',
+              ? 'opacity-100 scale-[1.03] saturate-125 contrast-110 brightness-125'
+              : 'opacity-100 saturate-110 contrast-105 brightness-110 group-hover:scale-[1.02] group-hover:saturate-125 group-hover:brightness-125',
           )}
           draggable={false}
         />
@@ -243,8 +252,9 @@ function TeamCard({ team: t, idx, isSelected, onSelect, className }: TeamCardPro
       <span aria-hidden className="pp-card-glass-sheen" />
 
       {/* Vignette + gradient legibility (mais forte no rodapé para o footer institucional) */}
-      <span aria-hidden className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_50%_35%,transparent_25%,rgba(2,6,23,0.7)_85%)]" />
-      <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-1/2 bg-gradient-to-t from-slate-950 via-slate-950/85 to-transparent" />
+      <span aria-hidden className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_50%_35%,transparent_40%,rgba(2,6,23,0.4)_88%)]" />
+      <span aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-2/5 bg-gradient-to-t from-slate-950/90 via-slate-950/50 to-transparent" />
+      <span aria-hidden className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-1/4 bg-gradient-to-b from-slate-950/55 to-transparent" />
       <span
         aria-hidden
         className={cn(
@@ -278,6 +288,9 @@ function TeamCard({ team: t, idx, isSelected, onSelect, className }: TeamCardPro
 
       {/* Nome herói — SVG auto-escalável: nunca ultrapassa o contêiner em nenhuma largura */}
       <div className="relative z-20 flex-1 min-h-0 min-w-0 flex flex-col items-center justify-center px-3 pt-5">
+        <div className="h-12 w-12 sm:h-14 sm:w-14 mb-1">
+          <TeamObject team={t} isAlfa={idx === 0} idx={idx} />
+        </div>
         <div className="flex flex-col items-center w-full min-w-0 max-w-full">
           <svg
             role="img"
@@ -355,7 +368,7 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
     metrics.uplink === 'online'
       ? { dot: 'bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)]', text: 'text-emerald-300/90', label: 'Estável' }
       : metrics.uplink === 'degraded'
-      ? { dot: 'bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.9)]', text: 'text-amber-300/90', label: 'Sinal reduzido' }
+      ? { dot: 'bg-primary shadow-[0_0_6px_rgba(56,165,230,0.9)]', text: 'text-primary/90', label: 'Sinal reduzido' }
       : { dot: 'bg-rose-500 shadow-[0_0_6px_rgba(244,63,94,0.9)]', text: 'text-rose-300/90', label: 'Offline' };
   const fmt2 = (n: number) => String(n).padStart(2, '0');
   const trackedAgents = useOnlineAgents().size;
@@ -503,15 +516,15 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
 
 
             <div className="hidden sm:flex flex-col gap-1.5 sm:gap-2">
-              <span className="inline-flex items-center gap-2 font-mono text-[10px] font-medium uppercase tracking-[0.24em] text-amber-300/90 leading-[1.4]">
-                <span className="h-px w-6 bg-amber-400/70" />
+              <span className="inline-flex items-center gap-2 font-mono text-[10px] font-medium uppercase tracking-[0.24em] text-primary/90 leading-[1.4]">
+                <span className="h-px w-6 bg-primary/70" />
                 Sistema Operacional
               </span>
               <h2
                 className="pp-hero-title font-serif text-white text-[clamp(1.5rem,2.2vw,2rem)] leading-[1.1] tracking-tight"
                 style={{ fontFamily: "'Libre Baskerville', 'Playfair Display', Georgia, serif" }}
               >
-                Comando <span className="text-amber-300 italic">Tático</span><br />
+                Comando <span className="text-primary italic">Tático</span><br />
                 <span className="text-white/85">Socioeducativo</span>
               </h2>
               <p className="pp-hero-subtitle font-mono text-[10.5px] uppercase tracking-[0.22em] text-white/50 leading-[1.5] max-w-[42ch]">
@@ -524,13 +537,13 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
 
             <div className="hidden sm:flex flex-wrap items-center gap-3 text-slate-200">
               <div className="flex items-center gap-1 text-[10px] font-mono font-semibold uppercase tracking-[0.18em]">
-                <ShieldCheck className="h-3 w-3 text-amber-400" /> RLS
+                <ShieldCheck className="h-3 w-3 text-primary" /> RLS
               </div>
               <div className="flex items-center gap-1 text-[10px] font-mono font-semibold uppercase tracking-[0.18em]">
                 <Activity className="h-3 w-3 text-emerald-400" /> Realtime
               </div>
               <div className="flex items-center gap-1 text-[10px] font-mono font-semibold uppercase tracking-[0.18em]">
-                <Radio className="h-3 w-3 text-amber-400" /> PWA
+                <Radio className="h-3 w-3 text-primary" /> PWA
               </div>
             </div>
 
@@ -540,22 +553,22 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
                 tabIndex={0}
                 role="group"
                 aria-label="Briefing Operacional"
-                className="pp-briefing-card group relative rounded-md border border-amber-400/25 bg-[linear-gradient(180deg,rgba(10,14,26,0.72)_0%,rgba(3,5,10,0.78)_100%)] backdrop-blur-md px-3 py-2.5 md:px-3.5 md:py-3 overflow-hidden outline-none transition-[box-shadow,border-color] duration-500 ease-out hover:border-amber-400/45 focus-visible:border-amber-400/60 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_0_0_1px_rgba(0,0,0,0.25),0_10px_28px_-10px_rgba(251,191,36,0.45),0_2px_6px_-2px_rgba(0,0,0,0.6)] focus-visible:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_0_0_1px_rgba(251,191,36,0.35),0_12px_32px_-10px_rgba(251,191,36,0.55),0_2px_6px_-2px_rgba(0,0,0,0.6)] motion-reduce:transition-none"
+                className="pp-briefing-card group relative rounded-md border border-primary/25 bg-[linear-gradient(180deg,rgba(10,14,26,0.72)_0%,rgba(3,5,10,0.78)_100%)] backdrop-blur-md px-3 py-2.5 md:px-3.5 md:py-3 overflow-hidden outline-none transition-[box-shadow,border-color] duration-500 ease-out hover:border-primary/45 focus-visible:border-primary/60 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_0_0_1px_rgba(0,0,0,0.25),0_10px_28px_-10px_rgba(56,165,230,0.45),0_2px_6px_-2px_rgba(0,0,0,0.6)] focus-visible:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_0_0_1px_rgba(56,165,230,0.35),0_12px_32px_-10px_rgba(56,165,230,0.55),0_2px_6px_-2px_rgba(0,0,0,0.6)] motion-reduce:transition-none"
                 style={{
                   boxShadow:
-                    'inset 0 1px 0 rgba(255,255,255,0.06), inset 0 0 0 1px rgba(0,0,0,0.25), 0 6px 18px -10px rgba(251,191,36,0.28), 0 2px 6px -2px rgba(0,0,0,0.55)',
+                    'inset 0 1px 0 rgba(255,255,255,0.06), inset 0 0 0 1px rgba(0,0,0,0.25), 0 6px 18px -10px rgba(56,165,230,0.28), 0 2px 6px -2px rgba(0,0,0,0.55)',
                   contain: 'layout paint',
                 }}
               >
                 {/* accent top hairline — reforça no hover/focus sem alterar geometria */}
-                <span aria-hidden className="pointer-events-none absolute top-0 left-3 right-3 h-px bg-gradient-to-r from-transparent via-amber-400/70 to-transparent transition-opacity duration-500 group-hover:via-amber-300 group-focus-within:via-amber-300" />
+                <span aria-hidden className="pointer-events-none absolute top-0 left-3 right-3 h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent transition-opacity duration-500 group-hover:via-primary group-focus-within:via-primary" />
                 {/* soft amber halo overlay — fade-in on hover/focus, layout-safe */}
                 <span
                   aria-hidden
                   className="pointer-events-none absolute inset-0 rounded-md opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-within:opacity-100 motion-reduce:transition-none"
                   style={{
                     background:
-                      'radial-gradient(120% 90% at 50% 0%, rgba(251,191,36,0.12) 0%, rgba(251,191,36,0.04) 40%, transparent 70%)',
+                      'radial-gradient(120% 90% at 50% 0%, rgba(56,165,230,0.12) 0%, rgba(56,165,230,0.04) 40%, transparent 70%)',
                   }}
                 />
                 {/* diagonal sheen + hover sweep removidos: causavam reflexo
@@ -566,20 +579,20 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
                   className="pointer-events-none absolute inset-0 opacity-[0.05] transition-opacity duration-500 group-hover:opacity-[0.08] group-focus-within:opacity-[0.08]"
                   style={{
                     backgroundImage:
-                      'linear-gradient(rgba(251,191,36,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(251,191,36,0.35) 1px, transparent 1px)',
+                      'linear-gradient(rgba(56,165,230,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(56,165,230,0.35) 1px, transparent 1px)',
                     backgroundSize: '18px 18px',
                   }}
                 />
 
                 {/* corner brackets — reforçados */}
-                <span aria-hidden className="absolute top-0 left-0 h-2.5 w-2.5 border-t border-l border-amber-400/60" />
-                <span aria-hidden className="absolute top-0 right-0 h-2.5 w-2.5 border-t border-r border-amber-400/60" />
-                <span aria-hidden className="absolute bottom-0 left-0 h-2.5 w-2.5 border-b border-l border-amber-400/60" />
-                <span aria-hidden className="absolute bottom-0 right-0 h-2.5 w-2.5 border-b border-r border-amber-400/60" />
+                <span aria-hidden className="absolute top-0 left-0 h-2.5 w-2.5 border-t border-l border-primary/60" />
+                <span aria-hidden className="absolute top-0 right-0 h-2.5 w-2.5 border-t border-r border-primary/60" />
+                <span aria-hidden className="absolute bottom-0 left-0 h-2.5 w-2.5 border-b border-l border-primary/60" />
+                <span aria-hidden className="absolute bottom-0 right-0 h-2.5 w-2.5 border-b border-r border-primary/60" />
 
                 <div className="relative flex items-center justify-between gap-2 mb-2.5">
-                  <span className="flex items-center gap-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-amber-300/90 truncate">
-                    <span aria-hidden className="inline-block h-2.5 w-[3px] rounded-sm bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.7)]" />
+                  <span className="flex items-center gap-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-primary/90 truncate">
+                    <span aria-hidden className="inline-block h-2.5 w-[3px] rounded-sm bg-primary shadow-[0_0_6px_rgba(56,165,230,0.7)]" />
                     Briefing Operacional
                   </span>
                   <span
@@ -640,64 +653,7 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
           {/* RIGHT — Agent 3D + HUD tático */}
           <div className="pp-scene-stage relative flex items-end justify-center sm:justify-center min-h-[160px] min-[390px]:min-h-[176px] sm:min-h-[clamp(90px,14vh,220px)] lg:min-h-[460px] xl:min-h-[540px] 2xl:min-h-[620px] md:order-none z-[90] overflow-visible pb-1 sm:pb-0 mt-0 sm:mt-0 mb-0 sm:-mb-1 pt-0 sm:pt-1 lg:pt-2 px-2 sm:px-0">
 
-            {/* ============ RADAR TÁTICO PROFISSIONAL — canto sup. direito da cena (fora do briefing) ============ */}
-            <div
-              aria-hidden
-              className="hidden lg:block absolute top-1 right-2 xl:top-2 xl:right-3 z-[60] pointer-events-none select-none"
-              style={{ width: 132, height: 132 }}
-            >
-              <div className="absolute -top-0.5 left-0 right-0 flex items-center justify-between font-mono text-[8px] uppercase tracking-[0.28em] text-white/45 leading-none">
-                <span className="flex items-center gap-1">
-                  <span className="h-1 w-1 rounded-full bg-emerald-400 shadow-[0_0_4px_rgba(52,211,153,0.9)]" />
-                  Radar
-                </span>
-                <span className="tabular-nums tracking-[0.18em] text-amber-200/70">R-04</span>
-              </div>
-              <div
-                className="absolute left-1/2 -translate-x-1/2 top-3 h-[108px] w-[108px] rounded-full border border-amber-300/35"
-                style={{
-                  background:
-                    'radial-gradient(circle at 50% 50%, hsl(150 70% 45% / 0.10) 0%, hsl(150 70% 45% / 0.04) 42%, transparent 72%)',
-                  boxShadow:
-                    'inset 0 0 22px rgba(52,211,153,0.10), inset 0 0 2px rgba(252,211,77,0.35), 0 0 12px rgba(0,0,0,0.55)',
-                }}
-              >
-                <span aria-hidden className="absolute inset-[10px] rounded-full border border-emerald-300/18" />
-                <span aria-hidden className="absolute inset-[22px] rounded-full border border-emerald-300/14" />
-                <span aria-hidden className="absolute inset-[36px] rounded-full border border-emerald-300/10" />
-                <span aria-hidden className="absolute top-1/2 left-0 right-0 h-px bg-emerald-300/18" />
-                <span aria-hidden className="absolute left-1/2 top-0 bottom-0 w-px bg-emerald-300/18" />
-                <span aria-hidden className="absolute inset-0 rotate-45">
-                  <span className="absolute top-1/2 left-1 right-1 h-px bg-emerald-300/10" />
-                  <span className="absolute left-1/2 top-1 bottom-1 w-px bg-emerald-300/10" />
-                </span>
-                <span className="absolute top-0.5 left-1/2 -translate-x-1/2 font-mono text-[6.5px] tracking-[0.18em] text-emerald-200/60 leading-none">N</span>
-                <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 font-mono text-[6.5px] tracking-[0.18em] text-emerald-200/45 leading-none">S</span>
-                <span className="absolute left-0.5 top-1/2 -translate-y-1/2 font-mono text-[6.5px] tracking-[0.18em] text-emerald-200/45 leading-none">W</span>
-                <span className="absolute right-0.5 top-1/2 -translate-y-1/2 font-mono text-[6.5px] tracking-[0.18em] text-emerald-200/45 leading-none">E</span>
-                <span
-                  aria-hidden
-                  className="absolute inset-0 rounded-full motion-safe:animate-[spin_4.2s_linear_infinite]"
-                  style={{
-                    background:
-                      'conic-gradient(from 0deg, transparent 0deg, hsl(150 84% 55% / 0.55) 55deg, hsl(150 84% 55% / 0.15) 78deg, transparent 92deg)',
-                    maskImage: 'radial-gradient(circle at center, black 60%, transparent 100%)',
-                    WebkitMaskImage: 'radial-gradient(circle at center, black 60%, transparent 100%)',
-                  }}
-                />
-                <span className="absolute h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.95)] motion-safe:animate-pulse" style={{ top: '22%', left: '30%' }} />
-                <span className="absolute h-1.5 w-1.5 rounded-full bg-orange-400 shadow-[0_0_6px_rgba(251,146,60,0.95)]" style={{ top: '34%', left: '70%' }} />
-                <span className="absolute h-1.5 w-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.95)]" style={{ top: '66%', left: '36%' }} />
-                <span className="absolute h-1.5 w-1.5 rounded-full bg-amber-300 shadow-[0_0_6px_rgba(252,211,77,0.95)]" style={{ top: '72%', left: '68%' }} />
-                <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-2 w-2 rounded-full border border-amber-300/70">
-                  <span className="absolute inset-0.5 rounded-full bg-amber-300 shadow-[0_0_6px_rgba(252,211,77,0.9)]" />
-                </span>
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between font-mono text-[7.5px] uppercase tracking-[0.22em] text-white/40 leading-none">
-                <span className="tabular-nums text-emerald-300/75">{fmt2(onlineAgents)} ONLINE</span>
-                <span className="tabular-nums text-amber-200/60">2.5 KM</span>
-              </div>
-            </div>
+            {/* Radar decorativo removido — não agregava informação real. */}
 
 
             {/* Moldura HUD/cantoneiras removidas (solicitação do usuário) */}
@@ -714,50 +670,28 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
 
 
 
-            {/* Cena única profissional: agente + viatura integrados na mesma foto.
-                Substitui os dois recortes anteriores por 1 asset em alta resolução,
-                eliminando problemas de escala relativa, poses duplicadas e bordas serrilhadas. */}
-            <div className="contents lg:relative lg:z-50 lg:inline-block">
-              <div
-                className="pp-scene-composite relative z-50 flex items-end justify-center leading-[0] isolate w-full sm:w-auto h-[184px] min-[390px]:h-[204px] sm:h-[clamp(90px,14vh,220px)] lg:h-[900px] xl:h-[1020px] 2xl:h-[1140px] lg:-translate-x-[8%] xl:-translate-x-[10%] lg:translate-y-[70%] xl:translate-y-[72%] 2xl:translate-y-[74%] pr-0 max-w-full overflow-visible"
-              >
-                <picture className="relative block h-full leading-[0] overflow-visible">
-                  <img
-                    src={agentVehiclePro}
-                    alt="Agente Socioeducativo ISE ao lado de viatura tática"
-                    width={1920}
-                    height={1200}
-                    loading="eager"
-                    decoding="async"
-                    // @ts-expect-error – fetchpriority é atributo HTML válido não tipado no React 18
-                    fetchpriority="high"
-                    className="block h-full w-auto max-w-none object-contain object-bottom drop-shadow-[0_24px_38px_rgba(0,0,0,0.85)] select-none lg:scale-[1.55] xl:scale-[1.65] 2xl:scale-[1.72] origin-bottom"
-                    draggable={false}
-                  />
-
-
-
-                  {/* Giroflex piscante posicionado sobre a barra de luzes da viatura na cena */}
-                  <span aria-hidden className="pointer-events-none absolute inset-0 scale-[1.55] xl:scale-[1.65] 2xl:scale-[1.72] origin-bottom">
-                    <span
-                      aria-hidden
-                      className="giroflex-flash giroflex-flash-blue giroflex-flash-scene-blue motion-reduce:hidden"
-                      style={{ top: '13.98%', left: '40.72%' }}
-                    />
-                    <span
-                      aria-hidden
-                      className="giroflex-flash giroflex-flash-red giroflex-flash-scene-red motion-reduce:hidden"
-                      style={{ top: '14.92%', left: '53.69%' }}
-                    />
-                  </span>
-
-                  {/* Sombra elíptica de chão unificando a cena */}
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute inset-x-[8%] bottom-1 h-4 rounded-[50%] blur-lg opacity-70"
-                    style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 70%)' }}
-                  />
-                </picture>
+            {/* Painel fotográfico institucional — foto real (Unsplash, licença livre)
+                em card contido, sem recorte transparente (o asset original do
+                Lovable não está mais acessível fora da plataforma deles). */}
+            <div className="relative z-50 w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[380px] xl:max-w-[420px] mx-auto lg:mx-0 lg:absolute lg:bottom-2 lg:right-2 xl:right-4">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-xl border border-border shadow-[0_20px_50px_-20px_rgba(0,0,0,0.7)]">
+                <img
+                  src={SCENE_PHOTO}
+                  alt="Viatura operacional do Sistema Socioeducativo"
+                  loading="eager"
+                  decoding="async"
+                  // @ts-expect-error – fetchpriority é atributo HTML válido não tipado no React 18
+                  fetchpriority="high"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  draggable={false}
+                />
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0"
+                  style={{ background: 'linear-gradient(0deg, hsl(222 22% 4% / 0.55) 0%, transparent 45%)' }}
+                />
+                <span aria-hidden className="giroflex-flash giroflex-flash-blue motion-reduce:hidden" style={{ top: '8%', left: '30%' }} />
+                <span aria-hidden className="giroflex-flash giroflex-flash-red motion-reduce:hidden" style={{ top: '8%', left: '66%' }} />
               </div>
             </div>
 
@@ -781,46 +715,29 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
               <button
                 type="button"
                 aria-label="Abrir Gestor de Rondas"
-                className="group relative w-full flex items-stretch rounded-[10px] overflow-hidden border border-amber-400/50 bg-[linear-gradient(135deg,rgba(20,14,4,0.96)_0%,rgba(48,32,6,0.9)_45%,rgba(20,14,4,0.96)_100%)] shadow-[0_0_0_1px_rgba(0,0,0,0.7),0_10px_22px_-14px_rgba(234,179,8,0.65),inset_0_1px_0_rgba(255,255,255,0.07)] active:scale-[0.985] transition-transform min-h-[46px]"
+                className="group relative w-full flex items-stretch rounded-[10px] overflow-hidden border border-primary/40 bg-[linear-gradient(135deg,hsl(222_18%_10%)_0%,hsl(222_18%_13%)_45%,hsl(222_18%_10%)_100%)] shadow-[0_0_0_1px_rgba(0,0,0,0.5),0_10px_22px_-14px_rgba(14,135,221,0.5),inset_0_1px_0_rgba(255,255,255,0.06)] active:scale-[0.985] transition-transform min-h-[46px]"
                 style={{ WebkitTapHighlightColor: 'transparent' }}
               >
-                {/* corner brackets */}
-                <span aria-hidden className="absolute top-0.5 left-0.5 w-1.5 h-1.5 border-t border-l border-amber-300/80" />
-                <span aria-hidden className="absolute top-0.5 right-0.5 w-1.5 h-1.5 border-t border-r border-amber-300/80" />
-                <span aria-hidden className="absolute bottom-0.5 left-0.5 w-1.5 h-1.5 border-b border-l border-amber-300/80" />
-                <span aria-hidden className="absolute bottom-0.5 right-0.5 w-1.5 h-1.5 border-b border-r border-amber-300/80" />
-
                 {/* Sheen sweep on tap/hover */}
                 <span
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-40 bg-[linear-gradient(90deg,transparent_0%,rgba(234,179,8,0.18)_50%,transparent_100%)] -translate-x-full group-hover:translate-x-full group-active:translate-x-full transition-transform duration-[900ms]"
+                  className="pointer-events-none absolute inset-0 opacity-40 bg-[linear-gradient(90deg,transparent_0%,rgba(14,135,221,0.18)_50%,transparent_100%)] -translate-x-full group-hover:translate-x-full group-active:translate-x-full transition-transform duration-[900ms]"
                 />
 
-                {/* LEFT — radar icon block */}
+                {/* LEFT — icon block */}
                 <span
                   aria-hidden
-                  className="relative flex items-center justify-center w-11 shrink-0 border-r border-amber-400/25"
-                  style={{ background: 'linear-gradient(180deg, rgba(234,179,8,0.12) 0%, rgba(234,179,8,0.04) 100%)' }}
+                  className="relative flex items-center justify-center w-11 shrink-0 border-r border-primary/25 bg-primary/10"
                 >
-                  {/* rotating sweep */}
-                  <span
-                    aria-hidden
-                    className="absolute inset-1 rounded-full opacity-70"
-                    style={{
-                      background: 'conic-gradient(from 0deg, transparent 0deg, rgba(234,179,8,0.55) 60deg, transparent 90deg)',
-                      animation: 'spin 3.6s linear infinite',
-                      maskImage: 'radial-gradient(circle at center, black 60%, transparent 100%)',
-                    }}
-                  />
-                  <Radar className="relative h-[18px] w-[18px] text-amber-200 drop-shadow-[0_0_6px_rgba(234,179,8,0.75)]" strokeWidth={2.4} />
+                  <ClipboardList className="relative h-[18px] w-[18px] text-primary" strokeWidth={2.2} />
                 </span>
 
                 {/* MIDDLE — label stack */}
                 <span className="relative flex-1 min-w-0 flex flex-col justify-center px-2.5 py-1 text-left">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-amber-300/90 leading-none">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-primary/90 leading-none">
                     Comando · Ronda
                   </span>
-                  <span className="font-sans text-[15px] font-extrabold uppercase tracking-[0.02em] text-amber-50 leading-[1.05] mt-1 truncate" style={{ textShadow: '0 0 8px rgba(234,179,8,0.35)' }}>
+                  <span className="font-sans text-[15px] font-extrabold uppercase tracking-[0.02em] text-foreground leading-[1.05] mt-1 truncate" style={{ textShadow: '0 0 8px rgba(14,135,221,0.35)' }}>
                     Gestor de Rondas
                   </span>
                 </span>
@@ -841,7 +758,7 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
                       Ativo
                     </span>
                   </span>
-                  <svg width="10" height="14" viewBox="0 0 10 14" aria-hidden className="text-amber-300/85 group-active:translate-x-0.5 transition-transform">
+                  <svg width="10" height="14" viewBox="0 0 10 14" aria-hidden className="text-primary/85 group-active:translate-x-0.5 transition-transform">
                     <path d="M2 2l5 5-5 5" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </span>
@@ -858,10 +775,10 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
 
           <div className="flex items-center justify-between px-1 pb-1.5 lg:pb-2">
             <span className="font-mono text-[10.5px] sm:text-[10px] lg:text-[11.5px] font-semibold uppercase tracking-[0.22em] text-slate-100">
-              <span className="text-amber-300/90 mr-1.5">◉</span>Selecione sua Equipe
+              <span className="text-primary/90 mr-1.5">◉</span>Selecionar equipe
             </span>
-            <span className="font-mono text-[10.5px] sm:text-[10px] lg:text-[11px] font-semibold uppercase tracking-[0.2em] text-amber-300/95 tabular-nums">
-              04 · Divisões Táticas
+            <span className="font-mono text-[10.5px] sm:text-[10px] lg:text-[11px] font-semibold uppercase tracking-[0.2em] text-primary/95 tabular-nums">
+              04 · Equipes
             </span>
 
           </div>
@@ -891,9 +808,9 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
                 { k: 'SLA', v: '24/7', tone: 'amber' },
               ].map((it) => (
                 <span key={it.k} className="inline-flex items-center gap-1.5 whitespace-nowrap">
-                  <span className={cn('h-1 w-1 rounded-full', it.tone === 'emerald' ? 'bg-emerald-400 shadow-[0_0_4px_rgba(52,211,153,0.7)]' : 'bg-amber-400 shadow-[0_0_4px_rgba(251,191,36,0.7)]')} />
+                  <span className={cn('h-1 w-1 rounded-full', it.tone === 'emerald' ? 'bg-emerald-400 shadow-[0_0_4px_rgba(52,211,153,0.7)]' : 'bg-primary shadow-[0_0_4px_rgba(56,165,230,0.7)]')} />
                   <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/50 leading-none">{it.k}</span>
-                  <span className={cn('font-mono text-[9px] font-semibold uppercase tracking-[0.16em] leading-none tabular-nums', it.tone === 'emerald' ? 'text-emerald-300/90' : 'text-amber-300/90')}>{it.v}</span>
+                  <span className={cn('font-mono text-[9px] font-semibold uppercase tracking-[0.16em] leading-none tabular-nums', it.tone === 'emerald' ? 'text-emerald-300/90' : 'text-primary/90')}>{it.v}</span>
                 </span>
               ))}
             </div>
@@ -906,12 +823,12 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45">GPS · ATIVO</span>
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45">OP-01 · CONTENÇÃO ATIVA</span>
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45">UPLINK · ESTÁVEL</span>
-                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-amber-200/85 tabular-nums">LATÊNCIA · 42 ms</span>
-                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-amber-200/85 tabular-nums">09 UNIDADES ONLINE</span>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary/85 tabular-nums">LATÊNCIA · 42 ms</span>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary/85 tabular-nums">09 UNIDADES ONLINE</span>
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45">RONDA · GEORREFERENCIADA</span>
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45">CANAL SEGURO · AES-256</span>
                     <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-emerald-300/85">RLS · LGPD · ISO 27001</span>
-                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-amber-200/85">ISE · ACRE · 2026</span>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-primary/85">ISE · ACRE · 2026</span>
                     <span aria-hidden className="h-2 w-px bg-white/15" />
                   </span>
                 ))}
