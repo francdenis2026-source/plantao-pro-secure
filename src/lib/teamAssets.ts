@@ -1,24 +1,18 @@
-// Team image assets
-import alfaPoster_ptr from '@/assets/teams/alfa-poster.jpg.asset.json';
-const alfaPoster = (alfaPoster_ptr as {url:string}).url;
-import bravoPoster_ptr from '@/assets/teams/bravo-poster.jpg.asset.json';
-const bravoPoster = (bravoPoster_ptr as {url:string}).url;
-import charliePoster_ptr from '@/assets/teams/charlie-poster.jpg.asset.json';
-const charliePoster = (charliePoster_ptr as {url:string}).url;
-import deltaPoster_ptr from '@/assets/teams/delta-poster.jpg.asset.json';
-const deltaPoster = (deltaPoster_ptr as {url:string}).url;
+// Team image assets — pôsteres oficiais reais (fornecidos pelo usuário),
+// substituindo os assets quebrados do CDN do Lovable.
+import alfaPoster from '@/assets/midias/team-alfa.png';
+import bravoPoster from '@/assets/midias/team-bravo.png';
+import charliePoster from '@/assets/midias/team-charlie.png';
+import deltaPoster from '@/assets/midias/team-delta.png';
 const alfaPosterWebp = alfaPoster;
 const bravoPosterWebp = bravoPoster;
 const charliePosterWebp = charliePoster;
 const deltaPosterWebp = deltaPoster;
-import alfaEmblemAsset from '@/assets/teams/alfa-emblem.png.asset.json';
-const alfaEmblem = alfaEmblemAsset.url;
-import bravoEmblemAsset from '@/assets/teams/bravo-emblem.png.asset.json';
-const bravoEmblem = bravoEmblemAsset.url;
-import charlieEmblemAsset from '@/assets/teams/charlie-emblem.png.asset.json';
-const charlieEmblem = charlieEmblemAsset.url;
-import deltaEmblemAsset from '@/assets/teams/delta-emblem.png.asset.json';
-const deltaEmblem = deltaEmblemAsset.url;
+// Emblemas — arquivos locais reais (não dependem do CDN do Lovable).
+import alfaEmblem from '@/assets/teams/alfa-shield-v2.webp';
+import bravoEmblem from '@/assets/teams/bravo-helmet-v2.webp';
+import charlieEmblem from '@/assets/teams/charlie-optics-v2.webp';
+import deltaEmblem from '@/assets/teams/delta-radio-v2.webp';
 import panelsBgAsset from '@/assets/teams/panels-bg.png.asset.json';
 const panelsBg = panelsBgAsset.url;
 import homeBackgroundAsset from '@/assets/home-background.png.asset.json';

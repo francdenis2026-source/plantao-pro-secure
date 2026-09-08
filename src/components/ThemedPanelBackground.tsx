@@ -4,12 +4,12 @@ import { getThemeAssets } from '@/lib/themeAssets';
 import { teamPosters, teamColors } from '@/lib/teamAssets';
 import { cn } from '@/lib/utils';
 import { CommandRoomBackground } from '@/components/home/CommandRoomBackground';
-import splashAsset from '@/assets/brand/plantaopro-splash.jpg.asset.json';
-import splashAvif from '@/assets/brand/plantaopro-splash.avif.asset.json';
-import splashWebp from '@/assets/brand/plantaopro-splash.webp.asset.json';
+import heroAgentesViatura from '@/assets/midias/hero-agentes-viatura.png';
 
-const PANEL_BRAND_BG = splashAsset.url;
-const PANEL_BRAND_BG_IMAGE_SET = `image-set(url("${splashAvif.url}") type("image/avif"), url("${splashWebp.url}") type("image/webp"), url("${splashAsset.url}") type("image/jpeg"))`;
+// Foto institucional oficial (fornecida pelo usuário) — substitui o asset
+// quebrado do CDN do Lovable usado como fundo de todo painel autenticado.
+const PANEL_BRAND_BG = heroAgentesViatura;
+const PANEL_BRAND_BG_IMAGE_SET = `url("${heroAgentesViatura}")`;
 
 interface ThemedPanelBackgroundProps {
   team?: string | null;
