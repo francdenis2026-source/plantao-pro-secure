@@ -171,8 +171,8 @@ export function usePushNotifications() {
       if (serviceWorker) {
         await serviceWorker.showNotification(payload.title, {
           body: payload.body,
-          icon: payload.icon || '/favicon.ico',
-          badge: '/favicon.ico',
+          icon: payload.icon || '/icon-192.png',
+          badge: '/favicon.png',
           tag: payload.tag || 'default',
           requireInteraction: payload.requireInteraction ?? true,
         } as NotificationOptions);
@@ -180,7 +180,7 @@ export function usePushNotifications() {
         // Fallback to regular notification
         new Notification(payload.title, {
           body: payload.body,
-          icon: payload.icon || '/favicon.ico',
+          icon: payload.icon || '/icon-192.png',
           tag: payload.tag || 'default',
           requireInteraction: payload.requireInteraction ?? true,
         });

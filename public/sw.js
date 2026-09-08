@@ -202,7 +202,7 @@ self.addEventListener('push', (event) => {
     title: 'Plantão Pro',
     body: 'Você tem uma nova notificação',
     icon: '/icon-192.png',
-    badge: '/favicon.ico',
+    badge: '/favicon.png',
     tag: 'default',
     url: '/agent-panel'
   };
@@ -219,7 +219,7 @@ self.addEventListener('push', (event) => {
   const options = {
     body: data.body,
     icon: data.icon || '/icon-192.png',
-    badge: data.badge || '/favicon.ico',
+    badge: data.badge || '/favicon.png',
     vibrate: [200, 100, 200, 100, 200],
     data: {
       dateOfArrival: Date.now(),
@@ -341,7 +341,7 @@ self.addEventListener('message', (event) => {
     self.registration.showNotification(title, {
       body,
       icon: icon || '/icon-192.png',
-      badge: '/favicon.ico',
+      badge: '/favicon.png',
       vibrate: [200, 100, 200],
       tag: tag || 'message-notification',
       data: { url: url || '/agent-panel', type: notificationType },
