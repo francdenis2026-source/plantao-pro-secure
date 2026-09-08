@@ -1411,16 +1411,16 @@ export default function Index() {
         {/* Barra fixa do topo — marca + rádio, tema e ferramentas do operador,
             sempre visíveis mesmo com a página rolada. `fixed` (não `sticky`)
             porque um ancestral usa overflow-x-clip, o que quebra sticky. */}
-        <div className="fixed inset-x-0 top-0 z-40 flex h-14 shrink-0 items-center justify-between border-b border-border/60 bg-background/80 px-3 backdrop-blur-md sm:px-5">
-          <div className="flex items-center gap-2">
-            <BrasaoSentinela size={30} title="PlantãoPro" />
-            <span className="font-display text-sm font-bold tracking-wide text-foreground">
+        <div className="fixed inset-x-0 top-0 z-40 flex h-16 shrink-0 items-center justify-between border-b border-border/60 bg-background/80 px-3 backdrop-blur-md sm:px-5">
+          <div className="flex items-center gap-2.5">
+            <BrasaoSentinela size={46} title="PlantãoPro" />
+            <span className="font-display text-base font-bold tracking-wide text-foreground sm:text-lg">
               Plantão<span className="text-primary">Pro</span>
             </span>
           </div>
           <OperatorHeaderControls />
         </div>
-        <div className="h-14 shrink-0" aria-hidden />
+        <div className="h-16 shrink-0" aria-hidden />
 
         {/* (Selo movido para próximo do rodapé, em posição visível) */}
 
@@ -1599,8 +1599,9 @@ export default function Index() {
         <BetaNoticeFooter />
       </div>
 
-      {/* Rodapé institucional profissional — oculto no mobile */}
-      <footer className="relative z-30 mt-4 w-full hidden sm:block">
+      {/* Rodapé institucional profissional — visível também no mobile,
+          para garantir que a assinatura do desenvolvedor sempre apareça. */}
+      <footer className="relative z-30 mt-4 w-full">
         <CopyrightFooter
           compact
           leftSlot={

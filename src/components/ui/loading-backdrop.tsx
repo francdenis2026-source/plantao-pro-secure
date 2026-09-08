@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import loadingBgAsset from "@/assets/loading-backdrop.webp.asset.json";
+import loadingBgUrl from "@/assets/midias/section-background.png";
 
-const LOADING_BG_URL = loadingBgAsset.url;
+const LOADING_BG_URL = loadingBgUrl;
 
 // Cache de módulo: primeira vez => aguarda decode; próximas => síncrono.
 let bgReady = false;

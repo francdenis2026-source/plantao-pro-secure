@@ -41,7 +41,7 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
             aria-hidden
             className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,hsl(var(--primary))_50%,transparent)] opacity-80"
           />
-          <div className="relative mx-auto max-w-6xl px-3 sm:px-4 py-1 sm:py-2.5 flex flex-row items-center justify-between gap-2 sm:gap-3">
+          <div className="relative mx-auto max-w-6xl px-3 sm:px-4 py-1.5 sm:py-2.5 flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-3">
             {/* Left: Brand + Status + optional slot */}
             <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 font-sans">
               {leftSlot}
@@ -67,7 +67,7 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
 
 
             {/* Right: Meta + signature */}
-            <div className="flex items-center gap-x-1.5 sm:gap-x-2 text-[9px] text-muted-foreground/75 tracking-[0.18em] uppercase whitespace-nowrap">
+            <div className="flex flex-wrap items-center justify-center gap-x-1.5 sm:gap-x-2 gap-y-1 text-[9px] text-muted-foreground/75 tracking-[0.18em] uppercase">
               <MadeInFeijoBadge inline size="sm" />
               <span className="hidden md:inline text-muted-foreground/30">·</span>
               <span className="hidden sm:inline-flex items-center gap-1">
@@ -80,6 +80,9 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
               <span className="hidden min-[360px]:inline">© {year}</span>
               {rightSlot}
             </div>
+
+            {/* Assinatura do desenvolvedor — sempre visível, inclusive no mobile */}
+            <DeveloperSignature compact />
           </div>
 
 
