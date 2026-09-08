@@ -67,11 +67,11 @@ export function ShiftConflictsBanner({
 
   return (
     <>
-      <Card className="bg-amber-500/10 border-amber-500/30 shadow-lg shadow-amber-500/5">
+      <Card className="bg-primary/10 border-primary/30 shadow-lg shadow-primary/5">
         <CardContent className="p-0">
           {/* Header */}
           <div 
-            className="flex items-center justify-between p-3 cursor-pointer hover:bg-amber-500/5 transition-colors"
+            className="flex items-center justify-between p-3 cursor-pointer hover:bg-primary/5 transition-colors"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             <div className="flex items-center gap-3">
@@ -81,7 +81,7 @@ export function ShiftConflictsBanner({
               <div>
                 <h3 className="font-semibold text-foreground flex items-center gap-2">
                   Conflitos de Escalas Detectados
-                  <Badge variant="outline" className="bg-amber-500/20 text-amber-400 border-amber-500/30">
+                  <Badge variant="outline" className="bg-primary/20 text-primary border-primary/30">
                     {conflicts.length}
                   </Badge>
                 </h3>

@@ -186,13 +186,13 @@ const getThemeCardStyle = (resolvedTheme: string) => {
       return {
         borderRadius: 'rounded-tl-[3rem] rounded-tr-lg rounded-bl-lg rounded-br-[3rem]', // Asymmetric luxury
         borderStyle: 'border-2',
-        overlayGradient: 'bg-gradient-to-br from-yellow-950/80 via-amber-900/60 to-stone-950/95',
+        overlayGradient: 'bg-gradient-to-br from-yellow-950/80 via-primary/60 to-stone-950/95',
         glowEffect: 'shadow-[0_0_30px_rgba(234,179,8,0.25)] group-hover:shadow-[0_0_50px_rgba(234,179,8,0.5)]',
         scanlineStyle: 'opacity-5',
         buttonStyle: '',
         accentShape: Crown,
-        topAccent: 'h-1 bg-gradient-to-r from-yellow-600 via-amber-400 to-yellow-600',
-        bottomAccent: 'h-0.5 bg-gradient-to-r from-yellow-700 via-amber-500 to-yellow-700',
+        topAccent: 'h-1 bg-gradient-to-r from-yellow-600 via-primary to-yellow-600',
+        bottomAccent: 'h-0.5 bg-gradient-to-r from-yellow-700 via-primary to-yellow-700',
         cardClipPath: '',
       };
     // NEW: Nexus - Matrix green with layered depth effect
@@ -228,13 +228,13 @@ const getThemeCardStyle = (resolvedTheme: string) => {
       return {
         borderRadius: 'rounded-lg sm:rounded-xl md:rounded-2xl',
         borderStyle: 'border-2 md:border-3',
-        overlayGradient: 'bg-gradient-to-t from-black/95 via-black/60 to-amber-900/20',
+        overlayGradient: 'bg-gradient-to-t from-black/95 via-black/60 to-primary/20',
         glowEffect: 'shadow-[0_0_20px_rgba(251,191,36,0.15)] group-hover:shadow-[0_0_35px_rgba(251,191,36,0.4)]',
         scanlineStyle: 'opacity-15',
         buttonStyle: '',
         accentShape: Star,
-        topAccent: 'h-1 md:h-1.5 bg-gradient-to-r from-amber-500 via-orange-400 to-amber-500',
-        bottomAccent: 'h-0.5 md:h-1 bg-amber-600/80',
+        topAccent: 'h-1 md:h-1.5 bg-gradient-to-r from-primary via-orange-400 to-primary',
+        bottomAccent: 'h-0.5 md:h-1 bg-primary/80',
         cardClipPath: '',
       };
   }
@@ -475,15 +475,15 @@ export function ThemedTeamCard({ team, onClick }: ThemedTeamCardProps) {
               <>
                 {/* Tactical: Radar sweep */}
                 <div 
-                  className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-amber-500/70 to-transparent"
+                  className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-primary/70 to-transparent"
                   style={{ animation: 'radarSweep 3s linear infinite', boxShadow: '0 0 20px 4px rgba(251,191,36,0.4)' }}
                 />
                 <div 
-                  className="absolute top-2 left-2 w-2 h-2 rounded-full bg-amber-500/80"
+                  className="absolute top-2 left-2 w-2 h-2 rounded-full bg-primary/80"
                   style={{ animation: 'tacticalPulse 1.5s ease-in-out infinite' }}
                 />
                 <div 
-                  className="absolute bottom-2 right-2 w-2 h-2 rounded-full bg-amber-500/80"
+                  className="absolute bottom-2 right-2 w-2 h-2 rounded-full bg-primary/80"
                   style={{ animation: 'tacticalPulse 1.5s ease-in-out infinite', animationDelay: '0.75s' }}
                 />
               </>
@@ -562,7 +562,7 @@ export function ThemedTeamCard({ team, onClick }: ThemedTeamCardProps) {
                   style={{ animation: 'crownGlow 2s ease-in-out infinite' }}
                 />
                 <div 
-                  className="absolute bottom-2 right-2 w-1.5 h-1.5 bg-amber-400/80 rounded-full"
+                  className="absolute bottom-2 right-2 w-1.5 h-1.5 bg-primary/80 rounded-full"
                   style={{ animation: 'crownGlow 2s ease-in-out infinite', animationDelay: '1s' }}
                 />
               </>
@@ -602,7 +602,7 @@ export function ThemedTeamCard({ team, onClick }: ThemedTeamCardProps) {
                   style={{ animation: 'emberFlare 1s ease-in-out infinite' }}
                 />
                 <div 
-                  className="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-amber-500"
+                  className="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-primary"
                   style={{ animation: 'emberFlare 1s ease-in-out infinite', animationDelay: '0.5s' }}
                 />
               </>

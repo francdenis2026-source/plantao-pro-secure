@@ -188,7 +188,7 @@ export function TransferApprovalPanel({ showHistory = false }: TransferApprovalP
     switch (status) {
       case 'pending':
         return (
-          <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/40">
+          <Badge className="bg-primary/20 text-primary border-primary/40">
             Pendente
           </Badge>
         );
@@ -213,19 +213,19 @@ export function TransferApprovalPanel({ showHistory = false }: TransferApprovalP
 
   return (
     <>
-      <Card className={`border-2 ${showHistory ? 'bg-gradient-to-br from-slate-800/60 to-slate-900/60 border-slate-700/50' : 'bg-gradient-to-br from-slate-800/60 via-amber-900/10 to-slate-900/60 border-amber-500/40'}`}>
+      <Card className={`border-2 ${showHistory ? 'bg-gradient-to-br from-slate-800/60 to-slate-900/60 border-slate-700/50' : 'bg-gradient-to-br from-slate-800/60 via-primary/10 to-slate-900/60 border-primary/40'}`}>
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className={`p-2.5 rounded-xl ${showHistory ? 'bg-slate-700/50' : 'bg-gradient-to-br from-amber-500/20 to-orange-500/10'} border ${showHistory ? 'border-slate-600' : 'border-amber-500/30'}`}>
+              <div className={`p-2.5 rounded-xl ${showHistory ? 'bg-slate-700/50' : 'bg-gradient-to-br from-primary/20 to-orange-500/10'} border ${showHistory ? 'border-slate-600' : 'border-primary/30'}`}>
                 {showHistory ? (
                   <History className="h-5 w-5 text-slate-400" />
                 ) : (
-                  <ArrowRightLeft className="h-5 w-5 text-amber-400" />
+                  <ArrowRightLeft className="h-5 w-5 text-primary" />
                 )}
               </div>
               <div>
-                <CardTitle className={`text-lg ${showHistory ? 'text-slate-200' : 'text-amber-200'}`}>
+                <CardTitle className={`text-lg ${showHistory ? 'text-slate-200' : 'text-primary'}`}>
                   {showHistory ? 'Histórico de Transferências' : 'Solicitações Pendentes'}
                 </CardTitle>
                 <CardDescription className="text-xs">
@@ -238,8 +238,8 @@ export function TransferApprovalPanel({ showHistory = false }: TransferApprovalP
             </div>
             {!showHistory && pendingCount > 0 && (
               <div className="flex items-center gap-2">
-                <Bell className="h-4 w-4 text-amber-400" />
-                <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-black border-0 font-bold px-3">
+                <Bell className="h-4 w-4 text-primary" />
+                <Badge className="bg-gradient-to-r from-primary to-orange-500 text-black border-0 font-bold px-3">
                   {pendingCount} pendente{pendingCount > 1 ? 's' : ''}
                 </Badge>
               </div>
@@ -249,7 +249,7 @@ export function TransferApprovalPanel({ showHistory = false }: TransferApprovalP
         <CardContent className="p-0">
           {loading ? (
             <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-amber-500" />
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : requests.length === 0 ? (
             <div className="text-center py-12">

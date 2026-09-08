@@ -209,7 +209,7 @@ export function JourneyDetailsDialog({
       const headerH = 56;
       pdf.setFillColor(15, 23, 42); // slate-900
       pdf.rect(0, 0, pageW, headerH, 'F');
-      pdf.setDrawColor(245, 158, 11); // amber-500
+      pdf.setDrawColor(245, 158, 11); // primary
       pdf.setLineWidth(1.5);
       pdf.line(0, headerH, pageW, headerH);
 
@@ -297,7 +297,7 @@ export function JourneyDetailsDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md bg-slate-900 border-slate-700">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-amber-300">
+          <DialogTitle className="flex items-center gap-2 text-primary">
             <Clock className="h-4 w-4" />
             Jornada • {current ? format(current.targetDate, "EEEE, dd 'de' MMMM", { locale: ptBR }) : '—'}
           </DialogTitle>
@@ -355,8 +355,8 @@ export function JourneyDetailsDialog({
         {/* Conteúdo capturável */}
         <div ref={printRef} className="bg-slate-900 p-1 rounded">
           {!current || (!current.shiftStart && !current.restStart) ? (
-            <div className="flex items-start gap-2 rounded-md border border-amber-500/30 bg-amber-500/5 p-3">
-              <AlertCircle className="h-4 w-4 mt-0.5 text-amber-400 flex-shrink-0" />
+            <div className="flex items-start gap-2 rounded-md border border-primary/30 bg-primary/5 p-3">
+              <AlertCircle className="h-4 w-4 mt-0.5 text-primary flex-shrink-0" />
               <div className="text-xs text-slate-300 leading-relaxed">
                 {current?.emptyMessage ??
                   'Sem plantão cadastrado para este dia. Revise o cadastro do agente (data do primeiro plantão e escala).'}
@@ -418,16 +418,16 @@ export function JourneyDetailsDialog({
                         'mt-0.5 flex h-6 w-6 items-center justify-center rounded-full border flex-shrink-0',
                         isNight
                           ? 'bg-indigo-500/20 border-indigo-500/40'
-                          : 'bg-amber-500/20 border-amber-500/40'
+                          : 'bg-primary/20 border-primary/40'
                       )}
                     >
-                      <PeriodIcon className={cn('h-3 w-3', isNight ? 'text-indigo-300' : 'text-amber-300')} />
+                      <PeriodIcon className={cn('h-3 w-3', isNight ? 'text-indigo-300' : 'text-primary')} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div
                         className={cn(
                           'text-[10px] uppercase font-bold tracking-wider',
-                          isNight ? 'text-indigo-300' : 'text-amber-300'
+                          isNight ? 'text-indigo-300' : 'text-primary'
                         )}
                       >
                         Plantão {periodLabel} {onShift && '• em curso'}
@@ -455,7 +455,7 @@ export function JourneyDetailsDialog({
                   O plantão de <span className="font-semibold">24 horas</span> corresponde ao ciclo
                   contínuo de <span className="tabular-nums">07:00</span> de um dia até{' '}
                   <span className="tabular-nums">07:00</span> do dia seguinte. É classificado como{' '}
-                  <span className="font-semibold text-amber-300">Diurno</span> quando ocorre entre{' '}
+                  <span className="font-semibold text-primary">Diurno</span> quando ocorre entre{' '}
                   <span className="tabular-nums">07:00 e 19:00</span>, e como{' '}
                   <span className="font-semibold text-indigo-300">Noturno</span> quando inicia às{' '}
                   <span className="tabular-nums">19:00</span> e se encerra às{' '}
@@ -486,7 +486,7 @@ export function JourneyDetailsDialog({
           </Button>
           <Button
             size="sm"
-            className="h-8 text-xs bg-amber-500/90 hover:bg-amber-500 text-slate-900"
+            className="h-8 text-xs bg-primary/90 hover:bg-primary text-slate-900"
             onClick={handleDownloadPdf}
             disabled={!current || busy !== null}
           >

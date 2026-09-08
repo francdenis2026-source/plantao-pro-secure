@@ -107,10 +107,10 @@ export function PWAInstallPrompt() {
             : 'fixed bottom-4 left-4 right-4 z-50 animate-fade-in'
         }
       >
-        <Card className="bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/40 border-amber-500/40 shadow-2xl shadow-amber-500/20">
+        <Card className="bg-gradient-to-br from-slate-900 via-slate-900 to-primary/40 border-primary/40 shadow-2xl shadow-primary/20">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
-              <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg">
+              <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary flex items-center justify-center shadow-lg">
                 {isDesktop ? (
                   <Monitor className="h-6 w-6 text-black" />
                 ) : (
@@ -154,7 +154,7 @@ export function PWAInstallPrompt() {
 
             <Button
               onClick={handleInstall}
-              className="w-full mt-3 bg-amber-500 hover:bg-amber-600 text-black font-semibold h-9"
+              className="w-full mt-3 bg-primary hover:bg-primary text-black font-semibold h-9"
             >
               <Download className="h-4 w-4 mr-2" />
               {isInstallable ? 'Instalar agora' : 'Como instalar'}
@@ -169,9 +169,9 @@ export function PWAInstallPrompt() {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               {isDesktop ? (
-                <Monitor className="h-5 w-5 text-amber-500" />
+                <Monitor className="h-5 w-5 text-primary" />
               ) : (
-                <Smartphone className="h-5 w-5 text-amber-500" />
+                <Smartphone className="h-5 w-5 text-primary" />
               )}
               {platform === 'ios' && 'Instalar no iPhone/iPad'}
               {platform === 'desktop-firefox' && 'Instalar no Firefox'}
@@ -244,7 +244,7 @@ export function PWAInstallPrompt() {
 
             <Button
               onClick={() => setShowManualDialog(false)}
-              className="w-full bg-amber-500 hover:bg-amber-600 text-black font-semibold"
+              className="w-full bg-primary hover:bg-primary text-black font-semibold"
             >
               Entendi
             </Button>

@@ -751,7 +751,7 @@ export default function Master() {
               <Icon3D name="shield" size={14} className="sm:hidden" />
               <span className="hidden sm:inline">Cadastros</span>
               {stats.pendingApprovals > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 h-3.5 min-w-3.5 px-0.5 rounded-full bg-amber-500 text-[9px] font-mono text-white flex items-center justify-center animate-pulse">
+                <span className="absolute -top-0.5 -right-0.5 h-3.5 min-w-3.5 px-0.5 rounded-full bg-primary text-[9px] font-mono text-white flex items-center justify-center animate-pulse">
                   {stats.pendingApprovals}
                 </span>
               )}
@@ -763,7 +763,7 @@ export default function Master() {
             <TabsTrigger value="access-control" className="relative">
               Acesso
               {agents.filter(a => !a.is_active || (a as any).is_frozen).length > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-amber-500 text-[9px] text-white flex items-center justify-center">
+                <span className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-primary text-[9px] text-white flex items-center justify-center">
                   !
                 </span>
               )}
@@ -819,12 +819,12 @@ export default function Master() {
           {/* Overview Tab - Units */}
           <TabsContent value="overview" className="space-y-3 mt-3">
             {unitsError && (
-              <div className="rounded-md border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
+              <div className="rounded-md border border-primary/40 bg-primary/10 px-4 py-3 text-sm text-primary">
                 <strong>Aviso — Unidades:</strong> {unitsError}
                 <button
                   type="button"
                   onClick={() => fetchData()}
-                  className="ml-3 underline underline-offset-2 hover:text-amber-100"
+                  className="ml-3 underline underline-offset-2 hover:text-primary"
                 >
                   Tentar novamente
                 </button>
@@ -943,7 +943,7 @@ export default function Master() {
                           </SelectTrigger>
                           <SelectContent className="bg-popover border-border">
                             {units.length === 0 && (
-                              <div className="px-3 py-2 text-sm text-amber-500">
+                              <div className="px-3 py-2 text-sm text-primary">
                                 Nenhuma unidade disponível. {unitsError ? `(${unitsError})` : ''}
                               </div>
                             )}
@@ -1083,7 +1083,7 @@ export default function Master() {
                                   setEditingAgent(agent);
                                   setEditAgentOpen(true);
                                 }}
-                                className="text-amber-500 hover:text-amber-400 hover:bg-amber-500/10"
+                                className="text-primary hover:text-primary hover:bg-primary/10"
                                 title="Editar"
                               >
                                 <Icon3DAction name="edit" alt="Editar" />
@@ -1362,9 +1362,9 @@ export default function Master() {
 
           {/* Comunicações Internas Tab */}
           <TabsContent value="announcements" className="space-y-3 mt-3">
-            <div className="rounded-lg border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-orange-600/5 p-4">
+            <div className="rounded-lg border border-primary/30 bg-gradient-to-br from-primary/10 to-orange-600/5 p-4">
               <div className="flex items-center gap-3">
-                <MessageSquare className="h-5 w-5 text-amber-400" />
+                <MessageSquare className="h-5 w-5 text-primary" />
                 <div>
                   <h3 className="text-sm font-bold text-white">Central de Comunicações Internas</h3>
                   <p className="text-xs text-slate-400">Envie avisos, comunicados e alertas para todos os agentes, uma unidade ou uma equipe específica.</p>

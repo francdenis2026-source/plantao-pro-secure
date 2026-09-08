@@ -398,9 +398,9 @@ export function ImageProtection() {
           <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" />
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-md rounded-xl border border-amber-500/40 bg-zinc-950 shadow-2xl shadow-amber-900/30 overflow-hidden animate-in zoom-in-95 duration-200"
+            className="relative w-full max-w-md rounded-xl border border-primary/40 bg-zinc-950 shadow-2xl shadow-primary/30 overflow-hidden animate-in zoom-in-95 duration-200"
           >
-            <div className="h-1 bg-gradient-to-r from-amber-600 via-amber-300 to-amber-600" />
+            <div className="h-1 bg-gradient-to-r from-primary via-primary to-primary" />
             <button
               type="button"
               onClick={() => setOpen(false)}
@@ -480,11 +480,11 @@ export function ImageProtection() {
 
               <h2
                 id="img-protect-title"
-                className="font-['Libre_Baskerville',_Georgia,_serif] text-amber-300 text-xl font-bold mb-1"
+                className="font-['Libre_Baskerville',_Georgia,_serif] text-primary text-xl font-bold mb-1"
               >
                 {msg.title}
               </h2>
-              <div className="text-[10px] uppercase tracking-[0.28em] text-amber-500/70 mb-4 font-mono">
+              <div className="text-[10px] uppercase tracking-[0.28em] text-primary/70 mb-4 font-mono">
                 Dedicado aos agentes · Segurança Socioeducativa
               </div>
 
@@ -505,7 +505,7 @@ export function ImageProtection() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="mt-5 px-6 py-2 rounded-md bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-zinc-950 text-sm font-bold uppercase tracking-wider transition-colors"
+                className="mt-5 px-6 py-2 rounded-md bg-gradient-to-r from-primary to-primary hover:from-primary hover:to-primary text-zinc-950 text-sm font-bold uppercase tracking-wider transition-colors"
               >
                 Entendi
               </button>

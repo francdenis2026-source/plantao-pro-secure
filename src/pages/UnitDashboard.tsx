@@ -222,7 +222,7 @@ export default function UnitDashboard() {
   if (authLoading || isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-        <Loader2 className="h-8 w-8 animate-spin text-amber-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
   }
@@ -245,7 +245,7 @@ export default function UnitDashboard() {
               <button
                 type="button"
                 onClick={() => navigate('/units')}
-                className="inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-amber-300 transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs text-slate-300 hover:text-primary transition-colors"
               >
                 <ArrowLeft className="h-3.5 w-3.5" /> Voltar para Unidades
               </button>
@@ -358,13 +358,13 @@ export default function UnitDashboard() {
             {/* Quick Actions - Compact with tactical animations */}
             <div className="grid grid-cols-2 gap-2">
               <Card 
-                className="bg-slate-800/40 border-slate-700/50 hover:border-amber-500/40 cursor-pointer transition-all group tactical-card hover:scale-[1.02]"
+                className="bg-slate-800/40 border-slate-700/50 hover:border-primary/40 cursor-pointer transition-all group tactical-card hover:scale-[1.02]"
                 onClick={() => navigate('/overtime')}
                 style={{ animationDelay: '0.7s' }}
               >
                 <CardContent className="p-3 flex items-center gap-2.5 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="p-1.5 rounded bg-amber-500/20 text-amber-400 group-hover:scale-110 transition-transform">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="p-1.5 rounded bg-primary/20 text-primary group-hover:scale-110 transition-transform">
                     <Clock className="h-4 w-4" />
                   </div>
                   <div>
@@ -375,7 +375,7 @@ export default function UnitDashboard() {
               </Card>
               
               <Card 
-                className="bg-slate-800/40 border-slate-700/50 hover:border-amber-500/40 cursor-pointer transition-all group tactical-card hover:scale-[1.02]"
+                className="bg-slate-800/40 border-slate-700/50 hover:border-primary/40 cursor-pointer transition-all group tactical-card hover:scale-[1.02]"
                 onClick={() => navigate('/agents')}
                 style={{ animationDelay: '0.8s' }}
               >
@@ -395,10 +395,10 @@ export default function UnitDashboard() {
             {/* Histórico de alterações — Admin/Master */}
             {canSeeHistory && (
               <Card className="bg-slate-800/40 border-slate-700/50 tactical-card relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent" />
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
                 <CardHeader className="p-3 pb-2">
                   <CardTitle className="flex items-center gap-2 text-sm text-white">
-                    <History className="h-4 w-4 text-amber-400" />
+                    <History className="h-4 w-4 text-primary" />
                     Histórico de alterações
                     <Badge variant="secondary" className="ml-auto text-[10px] h-5">
                       {history.length}
@@ -408,7 +408,7 @@ export default function UnitDashboard() {
                 <CardContent className="p-3 pt-0">
                   {historyLoading ? (
                     <div className="flex items-center justify-center py-6">
-                      <Loader2 className="h-4 w-4 animate-spin text-amber-400" />
+                      <Loader2 className="h-4 w-4 animate-spin text-primary" />
                     </div>
                   ) : history.length === 0 ? (
                     <div className="text-center py-6 space-y-1">
@@ -424,8 +424,8 @@ export default function UnitDashboard() {
                           key={h.id}
                           className="flex items-start gap-2 p-2 rounded bg-slate-900/40 border border-slate-800/60 text-xs"
                         >
-                          <div className="h-6 w-6 shrink-0 rounded-full bg-amber-500/15 border border-amber-500/30 flex items-center justify-center">
-                            <History className="h-3 w-3 text-amber-400" />
+                          <div className="h-6 w-6 shrink-0 rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center">
+                            <History className="h-3 w-3 text-primary" />
                           </div>
                           <div className="min-w-0 flex-1">
                             <p className="text-slate-100 font-medium truncate">{actionLabel(h.action)}</p>

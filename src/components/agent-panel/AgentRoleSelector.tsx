@@ -13,7 +13,7 @@ interface AgentRoleSelectorProps {
 const roles = [
   { value: 'agent', label: 'Agente', shortLabel: 'AGT', icon: User, color: 'slate', gradient: 'from-slate-500 to-slate-600' },
   { value: 'support', label: 'Apoio', shortLabel: 'APO', icon: Shield, color: 'blue', gradient: 'from-blue-500 to-indigo-600' },
-  { value: 'team_leader', label: 'Chefe', shortLabel: 'CHF', icon: Crown, color: 'amber', gradient: 'from-amber-500 to-orange-600' },
+  { value: 'team_leader', label: 'Chefe', shortLabel: 'CHF', icon: Crown, color: 'amber', gradient: 'from-primary to-orange-600' },
 ];
 
 export function AgentRoleSelector({ agentId, currentRole }: AgentRoleSelectorProps) {
@@ -55,7 +55,7 @@ export function AgentRoleSelector({ agentId, currentRole }: AgentRoleSelectorPro
           className={cn(
             "relative flex items-center gap-1.5 px-3 py-2 rounded-xl font-bold text-xs transition-all duration-300",
             "border-2 shadow-lg hover:scale-105 active:scale-95 overflow-hidden group",
-            currentRoleData.color === 'amber' && "bg-gradient-to-br from-amber-500/20 to-orange-500/15 border-amber-500/50 hover:border-amber-400/70 text-amber-300 shadow-amber-500/20",
+            currentRoleData.color === 'amber' && "bg-gradient-to-br from-primary/20 to-orange-500/15 border-primary/50 hover:border-primary/70 text-primary shadow-primary/20",
             currentRoleData.color === 'blue' && "bg-gradient-to-br from-blue-500/20 to-indigo-500/15 border-blue-500/50 hover:border-blue-400/70 text-blue-300 shadow-blue-500/20",
             currentRoleData.color === 'slate' && "bg-gradient-to-br from-slate-700/80 to-slate-800/80 border-slate-600/50 hover:border-slate-500/70 text-slate-300 shadow-slate-500/10"
           )}
@@ -63,7 +63,7 @@ export function AgentRoleSelector({ agentId, currentRole }: AgentRoleSelectorPro
           {/* Glow effect on hover */}
           <div className={cn(
             "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300",
-            currentRoleData.color === 'amber' && "bg-gradient-to-r from-amber-400/0 via-amber-400/10 to-amber-400/0",
+            currentRoleData.color === 'amber' && "bg-gradient-to-r from-primary/0 via-primary/10 to-primary/0",
             currentRoleData.color === 'blue' && "bg-gradient-to-r from-blue-400/0 via-blue-400/10 to-blue-400/0",
             currentRoleData.color === 'slate' && "bg-gradient-to-r from-slate-400/0 via-slate-400/5 to-slate-400/0"
           )} />
@@ -99,7 +99,7 @@ export function AgentRoleSelector({ agentId, currentRole }: AgentRoleSelectorPro
               className={cn(
                 "flex items-center gap-2.5 cursor-pointer rounded-lg px-2.5 py-2 my-0.5 transition-all duration-200",
                 isActive 
-                  ? "bg-gradient-to-r from-amber-500/20 to-orange-500/15 border border-amber-500/40" 
+                  ? "bg-gradient-to-r from-primary/20 to-orange-500/15 border border-primary/40" 
                   : "hover:bg-slate-700/50 border border-transparent"
               )}
             >
@@ -111,12 +111,12 @@ export function AgentRoleSelector({ agentId, currentRole }: AgentRoleSelectorPro
               </div>
               <span className={cn(
                 "flex-1 font-semibold text-sm",
-                isActive ? "text-amber-300" : "text-slate-300"
+                isActive ? "text-primary" : "text-slate-300"
               )}>
                 {r.label}
               </span>
               {isActive && (
-                <Check className="h-4 w-4 text-amber-400" />
+                <Check className="h-4 w-4 text-primary" />
               )}
             </DropdownMenuItem>
           );
