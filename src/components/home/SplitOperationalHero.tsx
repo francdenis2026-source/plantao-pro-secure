@@ -6,8 +6,8 @@ import { RoundsManagerLazy as RoundsManager } from './RoundsManagerLazy';
 import { useOperationalMetrics } from '@/hooks/useOperationalMetrics';
 import { useOnlineAgents } from '@/hooks/useOnlineAgents';
 import { useVisitorPresence } from '@/hooks/useVisitorPresence';
+import { BrasaoSentinela } from '@/components/BrasaoSentinela';
 
-import iseLogo from '@/assets/logo-ise-socioeducativo.png';
 import teamAlfaPhoto from '@/assets/midias/team-alfa.png';
 import teamBravoPhoto from '@/assets/midias/team-bravo.png';
 import teamCharliePhoto from '@/assets/midias/team-charlie.png';
@@ -105,13 +105,10 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
 
         <div className="relative z-10 flex flex-col gap-6 px-6 py-8 sm:px-10 sm:py-12">
           <div className="flex items-start gap-4 sm:gap-5">
-            <img
-              src={iseLogo}
-              alt="Instituto Socioeducativo do Acre"
-              loading="eager"
-              decoding="async"
-              className="h-14 w-14 shrink-0 object-contain drop-shadow-[0_4px_14px_rgba(0,0,0,0.45)] sm:h-16 sm:w-16"
-              draggable={false}
+            <BrasaoSentinela
+              size={60}
+              className="shrink-0"
+              title="Instituto Socioeducativo do Acre"
             />
             <div className="max-w-lg">
               <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">

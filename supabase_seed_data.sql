@@ -11,9 +11,10 @@ INSERT INTO public.units (id, name, municipality, address, phone, email, directo
   ('0b0d9d6c-dfd2-4d8b-af9b-95fae975645d', 'CS Aquiri', 'Rio Branco', 'Rua Amazonas, 500 - Bosque', '(68) 3223-0002', 'cs.aquiri@ise.ac.gov.br', 'Dra. Maria Oliveira', 'Ana Costa'),
   ('f8d78670-b19f-4654-8f10-e91c7ecbce88', 'CS Mocinha Magalhães', 'Rio Branco', 'Av. Ceará, 800 - Cidade Nova', '(68) 3223-0003', 'cs.mocinha@ise.ac.gov.br', 'Dr. Pedro Souza', 'José Lima'),
   ('64eb9fa7-c831-478c-b968-153aeb1b4a32', 'CS Santa Juliana', 'Rio Branco', 'Rua Quinari, 200 - Tancredo Neves', '(68) 3223-0004', 'cs.santajuliana@ise.ac.gov.br', 'Dra. Lucia Pereira', 'Roberto Nunes'),
-  ('6ea1a1cd-0cdc-4ce8-ad61-0f9cfa214966', 'CS Juruá', 'Cruzeiro do Sul', 'Av. Mâncio Lima, 300 - Centro', '(68) 3322-0001', 'cs.jurua@ise.ac.gov.br', 'Dr. Ricardo Mendes', 'Patricia Gomes'),
+  ('05ca3120-d095-4e30-832b-e3026a540fa1', 'UIP', 'Rio Branco', 'Av. Getúlio Vargas, 1500 - Centro', '(68) 3223-0005', 'uip@ise.ac.gov.br', 'Dr. Fernando Alves', 'Marcos Ribeiro'),
+  ('6ea1a1cd-0cdc-4ce8-ad61-0f9cfa214966', 'CS Cruzeiro', 'Cruzeiro do Sul', 'Av. Mâncio Lima, 300 - Centro', '(68) 3322-0001', 'cs.cruzeiro@ise.ac.gov.br', 'Dr. Ricardo Mendes', 'Patricia Gomes'),
   ('dd77c458-92fb-49e2-819d-7a32288cc390', 'CS Feijó', 'Feijó', 'Rua Principal, 150 - Centro', '(68) 3463-0001', 'cs.feijo@ise.ac.gov.br', 'Dr. Antonio Ferreira', 'Sandra Melo'),
-  ('e97e1711-27ca-412b-9c5a-6183fc51cc04', 'CS Purus', 'Sena Madureira', 'Av. Avelino Chaves, 400 - Centro', '(68) 3612-0001', 'cs.purus@ise.ac.gov.br', 'Dra. Claudia Rocha', 'Paulo Freitas'),
+  ('e97e1711-27ca-412b-9c5a-6183fc51cc04', 'CS Sena', 'Sena Madureira', 'Av. Avelino Chaves, 400 - Centro', '(68) 3612-0001', 'cs.sena@ise.ac.gov.br', 'Dra. Claudia Rocha', 'Paulo Freitas'),
   ('f20f1979-19e4-4662-a97a-bf2d6a3283d9', 'CS Brasiléia', 'Brasiléia', 'Rua Raimundo Chaar, 100 - Centro', '(68) 3546-0001', 'cs.brasileia@ise.ac.gov.br', 'Dr. Marcos Dias', 'Fernanda Cruz');
 
 -- =============================================================================
