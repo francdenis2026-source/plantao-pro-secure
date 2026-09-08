@@ -34,32 +34,59 @@ export function RoundControls({ slot, isPaused, onPause, onResume, onComplete, o
   const disabled = slot.status === 'completed' || slot.status === 'cancelled';
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div className="space-y-2">
+      {/* Ação principal em destaque — pausar/retomar a ronda em curso */}
       {isPaused ? (
-        <Button size="sm" disabled={disabled || busy != null} onClick={() => run('resume', onResume)} className="gap-1.5">
-          {busy === 'resume' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Play className="h-4 w-4" />}
-          Retomar
+        <Button
+          disabled={disabled || busy != null}
+          onClick={() => run('resume', onResume)}
+          className="h-11 w-full gap-2 bg-emerald-600 text-white hover:bg-emerald-600/90"
+        >
+          {busy === 'resume' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Play className="h-4 w-4 fill-current" />}
+          Retomar ronda
         </Button>
       ) : (
-        <Button size="sm" variant="secondary" disabled={disabled || busy != null} onClick={() => run('pause', onPause)} className="gap-1.5">
-          {busy === 'pause' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Pause className="h-4 w-4" />}
+        <Button
+          disabled={disabled || busy != null}
+          onClick={() => run('pause', onPause)}
+          className="h-11 w-full gap-2 bg-emerald-600 text-white hover:bg-emerald-600/90"
+        >
+          {busy === 'pause' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Pause className="h-4 w-4 fill-current" />}
           Pausar
         </Button>
       )}
 
-      <Button size="sm" variant="outline" disabled={disabled || !canExtend || busy != null} onClick={() => run('extend', onExtend)} className="gap-1.5">
-        {busy === 'extend' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Clock3 className="h-4 w-4" />}
-        +5 min
-      </Button>
+      {/* Ações secundárias */}
+      <div className="grid grid-cols-2 gap-2">
+        <Button
+          variant="outline"
+          disabled={disabled || busy != null}
+          onClick={() => setConfirmFinish(true)}
+          className="h-10 gap-1.5"
+        >
+          <CheckCircle2 className="h-4 w-4" />
+          Finalizar
+        </Button>
 
-      <Button size="sm" variant="outline" disabled={disabled} onClick={onIncident} className="gap-1.5">
+        <Button
+          variant="outline"
+          disabled={disabled || !canExtend || busy != null}
+          onClick={() => run('extend', onExtend)}
+          className="h-10 gap-1.5"
+        >
+          {busy === 'extend' ? <Loader2 className="h-4 w-4 animate-spin" /> : <Clock3 className="h-4 w-4" />}
+          +5 min
+        </Button>
+      </div>
+
+      <Button
+        variant="ghost"
+        disabled={disabled}
+        onClick={onIncident}
+        className="h-9 w-full gap-1.5 text-rose-400 hover:bg-rose-500/10 hover:text-rose-300"
+      >
         <AlertTriangle className="h-4 w-4" />
-        Ocorrência
-      </Button>
-
-      <Button size="sm" variant="default" disabled={disabled || busy != null} onClick={() => setConfirmFinish(true)} className="ml-auto gap-1.5 bg-success text-success-foreground hover:bg-success/90">
-        <CheckCircle2 className="h-4 w-4" />
-        Finalizar
+        Registrar ocorrência
       </Button>
 
       <AlertDialog open={confirmFinish} onOpenChange={setConfirmFinish}>

@@ -1,21 +1,20 @@
 import { lazy, Suspense, useCallback, useEffect, useState, type ReactNode } from 'react';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
+import { Skeleton } from '@/components/ui/skeleton';
 
 /**
- * Wrapper leve para o Gestor de Rondas.
+ * Gestor de Rondas — ponto de entrada único.
  *
- * Motivo: `RoundsManager.tsx` tem >4500 linhas e importa dezenas de dialogs,
- * hooks e assets. Quando importado estaticamente na home, ele engorda o
- * bundle inicial, aumenta o tempo de parse e consome memória em máquinas
- * mais fracas — o usuário reportou travamento.
+ * Antes existiam DUAS ferramentas de rondas: este modal (RoundsManager,
+ * >4500 linhas) e o painel `/rondas` (RoundsDashboard). Agora ambos usam o
+ * mesmo painel: aqui ele abre em modal a partir da home, e em página cheia
+ * na rota /rondas — mesma UI, mesmos dados, uma implementação só.
  *
- * Este wrapper renderiza APENAS o botão gatilho (customTrigger) até que o
- * usuário efetivamente peça para abrir o Gestor. Só então o chunk pesado
- * é baixado e montado. Após montar, dispara `rounds:open` (evento global
- * já ouvido pelo próprio RoundsManager) para abrir o modal imediatamente.
+ * O painel continua sendo carregado sob demanda (lazy) para não pesar o
+ * bundle inicial da home.
  */
-
-const RoundsManager = lazy(() =>
-  import('./RoundsManager').then((m) => ({ default: m.RoundsManager })),
+const RoundsDashboard = lazy(() =>
+  import('@/features/rondas/components/RoundsDashboard').then((m) => ({ default: m.RoundsDashboard })),
 );
 
 interface Props {
@@ -23,32 +22,19 @@ interface Props {
 }
 
 export function RoundsManagerLazy({ customTrigger }: Props) {
-  const [mounted, setMounted] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  // Também mounts quando outro componente dispara o evento global.
+  // Mantém o contrato do evento global usado por outros pontos do app.
   useEffect(() => {
-    if (mounted) return;
-    const handler = () => setMounted(true);
+    const handler = () => setOpen(true);
     window.addEventListener('rounds:open', handler);
     return () => window.removeEventListener('rounds:open', handler);
-  }, [mounted]);
+  }, []);
 
-  const handleTriggerClick = useCallback(() => {
-    if (!mounted) {
-      setMounted(true);
-      // Dispatch várias vezes para garantir que o listener do RoundsManager
-      // (registrado num useEffect após montagem assíncrona via Suspense)
-      // receba o evento — evita necessidade de "clicar 2x".
-      [80, 200, 400, 800, 1400].forEach((ms) => {
-        setTimeout(() => window.dispatchEvent(new Event('rounds:open')), ms);
-      });
-    } else {
-      window.dispatchEvent(new Event('rounds:open'));
-    }
-  }, [mounted]);
+  const handleTriggerClick = useCallback(() => setOpen(true), []);
 
-  if (!mounted) {
-    return (
+  return (
+    <>
       <span
         onClick={handleTriggerClick}
         onKeyDown={(e) => {
@@ -62,13 +48,28 @@ export function RoundsManagerLazy({ customTrigger }: Props) {
       >
         {customTrigger}
       </span>
-    );
-  }
 
-  return (
-    <Suspense fallback={<span className="contents">{customTrigger}</span>}>
-      <RoundsManager customTrigger={customTrigger} />
-    </Suspense>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="flex max-h-[92dvh] w-[96vw] max-w-6xl flex-col gap-0 overflow-hidden p-0">
+          <DialogTitle className="sr-only">Gestor de Rondas</DialogTitle>
+          <DialogDescription className="sr-only">
+            Controle, acompanhamento e segurança das rondas em tempo real.
+          </DialogDescription>
+          <div className="min-h-0 flex-1 overflow-y-auto">
+            <Suspense
+              fallback={
+                <div className="space-y-3 p-4">
+                  <Skeleton className="h-24 w-full rounded-xl" />
+                  <Skeleton className="h-48 w-full rounded-xl" />
+                </div>
+              }
+            >
+              {open && <RoundsDashboard />}
+            </Suspense>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 

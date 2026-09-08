@@ -83,14 +83,66 @@
 
 
     <style>
-      /* Fundo de boot — cor sólida escura antes do React montar.
-         A splash institucional é renderizada UMA VEZ pelo componente
-         <SplashScreen>. Antes usávamos a arte como background-image
-         aqui também, o que causava sensação de "splash duplicada"
-         quando o overlay animado fazia fade-out. */
+      /* Fundo de boot — arte institucional exibida imediatamente, antes do
+         React montar, para que a tela de carregamento nunca fique vazia. */
       html, body, #root {
         background-color: #071522;
       }
+      /* Tela de carregamento — arte institucional + marca, visível desde o
+         primeiro paint e removida assim que o React monta (#root com
+         conteúdo). O fundo fica no próprio overlay porque o CSS do app
+         redefine `body { background: ... }` e apagaria a imagem. */
+      #boot-brand {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        z-index: 9999;
+        pointer-events: none;
+        transition: opacity 500ms ease;
+        background-image:
+          linear-gradient(180deg, rgba(7,21,34,0.80) 0%, rgba(7,21,34,0.90) 55%, rgba(7,21,34,0.97) 100%),
+          url('/loading-bg.png');
+        background-size: cover, cover;
+        background-position: center, center 40%;
+        background-repeat: no-repeat, no-repeat;
+      }
+      #boot-brand img {
+        width: 108px;
+        height: 108px;
+        filter: drop-shadow(0 10px 28px rgba(0,0,0,0.55));
+      }
+      #boot-brand .boot-word {
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: 0.04em;
+        color: #eaf2ff;
+      }
+      #boot-brand .boot-word span { color: #3ba7ff; }
+      #boot-brand .boot-bar {
+        width: 168px;
+        height: 3px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.12);
+        overflow: hidden;
+      }
+      #boot-brand .boot-bar i {
+        display: block;
+        height: 100%;
+        width: 40%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, transparent, #3ba7ff, transparent);
+        animation: bootSlide 1.15s ease-in-out infinite;
+      }
+      @keyframes bootSlide {
+        0%   { transform: translateX(-100%); }
+        100% { transform: translateX(320%); }
+      }
+      #root:not(:empty) ~ #boot-brand { opacity: 0; }
 
       /* Trava a altura no mobile para evitar redimensionamento quando a barra de endereço aparece/some */
       @media (max-width: 767px) {
@@ -137,6 +189,11 @@
 
   <body class="typoclear">
     <div id="root"></div>
+    <div id="boot-brand" aria-hidden="true">
+      <img src="/favicon.png" alt="" width="108" height="108" />
+      <div class="boot-word">Plantão<span>Pro</span></div>
+      <div class="boot-bar"><i></i></div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

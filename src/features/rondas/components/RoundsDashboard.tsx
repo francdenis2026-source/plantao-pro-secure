@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { AlertTriangle, WifiOff, Clock3 } from 'lucide-react';
+import { WifiOff, Clock3, Sun, Moon, Users, Building2, MapPin, UserCheck } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useAgentProfile } from '@/hooks/useAgentProfile';
 import { useAuth } from '@/contexts/AuthContext';
@@ -209,8 +210,14 @@ export function RoundsDashboard() {
     );
   }
 
+  const shiftStart = new Date(shift.start_at);
+  const shiftEnd = new Date(shift.end_at);
+  const fmtHm = (d: Date) =>
+    d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Rio_Branco' });
+  const isNightShift = shiftStart.getHours() >= 18 || shiftStart.getHours() < 6;
+
   return (
-    <div className="space-y-5 p-4">
+    <div className="space-y-4 p-4">
       {!isOnline && (
         <div className="flex items-center gap-2 rounded-lg border border-warning/40 bg-warning/10 px-3 py-2 text-sm text-warning">
           <WifiOff className="h-4 w-4" /> Sem conexão — as ações serão reenviadas quando a rede voltar.
@@ -222,74 +229,174 @@ export function RoundsDashboard() {
         </div>
       )}
 
+      {/* Cabeçalho operacional — título + contexto do turno */}
+      <header className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <h2 className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">Gestor de Rondas</h2>
+          <p className="mt-0.5 text-sm text-muted-foreground">
+            Controle, acompanhamento e segurança em tempo real
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
+          {[
+            {
+              Icon: isNightShift ? Moon : Sun,
+              label: 'Turno',
+              value: `${isNightShift ? 'Noturno' : 'Diurno'} (${fmtHm(shiftStart)} – ${fmtHm(shiftEnd)})`,
+            },
+            { Icon: Users, label: 'Equipe', value: team },
+            { Icon: Building2, label: 'Unidade', value: agent?.unit?.name ?? 'Minha unidade' },
+          ].map(({ Icon, label, value }) => (
+            <div
+              key={label}
+              className="flex items-center gap-2.5 rounded-xl border border-border bg-card px-3 py-2"
+            >
+              <Icon className="h-4 w-4 shrink-0 text-primary" strokeWidth={2.2} />
+              <div className="min-w-0 leading-tight">
+                <p className="text-[10px] uppercase tracking-wide text-muted-foreground">{label}</p>
+                <p className="truncate text-[13px] font-semibold text-foreground">{value}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </header>
+
       <RoundMetrics metrics={metrics} />
 
-      {currentAgentSlot && timer ? (
-        <div className="rounded-xl border border-border bg-card p-4">
-          <div className="mb-3 flex items-center justify-between">
-            <div>
-              <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Ronda em andamento</h3>
-              <p className="text-lg font-bold text-foreground">{currentAgentSlot.sector?.name ?? 'Setor não definido'}</p>
+      {/* Bloco principal: ronda atual (destaque) + fila de próximas rondas */}
+      <div className="grid grid-cols-1 gap-3 xl:grid-cols-[1.55fr_1fr]">
+        {currentAgentSlot && timer ? (
+          <section className="rounded-xl border border-border bg-card p-4">
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <h3 className="flex items-center gap-2 text-[13px] font-semibold uppercase tracking-wide text-foreground">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-70" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                </span>
+                Ronda em andamento
+              </h3>
+              <span className="truncate rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-medium text-muted-foreground">
+                {currentAgentSlot.sector?.name ?? 'Setor não definido'}
+              </span>
             </div>
-          </div>
-          <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-around">
-            <RoundTimer timer={timer} />
-            <div className="flex w-full flex-col gap-3 sm:max-w-xs">
-              <RoundControls
-                slot={currentAgentSlot}
-                isPaused={timer.isPaused}
-                onPause={handlePause}
-                onResume={handleResume}
-                onComplete={handleComplete}
-                onExtend={handleExtend}
-                onIncident={() => setIncidentOpen(true)}
-                canExtend
-              />
+
+            <div className="flex flex-col items-center gap-5 lg:flex-row lg:items-center lg:gap-6">
+              <RoundTimer timer={timer} />
+
+              <div className="flex w-full min-w-0 flex-col gap-4">
+                <dl className="space-y-3">
+                  <div className="flex items-start gap-2.5">
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={2.2} />
+                    <div className="min-w-0">
+                      <dt className="text-[11px] uppercase tracking-wide text-muted-foreground">Ronda atual</dt>
+                      <dd className="truncate text-[15px] font-bold text-foreground">
+                        {currentAgentSlot.sector?.name ?? 'Setor não definido'}
+                      </dd>
+                      <dd className="text-xs tabular-nums text-muted-foreground">
+                        {fmtHm(new Date(currentAgentSlot.scheduled_start))} – {fmtHm(new Date(currentAgentSlot.scheduled_end))}
+                      </dd>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-2.5">
+                    <UserCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" strokeWidth={2.2} />
+                    <div className="min-w-0">
+                      <dt className="text-[11px] uppercase tracking-wide text-muted-foreground">Agente responsável</dt>
+                      <dd className="truncate text-[15px] font-bold text-foreground">
+                        {currentAgentSlot.agent?.name ?? agent?.name ?? '—'}
+                      </dd>
+                      <dd className="flex items-center gap-1.5 text-xs text-emerald-400">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                        {timer.isPaused ? 'Pausado' : 'Em ronda'}
+                      </dd>
+                    </div>
+                  </div>
+                </dl>
+
+                <RoundControls
+                  slot={currentAgentSlot}
+                  isPaused={timer.isPaused}
+                  onPause={handlePause}
+                  onResume={handleResume}
+                  onComplete={handleComplete}
+                  onExtend={handleExtend}
+                  onIncident={() => setIncidentOpen(true)}
+                  canExtend
+                />
+              </div>
             </div>
+          </section>
+        ) : (
+          <section className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border p-8 text-center">
+            <Clock3 className="h-8 w-8 text-muted-foreground" strokeWidth={1.8} />
+            <p className="mt-2 text-sm text-muted-foreground">Você não está em ronda no momento.</p>
+            {slots.some((s) => s.agent_id === agent?.id && s.status === 'pending') && (
+              <Button
+                className="mt-3"
+                onClick={() => {
+                  const next = slots.find((s) => s.agent_id === agent?.id && s.status === 'pending');
+                  if (next) handleStart(next);
+                }}
+              >
+                Iniciar próxima ronda
+              </Button>
+            )}
+          </section>
+        )}
+
+        <section className="rounded-xl border border-border bg-card p-4">
+          <h3 className="mb-3 text-[13px] font-semibold uppercase tracking-wide text-foreground">Próximas rondas</h3>
+          <NextRounds slots={slots} />
+        </section>
+      </div>
+
+      {/* Linha do tempo do turno */}
+      <section className="rounded-xl border border-border bg-card p-4">
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+          <h3 className="text-[13px] font-semibold uppercase tracking-wide text-foreground">
+            Linha do tempo — quartos de hora
+          </h3>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-muted-foreground">
+            {[
+              { c: 'bg-emerald-500', l: 'Concluída' },
+              { c: 'bg-sky-500', l: 'Em andamento' },
+              { c: 'bg-muted-foreground/50', l: 'Pendente' },
+              { c: 'bg-amber-500', l: 'Atraso' },
+              { c: 'bg-rose-500', l: 'Ocorrência' },
+            ].map((k) => (
+              <span key={k.l} className="inline-flex items-center gap-1.5">
+                <span className={cn('h-2 w-2 rounded-full', k.c)} />
+                {k.l}
+              </span>
+            ))}
           </div>
         </div>
-      ) : (
-        <div className="rounded-xl border border-dashed border-border p-6 text-center">
-          <p className="text-sm text-muted-foreground">Você não está em ronda no momento.</p>
-          {slots.some((s) => s.agent_id === agent?.id && s.status === 'pending') && (
-            <Button
-              className="mt-3"
-              onClick={() => {
-                const next = slots.find((s) => s.agent_id === agent?.id && s.status === 'pending');
-                if (next) handleStart(next);
-              }}
-            >
-              Iniciar próxima ronda
-            </Button>
-          )}
-        </div>
-      )}
-
-      <section>
-        <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Próximas rondas</h3>
-        <NextRounds slots={slots} />
-      </section>
-
-      <section>
-        <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Linha do tempo — quartos de hora</h3>
         <RoundTimeline slots={slots} activeSlotId={currentAgentSlot?.id} />
       </section>
 
-      <section>
-        <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Equipe {team}</h3>
-        <RoundAgentList agents={shiftAgents} />
-      </section>
+      {/* Equipe + histórico/ocorrências lado a lado */}
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+        <section className="rounded-xl border border-border bg-card p-4">
+          <h3 className="mb-3 text-[13px] font-semibold uppercase tracking-wide text-foreground">
+            Agentes da equipe {team}{' '}
+            <span className="font-normal text-muted-foreground">({shiftAgents.length})</span>
+          </h3>
+          <RoundAgentList agents={shiftAgents} />
+        </section>
 
-      {metrics.open_incidents > 0 && (
-        <div className="flex items-center gap-2 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-          <AlertTriangle className="h-4 w-4" /> {metrics.open_incidents} ocorrência(s) em aberto neste turno.
-        </div>
-      )}
-
-      <section>
-        <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">Histórico do turno</h3>
-        <RoundHistory shiftId={shift.id} />
-      </section>
+        <section className="rounded-xl border border-border bg-card p-4">
+          <h3 className="mb-3 flex items-center gap-2 text-[13px] font-semibold uppercase tracking-wide text-foreground">
+            Últimas ocorrências
+            {metrics.open_incidents > 0 && (
+              <span className="rounded-full bg-rose-500/15 px-2 py-0.5 text-[10px] font-bold text-rose-400">
+                {metrics.open_incidents} em aberto
+              </span>
+            )}
+          </h3>
+          <RoundHistory shiftId={shift.id} />
+        </section>
+      </div>
 
       <IncidentDialog open={incidentOpen} onOpenChange={setIncidentOpen} onSubmit={handleIncident} />
       <ShiftDivider

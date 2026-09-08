@@ -76,7 +76,7 @@ import { DraggableHomeCard } from '@/components/home/DraggableHomeCard';
 import { useHomeCardOrder, type HomeCardId } from '@/hooks/useHomeCardOrder';
 
 import { CommandRoomBackground } from '@/components/home/CommandRoomBackground';
-import { BrasaoSentinela } from '@/components/BrasaoSentinela';
+import { AppLogo } from '@/components/AppLogo';
 import { OperatorHeaderControls } from '@/components/layout/OperatorHeaderControls';
 
 import { useTheme } from '@/contexts/ThemeContext';
@@ -148,6 +148,7 @@ export default function Index() {
 
   // CPF check
   const [checkCpf, setCheckCpf] = useState('');
+  const [checkCpfInvalid, setCheckCpfInvalid] = useState(false);
   const [foundAgent, setFoundAgent] = useState<{ name: string; team: string | null; unit?: string | null } | null>(null);
   const [isSearchingAgent, setIsSearchingAgent] = useState(false);
   
@@ -453,8 +454,16 @@ export default function Index() {
     setCheckCpf(formatted);
     
     const cleanCpf = formatted.replace(/\D/g, '');
-    
+
     if (cleanCpf.length === 11) {
+      // Verificador de CPF (dígito verificador) antes de qualquer consulta —
+      // evita ida ao servidor e dá retorno imediato ao agente.
+      if (!validateCPF(cleanCpf)) {
+        setCheckCpfInvalid(true);
+        setFoundAgent(null);
+        return;
+      }
+      setCheckCpfInvalid(false);
       setIsSearchingAgent(true);
       try {
         const { data: searchRows } = await (supabase as any)
@@ -490,6 +499,19 @@ export default function Index() {
               duration: 3000,
             });
           }, 800);
+        } else if (!silent && !data) {
+          // CPF válido e ainda não cadastrado → abre o cadastro direto,
+          // sem exigir um clique extra em "Continuar".
+          setTimeout(() => {
+            setFormData((prev) => ({ ...prev, cpf: formatted, unit_id: '' }));
+            setShowCpfCheck(false);
+            setShowRegistration(true);
+            toast({
+              title: 'CPF não cadastrado',
+              description: 'Vamos criar seu acesso. Preencha os dados abaixo.',
+              duration: 4000,
+            });
+          }, 500);
         } else if (!silent && data && data.team && data.team !== selectedTeam) {
           // Wrong team - show professional security-style warning via ErrorDialog
           playSound('access-denied');
@@ -509,6 +531,7 @@ export default function Index() {
       setIsSearchingAgent(false);
     } else {
       setFoundAgent(null);
+      setCheckCpfInvalid(false);
     }
   };
 
@@ -734,8 +757,26 @@ export default function Index() {
 
 
       if (existingByCpf) {
-        // CPF já cadastrado - não permitir novo cadastro
-        setRegErrors({ cpf: 'CPF já cadastrado. Faça login ou solicite ao Master para excluir o cadastro anterior.' });
+        // CPF já cadastrado — um agente só pode pertencer a uma equipe.
+        // Informa exatamente qual é a equipe dele e interrompe o cadastro.
+        const jaTem = existingByCpf.team as string | null;
+        setIsSubmitting(false);
+        setShowRegistration(false);
+        playSound('access-denied');
+        setErrorDialog({
+          open: true,
+          title: 'CPF JÁ CADASTRADO',
+          message: jaTem
+            ? `Este CPF já possui cadastro na EQUIPE ${jaTem}.\n\nCada agente pertence a uma única equipe. Volte à tela inicial e entre pelo card da EQUIPE ${jaTem}.\n\nPara mudar de equipe, solicite ao administrador da plataforma.`
+            : 'Este CPF já possui cadastro no sistema.\n\nFaça login normalmente ou procure o administrador da plataforma.',
+          type: 'team',
+          unit: existingByCpf.unit_name
+            ? (existingByCpf.unit_municipality
+                ? `${existingByCpf.unit_name} — ${existingByCpf.unit_municipality}`
+                : existingByCpf.unit_name)
+            : undefined,
+        });
+        setRegErrors({ cpf: jaTem ? `CPF já cadastrado na Equipe ${jaTem}.` : 'CPF já cadastrado.' });
         setIsSubmitting(false);
         return;
       }
@@ -1429,7 +1470,7 @@ export default function Index() {
           />
 
           <div className="relative flex items-center gap-2.5">
-            <BrasaoSentinela size={46} title="PlantãoPro" />
+            <AppLogo size={44} title="PlantãoPro" />
             <span className="font-display text-base font-bold tracking-wide text-foreground sm:text-lg">
               Plantão<span className="text-primary">Pro</span>
             </span>
@@ -1707,6 +1748,7 @@ export default function Index() {
               rightIcon={isSearchingAgent ? (
                 <Loader2 className="h-5 w-5 animate-spin text-emerald-400" />
               ) : undefined}
+              error={checkCpfInvalid ? 'CPF inválido — confira os dígitos.' : undefined}
             />
           )}
           
@@ -1978,32 +2020,27 @@ export default function Index() {
         subtitle="Novo Agente"
         team={selectedTeam}
       >
-        {/* Info alerts — compact on mobile, expanded on desktop */}
-        <div className="space-y-2 mb-4 sm:mb-6">
-          <div className="p-2.5 sm:p-4 bg-gradient-to-r from-amber-500/15 to-orange-500/10 rounded-lg sm:rounded-xl border border-amber-500/40 sm:border-2">
-            <div className="flex items-center gap-2 sm:gap-3">
-              <div className="p-1.5 sm:p-2 rounded-md sm:rounded-lg bg-amber-500/20 shrink-0">
-                <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-amber-400" />
-              </div>
-              <p className="text-amber-300/90 text-xs sm:text-sm font-semibold leading-snug">
-                <strong className="text-amber-400">CPF</strong> será seu usuário de acesso
-              </p>
+        {/* Resumo do cadastro — enxuto, uma linha por regra */}
+        <div className="mb-4 space-y-1.5 rounded-xl border border-white/10 bg-white/[0.03] p-3 sm:mb-6 sm:p-3.5">
+          {[
+            { Icon: Fingerprint, text: <>Seu <strong className="text-white/90">CPF</strong> será o usuário de acesso.</> },
+            { Icon: Lock, text: <>Defina uma senha de <strong className="text-white/90">6 dígitos numéricos</strong>.</> },
+            {
+              Icon: Users,
+              text: (
+                <>
+                  Vínculo com a <strong className="text-white/90">Equipe {selectedTeam}</strong>. Depois do cadastro,
+                  somente o administrador pode remanejar de equipe.
+                </>
+              ),
+            },
+            { Icon: Clock, text: <>O cadastro passa por <strong className="text-white/90">análise</strong> antes da liberação.</> },
+          ].map(({ Icon, text }, i) => (
+            <div key={i} className="flex items-start gap-2.5">
+              <Icon className="mt-[3px] h-3.5 w-3.5 shrink-0 text-primary" strokeWidth={2.2} />
+              <p className="text-[12px] leading-relaxed text-white/60">{text}</p>
             </div>
-          </div>
-
-          <div className="p-2.5 sm:p-4 bg-gradient-to-r from-cyan-500/15 to-teal-500/10 rounded-lg sm:rounded-xl border border-cyan-500/40 sm:border-2">
-            <div className="flex items-start gap-2 sm:gap-3">
-              <div className="p-1.5 sm:p-2 rounded-md sm:rounded-lg bg-cyan-500/20 shrink-0">
-                <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400" />
-              </div>
-              <div className="space-y-0.5 sm:space-y-1">
-                <p className="text-cyan-300 text-xs sm:text-sm font-bold">Aprovação Necessária</p>
-                <p className="text-cyan-200/70 text-[11px] sm:text-sm leading-snug sm:leading-relaxed">
-                  Cadastro será analisado antes da liberação.
-                </p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
 
