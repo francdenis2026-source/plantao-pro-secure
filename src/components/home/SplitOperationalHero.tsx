@@ -11,7 +11,6 @@ import teamAlfaPhoto from '@/assets/midias/team-alfa.png';
 import teamBravoPhoto from '@/assets/midias/team-bravo.png';
 import teamCharliePhoto from '@/assets/midias/team-charlie.png';
 import teamDeltaPhoto from '@/assets/midias/team-delta.png';
-import heroPhoto from '@/assets/midias/hero-agentes-viatura.png';
 
 import { TEAM_COLORS, type TeamKey } from '@/lib/teamColors';
 
@@ -93,19 +92,44 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
   return (
     <section className="mx-auto w-full max-w-6xl">
       {/* Institutional banner */}
-      <div className="relative overflow-hidden rounded-2xl border border-border">
-        <img
-          src={heroPhoto}
-          alt="Agentes socioeducativos do Acre"
-          className="absolute inset-0 h-full w-full object-cover"
-          loading="eager"
-          decoding="async"
-          draggable={false}
-        />
+      <div
+        className="relative overflow-hidden rounded-2xl border border-border"
+        style={{ background: 'linear-gradient(120deg, hsl(222 47% 9%) 0%, hsl(213 60% 16%) 55%, hsl(205 70% 20%) 100%)' }}
+      >
+        <svg
+          aria-hidden
+          className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.16]"
+          preserveAspectRatio="xMidYMid slice"
+          viewBox="0 0 800 320"
+        >
+          <defs>
+            <pattern id="hero-grid" width="34" height="34" patternUnits="userSpaceOnUse">
+              <path d="M 34 0 L 0 0 0 34" fill="none" stroke="white" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#hero-grid)" />
+        </svg>
+        <svg
+          aria-hidden
+          className="pointer-events-none absolute -right-10 -top-16 h-[420px] w-[420px] opacity-[0.08] sm:-right-6 sm:-top-24"
+          viewBox="0 0 100 100"
+          fill="none"
+        >
+          <path
+            d="M50 4 L90 18 V48 C90 72 73 90 50 96 C27 90 10 72 10 48 V18 Z"
+            stroke="white"
+            strokeWidth="2.5"
+          />
+          <path
+            d="M50 20 L74 29 V48 C74 63 64 74 50 79 C36 74 26 63 26 48 V29 Z"
+            stroke="white"
+            strokeWidth="1.5"
+          />
+        </svg>
         <div
           aria-hidden
-          className="absolute inset-0"
-          style={{ background: 'linear-gradient(100deg, hsl(222 47% 8% / 0.94) 0%, hsl(222 47% 10% / 0.78) 45%, hsl(222 47% 10% / 0.35) 100%)' }}
+          className="pointer-events-none absolute inset-0"
+          style={{ background: 'radial-gradient(120% 100% at 100% 0%, transparent 30%, hsl(222 47% 8% / 0.55) 100%)' }}
         />
 
         <div className="relative z-10 flex flex-col gap-6 px-6 py-8 sm:px-10 sm:py-12">
