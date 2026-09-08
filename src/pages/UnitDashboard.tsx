@@ -10,8 +10,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { TeamEmblem } from '@/components/TeamEmblem';
 import { useWelcomeHintEnabled } from '@/hooks/useWelcomeHintEnabled';
 import { PanelHeroHUD } from '@/components/panel/PanelHeroHUD';
-import hudPageBg_ptr from '@/assets/hero-tactical-ops.jpg.asset.json';
-const hudPageBg = (hudPageBg_ptr as {url:string}).url;
+import hudPageBg from '@/assets/midias/unit-cs-acre.png';
 import {
   Loader2,
   MapPin,

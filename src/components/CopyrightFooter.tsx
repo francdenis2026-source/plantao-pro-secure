@@ -1,14 +1,13 @@
 import { forwardRef, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import { ShieldCheck, MapPin, Cpu, Radio, Lock } from 'lucide-react';
-import iseAcreBadgeAsset from '@/assets/ise-acre-badge.png.asset.json';
-import iseAcreBadgeWebpAsset from '@/assets/ise-acre-badge.webp.asset.json';
+import iseAcreBadgeUrl from '@/assets/logo-plantao-pro.webp';
 import { MadeInFeijoBadge } from './MadeInFeijoBadge';
 
 import { DeveloperSignature } from './DeveloperSignature';
 
-const iseAcreBadge = iseAcreBadgeAsset.url;
-const iseAcreBadgeWebp = iseAcreBadgeWebpAsset.url;
+const iseAcreBadge = iseAcreBadgeUrl;
+const iseAcreBadgeWebp = iseAcreBadgeUrl;
 interface CopyrightFooterProps {
   className?: string;
   compact?: boolean;

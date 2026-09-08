@@ -1,5 +1,7 @@
 import { CSSProperties } from "react";
-import brasaoAsset from "@/assets/brand/brasao-sentinela-hd.png.asset.json";
+// Fonte real local — o asset original (CDN do Lovable) não é acessível fora
+// da plataforma deles. Reaproveita a logo oficial do PlantãoPro.
+import brasaoAssetUrl from "@/assets/logo-plantao-pro.webp";
 
 interface BrasaoSentinelaProps {
   size?: number | string;
@@ -42,7 +44,7 @@ export function BrasaoSentinela({
   return (
     <>
       <img
-        src={brasaoAsset.url}
+        src={brasaoAssetUrl}
         alt={title}
         title={title}
         role="img"

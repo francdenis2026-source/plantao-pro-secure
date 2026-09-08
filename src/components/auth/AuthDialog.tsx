@@ -1,10 +1,9 @@
 import { ReactNode } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
-import logoShieldAsset from '@/assets/ise-acre-badge.png.asset.json';
-import logoShieldWebpAsset from '@/assets/ise-acre-badge.webp.asset.json';
-const logoShield = logoShieldAsset.url;
-const logoShieldWebp = logoShieldWebpAsset.url;
+import logoShieldUrl from '@/assets/logo-plantao-pro.webp';
+const logoShield = logoShieldUrl;
+const logoShieldWebp = logoShieldUrl;
 import { getTeamPoster, getTeamEmblem, getTeamColors } from '@/lib/teamAssets';
 
 type AuthDialogVariant = 'agent' | 'master' | 'admin' | 'register' | 'check';

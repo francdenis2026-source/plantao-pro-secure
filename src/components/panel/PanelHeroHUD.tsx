@@ -1,8 +1,6 @@
 import { ReactNode } from 'react';
-import heroCommand_ptr from '@/assets/hud-hero-command.jpg.asset.json';
-const heroCommand = (heroCommand_ptr as {url:string}).url;
-import heroUnits_ptr from '@/assets/hud-hero-units.jpg.asset.json';
-const heroUnits = (heroUnits_ptr as {url:string}).url;
+import heroCommand from '@/assets/midias/hero-agentes-viatura.png';
+import heroUnits from '@/assets/midias/unit-cs-acre.png';
 import icon3dShield_ptr from '@/assets/icon3d-shield.png.asset.json';
 const icon3dShield = (icon3dShield_ptr as {url:string}).url;
 import icon3dBuilding_ptr from '@/assets/icon3d-building.png.asset.json';

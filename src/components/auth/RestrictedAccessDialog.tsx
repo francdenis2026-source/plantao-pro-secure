@@ -2,8 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { ShieldAlert, KeyRound } from 'lucide-react';
-import restrictedSceneAsset from '@/assets/restricted-access-scene.jpg.asset.json';
-const restrictedScene = restrictedSceneAsset.url;
+import restrictedScene from '@/assets/midias/hero-agentes-viatura.png';
 
 // Pré-carrega a imagem no momento em que o módulo é importado,
 // para que ao abrir o diálogo ela já esteja em cache do browser.

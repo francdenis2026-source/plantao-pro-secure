@@ -1,7 +1,6 @@
 import { useEffect, useState, lazy, Suspense } from 'react';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
-import hudPageBg_ptr from '@/assets/hero-tactical-ops.jpg.asset.json';
-const hudPageBg = (hudPageBg_ptr as {url:string}).url;
+import hudPageBg from '@/assets/midias/unit-cs-acre.png';
 import { Icon3D, Icon3DAction, type Icon3DName } from '@/components/ui/Icon3D';
 const hudBgStyle = { ['--hud-bg-url' as any]: `url(${hudPageBg})` };
 
@@ -85,10 +84,9 @@ import { cn } from '@/lib/utils';
 import { getMasterToken, setMasterToken } from '@/lib/masterSession';
 import { adminClient } from '@/lib/adminClient';
 import { Bell } from 'lucide-react';
-import iseAcreBadgeAsset from '@/assets/ise-acre-badge.png.asset.json';
-import iseAcreBadgeWebpAsset from '@/assets/ise-acre-badge.webp.asset.json';
-const iseAcreBadge = iseAcreBadgeAsset.url;
-const iseAcreBadgeWebp = iseAcreBadgeWebpAsset.url;
+import iseAcreBadgeUrl from '@/assets/logo-plantao-pro.webp';
+const iseAcreBadge = iseAcreBadgeUrl;
+const iseAcreBadgeWebp = iseAcreBadgeUrl;
 import { PanelNav } from '@/components/ui/panel-nav';
 import { MasterDiagnostics } from '@/components/master/MasterDiagnostics';
 import { formatUnitName } from '@/lib/unitNames';

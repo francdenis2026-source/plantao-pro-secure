@@ -17,8 +17,6 @@ import { EmptyState } from '@/components/ui/data-states';
 import { format, parseISO, differenceInDays, isAfter, startOfDay, isSameDay, addDays } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { TeamMemberDialog } from './TeamMemberDialog';
-import leaveDialogBg_ptr from '@/assets/leave-dialog-bg.jpg.asset.json';
-const leaveDialogBg = (leaveDialogBg_ptr as {url:string}).url;
 
 interface LeaveRequestCardProps {
   agentId: string;

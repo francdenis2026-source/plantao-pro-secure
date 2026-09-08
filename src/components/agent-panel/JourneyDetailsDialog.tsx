@@ -10,7 +10,7 @@ import { ptBR } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from '@/hooks/use-toast';
-import logoAsset from '@/assets/logo-plantao-pro-official.png.asset.json';
+import logoAssetUrl from '@/assets/logo-plantao-pro.webp';
 
 export interface JourneyDetailsData {
   targetDate: Date;
@@ -146,7 +146,7 @@ export function JourneyDetailsDialog({
 
   const loadLogoDataUrl = async (): Promise<string | null> => {
     try {
-      const res = await fetch(logoAsset.url);
+      const res = await fetch(logoAssetUrl);
       const blob = await res.blob();
       return await new Promise<string>((resolve, reject) => {
         const r = new FileReader();

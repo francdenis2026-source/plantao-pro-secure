@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
-import heroAsset from '@/assets/master-login-hero.jpg.asset.json';
+import heroAssetUrl from '@/assets/midias/hero-agentes-viatura.png';
 
 interface MasterLoginDialogProps {
   open: boolean;
@@ -16,7 +16,7 @@ const GOLD_SOFT = '#f0d78c';
 // abre instantaneamente com a imagem já em cache, e o navigate('/master')
 // posterior não passa pelo fallback preto do Suspense.
 if (typeof window !== 'undefined') {
-  const HREF = heroAsset.url;
+  const HREF = heroAssetUrl;
   if (!document.querySelector(`link[rel="preload"][href="${HREF}"]`)) {
     const link = document.createElement('link');
     link.rel = 'preload';
@@ -77,7 +77,7 @@ export function MasterLoginDialog({ open, onOpenChange, children }: MasterLoginD
           }}
         >
           <img
-            src={heroAsset.url}
+            src={heroAssetUrl}
             alt=""
             loading="eager"
             decoding="async"

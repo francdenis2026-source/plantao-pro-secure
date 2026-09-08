@@ -17,11 +17,9 @@ import teamBravoPhoto from '@/assets/midias/team-bravo.png';
 import teamCharliePhoto from '@/assets/midias/team-charlie.png';
 import teamDeltaPhoto from '@/assets/midias/team-delta.png';
 import agent3dWebp from '@/assets/hero/agent-ise-3d.local.webp';
-import agent3d_ptr from '@/assets/hero/agent-ise-3d.local.png.asset.json';
-const agent3d = (agent3d_ptr as {url:string}).url;
+const agent3d = agent3dWebp;
 import vehicle3dWebp from '@/assets/hero/vehicle-ise-3d.local.webp';
-import vehicle3d_ptr from '@/assets/hero/vehicle-ise-3d.local.png.asset.json';
-const vehicle3d = (vehicle3d_ptr as {url:string}).url;
+const vehicle3d = vehicle3dWebp;
 // Foto real (Unsplash, licença livre) usada no painel fotográfico da cena —
 // substitui o asset quebrado do CDN do Lovable.
 const SCENE_PHOTO = 'https://images.unsplash.com/photo-1758956929717-e657fc784606?w=900&h=1120&q=80&fm=jpg&fit=crop';
@@ -62,15 +60,6 @@ import objDeltaWebp from '@/assets/teams/delta-radio-v2.webp';
 
 
 
-// Pôsteres cinematográficos táticos (background dos cards de equipe)
-import bgAlfa_ptr from '@/assets/teams/alfa-poster.jpg.asset.json';
-const bgAlfa = (bgAlfa_ptr as {url:string}).url;
-import bgBravo_ptr from '@/assets/teams/bravo-poster.jpg.asset.json';
-const bgBravo = (bgBravo_ptr as {url:string}).url;
-import bgCharlie_ptr from '@/assets/teams/charlie-poster.jpg.asset.json';
-const bgCharlie = (bgCharlie_ptr as {url:string}).url;
-import bgDelta_ptr from '@/assets/teams/delta-poster.jpg.asset.json';
-const bgDelta = (bgDelta_ptr as {url:string}).url;
 
 // Retratos táticos de equipe — exibidos APENAS na versão mobile (<768px).
 // Servidos como <picture> com variantes WebP + JPEG em dois tamanhos

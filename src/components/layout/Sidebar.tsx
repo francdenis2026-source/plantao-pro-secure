@@ -4,8 +4,7 @@ import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAgentProfile } from '@/hooks/useAgentProfile';
 import { RestrictedAccessDialog } from '@/components/auth/RestrictedAccessDialog';
-import plantaoproLogo_ptr from '@/assets/brand/plantaopro-logo.png.asset.json';
-const plantaoproLogo = (plantaoproLogo_ptr as {url:string}).url;
+import plantaoproLogo from '@/assets/logo-plantao-pro.webp';
 
 import {
   Users,
