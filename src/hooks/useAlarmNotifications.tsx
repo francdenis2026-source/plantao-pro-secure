@@ -54,7 +54,7 @@ export function useAlarmNotifications({
       const notification = new Notification('⏰ ALERTA DE PLANTÃO!', {
         body: `Seu plantão começa em ${alarmBeforeMinutes} minutos! (${shiftTimeStr})`,
         icon: '/icon-192.png',
-        badge: '/favicon.ico',
+        badge: '/favicon.png',
         requireInteraction: true,
         tag: `alarm-${shift.shiftId}`
       });

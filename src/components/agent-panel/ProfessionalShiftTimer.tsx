@@ -118,7 +118,7 @@ export function ProfessionalShiftTimer({ agentId, compact = false }: Professiona
       if (pushEnabled && areNativeNotificationsAllowed() && Notification.permission === 'granted') {
         new Notification('🚨 Plantão Próximo!', {
           body: message,
-          icon: '/favicon.ico',
+          icon: '/icon-192.png',
           tag: 'shift-reminder',
         });
       }

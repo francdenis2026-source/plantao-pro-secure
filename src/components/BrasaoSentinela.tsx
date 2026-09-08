@@ -1,6 +1,5 @@
 import { CSSProperties } from "react";
-// Logomarca oficial — brasão do Instituto Socioeducativo (ISE/AC).
-import brasaoAssetUrl from "@/assets/logo-ise-socioeducativo.png";
+import brandIcon from "@/assets/brand/plantaopro-ac-icon.png.asset.json";
 
 interface BrasaoSentinelaProps {
   size?: number | string;
@@ -11,10 +10,7 @@ interface BrasaoSentinelaProps {
 }
 
 /**
- * Brasão Sentinela — logomarca oficial (brasão do Instituto Socioeducativo
- * do Acre). Fonte única de verdade da marca: qualquer lugar que use
- * `BrasaoSentinela` passa a exibir o brasão oficial automaticamente
- * (splash, painéis, favicons, etc.).
+ * Símbolo oficial PlantãoPro AC. Fonte única de verdade da marca no app.
  */
 export function BrasaoSentinela({
   size = 96,
@@ -28,9 +24,7 @@ export function BrasaoSentinela({
   const composedStyle: CSSProperties = {
     width: dim,
     height: dim,
-    // Sombra sutil para dar peso institucional sobre qualquer fundo.
-    filter:
-      "drop-shadow(0 6px 18px rgba(15,23,42,0.28)) drop-shadow(0 2px 4px rgba(0,0,0,0.35))",
+    filter: "drop-shadow(0 6px 18px rgba(15,23,42,0.28))",
     ...(animated
       ? {
           animation:
@@ -43,7 +37,7 @@ export function BrasaoSentinela({
   return (
     <>
       <img
-        src={brasaoAssetUrl}
+        src={brandIcon.url}
         alt={title}
         title={title}
         role="img"
