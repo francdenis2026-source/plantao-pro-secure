@@ -13,14 +13,12 @@ import alfaEmblem from '@/assets/teams/alfa-shield-v2.webp';
 import bravoEmblem from '@/assets/teams/bravo-helmet-v2.webp';
 import charlieEmblem from '@/assets/teams/charlie-optics-v2.webp';
 import deltaEmblem from '@/assets/teams/delta-radio-v2.webp';
-import panelsBgAsset from '@/assets/teams/panels-bg.png.asset.json';
-const panelsBg = panelsBgAsset.url;
+import panelsBg from '@/assets/midias/hero-agentes-viatura.png';
 import homeBackgroundAsset from '@/assets/home-background.png.asset.json';
 const homeBackground = homeBackgroundAsset.url;
 import homeBackgroundWebp from '@/assets/home-background.webp';
-import loginBackground_ptr from '@/assets/login-background.jpg.asset.json';
-const loginBackground = (loginBackground_ptr as {url:string}).url;
 import loginBackgroundWebp from '@/assets/login-background.webp';
+const loginBackground = loginBackgroundWebp;
 
 export const teamPosters: Record<string, string> = {
   ALFA: alfaPoster,

@@ -1,12 +1,9 @@
 import { ReactNode } from 'react';
 import heroCommand from '@/assets/midias/hero-agentes-viatura.png';
 import heroUnits from '@/assets/midias/unit-cs-acre.png';
-import icon3dShield_ptr from '@/assets/icon3d-shield.png.asset.json';
-const icon3dShield = (icon3dShield_ptr as {url:string}).url;
-import icon3dBuilding_ptr from '@/assets/icon3d-building.png.asset.json';
-const icon3dBuilding = (icon3dBuilding_ptr as {url:string}).url;
-import icon3dTeam_ptr from '@/assets/icon3d-team.png.asset.json';
-const icon3dTeam = (icon3dTeam_ptr as {url:string}).url;
+import icon3dShield from '@/assets/icon3d-shield.webp';
+import icon3dBuilding from '@/assets/icon3d-building.webp';
+import icon3dTeam from '@/assets/icon3d-team.webp';
 
 type Variant = 'command' | 'units';
 type IconKey = 'shield' | 'building' | 'team';

@@ -164,7 +164,7 @@ export function Icon3D({
       {status === 'loading' && (
         <span
           aria-hidden
-          className="absolute inset-0 rounded-md bg-amber-500/20 animate-pulse"
+          className="absolute inset-0 rounded-md bg-primary/20 animate-pulse"
         />
       )}
       <picture>
