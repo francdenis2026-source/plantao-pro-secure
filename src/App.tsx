@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
@@ -18,7 +18,6 @@ import { RequireAuth } from "@/components/auth/RequireAuth";
 import { ConfirmProvider } from "@/components/ui/confirm-provider";
 import { SingleDeviceGuard } from "@/components/SingleDeviceGuard";
 import { SingleTabGuard } from "@/components/SingleTabGuard";
-import { SplashScreen } from "@/components/SplashScreen";
 
 import { PanelSkeleton } from "@/components/ui/panel-skeleton";
 import { InactivityGuard } from "@/components/InactivityGuard";
@@ -58,16 +57,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
-const CLEAN_ENTRY_ROUTES = new Set(["/about", "/install"]);
-
-function RouteAwareSplashScreen() {
-  const { pathname } = useLocation();
-
-  if (CLEAN_ENTRY_ROUTES.has(pathname)) return null;
-
-  return <SplashScreen />;
-}
 
 // Wrapper component to handle global navigation (ESC key and logout redirect)
 function GlobalNavigationHandler({ children }: { children: React.ReactNode }) {
@@ -118,7 +107,6 @@ const App = () => (
           <ImageProtection />
           <ServiceWorkerUpdateBanner />
           <BrowserRouter>
-            <RouteAwareSplashScreen />
             <AuthProvider>
               <ConfirmProvider>
               <GlobalNavigationHandler>

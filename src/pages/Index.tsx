@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { AgentHomeDashboard } from '@/features/home-dashboard/AgentHomeDashboard';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -1377,9 +1378,16 @@ export default function Index() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-        <Loader2 className="h-8 w-8 animate-spin text-amber-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
+  }
+
+  // Usuário autenticado (agente comum) vê a dashboard pessoal (Seção 13),
+  // não a home pública de marketing. Master/admin continuam navegando pela
+  // sidebar normalmente (Painel Master / Admin), essa tela é só para /.
+  if (user) {
+    return <AgentHomeDashboard />;
   }
 
   return (
