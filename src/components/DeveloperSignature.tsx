@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { MapPin } from 'lucide-react';
+import { MapPin, Code2 } from 'lucide-react';
 
 interface DeveloperSignatureProps {
   className?: string;
@@ -7,20 +7,26 @@ interface DeveloperSignatureProps {
 }
 
 /**
- * Assinatura do desenvolvedor — inline, sem aumentar altura do container.
- * Franc Denis · Agente Socioeducativo · Feijó, Acre · 2026
+ * Assinatura do desenvolvedor — crédito institucional discreto, presente
+ * ao final das telas principais (rodapé público e painel do agente).
+ * Franc Denis · Desenvolvedor · Feijó, Acre · 2026
  */
 export function DeveloperSignature({ className, compact = false }: DeveloperSignatureProps) {
   return (
     <div
       className={cn(
-        'group inline-flex items-center gap-2 leading-none select-none whitespace-nowrap',
-        'text-muted-foreground/80 transition-colors duration-500',
+        'group inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/40 leading-none select-none whitespace-nowrap backdrop-blur-sm',
+        'text-muted-foreground/80 transition-colors duration-500 hover:border-primary/40 hover:bg-card/70',
+        compact ? 'px-2.5 py-1.5' : 'px-3 py-1.5',
         className,
       )}
-      title="Franc Denis · criado por Agente Socioeducativo · Feijó, Acre · 2026"
-      aria-label="Franc Denis, criado por Agente Socioeducativo, Feijó, Acre, 2026"
+      title="Franc Denis · Desenvolvedor · Feijó, Acre · 2026"
+      aria-label="Desenvolvido por Franc Denis, Feijó, Acre, 2026"
     >
+      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
+        <Code2 className="h-2.5 w-2.5" strokeWidth={2.5} />
+      </span>
+
       {/* Developer name */}
       <span
         className={cn(
@@ -31,15 +37,15 @@ export function DeveloperSignature({ className, compact = false }: DeveloperSign
         Franc Denis
       </span>
 
-      {/* Profession */}
+      {/* Role */}
       <span
         className={cn(
           'font-mono uppercase tracking-[0.18em] text-foreground/75',
           compact ? 'text-[8px]' : 'text-[9px]',
         )}
       >
-        <span className="hidden sm:inline">Agente Socioeducativo</span>
-        <span className="sm:hidden">Ag. Socioed.</span>
+        <span className="hidden sm:inline">Desenvolvedor</span>
+        <span className="sm:hidden">Dev</span>
       </span>
 
       {/* Location with pin */}

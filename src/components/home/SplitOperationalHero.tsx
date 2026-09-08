@@ -7,6 +7,7 @@ import { useOperationalMetrics } from '@/hooks/useOperationalMetrics';
 import { useOnlineAgents } from '@/hooks/useOnlineAgents';
 import { useVisitorPresence } from '@/hooks/useVisitorPresence';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
+import { OperatorHeaderControls } from '@/components/layout/OperatorHeaderControls';
 
 import teamAlfaPhoto from '@/assets/midias/team-alfa.png';
 import teamBravoPhoto from '@/assets/midias/team-bravo.png';
@@ -104,23 +105,27 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
         />
 
         <div className="relative z-10 flex flex-col gap-6 px-6 py-8 sm:px-10 sm:py-12">
-          <div className="flex items-start gap-4 sm:gap-5">
-            <BrasaoSentinela
-              size={60}
-              className="shrink-0"
-              title="Instituto Socioeducativo do Acre"
-            />
-            <div className="max-w-lg">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                Sistema Socioeducativo · Acre
-              </span>
-              <h1 className="mt-2 text-2xl font-bold leading-tight text-white sm:text-3xl">
-                Gestão de plantões e rondas para agentes socioeducativos
-              </h1>
-              <p className="mt-2 text-sm text-white/70">
-                Escalas, banco de horas e rondas georreferenciadas em um único lugar.
-              </p>
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start gap-4 sm:gap-5">
+              <BrasaoSentinela
+                size={60}
+                className="shrink-0"
+                title="Instituto Socioeducativo do Acre"
+              />
+              <div className="max-w-lg">
+                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+                  Sistema Socioeducativo · Acre
+                </span>
+                <h1 className="mt-2 text-2xl font-bold leading-tight text-white sm:text-3xl">
+                  Gestão de plantões e rondas para agentes socioeducativos
+                </h1>
+                <p className="mt-2 text-sm text-white/70">
+                  Escalas, banco de horas e rondas georreferenciadas em um único lugar.
+                </p>
+              </div>
             </div>
+
+            <OperatorHeaderControls className="shrink-0" />
           </div>
 
           <OperationalStatusRibbon />

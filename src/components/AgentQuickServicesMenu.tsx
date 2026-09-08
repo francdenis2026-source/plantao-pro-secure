@@ -1,4 +1,4 @@
-import { Menu, ExternalLink, Phone, ScrollText, ShieldCheck, Building2, CalendarClock, ArrowLeftRight, MessageCircle, Settings } from 'lucide-react';
+import { Menu, ExternalLink, Phone, ScrollText, ShieldCheck, Building2, CalendarClock, ArrowLeftRight, MessageCircle, Settings, LogIn } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import {
   Sheet,
@@ -10,6 +10,7 @@ import {
   SheetClose,
 } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface ServiceLink {
   label: string;
@@ -56,16 +57,22 @@ const EMERGENCIA: ServiceLink[] = [
  * do próprio app, legislação de referência (ECA/SINASE) e contatos de
  * emergência. Disponível globalmente (renderizado uma vez no App).
  */
-export function AgentQuickServicesMenu({ className }: { className?: string }) {
+export function AgentQuickServicesMenu({ className, variant = 'floating' }: { className?: string; variant?: 'floating' | 'header' }) {
   const navigate = useNavigate();
+  const { user, masterSession } = useAuth();
+  const isAuthed = !!user || !!masterSession;
 
-  const appAtalhos: ServiceLink[] = [
-    { label: 'Gestor de Rondas', description: 'Rondas em andamento', icon: ShieldCheck, href: '/rondas' },
-    { label: 'Minha escala', description: 'Próximos plantões', icon: CalendarClock, href: '/agenda' },
-    { label: 'Central de trocas', description: 'Solicitar ou aceitar trocas', icon: ArrowLeftRight, href: '/agent-panel?tab=permutas' },
-    { label: 'Chat da equipe', description: 'Falar com sua equipe', icon: MessageCircle, href: '/agent-panel?tab=chat' },
-    { label: 'Configurações', description: 'Preferências da conta', icon: Settings, href: '/settings' },
-  ];
+  const appAtalhos: ServiceLink[] = isAuthed
+    ? [
+        { label: 'Gestor de Rondas', description: 'Rondas em andamento', icon: ShieldCheck, href: '/rondas' },
+        { label: 'Minha escala', description: 'Próximos plantões', icon: CalendarClock, href: '/agenda' },
+        { label: 'Central de trocas', description: 'Solicitar ou aceitar trocas', icon: ArrowLeftRight, href: '/agent-panel?tab=permutas' },
+        { label: 'Chat da equipe', description: 'Falar com sua equipe', icon: MessageCircle, href: '/agent-panel?tab=chat' },
+        { label: 'Configurações', description: 'Preferências da conta', icon: Settings, href: '/settings' },
+      ]
+    : [
+        { label: 'Entrar no sistema', description: 'Acessar com CPF e senha', icon: LogIn, href: '/' },
+      ];
 
   const renderRow = (item: ServiceLink) => {
     const content = (
@@ -102,10 +109,12 @@ export function AgentQuickServicesMenu({ className }: { className?: string }) {
       <SheetTrigger asChild>
         <button
           type="button"
-          aria-label="Abrir serviços do agente"
-          title="Serviços do agente"
+          aria-label="Abrir ferramentas do operador"
+          title="Ferramentas do operador"
           className={cn(
-            'flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-md transition-colors hover:bg-muted',
+            variant === 'header'
+              ? 'flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/60 text-foreground shadow-sm transition-colors hover:border-primary/50 hover:bg-muted'
+              : 'flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-md transition-colors hover:bg-muted',
             className,
           )}
         >
@@ -115,8 +124,8 @@ export function AgentQuickServicesMenu({ className }: { className?: string }) {
 
       <SheetContent side="left" className="w-[85vw] max-w-sm overflow-y-auto p-0">
         <SheetHeader className="border-b border-border px-5 py-4 text-left">
-          <SheetTitle>Serviços do Agente</SheetTitle>
-          <SheetDescription>Atalhos úteis para o dia a dia do agente socioeducativo</SheetDescription>
+          <SheetTitle>Ferramentas do Operador</SheetTitle>
+          <SheetDescription>Atalhos úteis para o dia a dia do agente de segurança pública</SheetDescription>
         </SheetHeader>
 
         <div className="space-y-5 px-3 py-4">

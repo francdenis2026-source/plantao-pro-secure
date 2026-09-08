@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { ColorModeToggle } from './ColorModeToggle';
 import { RadioPlayerWidget } from './RadioPlayerWidget';
@@ -8,10 +9,17 @@ import { AgentQuickServicesMenu } from './AgentQuickServicesMenu';
  * única vez fora do <Routes>, ao lado do PWAInstallPrompt). Reúne:
  * alternador de modo claro/escuro, player de rádio (Jovem Pan) e, para
  * agentes autenticados, o menu de serviços úteis.
+ *
+ * Na rota "/" esses mesmos controles já aparecem no header (banner público
+ * ou painel do agente), então o dock fica oculto lá para não duplicar.
  */
 export function GlobalUtilityDock() {
   const { user, masterSession } = useAuth();
+  const { pathname } = useLocation();
   const isAuthed = !!user || !!masterSession;
+  const hasHeaderControls = pathname === '/';
+
+  if (hasHeaderControls) return null;
 
   return (
     <div

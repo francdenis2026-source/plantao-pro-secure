@@ -1,5 +1,6 @@
 import { Bell, Search } from 'lucide-react';
 import { Sidebar } from '@/components/layout/Sidebar';
+import { OperatorHeaderControls } from '@/components/layout/OperatorHeaderControls';
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
@@ -48,6 +49,7 @@ export function AgentHomeDashboard() {
             <Input placeholder="Buscar por colega, data ou unidade..." className="pl-9" />
           </div>
           <div className="flex items-center gap-3">
+            <OperatorHeaderControls />
             <button className="relative rounded-lg p-2 text-muted-foreground hover:bg-muted" aria-label="Notificações">
               <Bell className="h-5 w-5" />
               {(countsQ.data?.notices ?? 0) > 0 && (
