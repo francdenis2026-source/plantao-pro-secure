@@ -128,7 +128,7 @@ export function ShiftTracker({ agentId, compact = false }: ShiftTrackerProps) {
       
       toast.info(message, {
         duration: 10000,
-        icon: <Bell className="h-5 w-5 text-amber-500" />,
+        icon: <Bell className="h-5 w-5 text-primary" />,
       });
       
       // Push notification
@@ -321,7 +321,7 @@ export function ShiftTracker({ agentId, compact = false }: ShiftTrackerProps) {
     return (
       <Card className={`bg-slate-800/50 border-slate-700 ${compact ? 'col-span-1' : ''}`}>
         <CardContent className="flex items-center justify-center py-8">
-          <Loader2 className="h-6 w-6 animate-spin text-amber-500" />
+          <Loader2 className="h-6 w-6 animate-spin text-primary" />
         </CardContent>
       </Card>
     );
@@ -398,11 +398,11 @@ export function ShiftTracker({ agentId, compact = false }: ShiftTrackerProps) {
               {/* Compact Digital Timer */}
               <div className="bg-slate-900/80 rounded-lg p-2 mb-2 border border-slate-700/50">
                 <div className="flex items-center justify-center gap-0.5">
-                  <span className="font-mono text-2xl font-bold text-amber-400">{formatUnit(timeElapsed.hours)}</span>
-                  <span className="text-xl font-bold text-amber-400 animate-pulse">:</span>
-                  <span className="font-mono text-2xl font-bold text-amber-400">{formatUnit(timeElapsed.minutes)}</span>
-                  <span className="text-xl font-bold text-amber-400 animate-pulse">:</span>
-                  <span className="font-mono text-2xl font-bold text-amber-400">{formatUnit(timeElapsed.seconds)}</span>
+                  <span className="font-mono text-2xl font-bold text-primary">{formatUnit(timeElapsed.hours)}</span>
+                  <span className="text-xl font-bold text-primary animate-pulse">:</span>
+                  <span className="font-mono text-2xl font-bold text-primary">{formatUnit(timeElapsed.minutes)}</span>
+                  <span className="text-xl font-bold text-primary animate-pulse">:</span>
+                  <span className="font-mono text-2xl font-bold text-primary">{formatUnit(timeElapsed.seconds)}</span>
                 </div>
                 <p className="text-[10px] text-center text-slate-500 uppercase">Decorrido</p>
               </div>

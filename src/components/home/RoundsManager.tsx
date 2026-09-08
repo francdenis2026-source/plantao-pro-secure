@@ -1127,7 +1127,7 @@ function TimeField({
           <span
             title={lockedHint || 'Configuração bloqueada'}
             data-testid="night-lock-badge"
-            className="inline-flex items-center gap-1 rounded-sm border border-amber-500/40 bg-amber-500/10 px-1 py-0.5 text-[9.5px] font-mono uppercase text-amber-300"
+            className="inline-flex items-center gap-1 rounded-sm border border-primary/40 bg-primary/10 px-1 py-0.5 text-[9.5px] font-mono uppercase text-primary"
           >
             <svg viewBox="0 0 16 16" className="h-2.5 w-2.5"><path d="M4 7V5a4 4 0 118 0v2h1v7H3V7h1zm2 0h4V5a2 2 0 10-4 0v2z" fill="currentColor"/></svg>
             {lockedBadgeText || 'BLOQUEADO'}
@@ -3530,7 +3530,7 @@ export function RoundsManager({ customTrigger }: { customTrigger?: React.ReactNo
                     data-testid="night-shift-banner"
                     className={cn(
                       'rounded-md border px-2.5 py-1.5 text-[12px]',
-                      'border-amber-500/30 bg-amber-500/5 text-amber-200/90',
+                      'border-primary/30 bg-primary/5 text-primary/90',
                     )}
                   >
                     <div className="flex items-center gap-2">
@@ -3578,21 +3578,21 @@ export function RoundsManager({ customTrigger }: { customTrigger?: React.ReactNo
                     aria-label="Configuração indisponível"
                   >
                     <div className="grid grid-cols-2 gap-2">
-                      <div className="rounded-md border border-amber-500/40 bg-amber-500/5 px-2 py-1.5">
-                        <div className="text-[10.5px] uppercase tracking-wide text-amber-300/80 flex items-center gap-1">
+                      <div className="rounded-md border border-primary/40 bg-primary/5 px-2 py-1.5">
+                        <div className="text-[10.5px] uppercase tracking-wide text-primary/80 flex items-center gap-1">
                           Início {preNightScheduled && <span className="font-mono text-[8.5px]">· programado</span>}
                         </div>
                         <div className="font-mono text-sm text-foreground">22:00</div>
                       </div>
-                      <div className="rounded-md border border-amber-500/40 bg-amber-500/5 px-2 py-1.5">
-                        <div className="text-[10.5px] uppercase tracking-wide text-amber-300/80 flex items-center gap-1">
+                      <div className="rounded-md border border-primary/40 bg-primary/5 px-2 py-1.5">
+                        <div className="text-[10.5px] uppercase tracking-wide text-primary/80 flex items-center gap-1">
                           Final {preNightScheduled && <span className="font-mono text-[8.5px]">· programado</span>}
                         </div>
                         <div className="font-mono text-sm text-foreground">06:00</div>
                       </div>
                     </div>
                     {preNightScheduled && (
-                      <p className="mt-1 text-[10.5px] leading-snug text-amber-200/80">
+                      <p className="mt-1 text-[10.5px] leading-snug text-primary/80">
                         🌙 Turno noturno programado automaticamente. Só é possível alterar a <b>quantidade de agentes</b>.
                       </p>
                     )}
@@ -3666,7 +3666,7 @@ export function RoundsManager({ customTrigger }: { customTrigger?: React.ReactNo
                     <Label className="text-[12.5px] font-sans tracking-wide text-muted-foreground flex items-center gap-1 min-w-0 truncate">
                       <Users className="h-3 w-3 shrink-0" /> <span className="truncate">Agentes ({agents.length})</span>
                       {configLocked && (
-                        <span className="ml-1 inline-flex items-center gap-1 rounded-sm border border-amber-500/40 bg-amber-500/10 px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-widest text-amber-300 shrink-0">
+                        <span className="ml-1 inline-flex items-center gap-1 rounded-sm border border-primary/40 bg-primary/10 px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-widest text-primary shrink-0">
                           <Lock className="h-2.5 w-2.5" /> Programado
                         </span>
                       )}
@@ -4092,10 +4092,10 @@ export function RoundsManager({ customTrigger }: { customTrigger?: React.ReactNo
                                   className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 font-mono text-[11.5px] tabular-nums"
                                   data-testid="round-card-remaining"
                                 >
-                                  <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/5 px-2 py-0.5 text-amber-200">
+                                  <span className="inline-flex items-center gap-1 rounded-full border border-primary/40 bg-primary/5 px-2 py-0.5 text-primary">
                                     <Timer className="h-3 w-3" />
                                     Turno {nightEffectivelyLocked ? '(até 06:00)' : 'total'}:&nbsp;
-                                    <b className="text-amber-100">
+                                    <b className="text-primary">
                                       {view
                                         ? fmtHMS(Math.max(0, schedule.totalSec - view.elapsed))
                                         : fmtHMS(schedule.totalSec)}
@@ -4485,7 +4485,7 @@ export function RoundsManager({ customTrigger }: { customTrigger?: React.ReactNo
                         <Button type="button" size="icon" variant="ghost" onClick={copyToClipboard} className="h-8 w-8 text-muted-foreground hover:text-primary" aria-label="Copiar cronograma">
                           <Copy className="h-3.5 w-3.5" />
                         </Button>
-                        <Button type="button" size="icon" variant="ghost" onClick={exportPDF} className="h-8 w-8 text-amber-500 hover:text-amber-400 hover:bg-amber-500/10" aria-label="Exportar PDF">
+                        <Button type="button" size="icon" variant="ghost" onClick={exportPDF} className="h-8 w-8 text-primary hover:text-primary hover:bg-primary/10" aria-label="Exportar PDF">
                           <FileDown className="h-3.5 w-3.5" />
                         </Button>
                       </div>

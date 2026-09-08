@@ -89,7 +89,7 @@ export const themeAssets: Record<ThemeType, ThemeAssets> = {
       { type: 'particles', intensity: 'high', primaryColor: 'rgba(251, 191, 36, 0.7)', animated: true, particleCount: 50, speed: 'slow' },
     ],
     ambientGlow: { primary: 'rgba(251, 191, 36, 0.2)', secondary: 'rgba(249, 115, 22, 0.15)', tertiary: 'rgba(234, 179, 8, 0.1)' },
-    cornerAccents: { style: 'tactical', color: 'border-amber-500/40' },
+    cornerAccents: { style: 'tactical', color: 'border-primary/40' },
   },
   cyber: {
     mainIcon: Cpu,
@@ -328,7 +328,7 @@ export const themeAssets: Record<ThemeType, ThemeAssets> = {
       { type: 'particles', intensity: 'medium', primaryColor: 'rgba(251, 191, 36, 0.6)', animated: true, particleCount: 40, speed: 'slow' },
     ],
     ambientGlow: { primary: 'rgba(251, 191, 36, 0.15)', secondary: 'rgba(249, 115, 22, 0.1)' },
-    cornerAccents: { style: 'tactical', color: 'border-amber-500/30' },
+    cornerAccents: { style: 'tactical', color: 'border-primary/30' },
   },
 };
 

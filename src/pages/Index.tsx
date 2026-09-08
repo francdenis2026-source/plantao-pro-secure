@@ -1590,7 +1590,7 @@ export default function Index() {
           compact
           leftSlot={
             <span className="inline-flex items-center gap-1.5 text-[9px] font-mono tracking-[0.24em] uppercase text-muted-foreground/70">
-              <ShieldCheck className="h-3 w-3 text-amber-500/80" strokeWidth={2.2} />
+              <ShieldCheck className="h-3 w-3 text-primary/80" strokeWidth={2.2} />
               <span>ISE · Acre</span>
               <span className="text-muted-foreground/30">/</span>
               <span>Sistema Operacional</span>
@@ -1623,8 +1623,8 @@ export default function Index() {
       </footer>
 
       {/* Mobile-only ultra-thin footer strip (fixo, não empurra viatura/boneco) */}
-      <div className="sm:hidden fixed bottom-0 inset-x-0 z-20 h-8 flex items-center justify-center gap-2.5 bg-gradient-to-r from-background/85 via-background/95 to-background/85 backdrop-blur-md border-t border-amber-500/20 pointer-events-auto shadow-[0_-4px_16px_-8px_rgba(0,0,0,0.4)]">
-        <ShieldCheck className="h-3 w-3 text-amber-500/90" strokeWidth={2.4} />
+      <div className="sm:hidden fixed bottom-0 inset-x-0 z-20 h-8 flex items-center justify-center gap-2.5 bg-gradient-to-r from-background/85 via-background/95 to-background/85 backdrop-blur-md border-t border-primary/20 pointer-events-auto shadow-[0_-4px_16px_-8px_rgba(0,0,0,0.4)]">
+        <ShieldCheck className="h-3 w-3 text-primary/90" strokeWidth={2.4} />
         <span className="text-[10.5px] font-mono tracking-[0.22em] uppercase text-amber-400/95 font-bold">PlantãoPro</span>
         <span className="text-muted-foreground/40 text-[10.5px]">·</span>
         <span className="inline-flex items-center gap-1 text-[9.5px] font-mono tracking-[0.18em] uppercase text-muted-foreground/80">
@@ -1639,7 +1639,7 @@ export default function Index() {
           type="button"
           onClick={() => setShowMasterLogin(true)}
           aria-label="Acesso Administrador Master"
-          className="inline-flex items-center gap-1 text-[10px] font-mono tracking-[0.18em] uppercase text-muted-foreground/80 hover:text-amber-400 transition-colors"
+          className="inline-flex items-center gap-1 text-[10px] font-mono tracking-[0.18em] uppercase text-muted-foreground/80 hover:text-primary transition-colors"
         >
           <Lock className="h-3 w-3" strokeWidth={2.2} />
           <span>Master</span>
@@ -1859,17 +1859,17 @@ export default function Index() {
           </AuthButton>
 
           {/* Divisor + Atalho para Acesso Master (Administrador) */}
-          <div className="pt-3 mt-1 border-t border-amber-500/20">
+          <div className="pt-3 mt-1 border-t border-primary/20">
             <button
               type="button"
               onClick={() => {
                 setShowLogin(false);
                 setShowMasterLogin(true);
               }}
-              className="group w-full flex items-center justify-center gap-2 py-2.5 rounded-md border border-amber-500/40 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-amber-500/10 hover:from-amber-500/20 hover:to-amber-500/20 hover:border-amber-400/70 transition-all"
+              className="group w-full flex items-center justify-center gap-2 py-2.5 rounded-md border border-primary/40 bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 hover:from-primary/20 hover:to-primary/20 hover:border-primary/70 transition-all"
             >
-              <ShieldCheck className="h-4 w-4 text-amber-400 group-hover:text-amber-300" />
-              <span className="text-[11px] font-mono font-bold tracking-[0.24em] uppercase text-amber-300 group-hover:text-amber-200">
+              <ShieldCheck className="h-4 w-4 text-primary group-hover:text-primary" />
+              <span className="text-[11px] font-mono font-bold tracking-[0.24em] uppercase text-primary group-hover:text-primary">
                 Acesso Master
               </span>
             </button>
@@ -2092,7 +2092,7 @@ export default function Index() {
                 error={regErrors.birth_date}
               />
               {calculatedAge !== null && !regErrors.birth_date && (
-                <p className="text-sm text-amber-400 font-bold mt-2">{calculatedAge} anos</p>
+                <p className="text-sm text-primary font-bold mt-2">{calculatedAge} anos</p>
               )}
             </div>
             <AuthInput
