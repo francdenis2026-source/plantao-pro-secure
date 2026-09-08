@@ -357,7 +357,7 @@ export function BetaNoticeFooter() {
                   Feito por agente · Para agentes
                 </p>
                 <p className="mt-0.5 text-[10px] text-muted-foreground">
-                  QSL, Feijó! · &lt;dev&gt; Franc D'nis
+                  QSL, Feijó! · &lt;dev&gt; Franc Denis
                 </p>
               </div>
             </div>

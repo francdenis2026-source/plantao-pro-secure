@@ -245,7 +245,7 @@ export default function Index() {
     const handler = () => {
       setShowMasterLogin(true);
       toast({
-        title: "Se você for Franc D'nis, seja bem-vindo, Master!",
+        title: "Se você for Franc Denis, seja bem-vindo, Master!",
         description: 'Acesso restrito ao Administrador Master do sistema.',
         duration: 5000,
       });

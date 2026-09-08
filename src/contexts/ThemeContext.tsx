@@ -370,11 +370,43 @@ export const themes: Record<ThemeType, ThemeConfig> = {
   },
 };
 
+export type ColorMode = 'light' | 'dark';
+
+const COLOR_MODE_KEY = 'plantaopro_color_mode';
+
+// Light-mode surface palette — applied on top of whichever accent theme is
+// active. The accent (primary/gradient) never changes between modes; only
+// background/foreground/card/border/muted flip so every screen (including
+// components styled with plain Tailwind `dark:` utilities) responds to it.
+const LIGHT_SURFACE = {
+  background: '210 20% 97%',
+  foreground: '222 25% 14%',
+  card: '0 0% 100%',
+  border: '214 18% 89%',
+  muted: '210 20% 94%',
+  mutedForeground: '215 12% 42%',
+  sidebarBackground: '0 0% 100%',
+  sidebarForeground: '222 20% 16%',
+  sidebarAccent: '210 20% 94%',
+  sidebarBorder: '214 18% 89%',
+};
+
+function getInitialColorMode(): ColorMode {
+  try {
+    const saved = localStorage.getItem(COLOR_MODE_KEY);
+    if (saved === 'light' || saved === 'dark') return saved;
+  } catch { /* ignore */ }
+  return 'dark';
+}
+
 interface ThemeContextType {
   theme: ThemeType;
   setTheme: (theme: ThemeType) => void;
   themeConfig: ThemeConfig;
   resolvedTheme: Exclude<ThemeType, 'system'>;
+  colorMode: ColorMode;
+  setColorMode: (mode: ColorMode) => void;
+  toggleColorMode: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -384,6 +416,21 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   // localStorage is intentionally ignored so all devices share the same theme.
   const DEFAULT_THEME: ThemeType = 'tactical';
   const [theme, setThemeState] = useState<ThemeType>(DEFAULT_THEME);
+
+  // Color mode (light/dark) is a per-device preference — unlike the accent
+  // theme above, it is NOT shared globally via the DB.
+  const [colorMode, setColorModeState] = useState<ColorMode>(getInitialColorMode);
+  const setColorMode = useCallback((mode: ColorMode) => {
+    setColorModeState(mode);
+    try { localStorage.setItem(COLOR_MODE_KEY, mode); } catch { /* ignore */ }
+  }, []);
+  const toggleColorMode = useCallback(() => {
+    setColorModeState((prev) => {
+      const next: ColorMode = prev === 'light' ? 'dark' : 'light';
+      try { localStorage.setItem(COLOR_MODE_KEY, next); } catch { /* ignore */ }
+      return next;
+    });
+  }, []);
 
   const [systemTheme] = useState<'tactical'>(getSystemTheme);
 
@@ -467,31 +514,47 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const config = activeConfig;
     const root = document.documentElement;
-    
+    const isLight = colorMode === 'light';
+
+    const surface = isLight
+      ? LIGHT_SURFACE
+      : {
+          background: config.colors.background,
+          foreground: config.colors.foreground,
+          card: config.colors.card,
+          border: config.colors.border,
+          muted: config.colors.muted,
+          mutedForeground: config.colors.mutedForeground,
+          sidebarBackground: config.colors.background,
+          sidebarForeground: config.colors.foreground,
+          sidebarAccent: config.colors.muted,
+          sidebarBorder: config.colors.border,
+        };
+
     root.style.setProperty('--primary', config.colors.primary);
     root.style.setProperty('--primary-foreground', config.colors.primaryForeground);
     root.style.setProperty('--accent', config.colors.accent);
     root.style.setProperty('--accent-foreground', config.colors.primaryForeground);
-    root.style.setProperty('--background', config.colors.background);
-    root.style.setProperty('--foreground', config.colors.foreground);
-    root.style.setProperty('--card', config.colors.card);
-    root.style.setProperty('--card-foreground', config.colors.foreground);
-    root.style.setProperty('--popover', config.colors.card);
-    root.style.setProperty('--popover-foreground', config.colors.foreground);
-    root.style.setProperty('--muted', config.colors.muted);
-    root.style.setProperty('--muted-foreground', config.colors.mutedForeground);
-    root.style.setProperty('--border', config.colors.border);
-    root.style.setProperty('--input', config.colors.muted);
+    root.style.setProperty('--background', surface.background);
+    root.style.setProperty('--foreground', surface.foreground);
+    root.style.setProperty('--card', surface.card);
+    root.style.setProperty('--card-foreground', surface.foreground);
+    root.style.setProperty('--popover', surface.card);
+    root.style.setProperty('--popover-foreground', surface.foreground);
+    root.style.setProperty('--muted', surface.muted);
+    root.style.setProperty('--muted-foreground', surface.mutedForeground);
+    root.style.setProperty('--border', surface.border);
+    root.style.setProperty('--input', surface.muted);
     root.style.setProperty('--ring', config.colors.primary);
-    root.style.setProperty('--secondary', config.colors.muted);
-    root.style.setProperty('--secondary-foreground', config.colors.foreground);
-    root.style.setProperty('--sidebar-background', config.colors.isLight ? config.colors.card : config.colors.background);
-    root.style.setProperty('--sidebar-foreground', config.colors.isLight ? config.colors.mutedForeground : config.colors.foreground);
+    root.style.setProperty('--secondary', surface.muted);
+    root.style.setProperty('--secondary-foreground', surface.foreground);
+    root.style.setProperty('--sidebar-background', surface.sidebarBackground);
+    root.style.setProperty('--sidebar-foreground', surface.sidebarForeground);
     root.style.setProperty('--sidebar-primary', config.colors.primary);
     root.style.setProperty('--sidebar-primary-foreground', config.colors.primaryForeground);
-    root.style.setProperty('--sidebar-accent', config.colors.muted);
-    root.style.setProperty('--sidebar-accent-foreground', config.colors.foreground);
-    root.style.setProperty('--sidebar-border', config.colors.border);
+    root.style.setProperty('--sidebar-accent', surface.sidebarAccent);
+    root.style.setProperty('--sidebar-accent-foreground', surface.foreground);
+    root.style.setProperty('--sidebar-border', surface.sidebarBorder);
     root.style.setProperty('--sidebar-ring', config.colors.primary);
     
     // Tipografia global — body usa sans (IBM Plex Sans) para todos os shadcn;
@@ -511,38 +574,42 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       `linear-gradient(135deg, hsl(${config.colors.gradientFrom}) 0%, hsl(${config.colors.gradientTo}) 100%)`
     );
     
-    if (config.colors.isLight) {
-      root.style.setProperty('--gradient-dark', 
-        `linear-gradient(180deg, hsl(${config.colors.background}) 0%, hsl(210 40% 96%) 100%)`
+    if (isLight) {
+      root.style.setProperty('--gradient-dark',
+        `linear-gradient(180deg, hsl(${surface.background}) 0%, hsl(210 40% 96%) 100%)`
       );
     } else {
-      root.style.setProperty('--gradient-dark', 
-        `linear-gradient(180deg, hsl(${config.colors.card}) 0%, hsl(${config.colors.background}) 100%)`
+      root.style.setProperty('--gradient-dark',
+        `linear-gradient(180deg, hsl(${surface.card}) 0%, hsl(${surface.background}) 100%)`
       );
     }
-    
+
     // Remove todas as classes de tema anteriores
     root.classList.remove('light-theme', 'nightops-theme', 'tactical-theme', 'cyber-theme', 'crimson-theme', 'arctic-theme', 'sovereign-theme', 'nexus-theme', 'ember-theme');
-    
+
     // Aplica nova classe de tema
     root.setAttribute('data-theme', resolvedTheme);
-    
-    if (config.colors.isLight) {
+    root.setAttribute('data-color-mode', colorMode);
+
+    if (isLight) {
       root.classList.add('light-theme');
       root.classList.remove('dark');
     } else {
       root.classList.add('dark', `${resolvedTheme}-theme`);
     }
-  }, [activeConfig, resolvedTheme]);
+  }, [activeConfig, resolvedTheme, colorMode]);
 
   const displayConfig = theme === 'system' ? themes.system : themes[theme];
 
   return (
-    <ThemeContext.Provider value={{ 
-      theme, 
-      setTheme, 
+    <ThemeContext.Provider value={{
+      theme,
+      setTheme,
       themeConfig: displayConfig,
-      resolvedTheme 
+      resolvedTheme,
+      colorMode,
+      setColorMode,
+      toggleColorMode,
     }}>
       {children}
     </ThemeContext.Provider>

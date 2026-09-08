@@ -7,8 +7,8 @@ interface DeveloperSignatureProps {
 }
 
 /**
- * Assinatura tática do desenvolvedor — inline, sem aumentar altura do container.
- * Franc D'nis (manuscrito) · [Agente Socioeducativo] · Feijó/AC
+ * Assinatura do desenvolvedor — inline, sem aumentar altura do container.
+ * Franc Denis · Agente Socioeducativo · Feijó, Acre · 2026
  */
 export function DeveloperSignature({ className, compact = false }: DeveloperSignatureProps) {
   return (
@@ -18,43 +18,28 @@ export function DeveloperSignature({ className, compact = false }: DeveloperSign
         'text-muted-foreground/80 transition-colors duration-500',
         className,
       )}
-      title="Desenvolvido por Franc D'nis · Agente Socioeducativo · Feijó/AC"
-      aria-label="Desenvolvido por Franc D'nis, Agente Socioeducativo, Feijó, AC"
+      title="Franc Denis · criado por Agente Socioeducativo · Feijó, Acre · 2026"
+      aria-label="Franc Denis, criado por Agente Socioeducativo, Feijó, Acre, 2026"
     >
-      {/* DEV// tag */}
-      <span
-        className={cn(
-          'font-mono uppercase tracking-[0.22em] text-muted-foreground/50',
-          compact ? 'text-[8px]' : 'text-[9px]',
-        )}
-      >
-        DEV//
-      </span>
-
       {/* Developer name */}
       <span
         className={cn(
           'font-serif italic font-semibold text-primary tracking-wide',
-          '[text-shadow:0_0_6px_hsl(var(--primary)/0.35)]',
           compact ? 'text-[11px]' : 'text-[12px]',
         )}
       >
-        Franc D'nis
+        Franc Denis
       </span>
 
-      {/* Profession bracketed */}
+      {/* Profession */}
       <span
         className={cn(
-          'inline-flex items-center gap-1 font-mono uppercase tracking-[0.18em]',
+          'font-mono uppercase tracking-[0.18em] text-foreground/75',
           compact ? 'text-[8px]' : 'text-[9px]',
         )}
       >
-        <span className="text-amber-500/80 font-bold">[</span>
-        <span className="text-foreground/75">
-          <span className="hidden sm:inline">Agente Socioeducativo</span>
-          <span className="sm:hidden">Ag. Socioed.</span>
-        </span>
-        <span className="text-amber-500/80 font-bold">]</span>
+        <span className="hidden sm:inline">Agente Socioeducativo</span>
+        <span className="sm:hidden">Ag. Socioed.</span>
       </span>
 
       {/* Location with pin */}
@@ -65,7 +50,7 @@ export function DeveloperSignature({ className, compact = false }: DeveloperSign
         )}
       >
         <MapPin className="h-2.5 w-2.5" strokeWidth={2.5} />
-        FEIJÓ/AC
+        FEIJÓ/AC · 2026
       </span>
     </div>
   );

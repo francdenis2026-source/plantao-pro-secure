@@ -13,6 +13,7 @@ import { WeekStrip } from './WeekStrip';
 import { HomeKpiRow } from './HomeKpiRow';
 import { SwapCenterCard } from './SwapCenterCard';
 import { ActivityAndQuickAccess } from './ActivityAndQuickAccess';
+import { DeveloperSignature } from '@/components/DeveloperSignature';
 import { useNextShift, useWeekShifts, useHomeCounts, usePendingSwaps, useRecentActivity } from './useHomeDashboardData';
 
 export function AgentHomeDashboard() {
@@ -88,6 +89,10 @@ export function AgentHomeDashboard() {
           <SwapCenterCard swaps={swapsQ.data ?? []} agentId={agent?.id} />
 
           <ActivityAndQuickAccess activity={activityQ.data ?? []} />
+
+          <div className="flex justify-center pt-2">
+            <DeveloperSignature compact />
+          </div>
         </main>
       </div>
 

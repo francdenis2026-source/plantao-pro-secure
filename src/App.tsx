@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import { FontSizeProvider } from "@/contexts/FontSizeContext";
 import { useGlobalNavigation } from "@/hooks/useGlobalNavigation";
 import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
+import { GlobalUtilityDock } from "@/components/GlobalUtilityDock";
 import { GlobalOfflineBanner } from "@/components/OfflineIndicator";
 import { OfflineFullScreen } from "@/components/OfflineFullScreen";
 import { ReconnectingGuard } from "@/components/ReconnectingGuard";
@@ -218,6 +219,8 @@ const App = () => (
                 </ReconnectingGuard>
                 {/* PWA Install Prompt - Shows on all pages when installable */}
                 <PWAInstallPrompt />
+                {/* Global dock: color mode toggle, radio player, agent services menu */}
+                <GlobalUtilityDock />
               </GlobalNavigationHandler>
               </ConfirmProvider>
             </AuthProvider>

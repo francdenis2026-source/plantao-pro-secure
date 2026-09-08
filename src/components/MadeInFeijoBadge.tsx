@@ -46,8 +46,8 @@ export function MadeInFeijoBadge({
   return (
     <div
       role="note"
-      title="Software desenvolvido por Franc D'nis"
-      aria-label="Software desenvolvido por Franc D'nis"
+      title="Software desenvolvido por Franc Denis"
+      aria-label="Software desenvolvido por Franc Denis"
       className={cn(wrapperClass, className)}
     >
       <div
@@ -99,7 +99,7 @@ export function MadeInFeijoBadge({
           )}
           style={{ fontFamily: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace" }}
         >
-          Franc D&apos;nis
+          Franc Denis
         </span>
       </div>
     </div>
