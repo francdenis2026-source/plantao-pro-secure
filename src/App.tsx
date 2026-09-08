@@ -170,14 +170,7 @@ const App = () => (
                       <Route path="/agents/:id" element={<AgentProfile />} />
 
                       <Route path="/overtime" element={<Overtime />} />
-                      <Route
-                        path="/rondas"
-                        element={
-                          <RequireAuth mode="redirect" redirectTo="/">
-                            <RondasCommand />
-                          </RequireAuth>
-                        }
-                      />
+                      <Route path="/rondas" element={<RondasCommand />} />
                       <Route path="/units" element={<Units />} />
                       <Route
                         path="/admin/units-audit"

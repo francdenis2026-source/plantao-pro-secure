@@ -35,6 +35,10 @@ export function RoundsDashboard() {
   const [isOnline, setIsOnline] = useState(typeof navigator === 'undefined' ? true : navigator.onLine);
   const [pendingCount, setPendingCount] = useState(() => getQueueLength());
 
+  // Allow manual team/unit selection for unauthenticated users
+  const [guestTeam, setGuestTeam] = useState<string | null>(null);
+  const [guestUnitId, setGuestUnitId] = useState<string | null>(null);
+
   const flushQueue = async () => {
     const { synced, remaining } = await flushPatrolQueue({
       start: api.startSlot, pause: api.pauseSlot, resume: api.resumeSlot, complete: api.completeSlot,
@@ -58,8 +62,8 @@ export function RoundsDashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const unitId = agent?.unit_id ?? null;
-  const team = agent?.team ?? null;
+  const unitId = agent?.unit_id ?? guestUnitId ?? null;
+  const team = agent?.team ?? guestTeam ?? null;
 
   const shiftQuery = useQuery({
     queryKey: ['patrol-shift', unitId, team],
@@ -188,6 +192,42 @@ export function RoundsDashboard() {
   };
 
   if (!unitId || !team) {
+    // Allow guest users to select team and unit manually
+    if (!user) {
+      return (
+        <div className="space-y-4 p-6">
+          <h2 className="text-lg font-bold">Gestor de Rondas - Acesso Público</h2>
+          <p className="text-sm text-muted-foreground">Selecione uma equipe e unidade para visualizar as rondas</p>
+          <div className="space-y-3">
+            <div>
+              <label className="text-sm font-medium">Equipe</label>
+              <select
+                value={guestTeam || ''}
+                onChange={(e) => setGuestTeam(e.target.value || null)}
+                className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm mt-1"
+              >
+                <option value="">Selecione uma equipe...</option>
+                <option value="ALFA">ALFA</option>
+                <option value="BRAVO">BRAVO</option>
+                <option value="CHARLIE">CHARLIE</option>
+                <option value="DELTA">DELTA</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-sm font-medium">Unidade</label>
+              <input
+                type="text"
+                value={guestUnitId || ''}
+                onChange={(e) => setGuestUnitId(e.target.value || null)}
+                placeholder="Digite o ID ou nome da unidade"
+                className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm mt-1"
+              />
+            </div>
+            <p className="text-xs text-muted-foreground mt-3">Ou faça login para usar seu perfil de agente</p>
+          </div>
+        </div>
+      );
+    }
     return <p className="p-6 text-sm text-muted-foreground">Vincule seu perfil a uma unidade e equipe para usar o Gestor de Rondas.</p>;
   }
 
@@ -204,8 +244,15 @@ export function RoundsDashboard() {
     return (
       <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border p-10 text-center">
         <p className="text-sm text-muted-foreground">Nenhum turno de rondas ativo para a equipe {team}.</p>
-        <Button onClick={() => setDividerOpen(true)}>Criar turno de rondas</Button>
-        <NewShiftDialog open={dividerOpen} onOpenChange={setDividerOpen} unitId={unitId} team={team} createdBy={user?.id ?? ''} onCreated={() => shiftQuery.refetch()} />
+        {user && (
+          <>
+            <Button onClick={() => setDividerOpen(true)}>Criar turno de rondas</Button>
+            <NewShiftDialog open={dividerOpen} onOpenChange={setDividerOpen} unitId={unitId} team={team} createdBy={user?.id ?? ''} onCreated={() => shiftQuery.refetch()} />
+          </>
+        )}
+        {!user && (
+          <p className="text-xs text-muted-foreground mt-2">Faça login para criar novos turnos de rondas</p>
+        )}
       </div>
     );
   }
