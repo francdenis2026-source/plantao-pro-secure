@@ -17,6 +17,7 @@ import {
   ClipboardCheck,
   Home,
   Building2,
+  ShieldCheck,
 } from 'lucide-react';
 import {
   SidebarNavItem,
@@ -29,6 +30,7 @@ const navItems: NavItemDef[] = [
   { icon: Home, label: 'Início', href: '/?home=1' },
   { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard' },
   { icon: UserCircle, label: 'Meu Painel', href: '/agent-panel' },
+  { icon: ShieldCheck, label: 'Rondas', href: '/rondas' },
   { icon: Users, label: 'Agentes', href: '/agents' },
   { icon: Clock, label: 'Banco de Horas', href: '/overtime' },
   { icon: MapPin, label: 'Unidades', href: '/units' },

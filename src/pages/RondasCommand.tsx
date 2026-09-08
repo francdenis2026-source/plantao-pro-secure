@@ -1,5 +1,6 @@
 import { RoundsDashboard } from '@/features/rondas/components/RoundsDashboard';
 import { BackButton } from '@/components/BackButton';
+import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
 
 export default function RondasCommand() {
   return (
@@ -13,9 +14,10 @@ export default function RondasCommand() {
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-5xl">
+      <main className="mx-auto max-w-5xl" style={{ paddingBottom: 'calc(56px + env(safe-area-inset-bottom))' }}>
         <RoundsDashboard />
       </main>
+      <MobileBottomNav />
     </div>
   );
 }
