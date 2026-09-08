@@ -263,11 +263,11 @@ export function AdAnalyticsDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-amber-900/30 to-slate-800/50 border-amber-500/20">
+        <Card className="bg-gradient-to-br from-primary/30 to-slate-800/50 border-primary/20">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-amber-500/20 rounded-lg">
-                <Clock className="h-5 w-5 text-amber-400" />
+              <div className="p-2 bg-primary/20 rounded-lg">
+                <Clock className="h-5 w-5 text-primary" />
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">{avgViewTime}s</p>
@@ -403,7 +403,7 @@ export function AdAnalyticsDashboard() {
                           {stat.ctr}%
                         </Badge>
                       </td>
-                      <td className="text-right py-2 px-3 text-amber-400">{stat.avg_view_time}s</td>
+                      <td className="text-right py-2 px-3 text-primary">{stat.avg_view_time}s</td>
                       <td className="text-right py-2 px-3 text-purple-400">{stat.completed_views}</td>
                     </tr>
                   ))}

@@ -52,7 +52,7 @@ export function MadeInFeijoBadge({
     >
       <div
         className={cn(
-          'inline-flex items-center rounded-md border border-amber-500/30 bg-[linear-gradient(180deg,hsl(220_40%_7%/0.95),hsl(222_45%_4%/0.98))] shadow-[0_1px_0_hsl(45_95%_55%/0.15)_inset,0_2px_8px_rgba(0,0,0,0.35)]',
+          'inline-flex items-center rounded-md border border-primary/30 bg-[linear-gradient(180deg,hsl(220_40%_7%/0.95),hsl(222_45%_4%/0.98))] shadow-[0_1px_0_hsl(45_95%_55%/0.15)_inset,0_2px_8px_rgba(0,0,0,0.35)]',
           sizeMap.pad,
         )}
       >
@@ -60,7 +60,7 @@ export function MadeInFeijoBadge({
         <span
           aria-hidden
           className={cn(
-            'w-[3px] rounded-sm bg-gradient-to-b from-amber-400 to-amber-600 shadow-[0_0_6px_hsl(45_95%_55%/0.55)]',
+            'w-[3px] rounded-sm bg-gradient-to-b from-primary to-primary shadow-[0_0_6px_hsl(45_95%_55%/0.55)]',
             sizeMap.bar,
           )}
         />
@@ -69,7 +69,7 @@ export function MadeInFeijoBadge({
         <span
           aria-hidden
           className={cn(
-            'font-mono font-bold text-amber-400 leading-none',
+            'font-mono font-bold text-primary leading-none',
             sizeMap.chev,
           )}
           style={{ fontFamily: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace" }}
@@ -89,7 +89,7 @@ export function MadeInFeijoBadge({
         </span>
 
         {/* Separador */}
-        <span aria-hidden className="text-amber-500/40 leading-none">·</span>
+        <span aria-hidden className="text-primary/40 leading-none">·</span>
 
         {/* Título */}
         <span

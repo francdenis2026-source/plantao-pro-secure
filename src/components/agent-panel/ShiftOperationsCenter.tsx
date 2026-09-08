@@ -386,7 +386,7 @@ export function ShiftOperationsCenter({ agentId, agentName, agentTeam, unitId }:
                 <span className="text-[10px] uppercase text-slate-400 tracking-wider">Silencioso</span>
                 <Switch checked={lowMotion} onCheckedChange={toggleLowMotion} className="scale-75" />
               </div>
-              <Button size="sm" variant="outline" onClick={exportPDF} className="h-8 border-amber-500/40 text-amber-400 hover:bg-amber-500/10">
+              <Button size="sm" variant="outline" onClick={exportPDF} className="h-8 border-primary/40 text-primary hover:bg-primary/10">
                 <FileDown className="h-3.5 w-3.5 mr-1.5" />
                 PDF
               </Button>
@@ -408,7 +408,7 @@ export function ShiftOperationsCenter({ agentId, agentName, agentTeam, unitId }:
               </div>
               <OperationsRadar members={members} myId={agentId} lowMotion={lowMotion} />
               <div className="mt-2 flex items-center justify-center gap-3 text-[10px] text-slate-400">
-                <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-amber-400" />Você</span>
+                <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-primary" />Você</span>
                 <span className="flex items-center gap-1"><span className="h-2 w-2 rounded-full bg-emerald-500" />Equipe</span>
               </div>
             </div>
@@ -496,7 +496,7 @@ export function ShiftOperationsCenter({ agentId, agentName, agentTeam, unitId }:
                 rows={2}
                 className="bg-slate-950/60 border-slate-700 text-slate-100 text-sm resize-none font-serif italic"
               />
-              <Button onClick={exportPDF} className="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold">
+              <Button onClick={exportPDF} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
                 <FileDown className="h-4 w-4 mr-2" />
                 Exportar PDF Assinável
               </Button>
