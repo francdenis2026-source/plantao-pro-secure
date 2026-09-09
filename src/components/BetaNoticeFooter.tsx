@@ -5,8 +5,9 @@ import { Button } from '@/components/ui/button';
 import { ShieldCheck, Info } from 'lucide-react';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
 
-const SEEN_KEY = 'beta-notice-seen-v2';
-const HIDDEN_KEY = 'beta-notice-hidden-v2';
+const SEEN_KEY = 'beta-notice-seen-v3';
+const HIDDEN_KEY = 'beta-notice-hidden-v3';
+const DELAY_MS = 60_000;
 
 const POINTS = [
   'Iniciativa independente de um agente socioeducativo — não é o aplicativo oficial da ISE nem representa o Governo do Acre.',
@@ -24,17 +25,38 @@ export function BetaNoticeFooter() {
   const [dontShowAgain, setDontShowAgain] = useState(false);
 
   useEffect(() => {
-    try {
-      if (localStorage.getItem(SEEN_KEY) || localStorage.getItem(HIDDEN_KEY)) return;
-      const t = window.setTimeout(() => {
-        try {
-          if (!localStorage.getItem(SEEN_KEY) && !localStorage.getItem(HIDDEN_KEY)) setOpen(true);
-        } catch { /* ignore */ }
-      }, 60_000);
-      return () => window.clearTimeout(t);
-    } catch {
-      /* ignore */
+    let t: number | undefined;
+
+    const alreadyHandled = () => {
+      try {
+        return !!(localStorage.getItem(SEEN_KEY) || localStorage.getItem(HIDDEN_KEY));
+      } catch {
+        return false;
+      }
+    };
+
+    const scheduleReveal = () => {
+      if (alreadyHandled()) return;
+      t = window.setTimeout(() => {
+        if (!alreadyHandled()) setOpen(true);
+      }, DELAY_MS);
+    };
+
+    if (alreadyHandled()) return;
+
+    // Conta o minuto a partir do carregamento COMPLETO da página (imagens,
+    // fontes etc.), não do momento em que este componente apenas monta —
+    // evita que o aviso pareça "abrir na hora" numa página ainda pesada.
+    if (document.readyState === 'complete') {
+      scheduleReveal();
+    } else {
+      window.addEventListener('load', scheduleReveal, { once: true });
     }
+
+    return () => {
+      window.removeEventListener('load', scheduleReveal);
+      if (t) window.clearTimeout(t);
+    };
   }, []);
 
   const close = () => {
