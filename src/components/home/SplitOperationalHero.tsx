@@ -117,31 +117,34 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
           <OperationalStatusRibbon />
         </div>
 
-        <div className="relative order-1 h-48 sm:order-2 sm:h-auto sm:min-h-[280px]">
+        <div
+          className="relative order-1 h-48 sm:order-2 sm:h-auto sm:min-h-[280px]"
+          style={{ background: 'linear-gradient(200deg, hsl(213 55% 13%) 0%, hsl(222 47% 8%) 100%)' }}
+        >
+          {/* Foto inteira, sem cortar (object-contain) — o fundo da coluna
+              usa o mesmo gradiente do painel de texto, então onde a foto
+              não preenche (letterbox) parece parte do design, não um
+              vazio. Selo do Governo do Acre (canto superior direito da
+              foto) fica sempre visível por completo. */}
           <img
             src={heroBanner}
             alt="Agente da Socioeducação do Acre, com o brasão do Governo do Acre ao fundo, em unidade operacional"
             loading="eager"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover object-[82%_32%]"
+            className="absolute inset-0 h-full w-full object-contain object-center"
             draggable={false}
           />
-          {/* Selo do Governo do Acre já vem impresso na própria foto (canto
-              superior direito). Enquadramento deslocado pra revelar ele
-              inteiro em vez de escondê-lo atrás de uma máscara — a foto
-              não é cortada de forma diferente, só o ponto de foco mudou. */}
-          {/* Costura sutil entre as duas colunas — só uma faixa fina e bem
-              discreta, a imagem fica quase inteiramente visível (o pedido
-              foi explicitamente por um escurecimento mais sutil). */}
+          {/* Costura larga e suave entre as duas colunas — a foto "nasce"
+              do fundo escuro do texto em vez de ter uma linha de corte. */}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-y-0 left-0 w-6 sm:w-10 opacity-70"
-            style={{ background: 'linear-gradient(90deg, hsl(213 55% 13%) 0%, transparent 100%)' }}
+            className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-28"
+            style={{ background: 'linear-gradient(90deg, hsl(213 55% 13%) 0%, hsl(213 55% 13% / 0.5) 45%, transparent 100%)' }}
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-5 sm:hidden opacity-70"
-            style={{ background: 'linear-gradient(180deg, hsl(222 47% 8%) 0%, transparent 100%)' }}
+            className="pointer-events-none absolute inset-x-0 top-0 h-10 sm:hidden"
+            style={{ background: 'linear-gradient(180deg, hsl(222 47% 8%) 0%, hsl(222 47% 8% / 0.5) 45%, transparent 100%)' }}
           />
         </div>
       </div>

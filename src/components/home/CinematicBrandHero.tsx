@@ -112,27 +112,34 @@ export function CinematicBrandHero({
         </div>
       </div>
 
-      {/* Coluna de imagem — recortada para focar nos agentes, sem repetir a
-          logomarca do Governo do Acre (já visível no cabeçalho fixo). */}
-      <div className="relative order-1 h-56 sm:h-72 lg:order-2 lg:h-auto lg:min-h-[440px]">
+      {/* Coluna de imagem — foto inteira, sem cortar (object-contain). O
+          fundo da coluna é o mesmo tom sólido do resto da seção, então o
+          espaço que sobra ao redor da foto (letterbox) parece parte do
+          design em vez de um vazio. */}
+      <div
+        className="relative order-1 h-56 sm:h-72 lg:order-2 lg:h-auto lg:min-h-[440px]"
+        style={{ background: "hsl(222 20% 6%)" }}
+      >
         <img
           src={IMG_URL}
           alt="Agentes da Socioeducação do Acre em frente à unidade e viatura oficial"
           draggable={false}
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 h-full w-full select-none object-cover"
-          style={{ objectPosition: "38% 50%", filter: "saturate(0.9) contrast(1.02)" }}
+          className="absolute inset-0 h-full w-full select-none object-contain object-center"
+          style={{ filter: "saturate(0.9) contrast(1.02)" }}
+        />
+        {/* Costura larga e suave — a foto "nasce" do fundo em vez de ter
+            uma linha de corte contra o painel de texto. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 left-0 w-20 lg:w-32"
+          style={{ background: "linear-gradient(90deg, hsl(222 20% 6%) 0%, hsl(222 20% 6% / 0.5) 45%, transparent 100%)" }}
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-0 w-16 lg:w-24"
-          style={{ background: "linear-gradient(90deg, hsl(222 20% 6%) 0%, transparent 100%)" }}
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-10 lg:hidden"
-          style={{ background: "linear-gradient(180deg, hsl(222 20% 6%) 0%, transparent 100%)" }}
+          className="pointer-events-none absolute inset-x-0 top-0 h-12 lg:hidden"
+          style={{ background: "linear-gradient(180deg, hsl(222 20% 6%) 0%, hsl(222 20% 6% / 0.5) 45%, transparent 100%)" }}
         />
       </div>
     </section>
