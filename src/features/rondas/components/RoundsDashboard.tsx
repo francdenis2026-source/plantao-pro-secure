@@ -36,8 +36,9 @@ export function RoundsDashboard() {
   const [pendingCount, setPendingCount] = useState(() => getQueueLength());
 
   // Allow manual team/unit selection for unauthenticated users
-  const [guestTeam, setGuestTeam] = useState<string | null>(null);
-  const [guestUnitId, setGuestUnitId] = useState<string | null>(null);
+  // Default to ALFA team and "main" unit for public access
+  const [guestTeam, setGuestTeam] = useState<string | null>('ALFA');
+  const [guestUnitId, setGuestUnitId] = useState<string | null>('main');
 
   const flushQueue = async () => {
     const { synced, remaining } = await flushPatrolQueue({
@@ -192,43 +193,12 @@ export function RoundsDashboard() {
   };
 
   if (!unitId || !team) {
-    // Allow guest users to select team and unit manually
-    if (!user) {
-      return (
-        <div className="space-y-4 p-6">
-          <h2 className="text-lg font-bold">Gestor de Rondas - Acesso Público</h2>
-          <p className="text-sm text-muted-foreground">Selecione uma equipe e unidade para visualizar as rondas</p>
-          <div className="space-y-3">
-            <div>
-              <label className="text-sm font-medium">Equipe</label>
-              <select
-                value={guestTeam || ''}
-                onChange={(e) => setGuestTeam(e.target.value || null)}
-                className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm mt-1"
-              >
-                <option value="">Selecione uma equipe...</option>
-                <option value="ALFA">ALFA</option>
-                <option value="BRAVO">BRAVO</option>
-                <option value="CHARLIE">CHARLIE</option>
-                <option value="DELTA">DELTA</option>
-              </select>
-            </div>
-            <div>
-              <label className="text-sm font-medium">Unidade</label>
-              <input
-                type="text"
-                value={guestUnitId || ''}
-                onChange={(e) => setGuestUnitId(e.target.value || null)}
-                placeholder="Digite o ID ou nome da unidade"
-                className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm mt-1"
-              />
-            </div>
-            <p className="text-xs text-muted-foreground mt-3">Ou faça login para usar seu perfil de agente</p>
-          </div>
-        </div>
-      );
+    // For authenticated users without profile link
+    if (user) {
+      return <p className="p-6 text-sm text-muted-foreground">Vincule seu perfil a uma unidade e equipe para usar o Gestor de Rondas.</p>;
     }
-    return <p className="p-6 text-sm text-muted-foreground">Vincule seu perfil a uma unidade e equipe para usar o Gestor de Rondas.</p>;
+    // Guest users see a banner with quick team/unit switcher (non-blocking)
+    // Already has defaults, so we show the dashboard with optional override
   }
 
   if (shiftQuery.isLoading) {
@@ -273,6 +243,37 @@ export function RoundsDashboard() {
       {isOnline && pendingCount > 0 && (
         <div className="flex items-center gap-2 rounded-lg border border-warning/40 bg-warning/10 px-3 py-2 text-sm text-warning">
           <Clock3 className="h-4 w-4" /> {pendingCount} alteração(ões) pendente(s) de sincronização...
+        </div>
+      )}
+      {!user && (
+        <div className="space-y-3 rounded-lg border border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950/30 p-4">
+          <p className="text-sm font-medium text-blue-900 dark:text-blue-100">Acesso público - Trocar equipe/unidade</p>
+          <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+            <div>
+              <label className="text-xs font-medium text-blue-800 dark:text-blue-200">Equipe</label>
+              <select
+                value={guestTeam || 'ALFA'}
+                onChange={(e) => setGuestTeam(e.target.value || 'ALFA')}
+                className="w-full rounded-md border border-blue-200 dark:border-blue-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm mt-1"
+              >
+                <option value="ALFA">ALFA</option>
+                <option value="BRAVO">BRAVO</option>
+                <option value="CHARLIE">CHARLIE</option>
+                <option value="DELTA">DELTA</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-xs font-medium text-blue-800 dark:text-blue-200">Unidade</label>
+              <input
+                type="text"
+                value={guestUnitId || 'main'}
+                onChange={(e) => setGuestUnitId(e.target.value || 'main')}
+                placeholder="ID da unidade"
+                className="w-full rounded-md border border-blue-200 dark:border-blue-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm mt-1"
+              />
+            </div>
+          </div>
+          <p className="text-xs text-blue-700 dark:text-blue-300">Ou <a href="/login" className="underline hover:no-underline font-medium">faça login</a> para usar seu perfil de agente</p>
         </div>
       )}
 
