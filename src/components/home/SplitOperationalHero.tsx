@@ -120,24 +120,16 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
         <div className="relative order-1 h-40 sm:order-2 sm:h-auto sm:min-h-[280px]">
           <img
             src={heroBanner}
-            alt="Agente da Socioeducação do Acre em unidade operacional"
+            alt="Agente da Socioeducação do Acre, com o brasão do Governo do Acre ao fundo, em unidade operacional"
             loading="eager"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover object-[60%_65%]"
+            className="absolute inset-0 h-full w-full object-cover object-[82%_38%]"
             draggable={false}
           />
-          {/* Selo do Governo do Acre removido daqui — duplicava o da barra do
-              cabeçalho. Único lugar oficial agora: o header (Index.tsx).
-              A foto original tem o brasão impresso no canto superior
-              direito; dependendo do recorte (object-cover) ele aparece
-              cortado pela metade. Não dá pra apagar do arquivo de imagem,
-              então mascara a região com um degradê na mesma cor do céu
-              noturno da foto — funde sem parecer um retalho colado. */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute right-0 top-0 h-[42%] w-[38%]"
-            style={{ background: 'radial-gradient(ellipse at top right, hsl(213 55% 10%) 0%, hsl(213 55% 10% / 0.85) 45%, transparent 75%)' }}
-          />
+          {/* Selo do Governo do Acre já vem impresso na própria foto (canto
+              superior direito). Enquadramento deslocado pra revelar ele
+              inteiro em vez de escondê-lo atrás de uma máscara — a foto
+              não é cortada de forma diferente, só o ponto de foco mudou. */}
           {/* Transição suave para o painel de texto — sem gradiente cobrindo
               a imagem inteira, só a costura entre as duas colunas. */}
           <div

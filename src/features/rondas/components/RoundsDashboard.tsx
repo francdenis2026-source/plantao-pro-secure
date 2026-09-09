@@ -260,6 +260,47 @@ export function RoundsDashboard() {
           </div>
         </div>
 
+        {!user && (
+          <div className="space-y-2.5 rounded-xl border border-primary/25 bg-primary/[0.06] p-3.5 animate-in fade-in-0 slide-in-from-bottom-2 duration-500">
+            <p className="text-xs font-semibold text-primary">Acesso público — indique sua equipe e unidade</p>
+            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+              <div>
+                <label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">Equipe</label>
+                <select
+                  value={guestTeam || 'ALFA'}
+                  onChange={(e) => setGuestTeam(e.target.value || 'ALFA')}
+                  className="mt-1 w-full rounded-md border border-primary/25 bg-card px-3 py-2 text-sm text-foreground"
+                >
+                  <option value="ALFA">ALFA</option>
+                  <option value="BRAVO">BRAVO</option>
+                  <option value="CHARLIE">CHARLIE</option>
+                  <option value="DELTA">DELTA</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">Unidade</label>
+                <select
+                  value={guestUnitId || ''}
+                  onChange={(e) => setGuestUnitId(e.target.value || null)}
+                  className="mt-1 w-full rounded-md border border-primary/25 bg-card px-3 py-2 text-sm text-foreground"
+                >
+                  {unitsForPicker.length === 0 && <option value={guestUnitId ?? ''}>Carregando unidades…</option>}
+                  {unitsForPicker.map((u) => (
+                    <option key={u.id} value={u.id}>{u.name}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            {guestTeam && teamPosters[guestTeam] && (
+              <div key={guestTeam} className="flex items-center gap-2.5 animate-in fade-in-0 slide-in-from-left-2 duration-300">
+                <img src={teamPosters[guestTeam]} alt={`Equipe ${guestTeam}`} className="h-12 w-12 shrink-0 rounded-lg border border-primary/25 object-cover" />
+                <p className="text-xs font-bold text-foreground">EQUIPE {guestTeam}</p>
+              </div>
+            )}
+            <p className="text-[11px] text-muted-foreground">Ou <a href="/login" className="text-primary underline hover:no-underline font-medium">faça login</a> para usar seu perfil de agente</p>
+          </div>
+        )}
+
         <div className="animate-in fade-in-0 slide-in-from-bottom-2 duration-500 overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-card via-card to-primary/[0.07]">
           <div className="flex flex-col items-center gap-3 px-5 py-6 text-center sm:flex-row sm:justify-between sm:text-left">
             <div className="flex items-center gap-3">
