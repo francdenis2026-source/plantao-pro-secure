@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useQuery, useQueryClient, keepPreviousData } from '@tanstack/react-query';
-import { WifiOff, Clock3, Sun, Moon, Users, Building2, MapPin, UserCheck, SplitSquareHorizontal, ShieldOff, CalendarPlus, CalendarClock, CalendarDays, Hourglass } from 'lucide-react';
+import { WifiOff, Clock3, Sun, Moon, Users, Building2, MapPin, UserCheck, SplitSquareHorizontal, ShieldOff, CalendarPlus, CalendarClock, CalendarDays, Hourglass, UserPlus, Search, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useAgentProfile } from '@/hooks/useAgentProfile';
@@ -215,6 +215,29 @@ export function RoundsDashboard() {
     if (!shift?.id) return;
     queryClient.invalidateQueries({ queryKey: ['patrol-slots', shift.id] });
     queryClient.invalidateQueries({ queryKey: ['patrol-metrics', shift.id] });
+    queryClient.invalidateQueries({ queryKey: ['patrol-agents', shift.id] });
+  };
+
+  const handleRemoveShiftAgent = async (agentId: string) => {
+    if (!shift?.id) return;
+    try {
+      await api.removeShiftAgent(shift.id, agentId);
+      invalidateAll();
+      toast.success('Agente removido da ronda.');
+    } catch (e: any) {
+      toast.error(e?.message ?? 'Não foi possível remover o agente.');
+    }
+  };
+
+  const handleAddSupportAgent = async (agentId: string) => {
+    if (!shift?.id) return;
+    try {
+      await api.addSupportAgentToShift(shift.id, agentId);
+      invalidateAll();
+      toast.success('Agente de apoio (BH) escalado.');
+    } catch (e: any) {
+      toast.error(e?.message ?? 'Não foi possível escalar o agente de apoio.');
+    }
   };
 
   const handleStart = async (slot: PatrolSlot) => {
@@ -630,7 +653,13 @@ export function RoundsDashboard() {
             Agentes da equipe {team}{' '}
             <span className="font-normal text-muted-foreground">({shiftAgents.length})</span>
           </h3>
-          <RoundAgentList agents={shiftAgents} />
+          <RoundAgentList agents={shiftAgents} onRemove={user ? handleRemoveShiftAgent : undefined} />
+          {user && (
+            <AddSupportAgent
+              excludeIds={shiftAgents.map((a) => a.agent_id)}
+              onAdd={handleAddSupportAgent}
+            />
+          )}
         </section>
 
         <section className="rounded-xl border border-border bg-card p-4">
@@ -665,6 +694,93 @@ export function RoundsDashboard() {
           toast.success(`${preview.length} slots gerados.`);
         }}
       />
+    </div>
+  );
+}
+
+/** Busca compacta para escalar um agente de apoio (BH) — fora do time
+ * titular, entrou como reforço/banco de horas. Fecha após adicionar. */
+function AddSupportAgent({ excludeIds, onAdd }: { excludeIds: string[]; onAdd: (agentId: string) => Promise<void> }) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState<Array<{ id: string; name: string; team: string | null }>>([]);
+  const [searching, setSearching] = useState(false);
+  const [adding, setAdding] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const q = query.trim();
+    if (q.length < 2) { setResults([]); return; }
+    setSearching(true);
+    const t = setTimeout(() => {
+      api.searchAgentsByName(q, excludeIds)
+        .then(setResults)
+        .catch(() => setResults([]))
+        .finally(() => setSearching(false));
+    }, 300);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, open]);
+
+  if (!open) {
+    return (
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg border border-dashed border-border py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+      >
+        <UserPlus className="h-3.5 w-3.5" /> Adicionar agente de apoio (BH)
+      </button>
+    );
+  }
+
+  return (
+    <div className="mt-2 space-y-1.5 rounded-lg border border-border bg-muted/30 p-2.5">
+      <div className="relative">
+        <Search className="pointer-events-none absolute left-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+        <input
+          autoFocus
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Buscar agente pelo nome..."
+          className="w-full rounded-md border border-border bg-background py-1.5 pl-7 pr-2 text-xs outline-none focus:border-primary/50"
+        />
+      </div>
+      {searching && <p className="px-1 text-[11px] text-muted-foreground">Buscando...</p>}
+      {!searching && query.trim().length >= 2 && results.length === 0 && (
+        <p className="px-1 text-[11px] text-muted-foreground">Nenhum agente encontrado.</p>
+      )}
+      {results.length > 0 && (
+        <div className="max-h-36 space-y-0.5 overflow-y-auto">
+          {results.map((r) => (
+            <button
+              key={r.id}
+              type="button"
+              disabled={adding === r.id}
+              onClick={async () => {
+                setAdding(r.id);
+                await onAdd(r.id);
+                setAdding(null);
+                setOpen(false);
+                setQuery('');
+              }}
+              className="flex w-full items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left text-xs hover:bg-background disabled:opacity-60"
+            >
+              <span className="truncate text-foreground">{r.name}</span>
+              <span className="flex shrink-0 items-center gap-1 text-[10px] text-muted-foreground">
+                {adding === r.id ? <Loader2 className="h-3 w-3 animate-spin" /> : (r.team ?? '—')}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
+      <button
+        type="button"
+        onClick={() => { setOpen(false); setQuery(''); setResults([]); }}
+        className="w-full text-center text-[11px] text-muted-foreground hover:text-foreground"
+      >
+        Cancelar
+      </button>
     </div>
   );
 }

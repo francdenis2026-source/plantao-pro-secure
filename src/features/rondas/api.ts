@@ -87,6 +87,32 @@ export async function listShiftAgents(shiftId: string): Promise<PatrolAgentAssig
   return data ?? [];
 }
 
+export async function removeShiftAgent(shiftId: string, agentId: string): Promise<void> {
+  const { error } = await sb.from('patrol_agents').delete().eq('shift_id', shiftId).eq('agent_id', agentId);
+  if (error) throw error;
+}
+
+/** Busca agentes ativos por nome (qualquer equipe/unidade) — usada para
+ * escalar um agente de apoio (BH) que veio de fora do time titular. */
+export async function searchAgentsByName(query: string, excludeIds: string[] = []): Promise<Array<{ id: string; name: string; team: string | null }>> {
+  const q = query.trim();
+  if (q.length < 2) return [];
+  let builder = sb.from('agents').select('id, name, team').eq('is_active', true).ilike('name', `%${q}%`).order('name').limit(8);
+  if (excludeIds.length > 0) builder = builder.not('id', 'in', `(${excludeIds.join(',')})`);
+  const { data, error } = await builder;
+  if (error) throw error;
+  return data ?? [];
+}
+
+/** Escala um agente de apoio (BH) avulso no turno — fora do time titular. */
+export async function addSupportAgentToShift(shiftId: string, agentId: string): Promise<void> {
+  const { error } = await sb.from('patrol_agents').upsert(
+    { shift_id: shiftId, agent_id: agentId, is_support: true },
+    { onConflict: 'shift_id,agent_id' },
+  );
+  if (error) throw error;
+}
+
 // ---------- Slot generation (distribution strategies) ----------
 
 interface GenerateSlotsInput {

@@ -31,6 +31,7 @@ export interface PatrolAgentAssignment {
   agent_id: string;
   position: string | null;
   status: 'available' | 'in_round' | 'standby' | 'unavailable';
+  is_support: boolean;
   agent?: { id: string; name: string; matricula: string | null; avatar_url: string | null };
 }
 
