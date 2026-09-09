@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogFooter } f
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
+import { LiveClock } from '@/components/LiveClock';
 import { teamPosters } from '@/lib/teamAssets';
 import { QuickRoundsMode } from './QuickRoundsMode';
 import * as api from '../api';
@@ -527,6 +528,8 @@ export function RoundsDashboard() {
             Dividir / reprogramar rondas
           </Button>
         </div>
+
+        <LiveClock />
       </header>
 
       <RoundMetrics metrics={metrics} />

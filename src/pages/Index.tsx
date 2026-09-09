@@ -80,6 +80,7 @@ import { CommandRoomBackground } from '@/components/home/CommandRoomBackground';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
 import iseAcreHeaderBadge from '@/assets/logo-ise-socioeducativo.png';
 import { OperatorHeaderControls } from '@/components/layout/OperatorHeaderControls';
+import { LiveClock } from '@/components/LiveClock';
 
 import { useTheme } from '@/contexts/ThemeContext';
 import { setMasterToken } from '@/lib/masterSession';
@@ -1476,7 +1477,8 @@ export default function Index() {
             )}
           </div>
 
-          <div className="relative">
+          <div className="relative flex items-center gap-2.5">
+            <LiveClock className="hidden sm:flex" />
             <OperatorHeaderControls />
           </div>
         </div>

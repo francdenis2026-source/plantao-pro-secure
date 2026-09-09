@@ -2894,4 +2894,20 @@ body.rm-low-motion > #root { filter: none !important; }
   @keyframes rm-spin { to { transform: rotate(0deg); } }
 }
 
+/* Relógio ao vivo do header — dois-pontos piscando + brilho sutil na borda,
+   efeito discreto de "painel operacional" sem exagerar. */
+@keyframes live-clock-colon {
+  0%, 45% { opacity: 1; }
+  50%, 100% { opacity: 0.15; }
+}
+@keyframes live-clock-glow {
+  0%, 100% { box-shadow: 0 0 0 1px hsl(var(--primary) / 0.12), 0 0 10px hsl(var(--primary) / 0.06); }
+  50% { box-shadow: 0 0 0 1px hsl(var(--primary) / 0.28), 0 0 16px hsl(var(--primary) / 0.22); }
+}
+.live-clock-colon { animation: live-clock-colon 1s steps(1, end) infinite; }
+.live-clock-badge { animation: live-clock-glow 3.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .live-clock-colon, .live-clock-badge { animation: none; }
+}
+
 
