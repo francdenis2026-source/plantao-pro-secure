@@ -1,9 +1,8 @@
 import { useEffect, useState, useCallback, lazy, Suspense } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAgentProfile } from '@/hooks/useAgentProfile';
 import { useRegistrationsEnabled } from '@/hooks/useRegistrationsEnabled';
-import { AgentHomeDashboard } from '@/features/home-dashboard/AgentHomeDashboard';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -1443,11 +1442,11 @@ export default function Index() {
     );
   }
 
-  // Usuário autenticado (agente comum) vê a dashboard pessoal (Seção 13),
+  // Usuário autenticado vai direto para o painel operacional (Seção 13) —
   // não a home pública de marketing. Master/admin continuam navegando pela
   // sidebar normalmente (Painel Master / Admin), essa tela é só para /.
   if (user) {
-    return <AgentHomeDashboard />;
+    return <Navigate to="/agent-panel" replace />;
   }
 
   return (
