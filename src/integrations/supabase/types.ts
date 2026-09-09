@@ -473,6 +473,8 @@ export type Database = {
         Row: {
           address: string | null
           age: number | null
+          approval_status: string
+          approved_at: string | null
           avatar_url: string | null
           bh_hourly_rate: number | null
           bh_limit: number | null
@@ -495,6 +497,7 @@ export type Database = {
           name: string
           phone: string | null
           position: string | null
+          rejection_reason: string | null
           role: string | null
           team: string | null
           unblocked_at: string | null
@@ -505,6 +508,8 @@ export type Database = {
         Insert: {
           address?: string | null
           age?: number | null
+          approval_status?: string
+          approved_at?: string | null
           avatar_url?: string | null
           bh_hourly_rate?: number | null
           bh_limit?: number | null
@@ -527,6 +532,7 @@ export type Database = {
           name: string
           phone?: string | null
           position?: string | null
+          rejection_reason?: string | null
           role?: string | null
           team?: string | null
           unblocked_at?: string | null
@@ -537,6 +543,8 @@ export type Database = {
         Update: {
           address?: string | null
           age?: number | null
+          approval_status?: string
+          approved_at?: string | null
           avatar_url?: string | null
           bh_hourly_rate?: number | null
           bh_limit?: number | null
@@ -559,6 +567,7 @@ export type Database = {
           name?: string
           phone?: string | null
           position?: string | null
+          rejection_reason?: string | null
           role?: string | null
           team?: string | null
           unblocked_at?: string | null
@@ -1075,6 +1084,7 @@ export type Database = {
           agent_id: string
           created_at: string
           id: string
+          is_support: boolean
           position: string | null
           shift_id: string
           status: string
@@ -1083,6 +1093,7 @@ export type Database = {
           agent_id: string
           created_at?: string
           id?: string
+          is_support?: boolean
           position?: string | null
           shift_id: string
           status?: string
@@ -1091,6 +1102,7 @@ export type Database = {
           agent_id?: string
           created_at?: string
           id?: string
+          is_support?: boolean
           position?: string | null
           shift_id?: string
           status?: string
@@ -1436,6 +1448,53 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      quick_round_history: {
+        Row: {
+          agent_names: string[]
+          completed_at: string
+          created_at: string
+          created_by: string | null
+          duration_minutes: number
+          id: string
+          per_agent_minutes: number
+          started_at: string
+          team: string | null
+          unit_id: string | null
+        }
+        Insert: {
+          agent_names: string[]
+          completed_at?: string
+          created_at?: string
+          created_by?: string | null
+          duration_minutes: number
+          id?: string
+          per_agent_minutes: number
+          started_at: string
+          team?: string | null
+          unit_id?: string | null
+        }
+        Update: {
+          agent_names?: string[]
+          completed_at?: string
+          created_at?: string
+          created_by?: string | null
+          duration_minutes?: number
+          id?: string
+          per_agent_minutes?: number
+          started_at?: string
+          team?: string | null
+          unit_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quick_round_history_unit_id_fkey"
+            columns: ["unit_id"]
+            isOneToOne: false
+            referencedRelation: "units"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       round_sessions: {
         Row: {
@@ -2295,6 +2354,20 @@ export type Database = {
           id: string
           municipality: string
           name: string
+        }[]
+      }
+      lookup_agent_by_cpf: {
+        Args: { _cpf: string }
+        Returns: {
+          id: string
+          is_active: boolean
+          is_frozen: boolean
+          license_expires_at: string
+          license_status: string
+          name: string
+          team: string
+          unit_municipality: string
+          unit_name: string
         }[]
       }
       lookup_agent_for_login: {
