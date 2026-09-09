@@ -1,4 +1,4 @@
-import { Menu, ExternalLink, Phone, ScrollText, ShieldCheck, Building2, CalendarClock, ArrowLeftRight, MessageCircle, Settings, LogIn } from 'lucide-react';
+import { Menu, ExternalLink, Phone, ScrollText, ShieldCheck, Building2, CalendarClock, ArrowLeftRight, MessageCircle, Settings, LogIn, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import {
   Sheet,
@@ -18,6 +18,9 @@ interface ServiceLink {
   icon: typeof ScrollText;
   external?: boolean;
   href: string;
+  /** Exige agente cadastrado — visitante é levado pra identificação por
+   * matrícula em vez de navegar direto (Seção 43). */
+  requiresAuth?: boolean;
 }
 
 const LEGISLACAO: ServiceLink[] = [
@@ -62,22 +65,24 @@ export function AgentQuickServicesMenu({ className, variant = 'floating' }: { cl
   const { user, masterSession } = useAuth();
   const isAuthed = !!user || !!masterSession;
 
-  const appAtalhos: ServiceLink[] = isAuthed
-    ? [
-        { label: 'Gestor de Rondas', description: 'Rondas em andamento', icon: ShieldCheck, href: '/rondas' },
-        { label: 'Minha escala', description: 'Próximos plantões', icon: CalendarClock, href: '/agenda' },
-        { label: 'Permutas', description: 'Solicitar ou aceitar trocas', icon: ArrowLeftRight, href: '/agent-panel?tab=permutas' },
-        { label: 'Chat da equipe', description: 'Falar com sua equipe', icon: MessageCircle, href: '/agent-panel?tab=chat' },
-        { label: 'Configurações', description: 'Preferências da conta', icon: Settings, href: '/settings' },
-      ]
-    : [
-        { label: 'Entrar no sistema', description: 'Acessar com CPF e senha', icon: LogIn, href: '/' },
-      ];
+  // Mesmo cardápio de funções pra todo mundo — visitante vê tudo que existe
+  // no PlantãoPro, só que o que exige cadastro leva pra identificação por
+  // matrícula em vez de abrir direto (Seção 43).
+  const appAtalhos: ServiceLink[] = [
+    { label: 'Gestor de Rondas', description: 'Rondas em andamento', icon: ShieldCheck, href: '/rondas' },
+    { label: 'Minha escala', description: 'Próximos plantões', icon: CalendarClock, href: '/agenda', requiresAuth: true },
+    { label: 'Permutas', description: 'Solicitar ou aceitar trocas', icon: ArrowLeftRight, href: '/agent-panel?tab=permutas', requiresAuth: true },
+    { label: 'Banco de Horas', description: 'Saldo e lançamentos', icon: Clock, href: '/overtime', requiresAuth: true },
+    { label: 'Chat da equipe', description: 'Falar com sua equipe', icon: MessageCircle, href: '/agent-panel?tab=chat', requiresAuth: true },
+    { label: 'Configurações', description: 'Preferências da conta', icon: Settings, href: '/settings', requiresAuth: true },
+    ...(!isAuthed ? [{ label: 'Entrar no sistema', description: 'Acessar com matrícula e senha', icon: LogIn, href: '/', requiresAuth: false }] : []),
+  ];
 
   const renderRow = (item: ServiceLink) => {
+    const locked = item.requiresAuth && !isAuthed;
     const content = (
       <div className="flex items-center gap-3 rounded-lg px-2.5 py-2.5 text-left transition-colors hover:bg-muted">
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+        <span className={cn('flex h-9 w-9 shrink-0 items-center justify-center rounded-lg', locked ? 'bg-muted text-muted-foreground' : 'bg-primary/10 text-primary')}>
           <item.icon className="h-4 w-4" />
         </span>
         <div className="min-w-0 flex-1">
@@ -97,7 +102,11 @@ export function AgentQuickServicesMenu({ className, variant = 'floating' }: { cl
     }
     return (
       <SheetClose asChild key={item.label}>
-        <button type="button" className="w-full" onClick={() => navigate(item.href)}>
+        <button
+          type="button"
+          className="w-full"
+          onClick={() => navigate(locked ? `/?login=1&feature=${encodeURIComponent(item.label)}` : item.href)}
+        >
           {content}
         </button>
       </SheetClose>

@@ -170,14 +170,13 @@ export function AuthDialog({
             <div className="absolute left-0 top-0 bottom-0 w-[3px]"
                  style={{ background: teamColor!.primary, opacity: 0.7 }} />
 
-            {/* Top status row */}
-            <div className="absolute top-2 sm:top-2.5 inset-x-3 sm:inset-x-4 flex items-center justify-between gap-2">
-              <div className="flex items-center gap-1.5 min-w-0">
-                <div className="h-1.5 w-1.5 rounded-full shrink-0"
-                     style={{ background: teamColor!.primary }} />
-                <span className="text-[9px] sm:text-[10px] tracking-[0.24em] sm:tracking-[0.28em] font-mono font-semibold text-white/75 uppercase truncate">
-                  Equipe {teamKey}
-                </span>
+            {/* O pôster já traz "EQUIPE {teamKey}" embutido na própria arte
+                (nome + lema) — nada de repetir esse texto por cima, ficava
+                redundante. Só um indicador discreto de status no canto. */}
+            <div className="absolute top-2 sm:top-2.5 right-3 sm:right-4">
+              <div className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style={{ background: teamColor!.primary }} />
+                <span className="relative inline-flex h-2 w-2 rounded-full" style={{ background: teamColor!.primary }} />
               </div>
             </div>
 
