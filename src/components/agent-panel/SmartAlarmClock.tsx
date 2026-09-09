@@ -117,7 +117,7 @@ export function SmartAlarmClock({ agentId }: SmartAlarmClockProps) {
               <div className="p-2 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-cyan-500/30">
                 <BellRing className={cn(
                   "h-5 w-5 text-cyan-400",
-                  nextAlarm?.isUrgent && "animate-bounce"
+                  nextAlarm?.isUrgent && "animate-pulse"
                 )} />
               </div>
               {alarms.length > 0 && (

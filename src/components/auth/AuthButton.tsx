@@ -14,7 +14,7 @@ interface AuthButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<AuthButtonVariant, string> = {
   primary:   'bg-accent text-accent-foreground hover:bg-accent/90 border-accent/40',
-  master:    'bg-amber-500 text-slate-900 hover:bg-amber-400 border-amber-400/40',
+  master:    'bg-amber-500 text-black hover:bg-amber-400 border-amber-400/40',
   admin:     'bg-indigo-500 text-white hover:bg-indigo-400 border-indigo-400/40',
   // register handled separately (tactical SVG)
   register:  '',

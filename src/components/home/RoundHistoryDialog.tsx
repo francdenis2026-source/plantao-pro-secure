@@ -218,7 +218,6 @@ export function RoundHistoryDialog({
                   <li
                     key={i}
                     className="rounded border border-slate-800/80 bg-slate-900/50 px-2.5 py-1.5"
-                    style={{ borderLeft: `3px solid ${color}` }}
                   >
                     {/* Linha 1: equipe + data/hora */}
                     <div className="flex items-center gap-2 min-w-0">

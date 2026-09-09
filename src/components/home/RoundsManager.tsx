@@ -3432,7 +3432,6 @@ export function RoundsManager({ customTrigger }: { customTrigger?: React.ReactNo
                           type="button"
                           onClick={() => { setHistoryTeamFilter(last.team); setHistoryDialogOpen(true); }}
                           className="mb-1.5 w-full text-left rounded border border-primary/25 bg-primary/5 px-2 py-1 hover:bg-primary/10 transition-colors"
-                          style={{ borderLeft: `3px solid ${color}` }}
                           title={`Abrir histórico filtrado por ${label}`}
                         >
                           <div className="flex items-center gap-1.5 min-w-0">

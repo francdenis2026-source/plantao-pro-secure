@@ -255,11 +255,12 @@ export function StartLockConfirmDialog({
             </span>
             {!armed && (
               <span
-                className="absolute left-0 bottom-0 h-[2px]"
+                className="absolute left-0 bottom-0 h-[2px] w-full"
                 style={{
                   backgroundColor: color,
-                  width: `${((3 - countdown) / 3) * 100}%`,
-                  transition: 'width 1s linear',
+                  transform: `scaleX(${(3 - countdown) / 3})`,
+                  transformOrigin: 'left',
+                  transition: 'transform 1s linear',
                 }}
               />
             )}

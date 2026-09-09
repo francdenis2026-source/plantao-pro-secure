@@ -152,7 +152,7 @@ export function ForgotPasswordDialog() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold"
+              className="w-full bg-amber-500 hover:bg-amber-600 text-black font-semibold"
             >
               {loading ? (
                 <>
