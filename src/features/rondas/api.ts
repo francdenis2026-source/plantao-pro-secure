@@ -44,7 +44,7 @@ export async function getActiveShift(unitId: string, team: string): Promise<Patr
 }
 
 export async function createShift(input: {
-  unit_id: string; team: string; start_at: string; end_at: string; interval_minutes: number; created_by: string;
+  unit_id: string; team: string; start_at: string; end_at: string; interval_minutes: number; created_by: string | null;
 }): Promise<PatrolShift> {
   const { data, error } = await sb.from('patrol_shifts').insert(input).select().single();
   if (error) throw error;
@@ -211,7 +211,7 @@ export async function listScheduledRounds(unitId: string, team: string): Promise
 
 /** Transforma uma programação em um turno real de hoje: cria o patrol_shift,
  * atribui a equipe inteira e já gera a grade de quartos de hora (rotativo). */
-export async function activateScheduledRound(row: ScheduledRoundRow, team: string, createdBy: string): Promise<PatrolShift> {
+export async function activateScheduledRound(row: ScheduledRoundRow, team: string, createdBy: string | null): Promise<PatrolShift> {
   const now = new Date();
   let start = now;
   let end: Date;

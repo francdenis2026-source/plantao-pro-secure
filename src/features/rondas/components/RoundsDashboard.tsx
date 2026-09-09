@@ -116,10 +116,10 @@ export function RoundsDashboard() {
   const [activatingId, setActivatingId] = useState<string | null>(null);
 
   const handleActivateScheduled = async (row: api.ScheduledRoundRow) => {
-    if (!unitId || !team || !user) return;
+    if (!unitId || !team) return;
     setActivatingId(row.id);
     try {
-      await api.activateScheduledRound(row, team, user.id);
+      await api.activateScheduledRound(row, team, user?.id ?? null);
       await shiftQuery.refetch();
       toast.success(`Turno "${row.name}" ativado a partir da programação.`);
     } catch (e: any) {
@@ -248,18 +248,11 @@ export function RoundsDashboard() {
       <div className="space-y-4 p-4">
         <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border p-10 text-center">
           <p className="text-sm text-muted-foreground">Nenhum turno de rondas ativo para a equipe {team}.</p>
-          {user && (
-            <>
-              <Button onClick={() => setDividerOpen(true)}>Programar turno de rondas</Button>
-              <CreateShiftDialog open={dividerOpen} onOpenChange={setDividerOpen} unitId={unitId} team={team} createdBy={user?.id ?? ''} onCreated={() => shiftQuery.refetch()} />
-            </>
-          )}
-          {!user && (
-            <p className="text-xs text-muted-foreground mt-2">Faça login para criar novos turnos de rondas</p>
-          )}
+          <Button onClick={() => setDividerOpen(true)}>Programar turno de rondas</Button>
+          <CreateShiftDialog open={dividerOpen} onOpenChange={setDividerOpen} unitId={unitId} team={team} createdBy={user?.id ?? null} onCreated={() => shiftQuery.refetch()} />
         </div>
 
-        {user && scheduledRounds.length > 0 && (
+        {scheduledRounds.length > 0 && (
           <section className="rounded-xl border border-border bg-card p-4">
             <h3 className="mb-3 text-[13px] font-semibold uppercase tracking-wide text-foreground">
               Programações desta unidade
@@ -376,12 +369,10 @@ export function RoundsDashboard() {
               </div>
             </div>
           ))}
-          {user && (
-            <Button variant="outline" size="sm" className="gap-1.5" onClick={() => setDividerOpen(true)}>
-              <SplitSquareHorizontal className="h-3.5 w-3.5" />
-              Dividir / reprogramar rondas
-            </Button>
-          )}
+          <Button variant="outline" size="sm" className="gap-1.5" onClick={() => setDividerOpen(true)}>
+            <SplitSquareHorizontal className="h-3.5 w-3.5" />
+            Dividir / reprogramar rondas
+          </Button>
         </div>
       </header>
 
@@ -573,7 +564,7 @@ function toDatetimeLocalValue(d: Date): string {
  * para o usuário já escolher a estratégia de divisão.
  */
 function CreateShiftDialog({ open, onOpenChange, unitId, team, createdBy, onCreated }: {
-  open: boolean; onOpenChange: (v: boolean) => void; unitId: string; team: string; createdBy: string; onCreated: () => void;
+  open: boolean; onOpenChange: (v: boolean) => void; unitId: string; team: string; createdBy: string | null; onCreated: () => void;
 }) {
   const [startAt, setStartAt] = useState(() => toDatetimeLocalValue(new Date()));
   const [durationMinutes, setDurationMinutes] = useState(12 * 60);
