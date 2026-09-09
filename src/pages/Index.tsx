@@ -1464,7 +1464,7 @@ export default function Index() {
         {/* Barra fixa do topo — marca + rádio, tema e ferramentas do operador,
             sempre visíveis mesmo com a página rolada. `fixed` (não `sticky`)
             porque um ancestral usa overflow-x-clip, o que quebra sticky. */}
-        <div className="fixed inset-x-0 top-0 z-40 flex h-16 shrink-0 items-center justify-between overflow-hidden border-b border-border/60 bg-background/90 px-3 backdrop-blur-md sm:px-5">
+        <div className="header-glass fixed inset-x-0 top-0 z-40 flex h-16 shrink-0 items-center justify-between overflow-hidden px-3 sm:px-5">
           {/* Textura tática discreta — grade de pontos + brilho radial, sem
               repetir a mesma foto usada na hero logo abaixo. */}
           <div
@@ -1480,6 +1480,9 @@ export default function Index() {
             className="pointer-events-none absolute inset-0"
             style={{ background: 'radial-gradient(60% 140% at 15% 50%, hsl(var(--primary) / 0.10) 0%, transparent 70%)' }}
           />
+          {/* Borda inferior em gradiente sutil (em vez de uma linha sólida) —
+              some pro azul da marca no centro, condiz com o efeito de vidro. */}
+          <div aria-hidden className="header-glass-edge pointer-events-none absolute inset-x-0 bottom-0 h-px" />
 
           <div className="relative flex items-center gap-2.5">
             <BrasaoSentinela size={56} title="PlantãoPro AC" />

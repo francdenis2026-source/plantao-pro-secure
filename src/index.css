@@ -3036,4 +3036,27 @@ body.rm-low-motion > #root { filter: none !important; }
   .live-clock-colon, .live-clock-badge { animation: none; }
 }
 
+/* Header fixo — vidro fosco de verdade: mais transparente que um simples
+   `bg-background/90`, com blur+saturação forte pra realçar o que passa por
+   baixo, um brilho interno no topo (como luz pegando na borda de um
+   vidro) e uma sombra suave por baixo pra dar profundidade. Web e mobile
+   usam a mesma classe — o efeito já é responsivo por natureza. */
+.header-glass {
+  background: linear-gradient(180deg, hsl(var(--background) / 0.66) 0%, hsl(var(--background) / 0.52) 100%);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.07),
+    0 10px 30px -14px hsl(222 60% 2% / 0.45);
+}
+.light-theme .header-glass {
+  background: linear-gradient(180deg, hsl(var(--background) / 0.74) 0%, hsl(var(--background) / 0.58) 100%);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.55),
+    0 10px 30px -16px hsl(216 40% 30% / 0.18);
+}
+.header-glass-edge {
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.55) 50%, transparent);
+}
+
 
