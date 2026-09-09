@@ -35,10 +35,11 @@ export function RoundsDashboard() {
   const [isOnline, setIsOnline] = useState(typeof navigator === 'undefined' ? true : navigator.onLine);
   const [pendingCount, setPendingCount] = useState(() => getQueueLength());
 
-  // Allow manual team/unit selection for unauthenticated users
-  // Default to ALFA team and "main" unit for public access
+  // Allow manual team/unit selection for unauthenticated users.
+  // Default to ALFA team and CS Feijó (unidade real — antes usava a string
+  // literal "main", que não corresponde a nenhum unit_id de verdade).
   const [guestTeam, setGuestTeam] = useState<string | null>('ALFA');
-  const [guestUnitId, setGuestUnitId] = useState<string | null>('main');
+  const [guestUnitId, setGuestUnitId] = useState<string | null>('dd77c458-92fb-49e2-819d-7a32288cc390');
 
   const flushQueue = async () => {
     const { synced, remaining } = await flushPatrolQueue({
@@ -95,6 +96,14 @@ export function RoundsDashboard() {
     enabled: !!unitId,
   });
   const sectors = sectorsQuery.data ?? [];
+
+  // Lista de unidades para o seletor de visitante — evita pedir o UUID cru.
+  const unitsQuery = useQuery({
+    queryKey: ['units-picker'],
+    queryFn: () => api.listUnitsForPicker(),
+    enabled: !user,
+  });
+  const unitsForPicker = unitsQuery.data ?? [];
 
   // Programações recorrentes criadas no Admin (scheduled_rounds) — só fazem
   // sentido oferecer quando não há turno ativo ainda para a equipe.
@@ -321,13 +330,16 @@ export function RoundsDashboard() {
             </div>
             <div>
               <label className="text-xs font-medium text-blue-800 dark:text-blue-200">Unidade</label>
-              <input
-                type="text"
-                value={guestUnitId || 'main'}
-                onChange={(e) => setGuestUnitId(e.target.value || 'main')}
-                placeholder="ID da unidade"
+              <select
+                value={guestUnitId || ''}
+                onChange={(e) => setGuestUnitId(e.target.value || null)}
                 className="w-full rounded-md border border-blue-200 dark:border-blue-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm mt-1"
-              />
+              >
+                {unitsForPicker.length === 0 && <option value={guestUnitId ?? ''}>Carregando unidades…</option>}
+                {unitsForPicker.map((u) => (
+                  <option key={u.id} value={u.id}>{u.name}</option>
+                ))}
+              </select>
             </div>
           </div>
           <p className="text-xs text-blue-700 dark:text-blue-300">Ou <a href="/login" className="underline hover:no-underline font-medium">faça login</a> para usar seu perfil de agente</p>

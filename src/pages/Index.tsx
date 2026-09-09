@@ -357,7 +357,7 @@ export default function Index() {
         const checkCpfExists = async () => {
           try {
             const { data: chkRows } = await (supabase as any)
-              .rpc('lookup_agent_for_login', { _cpf: cleanCpf });
+              .rpc('lookup_agent_by_cpf', { _cpf: cleanCpf });
             const data = Array.isArray(chkRows) && chkRows.length
               ? { name: chkRows[0].name, team: chkRows[0].team }
               : null;
@@ -418,14 +418,14 @@ export default function Index() {
     // If login is opened directly (quick login select / biometric), prefill CPF from last usage
     if (!loginCpf) {
       const lastCpf = readLastCpf();
-      if (lastCpf) setLoginCpf(formatCPF(lastCpf));
+      if (lastCpf) setLoginCpf(lastCpf.replace(/\D/g, '').slice(0, 6));
     }
 
     // Prefill password (only) when we have a single auto-login credential
     const autoLoginCred = getAutoLoginCredential();
     const currentCpf = loginCpf.replace(/\D/g, '');
     if (autoLoginCred && (!currentCpf || currentCpf === autoLoginCred.cpf) && !loginPassword) {
-      setLoginCpf(formatCPF(autoLoginCred.cpf));
+      setLoginCpf(autoLoginCred.cpf.replace(/\D/g, '').slice(0, 6));
       setLoginPassword(autoLoginCred.password);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -449,12 +449,12 @@ export default function Index() {
   // o alerta de "equipe incorreta" — evita travar a UI logo após clicar no card
   // quando o último CPF salvo pertence a outra equipe.
   const handleCpfInputChange = async (value: string, silent: boolean = false) => {
-    const formatted = formatCPF(value);
+    const formatted = value.replace(/\D/g, '').slice(0, 6);
     setCheckCpf(formatted);
-    
-    const cleanCpf = formatted.replace(/\D/g, '');
-    
-    if (cleanCpf.length === 11) {
+
+    const cleanCpf = formatted;
+
+    if (cleanCpf.length === 6) {
       setIsSearchingAgent(true);
       try {
         const { data: searchRows } = await (supabase as any)
@@ -514,18 +514,10 @@ export default function Index() {
 
   const handleCheckCpf = async () => {
     const cleanCpf = checkCpf.replace(/\D/g, '');
-    if (cleanCpf.length !== 11) {
+    if (cleanCpf.length !== 6) {
       toast({
-        title: 'CPF incompleto',
-        description: 'Digite os 11 dígitos do CPF.',
-        variant: 'destructive',
-      });
-      return;
-    }
-    if (!validateCPF(cleanCpf)) {
-      toast({
-        title: 'CPF inválido',
-        description: 'O dígito verificador do CPF não confere. Revise os números.',
+        title: 'Matrícula incompleta',
+        description: 'Digite os 6 primeiros dígitos da sua matrícula funcional.',
         variant: 'destructive',
       });
       return;
@@ -534,7 +526,6 @@ export default function Index() {
     setIsCheckingCpf(true);
 
     try {
-      // cleanCpf validated above
       const { data: preRows } = await (supabase as any)
         .rpc('lookup_agent_for_login', { _cpf: cleanCpf });
       const existingAgent = Array.isArray(preRows) && preRows.length
@@ -891,9 +882,9 @@ export default function Index() {
     
     const errors: Record<string, string> = {};
     const cleanCpf = loginCpf.replace(/\D/g, '');
-    
-    if (!cleanCpf || cleanCpf.length !== 11) {
-      errors.cpf = 'CPF inválido';
+
+    if (!cleanCpf || cleanCpf.length !== 6) {
+      errors.cpf = 'Digite os 6 primeiros dígitos da sua matrícula';
     }
     if (!loginPassword || loginPassword.length < 6) {
       errors.password = 'Senha deve ter pelo menos 6 caracteres';
@@ -983,7 +974,7 @@ export default function Index() {
         setLockoutDialog({
           open: true,
           endTime: lockoutEnd,
-          identifier: formatCPF(cleanCpf)
+          identifier: cleanCpf
         });
         setShowLogin(false);
       } else {
@@ -1261,11 +1252,11 @@ export default function Index() {
   // Handle credential selection (without password)
   const handleQuickLoginSelect = (cpf: string) => {
     persistLastCpf(cpf);
-    setLoginCpf(formatCPF(cpf));
+    setLoginCpf(cpf.replace(/\D/g, '').slice(0, 6));
     setSelectedTeam(null); // Clear team selection for direct login
     setShowLogin(true);
     toast({
-      title: 'CPF Carregado',
+      title: 'Matrícula carregada',
       description: 'Digite sua senha para entrar.',
     });
   };
@@ -1284,17 +1275,17 @@ export default function Index() {
         if (agentError || !agentData) {
           toast({
             title: 'Erro',
-            description: 'CPF não encontrado no sistema.',
+            description: 'Matrícula não encontrada no sistema.',
             variant: 'destructive',
           });
           setIsBiometricLoading(false);
           return;
         }
-        
+
         // We need the password for login - prompt user
         const authEmail = agentData.email || `${cpf}@agent.plantaopro.com`;
         persistLastCpf(cpf);
-        setLoginCpf(formatCPF(cpf));
+        setLoginCpf(cpf.replace(/\D/g, '').slice(0, 6));
         setShowLogin(true);
         toast({
           title: 'Biometria Confirmada',
@@ -1693,23 +1684,28 @@ export default function Index() {
         onOpenChange={(open) => !open && closeAllDialogs()}
         variant="check"
         title="Identificação de Agente"
-        subtitle="Digite seu CPF para identificação"
+        subtitle="Digite os 6 primeiros dígitos da sua matrícula"
         team={selectedTeam}
       >
         <div className="space-y-5">
           {!foundAgent && (
-            <AuthInput
-              value={checkCpf}
-              onChange={(e) => handleCpfInputChange(e.target.value)}
-              placeholder="000.000.000-00"
-              inputMode="numeric"
-              maxLength={14}
-              variant="centered"
-              icon={<Fingerprint className="h-5 w-5" />}
-              rightIcon={isSearchingAgent ? (
-                <Loader2 className="h-5 w-5 animate-spin text-emerald-400" />
-              ) : undefined}
-            />
+            <>
+              <AuthInput
+                value={checkCpf}
+                onChange={(e) => handleCpfInputChange(e.target.value)}
+                placeholder="000000"
+                inputMode="numeric"
+                maxLength={6}
+                variant="centered"
+                icon={<Fingerprint className="h-5 w-5" />}
+                rightIcon={isSearchingAgent ? (
+                  <Loader2 className="h-5 w-5 animate-spin text-emerald-400" />
+                ) : undefined}
+              />
+              <p className="text-center text-[11px] text-slate-500 -mt-3">
+                Os 6 primeiros dígitos da sua matrícula funcional — é também sua senha inicial.
+              </p>
+            </>
           )}
           
           {/* Found agent feedback */}
@@ -1754,23 +1750,23 @@ export default function Index() {
             </div>
           )}
           
-          {checkCpf.replace(/\D/g, '').length === 11 && !foundAgent && !isSearchingAgent && (
+          {checkCpf.replace(/\D/g, '').length === 6 && !foundAgent && !isSearchingAgent && (
             <div className="p-4 bg-gradient-to-r from-amber-500/15 to-orange-500/10 rounded-xl border-2 border-amber-500/40">
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-amber-500/20">
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                 </div>
-                <span className="text-amber-400 font-bold text-base">CPF não cadastrado</span>
+                <span className="text-amber-400 font-bold text-base">Matrícula não cadastrada</span>
               </div>
             </div>
           )}
           </div>
-          
 
-          
+
+
           <AuthButton
             onClick={handleCheckCpf}
-            disabled={isCheckingCpf || checkCpf.replace(/\D/g, '').length !== 11}
+            disabled={isCheckingCpf || checkCpf.replace(/\D/g, '').length !== 6}
             variant="master"
             loading={isCheckingCpf}
             loadingText="Verificando..."
@@ -1818,17 +1814,21 @@ export default function Index() {
             </div>
           ) : (
             <AuthInput
-              label="CPF"
+              label="Matrícula (6 dígitos)"
               value={loginCpf}
-              onChange={(e) => setLoginCpf(formatCPF(e.target.value))}
-              placeholder="000.000.000-00"
+              onChange={(e) => setLoginCpf(e.target.value.replace(/\D/g, '').slice(0, 6))}
+              placeholder="000000"
               inputMode="numeric"
-              maxLength={14}
+              maxLength={6}
               disabled={!!selectedTeam}
               error={loginErrors.cpf}
               icon={<Fingerprint className="h-5 w-5" />}
             />
           )}
+          <p className="text-[11px] text-slate-500 -mt-2">
+            Use os 6 primeiros dígitos da sua matrícula funcional.
+          </p>
+
           
           <AuthInput
             label="Senha (6 dígitos)"
@@ -1857,7 +1857,7 @@ export default function Index() {
 
           <SavedCredentials
             onSelectCredential={(cpf, savedPassword) => {
-              setLoginCpf(formatCPF(cpf));
+              setLoginCpf(cpf.replace(/\D/g, '').slice(0, 6));
               if (savedPassword) {
                 setLoginPassword(savedPassword);
               }

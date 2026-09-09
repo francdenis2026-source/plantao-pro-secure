@@ -8,6 +8,14 @@ const sb = supabase as any;
 
 // ---------- Sectors ----------
 
+/** Lista enxuta de unidades — alimenta o seletor de visitante no Gestor de
+ * Rondas, para não pedir o UUID da unidade digitado à mão. */
+export async function listUnitsForPicker(): Promise<Array<{ id: string; name: string }>> {
+  const { data, error } = await sb.from('units').select('id, name').order('name');
+  if (error) throw error;
+  return data ?? [];
+}
+
 export async function listSectors(unitId: string): Promise<PatrolSector[]> {
   const { data, error } = await sb
     .from('patrol_sectors')
