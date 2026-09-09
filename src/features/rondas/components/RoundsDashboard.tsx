@@ -242,7 +242,7 @@ export function RoundsDashboard() {
 
   if (shiftQuery.isLoading) {
     return (
-      <div className="space-y-4 p-4">
+      <div className="space-y-3 p-3">
         <Skeleton className="h-40 w-full rounded-xl" />
         <Skeleton className="h-24 w-full rounded-xl" />
       </div>
@@ -251,7 +251,7 @@ export function RoundsDashboard() {
 
   if (!shift) {
     return (
-      <div className="space-y-4 p-4">
+      <div className="space-y-3 p-3">
         <div className="flex items-center gap-3">
           <BrasaoSentinela size={40} title="Gestor de Rondas — PlantãoPro AC" />
           <div>
@@ -344,7 +344,7 @@ export function RoundsDashboard() {
   const isNightShift = shiftStart.getHours() >= 18 || shiftStart.getHours() < 6;
 
   return (
-    <div className="space-y-4 p-4">
+    <div className="space-y-3 p-3">
       {!isOnline && (
         <div className="flex items-center gap-2 rounded-lg border border-warning/40 bg-warning/10 px-3 py-2 text-sm text-warning">
           <WifiOff className="h-4 w-4" /> Sem conexão — as ações serão reenviadas quando a rede voltar.
