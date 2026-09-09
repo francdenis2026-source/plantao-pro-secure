@@ -48,6 +48,20 @@ export async function closeShift(shiftId: string): Promise<void> {
   if (error) throw error;
 }
 
+// ---------- Team roster (for assigning to a new shift) ----------
+
+export async function listUnitTeamAgents(unitId: string, team: string): Promise<Array<{ id: string; name: string }>> {
+  const { data, error } = await sb
+    .from('agents')
+    .select('id, name')
+    .eq('unit_id', unitId)
+    .eq('team', team)
+    .eq('is_active', true)
+    .order('name');
+  if (error) throw error;
+  return data ?? [];
+}
+
 // ---------- Shift agents ----------
 
 export async function assignAgentsToShift(shiftId: string, agentIds: string[]): Promise<void> {
@@ -154,6 +168,86 @@ export async function saveSlots(shiftId: string, slots: ReturnType<typeof genera
   }));
   const { error } = await sb.from('patrol_slots').insert(rows);
   if (error) throw error;
+}
+
+// ---------- Scheduled rounds (programação recorrente, criada no Admin) ----------
+// Liga o agendador (tabela scheduled_rounds, editada em /admin) aos turnos reais
+// que o Gestor de Rondas usa (patrol_shifts/patrol_slots). Sem depender de cron
+// no banco — é materializado sob demanda, com um clique, a partir desta tela.
+
+export interface ScheduledRoundRow {
+  id: string;
+  unit_id: string | null;
+  team: string;
+  name: string;
+  round_start_time: string | null;
+  round_end_time: string | null;
+  round_interval_min: number;
+  ronda_duration_min: number;
+  recur_weekdays: number[];
+  is_enabled: boolean;
+  last_triggered_at: string | null;
+}
+
+export async function listScheduledRounds(unitId: string, team: string): Promise<ScheduledRoundRow[]> {
+  const { data, error } = await sb
+    .from('scheduled_rounds')
+    .select('id, unit_id, team, name, round_start_time, round_end_time, round_interval_min, ronda_duration_min, recur_weekdays, is_enabled, last_triggered_at')
+    .eq('unit_id', unitId)
+    .in('team', [team, 'ALL'])
+    .eq('is_enabled', true)
+    .order('name');
+  if (error) throw error;
+  return data ?? [];
+}
+
+/** Transforma uma programação em um turno real de hoje: cria o patrol_shift,
+ * atribui a equipe inteira e já gera a grade de quartos de hora (rotativo). */
+export async function activateScheduledRound(row: ScheduledRoundRow, team: string, createdBy: string): Promise<PatrolShift> {
+  const now = new Date();
+  let start = now;
+  let end: Date;
+  if (row.round_start_time && row.round_end_time) {
+    const [sh, sm] = row.round_start_time.split(':').map(Number);
+    const [eh, em] = row.round_end_time.split(':').map(Number);
+    start = new Date(now);
+    start.setHours(sh, sm, 0, 0);
+    end = new Date(now);
+    end.setHours(eh, em, 0, 0);
+    if (end <= start) end.setDate(end.getDate() + 1); // turno que vira a noite
+  } else {
+    end = new Date(start.getTime() + (row.ronda_duration_min || 60) * 60_000);
+  }
+  const intervalMinutes = row.round_interval_min || 15;
+
+  const shift = await createShift({
+    unit_id: row.unit_id!,
+    team,
+    start_at: start.toISOString(),
+    end_at: end.toISOString(),
+    interval_minutes: intervalMinutes,
+    created_by: createdBy,
+  });
+
+  const roster = await listUnitTeamAgents(row.unit_id!, team);
+  if (roster.length > 0) {
+    await assignAgentsToShift(shift.id, roster.map((a) => a.id));
+  }
+
+  const preview = generateSlotPreview({
+    shiftId: shift.id,
+    startAt: start,
+    endAt: end,
+    intervalMinutes,
+    sectorIds: [],
+    agentIds: roster.map((a) => a.id),
+    strategy: 'rotative',
+  });
+  if (preview.length > 0) await saveSlots(shift.id, preview);
+
+  await sb.from('scheduled_rounds').update({ last_triggered_at: new Date().toISOString() }).eq('id', row.id);
+
+  return shift;
 }
 
 // ---------- Slots (read + lifecycle) ----------

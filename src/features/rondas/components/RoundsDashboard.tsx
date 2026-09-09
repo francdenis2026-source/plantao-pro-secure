@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { WifiOff, Clock3, Sun, Moon, Users, Building2, MapPin, UserCheck } from 'lucide-react';
+import { WifiOff, Clock3, Sun, Moon, Users, Building2, MapPin, UserCheck, SplitSquareHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useAgentProfile } from '@/hooks/useAgentProfile';
@@ -95,6 +95,30 @@ export function RoundsDashboard() {
     enabled: !!unitId,
   });
   const sectors = sectorsQuery.data ?? [];
+
+  // Programações recorrentes criadas no Admin (scheduled_rounds) — só fazem
+  // sentido oferecer quando não há turno ativo ainda para a equipe.
+  const scheduledQuery = useQuery({
+    queryKey: ['scheduled-rounds', unitId, team],
+    queryFn: () => api.listScheduledRounds(unitId!, team!),
+    enabled: !!unitId && !!team && !shiftQuery.data,
+  });
+  const scheduledRounds = scheduledQuery.data ?? [];
+  const [activatingId, setActivatingId] = useState<string | null>(null);
+
+  const handleActivateScheduled = async (row: api.ScheduledRoundRow) => {
+    if (!unitId || !team || !user) return;
+    setActivatingId(row.id);
+    try {
+      await api.activateScheduledRound(row, team, user.id);
+      await shiftQuery.refetch();
+      toast.success(`Turno "${row.name}" ativado a partir da programação.`);
+    } catch (e: any) {
+      toast.error(e?.message ?? 'Não foi possível ativar essa programação.');
+    } finally {
+      setActivatingId(null);
+    }
+  };
 
   const metricsQuery = useQuery({
     queryKey: ['patrol-metrics', shift?.id],
@@ -212,16 +236,49 @@ export function RoundsDashboard() {
 
   if (!shift) {
     return (
-      <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border p-10 text-center">
-        <p className="text-sm text-muted-foreground">Nenhum turno de rondas ativo para a equipe {team}.</p>
-        {user && (
-          <>
-            <Button onClick={() => setDividerOpen(true)}>Criar turno de rondas</Button>
-            <NewShiftDialog open={dividerOpen} onOpenChange={setDividerOpen} unitId={unitId} team={team} createdBy={user?.id ?? ''} onCreated={() => shiftQuery.refetch()} />
-          </>
-        )}
-        {!user && (
-          <p className="text-xs text-muted-foreground mt-2">Faça login para criar novos turnos de rondas</p>
+      <div className="space-y-4 p-4">
+        <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border p-10 text-center">
+          <p className="text-sm text-muted-foreground">Nenhum turno de rondas ativo para a equipe {team}.</p>
+          {user && (
+            <>
+              <Button onClick={() => setDividerOpen(true)}>Programar turno de rondas</Button>
+              <CreateShiftDialog open={dividerOpen} onOpenChange={setDividerOpen} unitId={unitId} team={team} createdBy={user?.id ?? ''} onCreated={() => shiftQuery.refetch()} />
+            </>
+          )}
+          {!user && (
+            <p className="text-xs text-muted-foreground mt-2">Faça login para criar novos turnos de rondas</p>
+          )}
+        </div>
+
+        {user && scheduledRounds.length > 0 && (
+          <section className="rounded-xl border border-border bg-card p-4">
+            <h3 className="mb-3 text-[13px] font-semibold uppercase tracking-wide text-foreground">
+              Programações desta unidade
+            </h3>
+            <div className="space-y-2">
+              {scheduledRounds.map((row) => (
+                <div key={row.id} className="flex items-center justify-between gap-3 rounded-lg border border-border px-3 py-2.5">
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-semibold text-foreground">{row.name}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {row.round_start_time && row.round_end_time
+                        ? `${row.round_start_time} – ${row.round_end_time}`
+                        : `${row.ronda_duration_min} min`}
+                      {' · '}quartos de {row.round_interval_min} min
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    disabled={activatingId === row.id}
+                    onClick={() => handleActivateScheduled(row)}
+                  >
+                    {activatingId === row.id ? 'Ativando...' : 'Ativar agora'}
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </section>
         )}
       </div>
     );
@@ -307,6 +364,12 @@ export function RoundsDashboard() {
               </div>
             </div>
           ))}
+          {user && (
+            <Button variant="outline" size="sm" className="gap-1.5" onClick={() => setDividerOpen(true)}>
+              <SplitSquareHorizontal className="h-3.5 w-3.5" />
+              Dividir / reprogramar rondas
+            </Button>
+          )}
         </div>
       </header>
 
@@ -469,35 +532,109 @@ export function RoundsDashboard() {
   );
 }
 
-/** Diálogo simples de criação de turno (quando não há nenhum ativo). */
-function NewShiftDialog({ open, onOpenChange, unitId, team, createdBy, onCreated }: {
+const DURATION_OPTIONS = [
+  { minutes: 6 * 60, label: '6 horas' },
+  { minutes: 8 * 60, label: '8 horas' },
+  { minutes: 12 * 60, label: '12 horas' },
+  { minutes: 24 * 60, label: '24 horas' },
+];
+
+const INTERVAL_OPTIONS = [
+  { minutes: 15, label: '15 min (quarto de hora)' },
+  { minutes: 20, label: '20 min' },
+  { minutes: 30, label: '30 min' },
+  { minutes: 60, label: '60 min' },
+];
+
+/** Formata um Date para o valor aceito por <input type="datetime-local">, em horário local. */
+function toDatetimeLocalValue(d: Date): string {
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+/**
+ * Diálogo de criação de turno (quando não há nenhum ativo). Deixa escolher
+ * início, duração e o tamanho dos quartos de hora — em vez do turno fixo de
+ * 12h/15min de antes. Ao confirmar, atribui a equipe inteira ao turno e
+ * mantém o modal aberto: o componente pai troca automaticamente para o
+ * ShiftDivider (mesmo estado `open`) assim que o turno passa a existir,
+ * para o usuário já escolher a estratégia de divisão.
+ */
+function CreateShiftDialog({ open, onOpenChange, unitId, team, createdBy, onCreated }: {
   open: boolean; onOpenChange: (v: boolean) => void; unitId: string; team: string; createdBy: string; onCreated: () => void;
 }) {
+  const [startAt, setStartAt] = useState(() => toDatetimeLocalValue(new Date()));
+  const [durationMinutes, setDurationMinutes] = useState(12 * 60);
+  const [intervalMinutes, setIntervalMinutes] = useState(15);
   const [saving, setSaving] = useState(false);
   if (!open) return null;
+
   const handleCreate = async () => {
     setSaving(true);
     try {
-      const start = new Date();
-      const end = new Date(start.getTime() + 12 * 60 * 60_000);
-      await api.createShift({ unit_id: unitId, team, start_at: start.toISOString(), end_at: end.toISOString(), interval_minutes: 15, created_by: createdBy });
+      const start = new Date(startAt);
+      const end = new Date(start.getTime() + durationMinutes * 60_000);
+      const shift = await api.createShift({
+        unit_id: unitId, team, start_at: start.toISOString(), end_at: end.toISOString(),
+        interval_minutes: intervalMinutes, created_by: createdBy,
+      });
+      try {
+        const roster = await api.listUnitTeamAgents(unitId, team);
+        if (roster.length > 0) await api.assignAgentsToShift(shift.id, roster.map((a) => a.id));
+      } catch {
+        // Segue sem atribuir automaticamente — dá para escolher agentes na etapa de divisão.
+      }
       onCreated();
-      onOpenChange(false);
-      toast.success('Turno de rondas criado (12h, quartos de hora).');
+      toast.success('Turno criado. Agora escolha como dividir as rondas.');
+      // Não fecha: assim que `shift` existir, o pai troca este diálogo pelo ShiftDivider.
     } catch (e: any) {
       toast.error(e?.message ?? 'Não foi possível criar o turno.');
     } finally {
       setSaving(false);
     }
   };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => onOpenChange(false)}>
       <div className="w-full max-w-sm rounded-xl border border-border bg-card p-5" onClick={(e) => e.stopPropagation()}>
-        <h3 className="text-base font-semibold text-foreground">Criar turno de 12h</h3>
-        <p className="mt-1 text-sm text-muted-foreground">Começa agora, divide em quartos de hora (15min). Você pode ajustar a distribuição depois.</p>
-        <div className="mt-4 flex justify-end gap-2">
+        <h3 className="text-base font-semibold text-foreground">Programar turno de rondas</h3>
+        <p className="mt-1 text-sm text-muted-foreground">Defina início, duração e o tamanho dos quartos de hora. Na próxima etapa você escolhe como dividir entre os agentes.</p>
+
+        <div className="mt-4 space-y-3">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium text-foreground">Início</label>
+            <input
+              type="datetime-local"
+              value={startAt}
+              onChange={(e) => setStartAt(e.target.value)}
+              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium text-foreground">Duração</label>
+            <select
+              value={durationMinutes}
+              onChange={(e) => setDurationMinutes(Number(e.target.value))}
+              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+            >
+              {DURATION_OPTIONS.map((o) => <option key={o.minutes} value={o.minutes}>{o.label}</option>)}
+            </select>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium text-foreground">Quartos de hora</label>
+            <select
+              value={intervalMinutes}
+              onChange={(e) => setIntervalMinutes(Number(e.target.value))}
+              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+            >
+              {INTERVAL_OPTIONS.map((o) => <option key={o.minutes} value={o.minutes}>{o.label}</option>)}
+            </select>
+          </div>
+        </div>
+
+        <div className="mt-5 flex justify-end gap-2">
           <Button variant="outline" onClick={() => onOpenChange(false)}>Cancelar</Button>
-          <Button onClick={handleCreate} disabled={saving}>{saving ? 'Criando...' : 'Criar turno'}</Button>
+          <Button onClick={handleCreate} disabled={saving}>{saving ? 'Criando...' : 'Criar e dividir'}</Button>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -31,6 +31,14 @@ export function ShiftDivider({ open, onOpenChange, startAt, endAt, intervalMinut
   const [selectedAgents, setSelectedAgents] = useState<string[]>(agents.map((a) => a.agent_id));
   const [selectedSectors, setSelectedSectors] = useState<string[]>(sectors.map((s) => s.id));
   const [saving, setSaving] = useState(false);
+
+  // agents/sectors chegam de forma assíncrona (query separada) — re-sincroniza
+  // a seleção sempre que o diálogo abre com uma lista nova (Seção 25).
+  useEffect(() => {
+    if (!open) return;
+    setSelectedAgents(agents.map((a) => a.agent_id));
+    setSelectedSectors(sectors.map((s) => s.id));
+  }, [open, agents, sectors]);
 
   const preview = useMemo(
     () => generateSlotPreview({ shiftId: '', startAt, endAt, intervalMinutes, sectorIds: selectedSectors, agentIds: selectedAgents, strategy }),
