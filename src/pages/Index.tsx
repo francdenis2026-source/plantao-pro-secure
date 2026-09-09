@@ -1785,6 +1785,13 @@ export default function Index() {
         </button>
       </div>
 
+      {/* Assinatura do desenvolvedor — só no mobile (no desktop ela já
+          aparece dentro do rodapé completo). Fica numa camada discreta,
+          flutuando por cima do conteúdo mas abaixo da faixa fina fixa. */}
+      <div className="sm:hidden">
+        <MadeInFeijoBadge size="sm" />
+      </div>
+
 
 
 

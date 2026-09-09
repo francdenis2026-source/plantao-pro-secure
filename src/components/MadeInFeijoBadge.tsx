@@ -15,9 +15,11 @@ export function MadeInFeijoBadge({
   size?: 'sm' | 'md' | 'lg';
   className?: string;
 }) {
+  // No mobile fica um pouco mais acima (bottom-10) pra não ficar embaixo da
+  // faixa fina fixa do rodapé; no desktop cola no canto normalmente.
   const wrapperClass = inline
     ? 'inline-flex items-center select-none'
-    : 'pointer-events-none fixed bottom-2 left-2 z-[55] hidden sm:inline-flex select-none';
+    : 'pointer-events-none fixed bottom-10 left-2 z-[55] inline-flex select-none sm:bottom-2';
 
   const sizeMap = {
     sm: {
@@ -100,6 +102,15 @@ export function MadeInFeijoBadge({
           style={{ fontFamily: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace" }}
         >
           Franc Denis
+        </span>
+
+        {/* Cidade e ano */}
+        <span aria-hidden className="text-primary/40 leading-none">·</span>
+        <span
+          className={cn('font-mono font-semibold uppercase text-slate-400 leading-none', sizeMap.tag)}
+          style={{ fontFamily: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace" }}
+        >
+          Feijó/AC · 2026
         </span>
       </div>
     </div>

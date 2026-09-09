@@ -10,7 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { BirthDatePicker } from '@/components/ui/birth-date-picker';
 import { toast } from 'sonner';
-import { ArrowLeft, Save, User, Phone, Mail, MapPin, Loader2, Droplet, Cake, Shield, Building2 } from 'lucide-react';
+import { ArrowLeft, Save, User, Phone, Mail, MapPin, Loader2, Droplet, Cake, Shield, Building2, HeartPulse, UserPlus2, NotebookPen } from 'lucide-react';
 import { formatPhone } from '@/lib/validators';
 import { AvatarUpload } from '@/components/agent-panel/AvatarUpload';
 import { format, isValid, parseISO } from 'date-fns';
@@ -31,7 +31,10 @@ export default function AgentProfileEdit() {
     phone: '',
     email: '',
     address: '',
-    blood_type: ''
+    blood_type: '',
+    emergency_contact_name: '',
+    emergency_contact_phone: '',
+    important_notes: '',
   });
 
   useEffect(() => {
@@ -60,7 +63,10 @@ export default function AgentProfileEdit() {
         phone: agent.phone || '',
         email: agent.email || '',
         address: agent.address || '',
-        blood_type: agent.blood_type || ''
+        blood_type: agent.blood_type || '',
+        emergency_contact_name: agent.emergency_contact_name || '',
+        emergency_contact_phone: agent.emergency_contact_phone || '',
+        important_notes: agent.important_notes || '',
       });
       setAvatarUrl(agent.avatar_url || null);
     }
@@ -68,6 +74,10 @@ export default function AgentProfileEdit() {
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({ ...prev, phone: formatPhone(e.target.value) }));
+  };
+
+  const handleEmergencyPhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({ ...prev, emergency_contact_phone: formatPhone(e.target.value) }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -93,7 +103,10 @@ export default function AgentProfileEdit() {
           email: formData.email || null,
           address: formData.address || null,
           blood_type: formData.blood_type || null,
-          birth_date: birthDateForDb
+          birth_date: birthDateForDb,
+          emergency_contact_name: formData.emergency_contact_name || null,
+          emergency_contact_phone: formData.emergency_contact_phone || null,
+          important_notes: formData.important_notes || null,
         })
         .eq('id', agent.id);
       if (error) throw error;
@@ -168,7 +181,7 @@ export default function AgentProfileEdit() {
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 mb-0.5">
                 <Shield className="h-3.5 w-3.5 text-primary shrink-0" />
-                <span className="font-tactical text-[10px] md:text-xs tracking-[0.2em] text-primary/90 uppercase">Meu Perfil</span>
+                <span className="font-tactical text-[10px] md:text-xs tracking-[0.2em] text-primary/90 uppercase">Meus Contatos</span>
               </div>
               <h1 className="font-tactical text-sm md:text-lg font-bold text-white truncate leading-tight">
                 {agent.name}
@@ -306,6 +319,65 @@ export default function AgentProfileEdit() {
                   className="bg-slate-900/60 border-slate-700 text-white placeholder:text-slate-500 min-h-[60px] text-sm resize-none"
                 />
               </div>
+            </div>
+          </section>
+
+          {/* Contato de emergência — tom âmbar/vermelho pra sinalizar
+              urgência, separado visualmente do contato pessoal comum. */}
+          <section className="rounded-xl border border-red-500/25 bg-red-950/10 backdrop-blur p-3 md:p-4">
+            <h2 className="font-tactical text-[11px] tracking-[0.18em] text-red-400 uppercase mb-3 flex items-center gap-2">
+              <HeartPulse className="h-3.5 w-3.5" /> Contato de emergência
+            </h2>
+            <p className="mb-3 text-[11px] leading-snug text-slate-400">
+              Quem sua equipe deve acionar em caso de emergência durante o plantão.
+            </p>
+            <div className="space-y-3">
+              <div className="space-y-1">
+                <Label htmlFor="emergency_name" className="text-slate-400 text-xs flex items-center gap-1.5">
+                  <UserPlus2 className="h-3 w-3" /> Nome do contato
+                </Label>
+                <Input
+                  id="emergency_name"
+                  placeholder="Nome completo"
+                  value={formData.emergency_contact_name}
+                  onChange={(e) => setFormData(prev => ({ ...prev, emergency_contact_name: e.target.value }))}
+                  className={inputCls}
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="emergency_phone" className="text-slate-400 text-xs flex items-center gap-1.5">
+                  <Phone className="h-3 w-3" /> Telefone do contato
+                </Label>
+                <Input
+                  id="emergency_phone"
+                  type="tel"
+                  placeholder="(00) 00000-0000"
+                  value={formData.emergency_contact_phone}
+                  onChange={handleEmergencyPhoneChange}
+                  maxLength={15}
+                  className={inputCls}
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* Informações importantes — alergias, condições médicas,
+              observações que a equipe/administração precisa saber. */}
+          <section className="rounded-xl border border-slate-700/60 bg-slate-800/40 backdrop-blur p-3 md:p-4 md:col-span-2">
+            <h2 className="font-tactical text-[11px] tracking-[0.18em] text-primary/90 uppercase mb-3 flex items-center gap-2">
+              <NotebookPen className="h-3.5 w-3.5" /> Informações importantes
+            </h2>
+            <div className="space-y-1">
+              <Label htmlFor="important_notes" className="text-slate-400 text-xs">
+                Alergias, condições médicas, medicações de uso contínuo ou outra observação relevante
+              </Label>
+              <Textarea
+                id="important_notes"
+                placeholder="Ex.: Alérgico a dipirona. Hipertenso, uso losartana 50mg."
+                value={formData.important_notes}
+                onChange={(e) => setFormData(prev => ({ ...prev, important_notes: e.target.value }))}
+                className="bg-slate-900/60 border-slate-700 text-white placeholder:text-slate-500 min-h-[80px] text-sm resize-none"
+              />
             </div>
           </section>
         </div>

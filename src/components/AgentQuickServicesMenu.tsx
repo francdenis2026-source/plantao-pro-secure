@@ -1,4 +1,4 @@
-import { Menu, ExternalLink, Phone, ScrollText, ShieldCheck, Building2, CalendarClock, ArrowLeftRight, MessageCircle, Settings, LogIn, Clock } from 'lucide-react';
+import { Menu, ExternalLink, Phone, ScrollText, ShieldCheck, Building2, CalendarClock, ArrowLeftRight, MessageCircle, Settings, LogIn, Clock, IdCard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import {
   Sheet,
@@ -72,6 +72,7 @@ export function AgentQuickServicesMenu({ className, variant = 'floating' }: { cl
     { label: 'Gestor de Rondas', description: 'Rondas em andamento', icon: ShieldCheck, href: '/rondas' },
     { label: 'Minha escala', description: 'Próximos plantões', icon: CalendarClock, href: '/agenda', requiresAuth: true },
     { label: 'Permutas', description: 'Solicitar ou aceitar trocas', icon: ArrowLeftRight, href: '/agent-panel?tab=permutas', requiresAuth: true },
+    { label: 'Meus Contatos', description: 'E-mail, celular e contato de emergência', icon: IdCard, href: '/agent-profile', requiresAuth: true },
     { label: 'Banco de Horas', description: 'Saldo e lançamentos', icon: Clock, href: '/overtime', requiresAuth: true },
     { label: 'Chat da equipe', description: 'Falar com sua equipe', icon: MessageCircle, href: '/agent-panel?tab=chat', requiresAuth: true },
     { label: 'Configurações', description: 'Preferências da conta', icon: Settings, href: '/settings', requiresAuth: true },

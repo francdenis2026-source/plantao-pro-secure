@@ -30,6 +30,9 @@ interface AgentProfile {
   license_status: string | null;
   license_expires_at: string | null;
   license_notes: string | null;
+  emergency_contact_name: string | null;
+  emergency_contact_phone: string | null;
+  important_notes: string | null;
   unit: {
     id: string;
     name: string;
@@ -57,6 +60,9 @@ const AGENT_SELECT_QUERY = `
   license_status,
   license_expires_at,
   license_notes,
+  emergency_contact_name,
+  emergency_contact_phone,
+  important_notes,
   unit:units(
     id,
     name,
@@ -253,6 +259,9 @@ export function useAgentProfile() {
               license_status: (foundAgent as any).license_status ?? null,
               license_expires_at: (foundAgent as any).license_expires_at ?? null,
               license_notes: (foundAgent as any).license_notes ?? null,
+              emergency_contact_name: (foundAgent as any).emergency_contact_name ?? null,
+              emergency_contact_phone: (foundAgent as any).emergency_contact_phone ?? null,
+              important_notes: (foundAgent as any).important_notes ?? null,
               unit: ((foundAgent as any).unit as AgentProfile['unit']) ?? null,
             };
 

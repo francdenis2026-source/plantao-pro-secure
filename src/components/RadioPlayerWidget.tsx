@@ -39,11 +39,29 @@ export function RadioPlayerWidget({
   const [state, setState] = useState<PlayState>('idle');
   const [usingFallback, setUsingFallback] = useState(false);
   const [nowPlaying, setNowPlaying] = useState<string | null>(null);
-  const [hovering, setHovering] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [tooltipPos, setTooltipPos] = useState<{ top: number; right: number } | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const handleErrorRef = useRef(() => {});
+  const hideTimerRef = useRef<number | null>(null);
+
+  // No mobile não existe "hover" — o toque dispara um mouseenter fantasma
+  // sem o mouseleave correspondente, então a mensagem ficava presa na tela
+  // pra sempre. Em vez de depender só de hover, todo caminho que mostra a
+  // mensagem agenda o próprio sumiço — funciona igual em mouse e toque.
+  const showTemporarily = useCallback((ms: number) => {
+    setVisible(true);
+    if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);
+    hideTimerRef.current = window.setTimeout(() => setVisible(false), ms);
+  }, []);
+
+  const hideNow = useCallback(() => {
+    if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);
+    setVisible(false);
+  }, []);
+
+  useEffect(() => () => { if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current); }, []);
 
   // O header fica em barra fixa com overflow-hidden (pro fundo tático não
   // vazar) — isso cortava o tooltip que aparecia logo abaixo do botão.
@@ -157,6 +175,19 @@ export function RadioPlayerWidget({
   const action = isPlaying ? 'Parar rádio' : isLoading ? 'Conectando…' : 'Tocar rádio';
   const tooltip = isPlaying ? (nowPlaying ?? 'Transmissão ao vivo') : action;
 
+  // Mostra a mensagem sozinha (sem precisar de hover/toque) quando a
+  // música muda — some de novo em alguns segundos.
+  const prevNowPlayingRef = useRef(nowPlaying);
+  useEffect(() => {
+    if (nowPlaying !== prevNowPlayingRef.current) {
+      prevNowPlayingRef.current = nowPlaying;
+      if (isPlaying) {
+        updateTooltipPos();
+        showTemporarily(5000);
+      }
+    }
+  }, [nowPlaying, isPlaying, updateTooltipPos, showTemporarily]);
+
   const tooltipNode = (
     <div
       role="status"
@@ -164,8 +195,8 @@ export function RadioPlayerWidget({
         'pointer-events-none max-w-[240px] truncate rounded-md border border-border/70 bg-popover/95 px-2.5 py-1.5 text-[11px] text-popover-foreground shadow-lg backdrop-blur-sm',
         'transition-all duration-300',
         variant === 'header'
-          ? cn('fixed z-[200]', hovering ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0')
-          : cn('absolute right-full top-1/2 z-[70] mr-2 -translate-y-1/2', hovering ? 'translate-x-0 opacity-100' : 'translate-x-1 opacity-0'),
+          ? cn('fixed z-[200]', visible ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0')
+          : cn('absolute right-full top-1/2 z-[70] mr-2 -translate-y-1/2', visible ? 'translate-x-0 opacity-100' : 'translate-x-1 opacity-0'),
       )}
       style={variant === 'header' && tooltipPos ? { top: tooltipPos.top, right: tooltipPos.right } : undefined}
     >
@@ -180,12 +211,12 @@ export function RadioPlayerWidget({
     <div
       ref={wrapperRef}
       className={cn('relative', variant === 'header' && 'inline-flex')}
-      onMouseEnter={() => { updateTooltipPos(); setHovering(true); }}
-      onMouseLeave={() => setHovering(false)}
+      onMouseEnter={() => { updateTooltipPos(); showTemporarily(5000); }}
+      onMouseLeave={hideNow}
     >
       <button
         type="button"
-        onClick={toggle}
+        onClick={() => { updateTooltipPos(); showTemporarily(3000); toggle(); }}
         aria-label={`${DEFAULT_STATION.name} — ${action}`}
         aria-pressed={isPlaying}
         className={cn(

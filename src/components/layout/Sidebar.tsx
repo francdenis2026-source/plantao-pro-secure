@@ -19,6 +19,7 @@ import {
   ShieldCheck,
   CalendarDays,
   ArrowLeftRight,
+  IdCard,
 } from 'lucide-react';
 import {
   SidebarNavItem,
@@ -34,6 +35,7 @@ const navItems: NavItemDef[] = [
   { icon: CalendarDays, label: 'Agenda', href: '/agenda' },
   { icon: ShieldCheck, label: 'Rondas', href: '/rondas' },
   { icon: ArrowLeftRight, label: 'Permutas', href: '/agent-panel?tab=permutas' },
+  { icon: IdCard, label: 'Meus Contatos', href: '/agent-profile' },
   { icon: Users, label: 'Agentes', href: '/agents' },
   { icon: Clock, label: 'Banco de Horas', href: '/overtime' },
   { icon: MapPin, label: 'Unidades', href: '/units' },
