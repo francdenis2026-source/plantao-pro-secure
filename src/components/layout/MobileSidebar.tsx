@@ -69,25 +69,34 @@ export function MobileSidebar({ onNavigate }: MobileSidebarProps) {
   return (
     <div className="flex flex-col h-full bg-sidebar">
       {/* Brand */}
-      <div className="px-5 pt-6 pb-4 border-b border-sidebar-border/60">
-        <Link to="/dashboard" className="flex items-center gap-3" onClick={onNavigate}>
+      <div className="relative shrink-0 overflow-hidden px-5 pt-6 pb-5">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{ background: 'linear-gradient(160deg, hsl(var(--primary) / 0.10) 0%, transparent 65%)' }}
+        />
+        <Link to="/dashboard" className="relative flex items-center gap-3" onClick={onNavigate}>
           <div className="relative w-11 h-11 shrink-0 flex items-center justify-center">
             <BrasaoSentinela size="100%" />
           </div>
-
           <div className="min-w-0">
-            <h1 className="font-display text-base leading-none tracking-wide text-gradient">
-              PlantaoPro
+            <h1 className="font-display text-base font-bold leading-none tracking-wide text-sidebar-foreground">
+              Plantão<span className="text-primary">Pro</span>
             </h1>
-            <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mt-1">
+            <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-sidebar-foreground/45">
               Comando Operacional
             </p>
           </div>
         </Link>
+        <div
+          aria-hidden
+          className="absolute inset-x-5 bottom-0 h-px"
+          style={{ background: 'linear-gradient(90deg, hsl(var(--primary) / 0.35), transparent 75%)' }}
+        />
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+      <nav className="flex-1 px-4 py-4 space-y-0.5 overflow-y-auto">
         <SidebarSectionLabel>Navegação</SidebarSectionLabel>
         {navItems.map((item) => (
           <SidebarNavItem

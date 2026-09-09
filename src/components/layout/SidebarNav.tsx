@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { ChevronRight, LucideIcon } from 'lucide-react';
+import { LucideIcon } from 'lucide-react';
 
 export interface NavItemDef {
   icon: LucideIcon;
@@ -22,28 +22,23 @@ export function SidebarNavItem({ item, onClick }: SidebarNavItemProps) {
     <Link
       to={item.href}
       onClick={onClick}
+      aria-current={isActive ? 'page' : undefined}
       className={cn(
-        'group relative flex items-center gap-3 px-3 py-2.5 rounded-md transition-colors',
-        'text-sm font-medium tracking-tight',
+        'group relative flex items-center gap-3 rounded-xl px-2.5 py-2 text-sm font-medium tracking-tight transition-all',
         isActive
-          ? 'bg-sidebar-accent text-sidebar-primary'
-          : 'text-sidebar-foreground/80 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground'
+          ? 'bg-primary text-primary-foreground shadow-sm'
+          : 'text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-foreground',
       )}
     >
       <span
         className={cn(
-          'absolute left-0 top-1/2 -translate-y-1/2 h-5 w-0.5 rounded-r-full transition-all',
-          isActive ? 'bg-primary' : 'bg-transparent group-hover:bg-primary/40'
+          'grid h-8 w-8 shrink-0 place-items-center rounded-lg transition-colors',
+          isActive ? 'bg-white/15' : 'bg-sidebar-accent/70 text-sidebar-foreground/60 group-hover:text-primary',
         )}
-      />
-      <Icon className={cn('h-[18px] w-[18px] shrink-0', isActive ? 'text-primary' : 'text-muted-foreground')} />
+      >
+        <Icon className="h-[17px] w-[17px]" strokeWidth={2.1} />
+      </span>
       <span className="flex-1 truncate">{item.label}</span>
-      <ChevronRight
-        className={cn(
-          'h-3.5 w-3.5 transition-opacity',
-          isActive ? 'opacity-60 text-primary' : 'opacity-0 group-hover:opacity-40'
-        )}
-      />
     </Link>
   );
 }
@@ -57,8 +52,8 @@ export function SidebarSectionLabel({ children, accent }: SidebarSectionLabelPro
   return (
     <p
       className={cn(
-        'px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.16em]',
-        accent ? 'text-primary/70' : 'text-muted-foreground/70'
+        'px-2.5 pb-1.5 pt-1 text-[10px] font-bold uppercase tracking-[0.16em]',
+        accent ? 'text-primary/75' : 'text-sidebar-foreground/45',
       )}
     >
       {children}
@@ -67,5 +62,5 @@ export function SidebarSectionLabel({ children, accent }: SidebarSectionLabelPro
 }
 
 export function SidebarDivider() {
-  return <div className="my-3 h-px bg-sidebar-border/60" />;
+  return <div className="my-3 h-px bg-sidebar-border/70" />;
 }

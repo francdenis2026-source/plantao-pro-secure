@@ -1456,24 +1456,24 @@ export default function Index() {
           </div>
 
           {/* Boas-vindas — nome + unidade quando logado, genérico quando
-              visitante. Fonte e cor seguem a marca (font-display, azul
-              institucional para o que importa, cinza pro resto). */}
+              visitante. Maiúsculas com leve tracking (tipografia de
+              cabeçalho institucional) + subtítulo discreto abaixo. */}
           <div className="relative hidden min-w-0 flex-col items-center text-center md:flex">
             {user && agent ? (
               <>
-                <span className="font-display text-[13px] font-bold leading-tight text-foreground">
+                <span className="font-display text-[12.5px] font-bold uppercase leading-tight tracking-[0.06em] text-foreground">
                   Bem-vindo, <span className="text-primary">{agent.name?.split(' ')[0]}</span>
                 </span>
-                <span className="text-[11px] leading-tight text-muted-foreground">
+                <span className="mt-0.5 text-[10.5px] font-medium leading-tight tracking-wide text-muted-foreground">
                   {agent.unit?.name ? `${agent.unit.name} · ` : ''}{todayLongLabel()}
                 </span>
               </>
             ) : (
               <>
-                <span className="font-display text-[13px] font-bold leading-tight text-foreground">
+                <span className="font-display text-[12.5px] font-bold uppercase leading-tight tracking-[0.06em] text-foreground">
                   Bem-vindo, Agente Socioeducativo
                 </span>
-                <span className="text-[11px] leading-tight text-muted-foreground">
+                <span className="mt-0.5 text-[10.5px] font-medium leading-tight tracking-wide text-muted-foreground">
                   Você está em plantão · {todayLongLabel()}
                 </span>
               </>

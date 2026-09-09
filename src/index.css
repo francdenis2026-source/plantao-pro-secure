@@ -79,6 +79,72 @@
     --accent-red: 354 68% 50%;
   }
 
+  /* ================================
+     MODO CLARO — mesma paleta institucional (azul PlantãoPro + ardósia),
+     invertida pra fundo claro em vez de reaproveitar os tokens escuros.
+     Sem isso, alternar pra "claro" não mudava nada: cabeçalho/rodapé
+     ficavam sem cor/contraste porque nenhuma var era redefinida aqui.
+     ================================ */
+  .light-theme {
+    --background: 210 24% 97%;
+    --foreground: 222 40% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 40% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 40% 12%;
+
+    --primary: 220 84% 46%;
+    --primary-foreground: 210 20% 99%;
+    --primary-glow: 220 84% 58%;
+
+    --secondary: 212 22% 93%;
+    --secondary-foreground: 222 35% 18%;
+
+    --muted: 212 20% 94%;
+    --muted-foreground: 215 16% 40%;
+
+    --accent: 220 84% 46%;
+    --accent-foreground: 210 20% 99%;
+
+    --destructive: 354 70% 44%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 152 60% 32%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 85% 40%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 214 20% 87%;
+    --input: 214 20% 89%;
+    --ring: 220 84% 46%;
+
+    --sidebar-background: 210 28% 98%;
+    --sidebar-foreground: 222 35% 16%;
+    --sidebar-primary: 220 84% 46%;
+    --sidebar-primary-foreground: 210 20% 99%;
+    --sidebar-accent: 213 26% 92%;
+    --sidebar-accent-foreground: 222 35% 16%;
+    --sidebar-border: 214 20% 86%;
+    --sidebar-ring: 220 84% 46%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(220 84% 46%) 0%, hsl(220 70% 34%) 100%);
+    --gradient-dark: radial-gradient(ellipse at top, hsl(210 24% 99%) 0%, hsl(210 24% 95%) 100%);
+    --gradient-navy-depth: linear-gradient(160deg, hsl(210 24% 99%) 0%, hsl(210 22% 96%) 55%, hsl(212 20% 93%) 100%);
+    --gradient-hero-overlay: linear-gradient(120deg, hsl(222 40% 12% / 0.85) 0%, hsl(222 30% 20% / 0.55) 55%, hsl(220 60% 40% / 0.15) 100%);
+
+    --shadow-command: 0 24px 60px -24px hsl(222 30% 20% / 0.22), 0 2px 8px hsl(220 84% 46% / 0.10);
+    --shadow-elevated: 0 30px 60px -24px hsl(222 30% 20% / 0.22), 0 0 0 1px hsl(214 20% 85%);
+    --glow-primary: 0 0 0 1px hsl(220 84% 46% / 0.35), 0 12px 32px -16px hsl(220 84% 46% / 0.25);
+    --accent-red: 354 70% 44%;
+  }
+
+  .light-theme body {
+    background: linear-gradient(160deg, hsl(210 24% 98%) 0%, hsl(212 22% 95%) 50%, hsl(213 22% 93%) 100%);
+  }
+
 
 
 

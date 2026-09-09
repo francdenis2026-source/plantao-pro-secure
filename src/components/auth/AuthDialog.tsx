@@ -151,21 +151,22 @@ export function AuthDialog({
               "relative w-full overflow-hidden bg-slate-950 shrink-0",
               variant === 'register'
                 ? "aspect-[16/5] sm:aspect-[16/5]"
-                : "aspect-[16/9] sm:aspect-[16/7] md:aspect-[16/6]"
+                : "aspect-[4/3] sm:aspect-[16/8] md:aspect-[16/7]"
             )}
           >
             <img
               src={teamPoster}
               alt={`Equipe ${teamKey}`}
               className="absolute inset-0 h-full w-full object-cover object-[center_25%] sm:object-[center_30%]"
-              style={{ filter: 'contrast(1.06) saturate(0.98) brightness(0.9)' }}
+              style={{ filter: 'contrast(1.05) saturate(1.02) brightness(1)' }}
             />
 
-            {/* Vinheta noir + gradiente base para legibilidade */}
+            {/* Vinheta noir + gradiente base para legibilidade — mais sutil,
+                a foto fica visível em vez de escurecida quase toda. */}
             <div className="absolute inset-0 pointer-events-none"
-                 style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0) 40%, rgba(2,6,23,0.55) 100%)' }} />
-            <div className="absolute inset-x-0 bottom-0 h-3/4 pointer-events-none"
-                 style={{ background: `linear-gradient(180deg, transparent 0%, rgba(2,6,23,0.65) 55%, rgba(2,6,23,0.98) 100%)` }} />
+                 style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0) 50%, rgba(2,6,23,0.35) 100%)' }} />
+            <div className="absolute inset-x-0 bottom-0 h-2/5 pointer-events-none"
+                 style={{ background: `linear-gradient(180deg, transparent 0%, rgba(2,6,23,0.55) 60%, rgba(2,6,23,0.92) 100%)` }} />
             <div className="absolute left-0 top-0 bottom-0 w-[3px]"
                  style={{ background: teamColor!.primary, opacity: 0.7 }} />
 
@@ -175,10 +176,9 @@ export function AuthDialog({
                 <div className="h-1.5 w-1.5 rounded-full shrink-0"
                      style={{ background: teamColor!.primary }} />
                 <span className="text-[9px] sm:text-[10px] tracking-[0.24em] sm:tracking-[0.28em] font-mono font-semibold text-white/75 uppercase truncate">
-                  Canal Seguro
+                  Equipe {teamKey}
                 </span>
               </div>
-              <span className="hidden sm:inline text-[9px] sm:text-[10px] tracking-[0.2em] font-mono text-white/45 shrink-0">CLASSIFIED</span>
             </div>
 
             {/* Title — o pôster já identifica a equipe (nome + emblema

@@ -5,7 +5,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useAgentProfile } from '@/hooks/useAgentProfile';
 import { RestrictedAccessDialog } from '@/components/auth/RestrictedAccessDialog';
 import { AppLogo } from '@/components/AppLogo';
-import institutionalArt from '@/assets/midias/section-background.png';
 
 import {
   Users,
@@ -48,6 +47,12 @@ const masterItems: NavItemDef[] = [
   { icon: ClipboardCheck, label: 'Auditoria de Unidades', href: '/admin/units-audit' },
 ];
 
+function initials(name?: string | null): string {
+  if (!name) return '--';
+  const parts = name.trim().split(/\s+/);
+  return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '')).toUpperCase() || '--';
+}
+
 export const Sidebar = forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
   (props, ref) => {
     const { masterSession, user, isAdmin } = useAuth();
@@ -68,29 +73,55 @@ export const Sidebar = forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>
         {...props}
         className={cn(
           'w-64 border-r border-sidebar-border bg-sidebar hidden lg:flex flex-col',
-          props.className
+          props.className,
         )}
       >
         {/* Brand */}
-        <div className="px-5 pt-6 pb-4 border-b border-sidebar-border/60">
-          <Link to="/dashboard" className="flex items-center gap-3">
+        <div className="relative shrink-0 overflow-hidden px-5 pt-6 pb-5">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-[0.9]"
+            style={{ background: 'linear-gradient(160deg, hsl(var(--primary) / 0.10) 0%, transparent 65%)' }}
+          />
+          <Link to="/dashboard" className="relative flex items-center gap-3">
             <div className="relative w-11 h-11 shrink-0 flex items-center justify-center">
               <AppLogo size={44} title="PlantãoPro" />
             </div>
-
             <div className="min-w-0">
-              <h1 className="font-display text-base leading-none tracking-wide text-gradient">
-                PlantaoPro
+              <h1 className="font-display text-base font-bold leading-none tracking-wide text-sidebar-foreground">
+                Plantão<span className="text-primary">Pro</span>
               </h1>
-              <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mt-1">
+              <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-sidebar-foreground/45">
                 Comando Operacional
               </p>
             </div>
           </Link>
+          <div
+            aria-hidden
+            className="absolute inset-x-5 bottom-0 h-px"
+            style={{ background: 'linear-gradient(90deg, hsl(var(--primary) / 0.35), transparent 75%)' }}
+          />
         </div>
 
+        {/* Identidade do agente logado — cartão compacto, contexto imediato */}
+        {(agent || masterSession) && (
+          <div className="mx-4 mb-1 mt-3 flex items-center gap-2.5 rounded-xl border border-sidebar-border/70 bg-sidebar-accent/50 px-3 py-2.5">
+            <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-primary/15 text-[11px] font-bold text-primary ring-1 ring-primary/25">
+              {masterSession ? 'MS' : initials(agent?.name)}
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-[12.5px] font-semibold leading-tight text-sidebar-foreground">
+                {masterSession ? 'Administrador Master' : (agent?.name ?? 'Agente')}
+              </p>
+              <p className="truncate text-[10.5px] leading-tight text-sidebar-foreground/50">
+                {masterSession ? 'Acesso nível 10' : (agent?.unit?.name ?? 'Sem unidade')}
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+        <nav className="flex-1 min-h-0 overflow-y-auto px-4 py-4 space-y-0.5">
           <SidebarSectionLabel>Navegação</SidebarSectionLabel>
           {navItems.map((item) => (
             <SidebarNavItem key={item.href} item={item} onClick={guard(item.label)} />
@@ -117,36 +148,29 @@ export const Sidebar = forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>
           )}
         </nav>
 
-        {/* Institutional footer — arte oficial + lema, reforça a identidade
-            da Socioeducação do Acre abaixo da navegação. */}
-        <div className="relative shrink-0 overflow-hidden border-t border-sidebar-border/60 px-5 py-4">
-          <img
-            src={institutionalArt}
-            alt=""
-            aria-hidden
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 h-full w-full object-cover opacity-25"
-          />
-          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-sidebar via-sidebar/85 to-sidebar/60" />
-          <div className="relative">
-            <p className="text-[10px] font-bold uppercase leading-tight tracking-[0.15em] text-foreground">
-              Agentes Socioeducativos
-              <br />do Acre
-            </p>
-            <p className="mt-1.5 text-[9px] italic leading-snug text-muted-foreground">
-              Disciplina · Respeito · Sociedade
-              <br />Mais Oportunidades
-            </p>
-          </div>
+        {/* Lema institucional — discreto, sem imagem de fundo (mais limpo e
+            sem depender de contraste de foto atrás de texto). */}
+        <div className="shrink-0 border-t border-sidebar-border/70 px-5 py-3.5">
+          <p className="text-[9.5px] font-semibold uppercase leading-snug tracking-[0.14em] text-sidebar-foreground/55">
+            Agentes Socioeducativos do Acre
+          </p>
+          <p className="mt-1 text-[9.5px] italic leading-snug text-sidebar-foreground/35">
+            Disciplina · Respeito · Sociedade · Mais Oportunidades
+          </p>
         </div>
 
         {/* Footer */}
-        <div className="px-5 py-3 border-t border-sidebar-border/60 flex items-center justify-between">
-          <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+        <div className="flex shrink-0 items-center justify-between border-t border-sidebar-border/70 px-5 py-2.5">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-sidebar-foreground/40">
             v1.0
           </span>
-          <span className="truncate text-[10px] text-muted-foreground/60">{agent?.unit?.name ?? (masterSession ? 'Master' : '')}</span>
+          <span className="flex items-center gap-1.5 text-[10px] text-sidebar-foreground/35">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-60" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
+            </span>
+            Online
+          </span>
         </div>
 
         <RestrictedAccessDialog
@@ -156,8 +180,7 @@ export const Sidebar = forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>
         />
       </aside>
     );
-  }
+  },
 );
 
 Sidebar.displayName = 'Sidebar';
-
