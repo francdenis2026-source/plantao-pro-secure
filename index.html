@@ -90,13 +90,14 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
+        padding-bottom: 14vh;
         gap: 18px;
         z-index: 9999;
         pointer-events: none;
         transition: opacity 500ms ease;
         background-image:
-          linear-gradient(180deg, rgba(7,21,34,0.80) 0%, rgba(7,21,34,0.90) 55%, rgba(7,21,34,0.97) 100%),
+          linear-gradient(180deg, rgba(7,21,34,0.15) 0%, rgba(7,21,34,0.35) 65%, rgba(7,21,34,0.85) 100%),
           url('/loading-bg.png');
         background-size: cover, cover;
         background-position: center, center 40%;
@@ -180,8 +181,6 @@
   <body class="typoclear">
     <div id="root"></div>
     <div id="boot-brand" aria-hidden="true">
-      <img src="/favicon.png" alt="" width="108" height="108" />
-      <div class="boot-word">Plantão<span>Pro</span></div>
       <div class="boot-bar"><i></i></div>
     </div>
     <script type="module" src="/src/main.tsx"></script>

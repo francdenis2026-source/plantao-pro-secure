@@ -197,40 +197,44 @@ export function AuthDialog({
           </div>
         ) : (
           <>
-            {/* Legacy header (non-team dialogs) */}
-            <div className={cn("relative px-6 pt-8 pb-6 bg-gradient-to-b shrink-0", styles.headerBg)}>
+            {/* Legacy header (non-team dialogs). Compacto para 'register' —
+                é um formulário longo, o cabeçalho decorativo não pode
+                empurrar os campos pra fora da janela. */}
+            <div className={cn("relative bg-gradient-to-b shrink-0", styles.headerBg, variant === 'register' ? "px-5 pt-4 pb-3" : "px-6 pt-8 pb-6")}>
 
               <div className="absolute top-4 right-4 flex gap-1.5">
                 <div className={cn("w-1.5 h-1.5 rounded-full", styles.decorColor)} />
                 <div className={cn("w-1.5 h-1.5 rounded-full opacity-60", styles.decorColor)} />
                 <div className={cn("w-1.5 h-1.5 rounded-full opacity-30", styles.decorColor)} />
               </div>
-              <div className="flex justify-center mb-5">
-                <div className={cn("p-4 rounded-2xl bg-gradient-to-br backdrop-blur-sm",
-                  styles.logoBg, "border border-white/10 shadow-lg")}>
-                  <div className="relative aspect-square h-16 w-16 flex items-center justify-center flex-shrink-0">
-                    <picture>
-                      <source type="image/webp" srcSet={logoShieldWebp} />
-                      <img src={logoShield} alt="Plantão Pro" width={128} height={128} loading="eager" decoding="async" className="max-h-full max-w-full h-full w-full object-contain drop-shadow-lg" />
-                    </picture>
+              {variant !== 'register' && (
+                <div className="flex justify-center mb-5">
+                  <div className={cn("p-4 rounded-2xl bg-gradient-to-br backdrop-blur-sm",
+                    styles.logoBg, "border border-white/10 shadow-lg")}>
+                    <div className="relative aspect-square h-16 w-16 flex items-center justify-center flex-shrink-0">
+                      <picture>
+                        <source type="image/webp" srcSet={logoShieldWebp} />
+                        <img src={logoShield} alt="Plantão Pro" width={128} height={128} loading="eager" decoding="async" className="max-h-full max-w-full h-full w-full object-contain drop-shadow-lg" />
+                      </picture>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
               {teamBadge && (
                 <div className="flex justify-center mb-4">{teamBadge}</div>
               )}
-              <div className="text-center space-y-2">
+              <div className={cn(variant === 'register' ? "text-center" : "text-center space-y-2")}>
                 <div className="flex items-center justify-center gap-3">
                   {icon && (
-                    <div className={cn("p-2.5 rounded-xl bg-gradient-to-br", styles.logoBg, "border border-white/10")}>
+                    <div className={cn("rounded-xl bg-gradient-to-br", styles.logoBg, "border border-white/10", variant === 'register' ? "p-1.5" : "p-2.5")}>
                       {icon}
                     </div>
                   )}
-                  <h2 className={cn("text-2xl font-bold tracking-tight", styles.titleColor)}>
+                  <h2 className={cn("font-bold tracking-tight", styles.titleColor, variant === 'register' ? "text-lg" : "text-2xl")}>
                     {title}
                   </h2>
                 </div>
-                {subtitle && (
+                {subtitle && variant !== 'register' && (
                   <p className={cn("text-base", styles.subtitleColor)}>{subtitle}</p>
                 )}
               </div>

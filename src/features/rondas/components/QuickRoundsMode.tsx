@@ -238,6 +238,13 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
           </Button>
         </div>
 
+        {/* Resumo discreto — quantos agentes, tempo de cada um, horário total */}
+        <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 border-b border-border/60 bg-muted/20 px-4 py-1.5 text-[10.5px] text-muted-foreground">
+          <span className="flex items-center gap-1"><Users className="h-3 w-3 text-primary" /> {sessionNames.length} agente{sessionNames.length > 1 ? 's' : ''}</span>
+          <span className="flex items-center gap-1"><Clock3 className="h-3 w-3 text-primary" /> {fmtClock(perAgentMs)} cada</span>
+          <span className="flex items-center gap-1"><CalendarClock className="h-3 w-3 text-primary" /> {session.startTime} – {session.endTime}</span>
+        </div>
+
         <div key={currentIndex} className="flex flex-col items-center gap-1.5 px-6 py-6 text-center animate-in fade-in-0 slide-in-from-bottom-3 zoom-in-95 duration-500">
           <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Agente na ronda</p>
           <p className="text-xl font-bold text-foreground">{sessionNames[currentIndex]}</p>
@@ -273,7 +280,7 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
                 )}
               >
                 {status === 'done' ? <CheckCircle2 className="h-3 w-3" /> : <span className={cn('h-1.5 w-1.5 rounded-full bg-current', status === 'current' && 'animate-pulse')} />}
-                {name}
+                <span className="opacity-60">{i + 1}.</span> {name}
               </div>
             );
           })}
@@ -300,7 +307,12 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
           <Label className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Agentes</Label>
           {names.map((name, i) => (
             <div key={i} className="flex items-center gap-2">
-              <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: CHIP_COLORS[i % CHIP_COLORS.length] }} />
+              <span
+                className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white"
+                style={{ background: CHIP_COLORS[i % CHIP_COLORS.length] }}
+              >
+                {i + 1}
+              </span>
               <Input value={name} onChange={(e) => updateName(i, e.target.value)} placeholder={`Nome do agente ${i + 1}`} className="h-9" />
               {names.length > 1 && (
                 <Button variant="ghost" size="icon" className="h-9 w-9 shrink-0 text-muted-foreground" onClick={() => removeName(i)}>
