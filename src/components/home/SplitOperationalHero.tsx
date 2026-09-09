@@ -8,6 +8,7 @@ import { useOnlineAgents } from '@/hooks/useOnlineAgents';
 import { useVisitorPresence } from '@/hooks/useVisitorPresence';
 
 import heroBanner from '@/assets/midias/hero-banner.png';
+import iseAcreBadge from '@/assets/logo-ise-socioeducativo.png';
 import teamAlfaPhoto from '@/assets/midias/team-alfa.png';
 import teamBravoPhoto from '@/assets/midias/team-bravo.png';
 import teamCharliePhoto from '@/assets/midias/team-charlie.png';
@@ -126,6 +127,18 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
             className="absolute inset-0 h-full w-full object-cover object-[60%_65%]"
             draggable={false}
           />
+          {/* Selo oficial do Governo do Acre — elemento próprio, com margem
+              fixa, em vez de depender do recorte da foto (que cortava a
+              marca d'água original em telas mais estreitas). */}
+          <div className="absolute right-3 top-3 z-10 flex h-10 w-10 items-center justify-center rounded-lg bg-background/85 p-1.5 shadow-lg ring-1 ring-white/15 backdrop-blur-sm sm:h-11 sm:w-11">
+            <img
+              src={iseAcreBadge}
+              alt="Governo do Estado do Acre"
+              className="h-full w-full object-contain"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
           {/* Transição suave para o painel de texto — sem gradiente cobrindo
               a imagem inteira, só a costura entre as duas colunas. */}
           <div

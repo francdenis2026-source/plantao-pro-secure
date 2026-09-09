@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogFooter } f
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
+import { teamPosters } from '@/lib/teamAssets';
 import { QuickRoundsMode } from './QuickRoundsMode';
 import * as api from '../api';
 import { useRoundTimer } from '../useRoundTimer';
@@ -383,6 +384,21 @@ export function RoundsDashboard() {
               </select>
             </div>
           </div>
+
+          {guestTeam && teamPosters[guestTeam] && (
+            <div key={guestTeam} className="flex items-center gap-3 animate-in fade-in-0 slide-in-from-left-2 duration-300">
+              <img
+                src={teamPosters[guestTeam]}
+                alt={`Equipe ${guestTeam}`}
+                className="h-16 w-16 shrink-0 rounded-xl border border-primary/25 object-cover"
+              />
+              <div>
+                <p className="text-sm font-bold text-foreground">EQUIPE {guestTeam}</p>
+                <p className="text-xs text-muted-foreground">Selecionada para esta ronda</p>
+              </div>
+            </div>
+          )}
+
           <p className="text-xs text-muted-foreground">Ou <a href="/login" className="text-primary underline hover:no-underline font-medium">faça login</a> para usar seu perfil de agente</p>
         </div>
       )}
