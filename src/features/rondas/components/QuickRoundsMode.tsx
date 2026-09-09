@@ -43,6 +43,15 @@ function nextOccurrence(hm: string): Date {
   return d;
 }
 
+/** "HH:mm" aplicado à data de hoje (sem rolar pra amanhã). */
+function todayAt(hm: string): Date {
+  const [h, m] = hm.split(':').map(Number);
+  const d = new Date();
+  d.setSeconds(0, 0);
+  d.setHours(h, m);
+  return d;
+}
+
 function fmtClock(ms: number): string {
   const totalSec = Math.max(0, Math.floor(ms / 1000));
   const h = Math.floor(totalSec / 3600);
@@ -201,12 +210,23 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
       return;
     }
     savedRef.current = false;
-    const triggerAt = mode === 'now' ? new Date() : nextOccurrence(startTime);
+    // "Iniciar agora" respeita o horário de início digitado, não o
+    // instante do clique — se o supervisor marcar 08:00 e só cadastrar os
+    // nomes às 14:00, o rodízio já nasce sabendo que passou 6h: os agentes
+    // cujo pedaço já venceu aparecem concluídos, e só o atual/futuros
+    // ficam ativos. Nunca cria elapsed negativo (não deixa "iniciar" no
+    // futuro se o horário digitado ainda não chegou).
+    const triggerAt = mode === 'now' ? new Date(Math.min(todayAt(startTime).getTime(), Date.now())) : nextOccurrence(startTime);
+    const backdatedMinutes = mode === 'now' ? Math.round((Date.now() - triggerAt.getTime()) / 60_000) : 0;
     persist({
       names: activeNames, startTime, endTime, durationMinutes,
       triggerAt: triggerAt.toISOString(), phase: mode === 'now' ? 'running' : 'waiting',
     });
-    toast.success(mode === 'now' ? 'Rodízio iniciado.' : `Programado para iniciar às ${startTime}.`);
+    if (backdatedMinutes > 1) {
+      toast.success(`Rodízio iniciado — ${backdatedMinutes} min já contabilizados desde as ${startTime}.`);
+    } else {
+      toast.success(mode === 'now' ? 'Rodízio iniciado.' : `Programado para iniciar às ${startTime}.`);
+    }
   };
 
   const handleScheduleClick = () => {
@@ -341,7 +361,8 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
                 )}
               >
                 {status === 'done' ? <CheckCircle2 className="h-3 w-3" /> : <span className={cn('h-1.5 w-1.5 rounded-full bg-current', status === 'current' && 'animate-pulse')} />}
-                <span className="opacity-60">{i + 1}.</span> {name}
+                <span className="opacity-60">{i + 1}.</span>
+                <span className={status === 'done' ? 'line-through opacity-70' : undefined}>{name}</span>
               </div>
             );
           })}
