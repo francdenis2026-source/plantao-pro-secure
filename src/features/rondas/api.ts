@@ -337,3 +337,39 @@ export async function resolveIncident(id: string): Promise<void> {
   const { error } = await sb.from('patrol_incidents').update({ status: 'resolvida', resolved_at: new Date().toISOString() }).eq('id', id);
   if (error) throw error;
 }
+
+// ---------- Modo rápido (nomes digitados, divisão proporcional, sem cadastro) ----------
+
+export interface QuickRoundHistoryRow {
+  id: string;
+  agent_names: string[];
+  duration_minutes: number;
+  per_agent_minutes: number;
+  started_at: string;
+  completed_at: string;
+}
+
+export async function saveQuickRoundHistory(input: {
+  unit_id: string | null; team: string | null; agent_names: string[];
+  duration_minutes: number; per_agent_minutes: number; started_at: string; created_by: string;
+}): Promise<void> {
+  const { error } = await sb.from('quick_round_history').insert(input);
+  if (error) throw error;
+}
+
+export async function listQuickRoundHistory(unitId: string | null, team: string | null): Promise<QuickRoundHistoryRow[]> {
+  let query = sb.from('quick_round_history').select('*').order('completed_at', { ascending: false }).limit(20);
+  if (unitId) query = query.eq('unit_id', unitId);
+  if (team) query = query.eq('team', team);
+  const { data, error } = await query;
+  if (error) throw error;
+  return data ?? [];
+}
+
+export async function clearQuickRoundHistory(unitId: string | null, team: string | null): Promise<void> {
+  let query = sb.from('quick_round_history').delete();
+  query = unitId ? query.eq('unit_id', unitId) : query.is('unit_id', null);
+  if (team) query = query.eq('team', team);
+  const { error } = await query;
+  if (error) throw error;
+}

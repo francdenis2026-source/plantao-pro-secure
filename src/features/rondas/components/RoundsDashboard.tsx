@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogFooter } f
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
+import { QuickRoundsMode } from './QuickRoundsMode';
 import * as api from '../api';
 import { useRoundTimer } from '../useRoundTimer';
 import { RoundTimer } from './RoundTimer';
@@ -291,6 +292,12 @@ export function RoundsDashboard() {
         </div>
 
         <CreateShiftDialog open={dividerOpen} onOpenChange={setDividerOpen} unitId={unitId} team={team} createdBy={user?.id ?? null} onCreated={() => shiftQuery.refetch()} />
+
+        <div className="flex items-center gap-3 text-[11px] uppercase tracking-wide text-muted-foreground">
+          <div className="h-px flex-1 bg-border" /> ou <div className="h-px flex-1 bg-border" />
+        </div>
+
+        <QuickRoundsMode unitId={unitId} team={team} />
 
         {scheduledRounds.length > 0 && (
           <section className="rounded-2xl border border-border bg-card p-4">
