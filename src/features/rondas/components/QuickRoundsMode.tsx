@@ -1,22 +1,33 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Plus, X, Play, Square, Users, Clock3, History, Trash2, CheckCircle2 } from 'lucide-react';
+import { Plus, X, Play, Square, Users, Clock3, History, Trash2, CheckCircle2, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useAuth } from '@/contexts/AuthContext';
 import * as api from '../api';
 
-const DURATION_OPTIONS = [
-  { minutes: 4 * 60, label: '4 horas' },
-  { minutes: 6 * 60, label: '6 horas' },
-  { minutes: 8 * 60, label: '8 horas' },
-  { minutes: 12 * 60, label: '12 horas' },
-  { minutes: 24 * 60, label: '24 horas' },
-];
+/** Início/fim em "HH:mm" → duração em minutos. Vira o dia (fim < início) soma 24h. */
+function diffMinutes(start: string, end: string): number {
+  const [sh, sm] = start.split(':').map(Number);
+  const [eh, em] = end.split(':').map(Number);
+  let diff = (eh * 60 + em) - (sh * 60 + sm);
+  if (diff <= 0) diff += 24 * 60;
+  return diff;
+}
+
+function nowHm(): string {
+  const d = new Date();
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+}
+
+function addHours(hm: string, hours: number): string {
+  const [h, m] = hm.split(':').map(Number);
+  const total = (h * 60 + m + hours * 60) % (24 * 60);
+  return `${String(Math.floor(total / 60)).padStart(2, '0')}:${String(total % 60).padStart(2, '0')}`;
+}
 
 function fmtClock(ms: number): string {
   const totalSec = Math.max(0, Math.floor(ms / 1000));
@@ -42,10 +53,12 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [names, setNames] = useState<string[]>(['', '']);
-  const [durationMinutes, setDurationMinutes] = useState(8 * 60);
+  const [startTime, setStartTime] = useState(() => nowHm());
+  const [endTime, setEndTime] = useState(() => addHours(nowHm(), 12));
   const [startedAt, setStartedAt] = useState<Date | null>(null);
   const [, forceTick] = useState(0);
   const savedRef = useRef(false);
+  const durationMinutes = diffMinutes(startTime, endTime);
 
   const historyQuery = useQuery({
     queryKey: ['quick-round-history', unitId, team],
@@ -131,8 +144,10 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
     const sliceProgressPct = Math.min(100, Math.max(0, (elapsedInSlice / perAgentMs) * 100));
     const overallProgressPct = Math.min(100, (elapsedMs / totalMs) * 100);
 
+    const urgent = remainingInSlice < 60_000;
+
     return (
-      <section className="overflow-hidden rounded-2xl border border-primary/25 bg-card">
+      <section className="animate-in fade-in-0 slide-in-from-bottom-2 duration-500 overflow-hidden rounded-2xl border border-primary/25 bg-card">
         <div className="flex items-center justify-between gap-3 border-b border-border bg-primary/[0.06] px-5 py-3.5">
           <h3 className="flex items-center gap-2 text-[13px] font-semibold uppercase tracking-wide text-foreground">
             <span className="relative flex h-2 w-2">
@@ -146,13 +161,18 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
           </Button>
         </div>
 
-        <div className="flex flex-col items-center gap-2 px-6 py-8 text-center">
+        <div key={currentIndex} className="flex flex-col items-center gap-2 px-6 py-8 text-center animate-in fade-in-0 slide-in-from-bottom-3 zoom-in-95 duration-500">
           <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Agente na ronda</p>
           <p className="text-2xl font-bold text-foreground">{activeNames[currentIndex]}</p>
-          <p className="mt-1 font-mono text-4xl font-bold tabular-nums text-primary">{fmtClock(remainingInSlice)}</p>
+          <p className={cn(
+            'mt-1 font-mono text-4xl font-bold tabular-nums transition-colors',
+            urgent ? 'text-destructive animate-pulse' : 'text-primary',
+          )}>
+            {fmtClock(remainingInSlice)}
+          </p>
           <p className="text-xs text-muted-foreground">restante deste turno · {fmtClock(perAgentMs)} no total cada</p>
           <div className="mt-3 h-1.5 w-full max-w-xs overflow-hidden rounded-full bg-muted">
-            <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${sliceProgressPct}%` }} />
+            <div className={cn('h-full rounded-full transition-all', urgent ? 'bg-destructive' : 'bg-primary')} style={{ width: `${sliceProgressPct}%` }} />
           </div>
         </div>
 
@@ -173,13 +193,13 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
               <div
                 key={`${name}-${i}`}
                 className={cn(
-                  'flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium',
+                  'flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium transition-all duration-500',
                   status === 'done' && 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400',
-                  status === 'current' && 'border-primary/40 bg-primary/10 text-primary',
+                  status === 'current' && 'border-primary/40 bg-primary/10 text-primary scale-105 shadow-[0_0_0_3px_hsl(var(--primary)/0.12)]',
                   status === 'pending' && 'border-border bg-muted/30 text-muted-foreground',
                 )}
               >
-                {status === 'done' ? <CheckCircle2 className="h-3.5 w-3.5" /> : <span className="h-1.5 w-1.5 rounded-full bg-current" />}
+                {status === 'done' ? <CheckCircle2 className="h-3.5 w-3.5" /> : <span className={cn('h-1.5 w-1.5 rounded-full bg-current', status === 'current' && 'animate-pulse')} />}
                 {name}
               </div>
             );
@@ -191,7 +211,7 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
 
   // ---------- Configuração ----------
   return (
-    <section className="overflow-hidden rounded-2xl border border-border bg-card">
+    <section className="animate-in fade-in-0 slide-in-from-bottom-2 duration-500 overflow-hidden rounded-2xl border border-border bg-card">
       <div className="flex items-center gap-3 border-b border-border bg-primary/[0.05] px-5 py-4">
         <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/15 ring-1 ring-primary/25">
           <Users className="h-5 w-5 text-primary" strokeWidth={2} />
@@ -227,19 +247,27 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
 
         <div className="space-y-1.5">
           <Label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            <Clock3 className="h-3.5 w-3.5 text-primary" /> Duração total do turno
+            <Clock3 className="h-3.5 w-3.5 text-primary" /> Início e fim da ronda
           </Label>
-          <Select value={String(durationMinutes)} onValueChange={(v) => setDurationMinutes(Number(v))}>
-            <SelectTrigger><SelectValue /></SelectTrigger>
-            <SelectContent>
-              {DURATION_OPTIONS.map((o) => <SelectItem key={o.minutes} value={String(o.minutes)}>{o.label}</SelectItem>)}
-            </SelectContent>
-          </Select>
-          {activeNames.length > 0 && (
-            <p className="text-xs text-muted-foreground">
-              {fmtClock((durationMinutes * 60_000) / activeNames.length)} por agente ({activeNames.length} agente{activeNames.length > 1 ? 's' : ''})
-            </p>
-          )}
+          <div className="flex items-center gap-2">
+            <input
+              type="time"
+              value={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            />
+            <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+            <input
+              type="time"
+              value={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            />
+          </div>
+          <p className="text-xs text-muted-foreground">
+            {fmtClock(durationMinutes * 60_000)} de ronda no total
+            {activeNames.length > 0 && <> · <span className="font-medium text-primary">{fmtClock((durationMinutes * 60_000) / activeNames.length)}</span> por agente ({activeNames.length} agente{activeNames.length > 1 ? 's' : ''})</>}
+          </p>
         </div>
 
         <Button size="lg" className="w-full gap-2" onClick={handleStart}>

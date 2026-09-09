@@ -259,7 +259,7 @@ export function RoundsDashboard() {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-card via-card to-primary/[0.07]">
+        <div className="animate-in fade-in-0 slide-in-from-bottom-2 duration-500 overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-card via-card to-primary/[0.07]">
           <div className="flex flex-col items-center gap-5 px-6 py-14 text-center">
             <div className="grid h-16 w-16 place-items-center rounded-2xl bg-primary/10 ring-1 ring-primary/25">
               <ShieldOff className="h-8 w-8 text-primary" strokeWidth={1.8} />
