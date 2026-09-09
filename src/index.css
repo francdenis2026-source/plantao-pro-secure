@@ -174,19 +174,22 @@
     .crb-image { opacity: 0.32; }
   }
   .light-theme .crb-image {
-    opacity: 0.16;
+    opacity: 0.34;
   }
+  /* Uma única camada de wash, bem mais fraca — a combinação anterior (wash
+     "do topo" + vinheta "do centro") criava faixas quase brancas nas
+     bordas onde as duas se somavam, apagando a foto quase inteira. */
   .light-theme .crb-wash {
-    background: radial-gradient(ellipse at top, hsl(216 45% 96% / 0.55) 0%, hsl(216 42% 93% / 0.72) 60%, hsl(216 40% 90% / 0.88) 100%);
+    background: radial-gradient(ellipse at top, hsl(216 40% 95% / 0.22) 0%, hsl(216 38% 92% / 0.30) 60%, hsl(216 36% 88% / 0.38) 100%);
   }
   .light-theme .crb-red-glow {
-    background: radial-gradient(70% 55% at 88% 92%, hsl(354 68% 55% / 0.08) 0%, transparent 60%);
+    background: radial-gradient(70% 55% at 88% 92%, hsl(354 68% 55% / 0.06) 0%, transparent 60%);
   }
   .light-theme .crb-vignette {
-    background: radial-gradient(ellipse at center, transparent 35%, hsl(216 40% 90% / 0.6) 100%);
+    background: radial-gradient(ellipse at center, transparent 55%, hsl(216 36% 88% / 0.28) 100%);
   }
   @media (min-width: 640px) {
-    .light-theme .crb-image { opacity: 0.12; }
+    .light-theme .crb-image { opacity: 0.26; }
   }
 
 
