@@ -166,14 +166,26 @@ export function generateSlotPreview(input: GenerateSlotsInput): Array<{
   return slots;
 }
 
+/** Ao gerar a grade de um turno que já começou no passado (ex.: turno
+ * programado manualmente com início há algumas horas), os quartos de hora
+ * cujo horário final já passou não fazem sentido ficar "pendentes" — eles
+ * já foram cumpridos (ou perdidos) pelo relógio. Marca como concluídos
+ * automaticamente e deixa só os atuais/futuros como ativos de verdade. */
 export async function saveSlots(shiftId: string, slots: ReturnType<typeof generateSlotPreview>): Promise<void> {
-  const rows = slots.map((s) => ({
-    shift_id: shiftId,
-    agent_id: s.agent_id,
-    sector_id: s.sector_id,
-    scheduled_start: s.scheduled_start.toISOString(),
-    scheduled_end: s.scheduled_end.toISOString(),
-  }));
+  const now = new Date();
+  const rows = slots.map((s) => {
+    const alreadyElapsed = s.scheduled_end <= now;
+    return {
+      shift_id: shiftId,
+      agent_id: s.agent_id,
+      sector_id: s.sector_id,
+      scheduled_start: s.scheduled_start.toISOString(),
+      scheduled_end: s.scheduled_end.toISOString(),
+      status: alreadyElapsed ? 'completed' : 'pending',
+      completed_at: alreadyElapsed ? s.scheduled_end.toISOString() : null,
+      notes: alreadyElapsed ? 'Marcado automaticamente — horário já havia passado quando o turno foi criado.' : null,
+    };
+  });
   const { error } = await sb.from('patrol_slots').insert(rows);
   if (error) throw error;
 }

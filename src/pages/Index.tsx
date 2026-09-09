@@ -77,6 +77,7 @@ import { useHomeCardOrder, type HomeCardId } from '@/hooks/useHomeCardOrder';
 
 import { CommandRoomBackground } from '@/components/home/CommandRoomBackground';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
+import iseAcreHeaderBadge from '@/assets/logo-ise-socioeducativo.png';
 import { OperatorHeaderControls } from '@/components/layout/OperatorHeaderControls';
 
 import { useTheme } from '@/contexts/ThemeContext';
@@ -1426,6 +1427,15 @@ export default function Index() {
             <span className="font-display text-base font-bold tracking-wide text-foreground sm:text-lg">
               Plantão<span className="text-primary">Pro</span> <span className="text-xs text-muted-foreground">AC</span>
             </span>
+            {/* Selo ISE/Governo do Acre — único lugar na home onde aparece
+                (removido da foto do hero e do rodapé para não duplicar). */}
+            <img
+              src={iseAcreHeaderBadge}
+              alt="Instituto Socioeducativo · Governo do Estado do Acre"
+              className="ml-1 hidden h-8 w-8 shrink-0 object-contain opacity-90 sm:block"
+              loading="eager"
+              decoding="async"
+            />
           </div>
           <div className="relative">
             <OperatorHeaderControls />

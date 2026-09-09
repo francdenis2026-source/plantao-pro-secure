@@ -13,6 +13,10 @@ interface CopyrightFooterProps {
   compact?: boolean;
   leftSlot?: ReactNode;
   rightSlot?: ReactNode;
+  /** Esconde o selo ISE/Acre — usar quando a página já mostra o selo em
+   * outro lugar (ex.: a homepage, que o exibe na barra do cabeçalho, para
+   * não duplicar a mesma marca institucional duas vezes na tela). */
+  hideBadge?: boolean;
 }
 
 /**
@@ -20,7 +24,7 @@ interface CopyrightFooterProps {
  * Tactical public-safety identity with steel cyan accents.
  */
 export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
-  ({ className, compact = false, leftSlot, rightSlot }, ref) => {
+  ({ className, compact = false, leftSlot, rightSlot, hideBadge = false }, ref) => {
 
     const year = new Date().getFullYear();
 
@@ -115,23 +119,25 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
             {/* Institutional Identity */}
             <div className="md:col-span-5 flex items-center gap-3.5">
-              <div className="relative shrink-0">
-                <div className="absolute inset-0 rounded-md bg-primary/15 blur-md" />
-                <div className="relative h-12 w-12 rounded-md ring-1 ring-primary/35 bg-gradient-to-br from-card to-background flex items-center justify-center p-1.5 shadow-[0_4px_14px_hsl(222_60%_2%/0.6)]">
-                  <picture>
-                    <source type="image/webp" srcSet={iseAcreBadgeWebp} />
-                    <img
-                      src={iseAcreBadge}
-                      alt="Brasão ISE Acre"
-                      width={96}
-                      height={96}
-                      loading="lazy"
-                      decoding="async"
-                      className="max-h-full max-w-full h-full w-full object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
-                    />
-                  </picture>
+              {!hideBadge && (
+                <div className="relative shrink-0">
+                  <div className="absolute inset-0 rounded-md bg-primary/15 blur-md" />
+                  <div className="relative h-12 w-12 rounded-md ring-1 ring-primary/35 bg-gradient-to-br from-card to-background flex items-center justify-center p-1.5 shadow-[0_4px_14px_hsl(222_60%_2%/0.6)]">
+                    <picture>
+                      <source type="image/webp" srcSet={iseAcreBadgeWebp} />
+                      <img
+                        src={iseAcreBadge}
+                        alt="Brasão ISE Acre"
+                        width={96}
+                        height={96}
+                        loading="lazy"
+                        decoding="async"
+                        className="max-h-full max-w-full h-full w-full object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+                      />
+                    </picture>
+                  </div>
                 </div>
-              </div>
+              )}
               <div className="flex flex-col leading-tight">
                 <span className="text-[10px] font-bold tracking-[0.24em] text-primary uppercase">
                   Instituto Socioeducativo
