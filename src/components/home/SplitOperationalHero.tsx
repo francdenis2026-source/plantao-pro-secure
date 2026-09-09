@@ -127,7 +127,17 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
             draggable={false}
           />
           {/* Selo do Governo do Acre removido daqui — duplicava o da barra do
-              cabeçalho. Único lugar oficial agora: o header (Index.tsx). */}
+              cabeçalho. Único lugar oficial agora: o header (Index.tsx).
+              A foto original tem o brasão impresso no canto superior
+              direito; dependendo do recorte (object-cover) ele aparece
+              cortado pela metade. Não dá pra apagar do arquivo de imagem,
+              então mascara a região com um degradê na mesma cor do céu
+              noturno da foto — funde sem parecer um retalho colado. */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute right-0 top-0 h-[42%] w-[38%]"
+            style={{ background: 'radial-gradient(ellipse at top right, hsl(213 55% 10%) 0%, hsl(213 55% 10% / 0.85) 45%, transparent 75%)' }}
+          />
           {/* Transição suave para o painel de texto — sem gradiente cobrindo
               a imagem inteira, só a costura entre as duas colunas. */}
           <div

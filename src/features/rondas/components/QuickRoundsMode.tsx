@@ -1,11 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Plus, X, Play, Square, Users, Clock3, History, Trash2, CheckCircle2, ArrowRight, CalendarClock, Zap } from 'lucide-react';
+import { Plus, X, Play, Square, Users, Clock3, History, Trash2, CheckCircle2, ArrowRight, CalendarClock, Zap, ShieldAlert } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+  AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction,
+} from '@/components/ui/alert-dialog';
 import { useAuth } from '@/contexts/AuthContext';
 import * as api from '../api';
 
@@ -88,6 +92,7 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
   });
   const [, forceTick] = useState(0);
   const savedRef = useRef(false);
+  const [confirmScheduleOpen, setConfirmScheduleOpen] = useState(false);
 
   const durationMinutes = diffMinutes(startTime, endTime);
   const activeNames = useMemo(() => names.map((n) => n.trim()).filter(Boolean), [names]);
@@ -175,6 +180,19 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
       triggerAt: triggerAt.toISOString(), phase: mode === 'now' ? 'running' : 'waiting',
     });
     toast.success(mode === 'now' ? 'Rodízio iniciado.' : `Programado para iniciar às ${startTime}.`);
+  };
+
+  const handleScheduleClick = () => {
+    if (activeNames.length < 1) {
+      toast.error('Digite pelo menos um nome.');
+      return;
+    }
+    setConfirmScheduleOpen(true);
+  };
+
+  const confirmSchedule = () => {
+    setConfirmScheduleOpen(false);
+    startSession('scheduled');
   };
 
   const handleCancel = () => {
@@ -354,7 +372,7 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
         )}
 
         <div className="grid grid-cols-2 gap-2 pt-1">
-          <Button variant="outline" className="gap-1.5" onClick={() => startSession('scheduled')}>
+          <Button variant="outline" className="gap-1.5" onClick={handleScheduleClick}>
             <CalendarClock className="h-4 w-4" /> Programar p/ {startTime}
           </Button>
           <Button className="gap-1.5" onClick={() => startSession('now')}>
@@ -362,6 +380,31 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
           </Button>
         </div>
       </div>
+
+      <AlertDialog open={confirmScheduleOpen} onOpenChange={setConfirmScheduleOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <ShieldAlert className="h-5 w-5 text-destructive" />
+              Confirmar programação
+            </AlertDialogTitle>
+            <AlertDialogDescription className="space-y-2 text-left">
+              <span className="block">
+                Ao confirmar, o rodízio de <strong className="text-foreground">{activeNames.length} agente{activeNames.length > 1 ? 's' : ''}</strong> fica travado para iniciar às <strong className="text-foreground">{startTime}</strong> e rodar sozinho até {endTime}.
+              </span>
+              <span className="block font-medium text-destructive">
+                Não será possível desfazer ou editar essa programação depois de confirmada — só cancelar o rodízio inteiro.
+              </span>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Voltar e revisar</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmSchedule} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Confirmar e travar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {user && (
         <div className="border-t border-border px-4 py-3">
