@@ -13,13 +13,16 @@
        Identidade profissional sóbria: ardósia neutra + azul institucional único.
        Sem dourado, sem HUD tático, sem heráldica decorativa.
        ================================ */
-    --background: 222 18% 8%;
+    /* Fundo em azul-marinho saturado — mesmo matiz do escudo (#0E2A5C),
+       não mais um cinza-ardósia desaturado, pra casar de verdade com a
+       logomarca em vez de só usar o azul como cor de destaque pontual. */
+    --background: 222 42% 7%;
     --foreground: 210 20% 96%;
 
-    --card: 222 16% 11%;
+    --card: 222 38% 11%;
     --card-foreground: 210 20% 96%;
 
-    --popover: 222 18% 9%;
+    --popover: 222 40% 9%;
     --popover-foreground: 210 20% 96%;
 
     /* Primary — Azul da marca (mesmo tom do escudo/favicon: #2F6FED) */
@@ -27,11 +30,11 @@
     --primary-foreground: 210 20% 99%;
     --primary-glow: 220 84% 66%;
 
-    --secondary: 222 14% 17%;
+    --secondary: 222 32% 16%;
     --secondary-foreground: 210 20% 94%;
 
-    --muted: 222 14% 15%;
-    --muted-foreground: 216 12% 65%;
+    --muted: 222 30% 14%;
+    --muted-foreground: 216 14% 66%;
 
     --accent: 220 84% 56%;
     --accent-foreground: 210 20% 99%;
@@ -46,17 +49,17 @@
     --warning: 38 80% 52%;
     --warning-foreground: 222 18% 8%;
 
-    --border: 222 13% 21%;
-    --input: 222 14% 16%;
+    --border: 222 30% 19%;
+    --input: 222 30% 15%;
     --ring: 220 84% 56%;
 
-    --sidebar-background: 222 20% 6%;
+    --sidebar-background: 222 45% 6%;
     --sidebar-foreground: 210 18% 92%;
     --sidebar-primary: 220 84% 58%;
     --sidebar-primary-foreground: 210 20% 99%;
-    --sidebar-accent: 222 14% 13%;
+    --sidebar-accent: 222 32% 13%;
     --sidebar-accent-foreground: 210 18% 92%;
-    --sidebar-border: 222 13% 17%;
+    --sidebar-border: 222 30% 16%;
     --sidebar-ring: 220 84% 58%;
 
     --radius: 0.625rem;
@@ -66,11 +69,13 @@
     --safe-dvh: 100dvh;
     --home-viewport-height: calc(var(--safe-dvh) - var(--app-header-height));
 
-    /* Gradientes institucionais — ardósia + azul da marca */
+    /* Gradientes institucionais — azul-marinho + azul da marca, com um
+       toque pontual do vermelho do brasão (nunca dominante). */
     --gradient-primary: linear-gradient(135deg, hsl(220 84% 56%) 0%, hsl(224 70% 22%) 100%);
-    --gradient-dark: radial-gradient(ellipse at top, hsl(222 18% 11%) 0%, hsl(222 20% 6%) 100%);
-    --gradient-navy-depth: linear-gradient(160deg, hsl(222 16% 12%) 0%, hsl(222 18% 8%) 55%, hsl(222 20% 5%) 100%);
-    --gradient-hero-overlay: linear-gradient(120deg, hsl(222 20% 6% / 0.94) 0%, hsl(222 18% 9% / 0.72) 55%, hsl(220 60% 20% / 0.20) 100%);
+    --gradient-dark: radial-gradient(ellipse at top, hsl(222 40% 11%) 0%, hsl(222 45% 6%) 100%);
+    --gradient-navy-depth: linear-gradient(160deg, hsl(222 38% 13%) 0%, hsl(222 42% 8%) 55%, hsl(222 46% 5%) 100%);
+    --gradient-hero-overlay: linear-gradient(120deg, hsl(222 45% 6% / 0.94) 0%, hsl(222 40% 10% / 0.72) 55%, hsl(220 70% 24% / 0.24) 100%);
+    --gradient-brand-glow: radial-gradient(120% 90% at 12% 0%, hsl(220 84% 40% / 0.28) 0%, transparent 55%), radial-gradient(90% 70% at 100% 100%, hsl(354 68% 40% / 0.10) 0%, transparent 60%);
 
     /* Sombras */
     --shadow-command: 0 24px 60px -20px hsl(222 25% 2% / 0.85), 0 2px 8px hsl(220 84% 56% / 0.16);
@@ -86,7 +91,9 @@
      ficavam sem cor/contraste porque nenhuma var era redefinida aqui.
      ================================ */
   .light-theme {
-    --background: 210 24% 97%;
+    /* Fundo com leve matiz azul-marinho da marca (não branco/cinza puro) —
+       cards seguem brancos por cima pra manter legibilidade e hierarquia. */
+    --background: 216 40% 97%;
     --foreground: 222 40% 12%;
 
     --card: 0 0% 100%;
@@ -99,11 +106,11 @@
     --primary-foreground: 210 20% 99%;
     --primary-glow: 220 84% 58%;
 
-    --secondary: 212 22% 93%;
+    --secondary: 216 42% 93%;
     --secondary-foreground: 222 35% 18%;
 
-    --muted: 212 20% 94%;
-    --muted-foreground: 215 16% 40%;
+    --muted: 216 38% 94%;
+    --muted-foreground: 215 18% 40%;
 
     --accent: 220 84% 46%;
     --accent-foreground: 210 20% 99%;
@@ -117,23 +124,24 @@
     --warning: 38 85% 40%;
     --warning-foreground: 0 0% 100%;
 
-    --border: 214 20% 87%;
-    --input: 214 20% 89%;
+    --border: 216 36% 85%;
+    --input: 216 36% 88%;
     --ring: 220 84% 46%;
 
-    --sidebar-background: 210 28% 98%;
+    --sidebar-background: 216 46% 97%;
     --sidebar-foreground: 222 35% 16%;
     --sidebar-primary: 220 84% 46%;
     --sidebar-primary-foreground: 210 20% 99%;
-    --sidebar-accent: 213 26% 92%;
+    --sidebar-accent: 216 42% 91%;
     --sidebar-accent-foreground: 222 35% 16%;
-    --sidebar-border: 214 20% 86%;
+    --sidebar-border: 216 36% 84%;
     --sidebar-ring: 220 84% 46%;
 
     --gradient-primary: linear-gradient(135deg, hsl(220 84% 46%) 0%, hsl(220 70% 34%) 100%);
-    --gradient-dark: radial-gradient(ellipse at top, hsl(210 24% 99%) 0%, hsl(210 24% 95%) 100%);
-    --gradient-navy-depth: linear-gradient(160deg, hsl(210 24% 99%) 0%, hsl(210 22% 96%) 55%, hsl(212 20% 93%) 100%);
+    --gradient-dark: radial-gradient(ellipse at top, hsl(216 40% 99%) 0%, hsl(216 40% 95%) 100%);
+    --gradient-navy-depth: linear-gradient(160deg, hsl(216 40% 99%) 0%, hsl(216 38% 96%) 55%, hsl(216 36% 93%) 100%);
     --gradient-hero-overlay: linear-gradient(120deg, hsl(222 40% 12% / 0.85) 0%, hsl(222 30% 20% / 0.55) 55%, hsl(220 60% 40% / 0.15) 100%);
+    --gradient-brand-glow: radial-gradient(120% 90% at 12% 0%, hsl(220 84% 60% / 0.14) 0%, transparent 55%), radial-gradient(90% 70% at 100% 100%, hsl(354 68% 55% / 0.07) 0%, transparent 60%);
 
     --shadow-command: 0 24px 60px -24px hsl(222 30% 20% / 0.22), 0 2px 8px hsl(220 84% 46% / 0.10);
     --shadow-elevated: 0 30px 60px -24px hsl(222 30% 20% / 0.22), 0 0 0 1px hsl(214 20% 85%);
@@ -142,7 +150,43 @@
   }
 
   .light-theme body {
-    background: linear-gradient(160deg, hsl(210 24% 98%) 0%, hsl(212 22% 95%) 50%, hsl(213 22% 93%) 100%);
+    background:
+      var(--gradient-brand-glow),
+      linear-gradient(160deg, hsl(216 42% 97%) 0%, hsl(216 38% 94%) 50%, hsl(217 36% 91%) 100%);
+  }
+
+  /* Fundo institucional da home (CommandRoomBackground) — a imagem oficial
+     precisa de tratamento bem diferente em cada tema: escurecida no modo
+     escuro, e com um wash claro (nunca uma faixa escura) no modo claro. */
+  .crb-image {
+    opacity: 0.42;
+  }
+  .crb-wash {
+    background: radial-gradient(ellipse at top, hsl(222 40% 12% / 0.55) 0%, hsl(222 45% 6% / 0.72) 60%, hsl(222 48% 4% / 0.86) 100%);
+  }
+  .crb-red-glow {
+    background: radial-gradient(70% 55% at 88% 92%, hsl(354 68% 40% / 0.16) 0%, transparent 60%);
+  }
+  .crb-vignette {
+    background: radial-gradient(ellipse at center, transparent 32%, hsl(222 45% 4% / 0.66) 100%);
+  }
+  @media (min-width: 640px) {
+    .crb-image { opacity: 0.32; }
+  }
+  .light-theme .crb-image {
+    opacity: 0.16;
+  }
+  .light-theme .crb-wash {
+    background: radial-gradient(ellipse at top, hsl(216 45% 96% / 0.55) 0%, hsl(216 42% 93% / 0.72) 60%, hsl(216 40% 90% / 0.88) 100%);
+  }
+  .light-theme .crb-red-glow {
+    background: radial-gradient(70% 55% at 88% 92%, hsl(354 68% 55% / 0.08) 0%, transparent 60%);
+  }
+  .light-theme .crb-vignette {
+    background: radial-gradient(ellipse at center, transparent 35%, hsl(216 40% 90% / 0.6) 100%);
+  }
+  @media (min-width: 640px) {
+    .light-theme .crb-image { opacity: 0.12; }
   }
 
 
@@ -167,8 +211,10 @@
   body {
     @apply text-foreground antialiased;
     font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
-    /* BG global do site — gradiente tático neutro (espelha o ThemedPanelBackground). */
+    /* BG global do site — azul-marinho institucional (mesmo matiz da
+       logomarca) com um toque pontual de vermelho no canto, nunca dominante. */
     background:
+      var(--gradient-brand-glow),
       linear-gradient(160deg,
         hsl(222 47% 8%) 0%,
         hsl(222 47% 12%) 50%,
