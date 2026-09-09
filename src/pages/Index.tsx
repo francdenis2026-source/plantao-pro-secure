@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAgentProfile } from '@/hooks/useAgentProfile';
+import { useRegistrationsEnabled } from '@/hooks/useRegistrationsEnabled';
 import { AgentHomeDashboard } from '@/features/home-dashboard/AgentHomeDashboard';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
@@ -121,6 +122,7 @@ function todayLongLabel(): string {
 export default function Index() {
   const { user, isLoading, signIn, signUp, setMasterSession, isAdmin, isMaster, userRole } = useAuth();
   const { agent } = useAgentProfile();
+  const { enabled: registrationsEnabled } = useRegistrationsEnabled();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -639,11 +641,20 @@ export default function Index() {
           requestAnimationFrame(() => setShowCpfCheck(false));
         }
 
+      } else if (!registrationsEnabled) {
+        // Matrícula não cadastrada, mas o administrador suspendeu novos
+        // cadastros — aviso discreto, sem abrir o formulário.
+        setShowCpfCheck(false);
+        toast({
+          title: 'Cadastros temporariamente suspensos',
+          description: 'Sua matrícula ainda não consta no sistema e os novos cadastros estão pausados no momento. Procure o administrador da sua unidade para verificar sua situação ou liberar o acesso.',
+          duration: 7000,
+        });
       } else {
         // CPF não cadastrado - redirecionar para registro
         setShowCpfCheck(false);
-        setFormData(prev => ({ 
-          ...prev, 
+        setFormData(prev => ({
+          ...prev,
           cpf: checkCpf,
           unit_id: '',
         }));
