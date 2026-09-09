@@ -151,7 +151,7 @@ export function AuthDialog({
               "relative w-full overflow-hidden bg-slate-950 shrink-0",
               variant === 'register'
                 ? "aspect-[16/5] sm:aspect-[16/5]"
-                : "aspect-[4/3] sm:aspect-[16/8] md:aspect-[16/7]"
+                : "aspect-[16/11] sm:aspect-[16/8] md:aspect-[16/7]"
             )}
           >
             <img
@@ -182,14 +182,15 @@ export function AuthDialog({
             </div>
 
             {/* Title — o pôster já identifica a equipe (nome + emblema
-                embutidos na arte), então não repetimos aqui. */}
+                embutidos na arte), então não repetimos aqui. Subtítulo NÃO
+                fica aqui dentro — o próprio pôster já tem texto embutido
+                (lema da equipe) e os dois se sobrepunham, ilegíveis. Ele
+                aparece destacado logo abaixo, no espaço vazio antes do
+                campo de matrícula. */}
             <div className="absolute bottom-0 inset-x-0 px-3 sm:px-4 pb-2.5 sm:pb-3">
               <h2 className="text-[15px] sm:text-lg md:text-xl font-bold tracking-tight text-white leading-tight font-stencil line-clamp-1">
                 {title}
               </h2>
-              {subtitle && (
-                <p className="text-[10px] sm:text-[11px] text-white/70 leading-snug mt-0.5 line-clamp-2 sm:line-clamp-1">{subtitle}</p>
-              )}
             </div>
 
             <div className="absolute bottom-0 inset-x-0 h-px"
@@ -280,6 +281,15 @@ export function AuthDialog({
             ['--team-glow' as string]: teamColor.glow,
           } as React.CSSProperties) : undefined}
         >
+          {/* Subtítulo em destaque — some do topo da própria foto (onde
+              colidia com o lema da equipe já impresso na arte) e aparece
+              aqui, na primeira coisa que o usuário lê antes do campo. */}
+          {subtitle && variant !== 'register' && teamBranded && (
+            <div className="mb-4 flex items-start gap-2.5 rounded-lg border border-[var(--team-primary)]/30 bg-[var(--team-primary)]/10 px-3.5 py-2.5">
+              <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--team-primary)]" aria-hidden />
+              <p className="text-[13px] font-medium leading-snug text-white/90">{subtitle}</p>
+            </div>
+          )}
           {children}
         </div>
 
