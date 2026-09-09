@@ -43,40 +43,11 @@ export function CinematicBrandHero({
   return (
     <section
       aria-label="PlantãoPro — Sistema de gestão de plantões"
-      className="relative w-full overflow-hidden isolate"
+      className="relative w-full overflow-hidden isolate grid grid-cols-1 lg:grid-cols-[1.1fr_1fr]"
       style={{ background: "hsl(222 20% 6%)" }}
     >
-      {/* Foto de fundo em tela cheia — mesmo recurso do banner do topo:
-          uma única imagem por trás de tudo, sem coluna separada. O texto
-          flutua sobre um scrim gradiente por cima dela. */}
-      <img
-        src={IMG_URL}
-        alt="Agentes da Socioeducação do Acre em frente à unidade e viatura oficial"
-        draggable={false}
-        loading="lazy"
-        decoding="async"
-        className="absolute inset-0 h-full w-full select-none object-cover object-[72%_38%] lg:object-[66%_38%]"
-        style={{ filter: "saturate(0.9) contrast(1.02)" }}
-      />
-      {/* Scrim desktop — escuro à esquerda (texto), revela a foto por
-          completo à direita. Mobile: escuro embaixo, foto visível em cima. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 hidden lg:block"
-        style={{
-          background: "linear-gradient(100deg, hsl(222 20% 5%) 0%, hsl(222 20% 6% / 0.97) 34%, hsl(222 22% 7% / 0.8) 52%, hsl(222 24% 8% / 0.35) 68%, transparent 84%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 lg:hidden"
-        style={{
-          background: "linear-gradient(180deg, hsl(222 20% 5% / 0.55) 0%, hsl(222 20% 5% / 0.7) 30%, hsl(222 20% 5% / 0.97) 58%, hsl(222 20% 5%) 100%)",
-        }}
-      />
-
-      {/* Conteúdo — sempre por cima do scrim, sem coluna própria */}
-      <div className="relative z-10 flex min-h-[420px] flex-col justify-end px-6 py-10 sm:min-h-[480px] sm:px-10 sm:py-12 lg:min-h-[460px] lg:justify-center lg:px-14 lg:py-14">
+      {/* Coluna de texto — fundo sólido, nunca compete com a foto */}
+      <div className="relative z-10 order-2 flex flex-col justify-center px-6 py-10 sm:px-10 sm:py-12 lg:order-1 lg:px-14 lg:py-14">
         <div className="max-w-2xl">
           <div
             className="inline-flex items-center gap-2 rounded-md border border-primary/30 bg-primary/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/90 animate-fade-in"
@@ -139,6 +110,41 @@ export function CinematicBrandHero({
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Coluna de imagem — espaço generoso pra mostrar detalhe de verdade
+          (rostos, viatura, unidade), não um recorte apertado atrás do
+          texto. Transição larga e em várias etapas com a coluna de
+          texto, em vez de uma linha de corte. */}
+      <div className="relative order-1 h-64 sm:h-80 lg:order-2 lg:h-auto lg:min-h-[460px]">
+        <img
+          src={IMG_URL}
+          alt="Agentes da Socioeducação do Acre em frente à unidade e viatura oficial"
+          draggable={false}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full select-none object-cover object-[62%_35%] lg:object-[58%_32%]"
+          style={{ filter: "saturate(0.9) contrast(1.02)" }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 left-0 w-24 lg:w-40"
+          style={{
+            background: "linear-gradient(90deg, hsl(222 20% 6%) 0%, hsl(222 20% 6% / 0.82) 22%, hsl(222 22% 7% / 0.5) 42%, hsl(222 24% 8% / 0.22) 65%, transparent 100%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-16 lg:hidden"
+          style={{
+            background: "linear-gradient(180deg, hsl(222 20% 6%) 0%, hsl(222 20% 6% / 0.7) 32%, transparent 100%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-px"
+          style={{ background: "linear-gradient(90deg, transparent, hsl(var(--primary) / 0.5) 50%, transparent)" }}
+        />
       </div>
     </section>
   );

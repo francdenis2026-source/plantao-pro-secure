@@ -94,59 +94,65 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
 
   return (
     <section className="mx-auto w-full max-w-6xl">
-      {/* Institutional banner — editorial de verdade: uma única foto de
-          fundo em tela cheia (sem coluna separada, sem costura pra
-          disfarçar), com o texto sobreposto sobre um scrim gradiente.
-          É o mesmo recurso usado em capas de revista/site institucional
-          premium — a foto nunca é "cortada em pedaço", ela preenche o
-          banner inteiro e o texto flutua sobre a parte mais escura dela. */}
-      <div className="relative overflow-hidden rounded-2xl border border-border">
-        <div className="relative aspect-[4/5] sm:aspect-[21/9]">
+      {/* Institutional banner — colunas separadas: foto com espaço de
+          verdade pra mostrar detalhe (não cortada em tela cheia atrás do
+          texto) e painel de texto com fundo sólido, ligados por uma
+          transição larga e gradual em vez de uma linha de corte. */}
+      <div className="relative overflow-hidden rounded-2xl border border-border grid grid-cols-1 sm:grid-cols-[1.05fr_1fr]">
+        <div
+          className="relative z-10 order-2 flex flex-col justify-center gap-6 px-6 py-7 sm:order-1 sm:px-10 sm:py-12"
+          style={{ background: 'linear-gradient(155deg, hsl(222 47% 7%) 0%, hsl(217 50% 11%) 55%, hsl(213 55% 14%) 100%)' }}
+        >
+          <div className="max-w-lg">
+            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              Sistema Socioeducativo · Acre
+            </span>
+            <h1 className="mt-2 text-2xl font-bold leading-tight text-white sm:text-3xl">
+              Gestão de plantões e rondas para agentes socioeducativos
+            </h1>
+            <p className="mt-2 text-sm text-white/70">
+              Escalas, banco de horas e rondas georreferenciadas em um único lugar.
+            </p>
+          </div>
+
+          <OperationalStatusRibbon />
+        </div>
+
+        <div className="relative order-1 h-56 sm:order-2 sm:h-auto sm:min-h-[340px]">
+          {/* Foto com espaço generoso — mostra o agente, a unidade e o
+              brasão do Acre com nitidez, não é um recorte apertado. */}
           <img
             src={heroBanner}
             alt="Agente da Socioeducação do Acre, com o brasão do Governo do Acre ao fundo, em unidade operacional"
             loading="eager"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover object-[68%_28%] sm:object-[62%_30%]"
+            className="absolute inset-0 h-full w-full object-cover object-[78%_30%] sm:object-[72%_28%]"
             draggable={false}
           />
-
-          {/* Scrim desktop — escuro à esquerda (onde o texto fica), some
-              gradualmente até revelar a foto por completo à direita. */}
+          {/* Transição larga e em várias etapas — a foto "nasce" do fundo
+              do painel de texto de forma gradual, sem linha de corte. */}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 hidden sm:block"
+            className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-40"
             style={{
-              background: 'linear-gradient(100deg, hsl(222 47% 6%) 0%, hsl(222 47% 7% / 0.95) 28%, hsl(217 50% 11% / 0.72) 46%, hsl(213 55% 15% / 0.28) 64%, transparent 80%)',
+              background: 'linear-gradient(90deg, hsl(213 55% 14%) 0%, hsl(213 55% 14% / 0.82) 22%, hsl(215 52% 12% / 0.55) 42%, hsl(217 50% 10% / 0.25) 65%, transparent 100%)',
             }}
           />
-          {/* Scrim mobile — escuro embaixo (onde o texto fica), foto
-              visível por completo na metade superior. */}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 sm:hidden"
+            className="pointer-events-none absolute inset-x-0 top-0 h-16 sm:hidden"
             style={{
-              background: 'linear-gradient(180deg, transparent 0%, hsl(222 47% 6% / 0.55) 42%, hsl(222 47% 6% / 0.94) 62%, hsl(222 47% 5%) 100%)',
+              background: 'linear-gradient(180deg, hsl(222 47% 7%) 0%, hsl(222 47% 7% / 0.75) 30%, hsl(222 47% 7% / 0.35) 60%, transparent 100%)',
             }}
           />
-          {/* Vinheta geral bem sutil — unifica tom da foto com a paleta da marca */}
-          <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: 'hsl(220 60% 20% / 0.08)' }} />
-
-          <div className="relative z-10 flex h-full flex-col justify-end gap-5 px-6 py-7 sm:justify-center sm:px-10 sm:py-10">
-            <div className="max-w-lg">
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-                Sistema Socioeducativo · Acre
-              </span>
-              <h1 className="mt-2 text-2xl font-bold leading-tight text-white sm:text-3xl">
-                Gestão de plantões e rondas para agentes socioeducativos
-              </h1>
-              <p className="mt-2 text-sm text-white/70">
-                Escalas, banco de horas e rondas georreferenciadas em um único lugar.
-              </p>
-            </div>
-
-            <OperationalStatusRibbon />
-          </div>
+          {/* Vinheta sutil pra unificar o tom da foto com a paleta da marca */}
+          <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: 'hsl(220 60% 18% / 0.1)' }} />
+          {/* Linha de base — pequeno acento pra fechar a foto com elegância */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-px"
+            style={{ background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.55) 50%, transparent)' }}
+          />
         </div>
       </div>
 
