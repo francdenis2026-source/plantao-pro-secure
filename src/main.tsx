@@ -10,6 +10,12 @@ import "@fontsource/dm-sans/400.css";
 import "@fontsource/dm-sans/500.css";
 import "@fontsource/dm-sans/600.css";
 import { pushConsoleError, pushDiagEvent } from "@/lib/diagLog";
+import { syncServerTime } from "@/hooks/useServerTime";
+
+// Relógio confiável: sincroniza o desvio entre o dispositivo e o horário
+// real do servidor assim que o app carrega — o Gestor de Rondas nunca usa
+// a hora do computador/celular diretamente (Seção 41).
+void syncServerTime(true);
 
 // Capture console errors for the Diagnostics report (no sensitive values).
 (function installConsoleCapture() {

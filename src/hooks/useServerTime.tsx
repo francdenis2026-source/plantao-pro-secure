@@ -132,6 +132,23 @@ export function useServerTime(tickMs = 1000): Date {
   return now;
 }
 
+// Acre é fixo em UTC-05:00 o ano todo (Brasil aboliu o horário de verão em
+// 2019) — dá pra converter hora de parede do Acre pra epoch sem tabela de
+// fusos, só somando o offset ao instante do servidor.
+const ACRE_UTC_OFFSET_HOURS = 5;
+
+/** Epoch (ms) do horário de parede "HH:mm" no fuso do Acre, no dia atual
+ * do servidor (+ dayOffset dias) — para "programar para tal hora" sem
+ * depender da data/hora configurada no dispositivo. */
+export function acreWallTimeToServerMs(hour: number, minute: number, dayOffset = 0): number {
+  const fmt = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Rio_Branco', year: 'numeric', month: '2-digit', day: '2-digit',
+  });
+  const parts = fmt.formatToParts(getServerDate());
+  const get = (t: string) => Number(parts.find((p) => p.type === t)?.value ?? '0');
+  return Date.UTC(get('year'), get('month') - 1, get('day') + dayOffset, hour + ACRE_UTC_OFFSET_HOURS, minute, 0, 0);
+}
+
 /**
  * Retorna horas/minutos/segundos da hora do servidor em um fuso específico.
  * Uso padrão para todos os relógios do app: `useServerClockParts()` = Rio Branco.

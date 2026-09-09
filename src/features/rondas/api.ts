@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { getServerDate } from '@/hooks/useServerTime';
 import type {
   PatrolShift, PatrolSlot, PatrolSector, PatrolAgentAssignment, PatrolIncident, PatrolMetrics,
   DistributionStrategy, IncidentSeverity,
@@ -198,7 +199,7 @@ export function generateSlotPreview(input: GenerateSlotsInput): Array<{
  * já foram cumpridos (ou perdidos) pelo relógio. Marca como concluídos
  * automaticamente e deixa só os atuais/futuros como ativos de verdade. */
 export async function saveSlots(shiftId: string, slots: ReturnType<typeof generateSlotPreview>): Promise<void> {
-  const now = new Date();
+  const now = getServerDate();
   const rows = slots.map((s) => {
     const alreadyElapsed = s.scheduled_end <= now;
     return {
@@ -250,7 +251,7 @@ export async function listScheduledRounds(unitId: string, team: string): Promise
 /** Transforma uma programação em um turno real de hoje: cria o patrol_shift,
  * atribui a equipe inteira e já gera a grade de quartos de hora (rotativo). */
 export async function activateScheduledRound(row: ScheduledRoundRow, team: string, createdBy: string | null): Promise<PatrolShift> {
-  const now = new Date();
+  const now = getServerDate();
   let start = now;
   let end: Date;
   if (row.round_start_time && row.round_end_time) {

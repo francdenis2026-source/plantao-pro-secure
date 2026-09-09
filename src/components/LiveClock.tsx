@@ -1,21 +1,16 @@
-import { useEffect, useState } from 'react';
 import { Clock3 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useServerClockParts } from '@/hooks/useServerTime';
 
 /** Relógio ao vivo (fuso Rio Branco/AC) — badge compacto com dois-pontos
  * piscando e leve brilho pulsante, para destacar a hora atual sem competir
- * visualmente com o resto do header. */
+ * visualmente com o resto do header. Usa o relógio sincronizado com o
+ * servidor (Seção 41): a hora exibida não muda se o dispositivo estiver
+ * com data/hora alteradas, certas ou erradas. */
 export function LiveClock({ className, size = 'md' }: { className?: string; size?: 'sm' | 'md' }) {
-  const [now, setNow] = useState(() => new Date());
-
-  useEffect(() => {
-    const iv = window.setInterval(() => setNow(new Date()), 1000);
-    return () => window.clearInterval(iv);
-  }, []);
-
-  const [hh, mm, ss] = now
-    .toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'America/Rio_Branco' })
-    .split(':');
+  const { hours, minutes, seconds } = useServerClockParts();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const [hh, mm, ss] = [pad(hours), pad(minutes), pad(seconds)];
 
   return (
     <div

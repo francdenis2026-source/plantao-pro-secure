@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Label } from '@/components/ui/label';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
 import { LiveClock } from '@/components/LiveClock';
+import { getServerDate } from '@/hooks/useServerTime';
 import { teamPosters } from '@/lib/teamAssets';
 import { QuickRoundsMode } from './QuickRoundsMode';
 import * as api from '../api';
@@ -815,7 +816,7 @@ function toDatetimeLocalValue(d: Date): string {
 function CreateShiftDialog({ open, onOpenChange, unitId, team, createdBy, onCreated }: {
   open: boolean; onOpenChange: (v: boolean) => void; unitId: string; team: string; createdBy: string | null; onCreated: () => void;
 }) {
-  const [startAt, setStartAt] = useState(() => toDatetimeLocalValue(new Date()));
+  const [startAt, setStartAt] = useState(() => toDatetimeLocalValue(getServerDate()));
   const [durationMinutes, setDurationMinutes] = useState(12 * 60);
   const [intervalMinutes, setIntervalMinutes] = useState(15);
   const [saving, setSaving] = useState(false);

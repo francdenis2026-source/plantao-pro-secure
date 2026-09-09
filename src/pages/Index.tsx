@@ -81,6 +81,7 @@ import { BrasaoSentinela } from '@/components/BrasaoSentinela';
 import iseAcreHeaderBadge from '@/assets/logo-ise-socioeducativo.png';
 import { OperatorHeaderControls } from '@/components/layout/OperatorHeaderControls';
 import { LiveClock } from '@/components/LiveClock';
+import { getServerDate } from '@/hooks/useServerTime';
 
 import { useTheme } from '@/contexts/ThemeContext';
 import { setMasterToken } from '@/lib/masterSession';
@@ -108,8 +109,10 @@ interface Unit {
 const teams = ['ALFA', 'BRAVO', 'CHARLIE', 'DELTA'] as const;
 
 /** Data de hoje por extenso, em português — "Terça-feira, 09 de setembro". */
+// Data do "hoje é..." vem do relógio sincronizado com o servidor (Seção
+// 41), nunca de `new Date()` local — imune a data/hora alteradas no aparelho.
 function todayLongLabel(): string {
-  const raw = new Date().toLocaleDateString('pt-BR', {
+  const raw = getServerDate().toLocaleDateString('pt-BR', {
     weekday: 'long', day: '2-digit', month: 'long', timeZone: 'America/Rio_Branco',
   });
   return raw.charAt(0).toUpperCase() + raw.slice(1);

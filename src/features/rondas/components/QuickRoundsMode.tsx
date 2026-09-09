@@ -13,6 +13,7 @@ import {
   AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction,
 } from '@/components/ui/alert-dialog';
 import { useAuth } from '@/contexts/AuthContext';
+import { getServerDate, acreWallTimeToServerMs, syncServerTime } from '@/hooks/useServerTime';
 import * as api from '../api';
 
 /** Início/fim em "HH:mm" → duração em minutos. Vira o dia (fim < início) soma 24h. */
@@ -24,9 +25,15 @@ function diffMinutes(start: string, end: string): number {
   return diff;
 }
 
+/** "HH:mm" atual no fuso do Acre, a partir do relógio do servidor. */
 function nowHm(): string {
-  const d = new Date();
-  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+  const fmt = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'America/Rio_Branco', hour12: false, hour: '2-digit', minute: '2-digit',
+  });
+  const parts = fmt.formatToParts(getServerDate());
+  const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '00';
+  const h = get('hour') === '24' ? '00' : get('hour');
+  return `${h}:${get('minute')}`;
 }
 
 function addHours(hm: string, hours: number): string {
@@ -35,23 +42,20 @@ function addHours(hm: string, hours: number): string {
   return `${String(Math.floor(total / 60)).padStart(2, '0')}:${String(total % 60).padStart(2, '0')}`;
 }
 
-/** Próxima ocorrência de "HH:mm" a partir de agora (hoje, ou amanhã se já passou). */
+/** Próxima ocorrência de "HH:mm" (fuso do Acre) a partir do relógio do
+ * servidor — hoje, ou amanhã se já passou. Nunca usa a hora do dispositivo
+ * (Seção 41): dispositivos com data/hora alterada não conseguem mentir
+ * pro cronômetro de rondas. */
 function nextOccurrence(hm: string): Date {
   const [h, m] = hm.split(':').map(Number);
-  const d = new Date();
-  d.setSeconds(0, 0);
-  d.setHours(h, m);
-  if (d.getTime() <= Date.now()) d.setDate(d.getDate() + 1);
-  return d;
+  const todayMs = acreWallTimeToServerMs(h, m, 0);
+  return new Date(todayMs <= getServerDate().getTime() ? acreWallTimeToServerMs(h, m, 1) : todayMs);
 }
 
-/** "HH:mm" aplicado à data de hoje (sem rolar pra amanhã). */
+/** "HH:mm" aplicado ao dia de hoje (fuso do Acre, hora do servidor). */
 function todayAt(hm: string): Date {
   const [h, m] = hm.split(':').map(Number);
-  const d = new Date();
-  d.setSeconds(0, 0);
-  d.setHours(h, m);
-  return d;
+  return new Date(acreWallTimeToServerMs(h, m, 0));
 }
 
 function fmtClock(ms: number): string {
@@ -64,7 +68,7 @@ function fmtClock(ms: number): string {
 }
 
 function todayLabel(): string {
-  return new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'America/Rio_Branco' });
+  return getServerDate().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'America/Rio_Branco' });
 }
 
 const CHIP_COLORS = ['#2F6FED', '#D62839', '#10B981', '#F59E0B', '#8B5CF6', '#06B6D4', '#EC4899', '#84CC16'];
@@ -197,7 +201,17 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
     return () => window.clearInterval(iv);
   }, [session]);
 
-  const now = Date.now();
+  // Ressincroniza o relógio do servidor ao montar e sempre que a aba volta
+  // ao foco — garante que uma ronda ativa nunca fique presa a um desvio de
+  // horário do dispositivo detectado enquanto a aba estava em segundo plano.
+  useEffect(() => {
+    void syncServerTime();
+    const onFocus = () => { void syncServerTime(true); };
+    window.addEventListener('focus', onFocus);
+    return () => window.removeEventListener('focus', onFocus);
+  }, []);
+
+  const now = getServerDate().getTime();
   const triggerMs = session ? new Date(session.triggerAt).getTime() : 0;
   const isWaiting = session?.phase === 'waiting' && now < triggerMs;
 
@@ -221,7 +235,7 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
   // sozinha — dá tempo do supervisor ver que terminou sem travar a tela.
   useEffect(() => {
     if (!isDone || !session) return;
-    persist({ ...session, phase: 'done', finishedAt: new Date().toISOString() });
+    persist({ ...session, phase: 'done', finishedAt: getServerDate().toISOString() });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDone]);
 
@@ -275,8 +289,8 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
     // cujo pedaço já venceu aparecem concluídos, e só o atual/futuros
     // ficam ativos. Nunca cria elapsed negativo (não deixa "iniciar" no
     // futuro se o horário digitado ainda não chegou).
-    const triggerAt = mode === 'now' ? new Date(Math.min(todayAt(startTime).getTime(), Date.now())) : nextOccurrence(startTime);
-    const backdatedMinutes = mode === 'now' ? Math.round((Date.now() - triggerAt.getTime()) / 60_000) : 0;
+    const triggerAt = mode === 'now' ? new Date(Math.min(todayAt(startTime).getTime(), getServerDate().getTime())) : nextOccurrence(startTime);
+    const backdatedMinutes = mode === 'now' ? Math.round((getServerDate().getTime() - triggerAt.getTime()) / 60_000) : 0;
     persist({
       names: activeNames, startTime, endTime, durationMinutes,
       triggerAt: triggerAt.toISOString(), phase: mode === 'now' ? 'running' : 'waiting',
