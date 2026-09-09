@@ -64,8 +64,11 @@
 
     --radius: 0.625rem;
 
-    /* Viewport contracts */
-    --app-header-height: 4rem;
+    /* Viewport contracts — soma a área segura do topo (notch/status bar do
+       iPhone e Android) pra quando o app roda instalado (standalone), sem
+       a barra do navegador cobrindo essa área por fora. Em navegador comum
+       env(safe-area-inset-top) é 0, então não muda nada lá. */
+    --app-header-height: calc(4rem + env(safe-area-inset-top, 0px));
     --safe-dvh: 100dvh;
     --home-viewport-height: calc(var(--safe-dvh) - var(--app-header-height));
 

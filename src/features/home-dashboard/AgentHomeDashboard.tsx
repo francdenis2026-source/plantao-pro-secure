@@ -43,7 +43,10 @@ export function AgentHomeDashboard() {
       <Sidebar />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-16 shrink-0 items-center justify-between gap-4 border-b border-border px-4 sm:px-6">
+        <header
+          className="flex h-16 shrink-0 items-center justify-between gap-4 border-b border-border px-4 sm:px-6"
+          style={{ paddingTop: 'max(env(safe-area-inset-top, 0px), 0px)', height: 'calc(4rem + env(safe-area-inset-top, 0px))' }}
+        >
           <div className="relative hidden max-w-sm flex-1 sm:block">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input placeholder="Buscar por colega, data ou unidade..." className="pl-9" />

@@ -1469,7 +1469,10 @@ export default function Index() {
         {/* Barra fixa do topo — marca + rádio, tema e ferramentas do operador,
             sempre visíveis mesmo com a página rolada. `fixed` (não `sticky`)
             porque um ancestral usa overflow-x-clip, o que quebra sticky. */}
-        <div className="header-glass fixed inset-x-0 top-0 z-40 flex h-16 shrink-0 items-center justify-between overflow-hidden px-3 sm:px-5">
+        <div
+          className="header-glass fixed inset-x-0 top-0 z-40 flex shrink-0 items-center justify-between overflow-hidden px-3 sm:px-5"
+          style={{ height: 'var(--app-header-height)', paddingTop: 'env(safe-area-inset-top, 0px)' }}
+        >
           {/* Textura tática discreta — grade de pontos + brilho radial, sem
               repetir a mesma foto usada na hero logo abaixo. */}
           <div
@@ -1541,7 +1544,7 @@ export default function Index() {
             <OperatorHeaderControls />
           </div>
         </div>
-        <div className="h-16 shrink-0" aria-hidden />
+        <div className="shrink-0" style={{ height: 'var(--app-header-height)' }} aria-hidden />
 
         {/* (Selo movido para próximo do rodapé, em posição visível) */}
 

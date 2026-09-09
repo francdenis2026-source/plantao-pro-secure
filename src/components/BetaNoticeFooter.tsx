@@ -72,7 +72,7 @@ export function BetaNoticeFooter() {
   return (
     <Dialog open={open} onOpenChange={(v) => { if (!v) close(); }}>
       <DialogContent
-        className="max-w-[360px] gap-0 overflow-hidden rounded-2xl p-0 border-primary/25"
+        className="max-w-[360px] gap-0 rounded-2xl p-0 border-primary/25"
         aria-labelledby="about-app-title"
         aria-describedby="about-app-desc"
       >
