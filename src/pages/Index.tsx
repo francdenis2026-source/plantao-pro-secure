@@ -676,10 +676,12 @@ export default function Index() {
       errors.cpf = 'CPF inválido';
     }
     
-    // Matrícula is optional at registration - validated only if provided (8 digits)
+    // Matrícula is optional at registration - validated only if provided.
+    // Algumas matrículas funcionais têm 7 dígitos, outras 8 — aceita a faixa
+    // real em vez de travar em um tamanho fixo (Seção 74).
     const matriculaNumbers = formData.matricula.replace(/\D/g, '');
-    if (matriculaNumbers && matriculaNumbers.length !== 8) {
-      errors.matricula = 'Matrícula deve ter 8 dígitos';
+    if (matriculaNumbers && (matriculaNumbers.length < 6 || matriculaNumbers.length > 9)) {
+      errors.matricula = 'Matrícula deve ter entre 6 e 9 dígitos';
     }
     
     if (!formData.unit_id) {
@@ -1849,8 +1851,10 @@ export default function Index() {
             inputMode="numeric"
             error={loginErrors.password}
           />
+          <p className="text-[11px] text-slate-500 -mt-1">
+            Primeiro acesso? Sua senha padrão são os 6 primeiros dígitos da sua matrícula. Você pode alterá-la no seu painel.
+          </p>
 
-          
           <SavedCredentials
             onSelectCredential={(cpf, savedPassword) => {
               setLoginCpf(formatCPF(cpf));

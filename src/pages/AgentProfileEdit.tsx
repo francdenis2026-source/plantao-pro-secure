@@ -79,8 +79,8 @@ export default function AgentProfileEdit() {
     setIsSaving(true);
     try {
       const matriculaNumbers = getMatriculaNumbers(formData.matricula);
-      if (matriculaNumbers && matriculaNumbers.length !== 8) {
-        toast.error('Matrícula deve ter 8 dígitos');
+      if (matriculaNumbers && (matriculaNumbers.length < 6 || matriculaNumbers.length > 9)) {
+        toast.error('Matrícula deve ter entre 6 e 9 dígitos');
         setIsSaving(false);
         return;
       }
