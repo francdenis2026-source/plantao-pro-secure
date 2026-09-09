@@ -22,6 +22,13 @@ interface CopyrightFooterProps {
 /**
  * Rodapé institucional — Obsidian Steel
  * Tactical public-safety identity with steel cyan accents.
+ *
+ * O fundo é sempre azul-marinho escuro, de propósito, nos dois temas (faixa
+ * de marca que "emoldura" o conteúdo claro/escuro do resto da página — o
+ * mesmo recurso do header). Por isso todo o texto aqui usa tons fixos de
+ * branco (text-white/NN), nunca os tokens de tema (--foreground/
+ * --muted-foreground): esses tokens invertem pra escuro no modo claro, o
+ * que apagava completamente o texto contra esse fundo sempre-escuro.
  */
 export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
   ({ className, compact = false, leftSlot, rightSlot, hideBadge = false }, ref) => {
@@ -49,10 +56,10 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
             {/* Left: Brand + Status + optional slot */}
             <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0 font-sans">
               {leftSlot}
-              <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.22em] text-foreground/85">
+              <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.22em] text-white/85">
                 PlantãoPro
               </span>
-              <span className="hidden min-[480px]:inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded-sm bg-card/40 ring-1 ring-border/40">
+              <span className="hidden min-[480px]:inline-flex items-center gap-1.5 px-1.5 py-0.5 rounded-sm bg-white/[0.06] ring-1 ring-white/15">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute inset-0 rounded-full bg-success opacity-60" />
                   <span className="relative h-1.5 w-1.5 rounded-full bg-success" />
@@ -69,25 +76,25 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
 
               {/* Jurisdição — discreto, no espírito de um rodapé de
                   segurança pública (unidade + município de referência). */}
-              <span className="hidden min-[480px]:inline-flex items-center gap-1 pl-0.5 text-[9px] font-semibold tracking-[0.18em] text-muted-foreground/70">
-                <span className="text-muted-foreground/30">·</span>
-                <ShieldCheck className="h-2.5 w-2.5 text-primary/60" />
+              <span className="hidden min-[480px]:inline-flex items-center gap-1 pl-0.5 text-[9px] font-semibold tracking-[0.18em] text-white/55">
+                <span className="text-white/25">·</span>
+                <ShieldCheck className="h-2.5 w-2.5 text-primary/70" />
                 <span className="uppercase">Feijó · AC</span>
               </span>
             </div>
 
 
             {/* Right: Meta + signature */}
-            <div className="flex flex-wrap items-center justify-center gap-x-1.5 sm:gap-x-2 gap-y-1 text-[9px] text-muted-foreground/75 tracking-[0.18em] uppercase">
+            <div className="flex flex-wrap items-center justify-center gap-x-1.5 sm:gap-x-2 gap-y-1 text-[9px] text-white/55 tracking-[0.18em] uppercase">
               <MadeInFeijoBadge inline size="sm" />
-              <span className="hidden md:inline text-muted-foreground/30">·</span>
+              <span className="hidden md:inline text-white/25">·</span>
               <span className="hidden sm:inline-flex items-center gap-1">
-                <Lock className="h-3 w-3 text-primary/60" />
+                <Lock className="h-3 w-3 text-primary/70" />
                 <span>LGPD · TLS 1.3</span>
               </span>
-              <span className="hidden sm:inline text-muted-foreground/40">·</span>
-              <span className="font-semibold text-foreground/80">v2.7</span>
-              <span className="hidden min-[360px]:inline text-muted-foreground/40">·</span>
+              <span className="hidden sm:inline text-white/30">·</span>
+              <span className="font-semibold text-white/80">v2.7</span>
+              <span className="hidden min-[360px]:inline text-white/30">·</span>
               <span className="hidden min-[360px]:inline">© {year}</span>
               {rightSlot}
             </div>
@@ -105,7 +112,7 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
         ref={ref}
         className={cn(
           'relative w-full overflow-hidden',
-          'border-t border-border/60',
+          'border-t border-primary/20',
           'bg-[linear-gradient(180deg,hsl(220_32%_8%/0.95)_0%,hsl(222_38%_5%/0.98)_100%)]',
           'backdrop-blur-md',
           className,
@@ -129,7 +136,7 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
               {!hideBadge && (
                 <div className="relative shrink-0">
                   <div className="absolute inset-0 rounded-md bg-primary/15 blur-md" />
-                  <div className="relative h-12 w-12 rounded-md ring-1 ring-primary/35 bg-gradient-to-br from-card to-background flex items-center justify-center p-1.5 shadow-[0_4px_14px_hsl(222_60%_2%/0.6)]">
+                  <div className="relative h-12 w-12 rounded-md ring-1 ring-primary/35 bg-[linear-gradient(160deg,hsl(222_38%_11%)_0%,hsl(222_45%_6%)_100%)] flex items-center justify-center p-1.5 shadow-[0_4px_14px_hsl(222_60%_2%/0.6)]">
                     <picture>
                       <source type="image/webp" srcSet={iseAcreBadgeWebp} />
                       <img
@@ -149,10 +156,10 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
                 <span className="text-[10px] font-bold tracking-[0.24em] text-primary uppercase">
                   Instituto Socioeducativo
                 </span>
-                <span className="text-[13px] font-bold text-foreground tracking-wide font-serif">
+                <span className="text-[13px] font-bold text-white tracking-wide font-serif">
                   PlantãoPro · Comando Tático
                 </span>
-                <span className="text-[10px] text-muted-foreground/80 flex items-center gap-1 mt-0.5">
+                <span className="text-[10px] text-white/65 flex items-center gap-1 mt-0.5">
                   <MapPin className="h-2.5 w-2.5" />
                   Governo do Estado do Acre
                 </span>
@@ -161,7 +168,7 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
 
             {/* Center: operational status */}
             <div className="md:col-span-3 flex md:justify-center">
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-card/60 ring-1 ring-border/60">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/[0.06] ring-1 ring-white/15">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inset-0 rounded-full bg-success opacity-60" />
                   <span className="relative h-2 w-2 rounded-full bg-success" />
@@ -177,7 +184,7 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
             <div className="md:col-span-4 flex flex-col items-start md:items-end leading-tight gap-1">
               <div className="flex items-center gap-2">
                 <Cpu className="h-3.5 w-3.5 text-primary/80" />
-                <span className="text-[9px] uppercase tracking-[0.22em] text-muted-foreground/70 font-semibold">
+                <span className="text-[9px] uppercase tracking-[0.22em] text-white/55 font-semibold">
                   Sistema Institucional
                 </span>
               </div>
@@ -186,7 +193,7 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
                   v2.7
                 </span>
               </div>
-              <p className="text-[9px] text-muted-foreground/60 tracking-wide">
+              <p className="text-[9px] text-white/45 tracking-wide">
                 Feijó · AC · © {year} PlantãoPro
               </p>
             </div>
@@ -194,12 +201,12 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
           </div>
 
           {/* Bottom hairline */}
-          <div className="mt-4 pt-3 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-2 text-[9px] text-muted-foreground/55">
+          <div className="mt-4 pt-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-[9px] text-white/40">
             <span className="tracking-wider uppercase flex items-center gap-1.5">
-              <Lock className="h-3 w-3 text-primary/60" />
+              <Lock className="h-3 w-3 text-primary/70" />
               Uso restrito · LGPD compliant
             </span>
-            <DeveloperSignature className="order-last sm:order-none" />
+            <DeveloperSignature className="order-last sm:order-none" onDark />
             <span className="flex items-center gap-1.5 tracking-wider uppercase">
               <ShieldCheck className="h-3 w-3 text-primary/70" />
               TLS 1.3 · AES-256 · RLS

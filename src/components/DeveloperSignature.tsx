@@ -4,6 +4,10 @@ import { MapPin, Code2 } from 'lucide-react';
 interface DeveloperSignatureProps {
   className?: string;
   compact?: boolean;
+  /** Usar quando o fundo por trás é sempre escuro, independente do tema
+   * (ex.: o rodapé institucional) — troca os tokens de tema (que invertem
+   * pra escuro no modo claro e apagavam o texto) por tons fixos de branco. */
+  onDark?: boolean;
 }
 
 /**
@@ -11,12 +15,14 @@ interface DeveloperSignatureProps {
  * ao final das telas principais (rodapé público e painel do agente).
  * Franc Denis · Desenvolvedor · Feijó, Acre · 2026
  */
-export function DeveloperSignature({ className, compact = false }: DeveloperSignatureProps) {
+export function DeveloperSignature({ className, compact = false, onDark = false }: DeveloperSignatureProps) {
   return (
     <div
       className={cn(
-        'group inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/40 leading-none select-none whitespace-nowrap backdrop-blur-sm',
-        'text-muted-foreground/80 transition-colors duration-500 hover:border-primary/40 hover:bg-card/70',
+        'group inline-flex items-center gap-2 rounded-full leading-none select-none whitespace-nowrap backdrop-blur-sm',
+        onDark
+          ? 'border border-white/15 bg-white/[0.05] text-white/70 transition-colors duration-500 hover:border-primary/50 hover:bg-white/10'
+          : 'border border-border/60 bg-card/40 text-muted-foreground/80 transition-colors duration-500 hover:border-primary/40 hover:bg-card/70',
         compact ? 'px-2.5 py-1.5' : 'px-3 py-1.5',
         className,
       )}
@@ -40,7 +46,8 @@ export function DeveloperSignature({ className, compact = false }: DeveloperSign
       {/* Role */}
       <span
         className={cn(
-          'font-mono uppercase tracking-[0.18em] text-foreground/75',
+          'font-mono uppercase tracking-[0.18em]',
+          onDark ? 'text-white/70' : 'text-foreground/75',
           compact ? 'text-[8px]' : 'text-[9px]',
         )}
       >
@@ -51,7 +58,8 @@ export function DeveloperSignature({ className, compact = false }: DeveloperSign
       {/* Location with pin */}
       <span
         className={cn(
-          'inline-flex items-center gap-1 pl-2 border-l border-border/50 font-mono tracking-[0.18em] text-primary/85',
+          'inline-flex items-center gap-1 pl-2 font-mono tracking-[0.18em] text-primary/85',
+          onDark ? 'border-l border-white/15' : 'border-l border-border/50',
           compact ? 'text-[8px]' : 'text-[9px]',
         )}
       >

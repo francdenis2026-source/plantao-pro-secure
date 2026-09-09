@@ -1720,36 +1720,38 @@ export default function Index() {
         <BetaNoticeFooter />
       </div>
 
-      {/* Rodapé institucional profissional — visível também no mobile,
-          para garantir que a assinatura do desenvolvedor sempre apareça. */}
-      <footer className="relative z-30 mt-4 w-full">
+      {/* Rodapé institucional completo — só no desktop. No mobile ele
+          empilhava em duas linhas (esquerda + direita uma embaixo da
+          outra) virando uma barra alta desperdiçando espaço; a faixa fina
+          fixa logo abaixo já cobre a marca de forma compacta no mobile. */}
+      <footer className="relative z-30 mt-4 hidden w-full sm:block">
         <CopyrightFooter
           compact
           leftSlot={
-            <span className="inline-flex items-center gap-1.5 text-[9px] font-mono tracking-[0.24em] uppercase text-muted-foreground/70">
+            <span className="inline-flex items-center gap-1.5 text-[9px] font-mono tracking-[0.24em] uppercase text-white/55">
               <ShieldCheck className="h-3 w-3 text-primary/80" strokeWidth={2.2} />
               <span>ISE · Acre</span>
-              <span className="text-muted-foreground/30">/</span>
+              <span className="text-white/25">/</span>
               <span>Sistema Operacional</span>
             </span>
           }
           rightSlot={
             <>
-              <span className="text-muted-foreground/40">·</span>
-              <span className="inline-flex items-center gap-1 text-[9px] font-mono tracking-[0.2em] uppercase text-muted-foreground/70">
+              <span className="text-white/25">·</span>
+              <span className="inline-flex items-center gap-1 text-[9px] font-mono tracking-[0.2em] uppercase text-white/55">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/60" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
                 </span>
                 <span>Online</span>
               </span>
-              
-              <span className="text-muted-foreground/40">·</span>
+
+              <span className="text-white/25">·</span>
               <button
                 type="button"
                 onClick={() => setShowMasterLogin(true)}
                 aria-label="Acesso Administrador Master"
-                className="inline-flex items-center gap-1 rounded-sm px-1 py-0.5 text-[9px] font-mono tracking-[0.2em] uppercase text-muted-foreground/70 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/50"
+                className="inline-flex items-center gap-1 rounded-sm px-1 py-0.5 text-[9px] font-mono tracking-[0.2em] uppercase text-white/55 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/50"
               >
                 <Lock className="h-3 w-3" strokeWidth={2.2} />
                 <span>Master</span>
@@ -1762,7 +1764,7 @@ export default function Index() {
       {/* Mobile-only ultra-thin footer strip (fixo, não empurra viatura/boneco) */}
       <div className="sm:hidden fixed bottom-0 inset-x-0 z-20 h-8 flex items-center justify-center gap-2.5 bg-gradient-to-r from-background/85 via-background/95 to-background/85 backdrop-blur-md border-t border-primary/20 pointer-events-auto shadow-[0_-4px_16px_-8px_rgba(0,0,0,0.4)]">
         <ShieldCheck className="h-3 w-3 text-primary/90" strokeWidth={2.4} />
-        <span className="text-[10.5px] font-mono tracking-[0.22em] uppercase text-amber-400/95 font-bold">PlantãoPro</span>
+        <span className="text-[10.5px] font-mono tracking-[0.22em] uppercase text-primary font-bold">PlantãoPro</span>
         <span className="text-muted-foreground/40 text-[10.5px]">·</span>
         <span className="inline-flex items-center gap-1 text-[9.5px] font-mono tracking-[0.18em] uppercase text-muted-foreground/80">
           <span className="relative flex h-1.5 w-1.5">
