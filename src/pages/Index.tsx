@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useAgentProfile } from '@/hooks/useAgentProfile';
 import { AgentHomeDashboard } from '@/features/home-dashboard/AgentHomeDashboard';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
@@ -105,8 +106,17 @@ interface Unit {
 
 const teams = ['ALFA', 'BRAVO', 'CHARLIE', 'DELTA'] as const;
 
+/** Data de hoje por extenso, em português — "Terça-feira, 09 de setembro". */
+function todayLongLabel(): string {
+  const raw = new Date().toLocaleDateString('pt-BR', {
+    weekday: 'long', day: '2-digit', month: 'long', timeZone: 'America/Rio_Branco',
+  });
+  return raw.charAt(0).toUpperCase() + raw.slice(1);
+}
+
 export default function Index() {
   const { user, isLoading, signIn, signUp, setMasterSession, isAdmin, isMaster, userRole } = useAuth();
+  const { agent } = useAgentProfile();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -1437,6 +1447,32 @@ export default function Index() {
               decoding="async"
             />
           </div>
+
+          {/* Boas-vindas — nome + unidade quando logado, genérico quando
+              visitante. Fonte e cor seguem a marca (font-display, azul
+              institucional para o que importa, cinza pro resto). */}
+          <div className="relative hidden min-w-0 flex-col items-center text-center md:flex">
+            {user && agent ? (
+              <>
+                <span className="font-display text-[13px] font-bold leading-tight text-foreground">
+                  Bem-vindo, <span className="text-primary">{agent.name?.split(' ')[0]}</span>
+                </span>
+                <span className="text-[11px] leading-tight text-muted-foreground">
+                  {agent.unit?.name ? `${agent.unit.name} · ` : ''}{todayLongLabel()}
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="font-display text-[13px] font-bold leading-tight text-foreground">
+                  Bem-vindo, Agente Socioeducativo
+                </span>
+                <span className="text-[11px] leading-tight text-muted-foreground">
+                  Você está em plantão · {todayLongLabel()}
+                </span>
+              </>
+            )}
+          </div>
+
           <div className="relative">
             <OperatorHeaderControls />
           </div>
