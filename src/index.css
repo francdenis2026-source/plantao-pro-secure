@@ -22,10 +22,10 @@
     --popover: 222 18% 9%;
     --popover-foreground: 210 20% 96%;
 
-    /* Primary — Azul institucional único (confiança, segurança pública) */
-    --primary: 205 88% 46%;
+    /* Primary — Azul da marca (mesmo tom do escudo/favicon: #2F6FED) */
+    --primary: 220 84% 56%;
     --primary-foreground: 210 20% 99%;
-    --primary-glow: 205 88% 58%;
+    --primary-glow: 220 84% 66%;
 
     --secondary: 222 14% 17%;
     --secondary-foreground: 210 20% 94%;
@@ -33,10 +33,11 @@
     --muted: 222 14% 15%;
     --muted-foreground: 216 12% 65%;
 
-    --accent: 205 88% 46%;
+    --accent: 220 84% 56%;
     --accent-foreground: 210 20% 99%;
 
-    --destructive: 0 70% 50%;
+    /* Destructive — mesmo vermelho de acento da marca (#D62839) */
+    --destructive: 354 68% 50%;
     --destructive-foreground: 0 0% 100%;
 
     --success: 152 55% 42%;
@@ -47,16 +48,16 @@
 
     --border: 222 13% 21%;
     --input: 222 14% 16%;
-    --ring: 205 88% 46%;
+    --ring: 220 84% 56%;
 
     --sidebar-background: 222 20% 6%;
     --sidebar-foreground: 210 18% 92%;
-    --sidebar-primary: 205 88% 50%;
+    --sidebar-primary: 220 84% 58%;
     --sidebar-primary-foreground: 210 20% 99%;
     --sidebar-accent: 222 14% 13%;
     --sidebar-accent-foreground: 210 18% 92%;
     --sidebar-border: 222 13% 17%;
-    --sidebar-ring: 205 88% 50%;
+    --sidebar-ring: 220 84% 58%;
 
     --radius: 0.625rem;
 
@@ -65,16 +66,17 @@
     --safe-dvh: 100dvh;
     --home-viewport-height: calc(var(--safe-dvh) - var(--app-header-height));
 
-    /* Gradientes institucionais — ardósia + azul único */
-    --gradient-primary: linear-gradient(135deg, hsl(205 88% 46%) 0%, hsl(217 85% 38%) 100%);
+    /* Gradientes institucionais — ardósia + azul da marca */
+    --gradient-primary: linear-gradient(135deg, hsl(220 84% 56%) 0%, hsl(224 70% 22%) 100%);
     --gradient-dark: radial-gradient(ellipse at top, hsl(222 18% 11%) 0%, hsl(222 20% 6%) 100%);
     --gradient-navy-depth: linear-gradient(160deg, hsl(222 16% 12%) 0%, hsl(222 18% 8%) 55%, hsl(222 20% 5%) 100%);
-    --gradient-hero-overlay: linear-gradient(120deg, hsl(222 20% 6% / 0.94) 0%, hsl(222 18% 9% / 0.72) 55%, hsl(205 60% 20% / 0.20) 100%);
+    --gradient-hero-overlay: linear-gradient(120deg, hsl(222 20% 6% / 0.94) 0%, hsl(222 18% 9% / 0.72) 55%, hsl(220 60% 20% / 0.20) 100%);
 
     /* Sombras */
-    --shadow-command: 0 24px 60px -20px hsl(222 25% 2% / 0.85), 0 2px 8px hsl(205 88% 46% / 0.16);
+    --shadow-command: 0 24px 60px -20px hsl(222 25% 2% / 0.85), 0 2px 8px hsl(220 84% 56% / 0.16);
     --shadow-elevated: 0 30px 60px -20px hsl(222 25% 2% / 0.85), 0 0 0 1px hsl(222 13% 24% / 0.6);
-    --glow-primary: 0 0 0 1px hsl(205 88% 46% / 0.45), 0 12px 32px -12px hsl(205 88% 46% / 0.35);
+    --glow-primary: 0 0 0 1px hsl(220 84% 56% / 0.45), 0 12px 32px -12px hsl(220 84% 56% / 0.35);
+    --accent-red: 354 68% 50%;
   }
 
 

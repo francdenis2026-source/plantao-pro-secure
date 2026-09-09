@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { BrasaoSentinela } from '@/components/BrasaoSentinela';
 import * as api from '../api';
 import { useRoundTimer } from '../useRoundTimer';
 import { RoundTimer } from './RoundTimer';
@@ -305,15 +306,15 @@ export function RoundsDashboard() {
         </div>
       )}
       {!user && (
-        <div className="space-y-3 rounded-lg border border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950/30 p-4">
-          <p className="text-sm font-medium text-blue-900 dark:text-blue-100">Acesso público - Trocar equipe/unidade</p>
+        <div className="space-y-3 rounded-lg border border-primary/25 bg-primary/[0.06] p-4">
+          <p className="text-sm font-medium text-primary">Acesso público — trocar equipe/unidade</p>
           <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
             <div>
-              <label className="text-xs font-medium text-blue-800 dark:text-blue-200">Equipe</label>
+              <label className="text-xs font-medium text-muted-foreground">Equipe</label>
               <select
                 value={guestTeam || 'ALFA'}
                 onChange={(e) => setGuestTeam(e.target.value || 'ALFA')}
-                className="w-full rounded-md border border-blue-200 dark:border-blue-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm mt-1"
+                className="w-full rounded-md border border-primary/25 bg-card px-3 py-2 text-sm mt-1 text-foreground"
               >
                 <option value="ALFA">ALFA</option>
                 <option value="BRAVO">BRAVO</option>
@@ -322,11 +323,11 @@ export function RoundsDashboard() {
               </select>
             </div>
             <div>
-              <label className="text-xs font-medium text-blue-800 dark:text-blue-200">Unidade</label>
+              <label className="text-xs font-medium text-muted-foreground">Unidade</label>
               <select
                 value={guestUnitId || ''}
                 onChange={(e) => setGuestUnitId(e.target.value || null)}
-                className="w-full rounded-md border border-blue-200 dark:border-blue-700 bg-white dark:bg-slate-900 px-3 py-2 text-sm mt-1"
+                className="w-full rounded-md border border-primary/25 bg-card px-3 py-2 text-sm mt-1 text-foreground"
               >
                 {unitsForPicker.length === 0 && <option value={guestUnitId ?? ''}>Carregando unidades…</option>}
                 {unitsForPicker.map((u) => (
@@ -335,17 +336,20 @@ export function RoundsDashboard() {
               </select>
             </div>
           </div>
-          <p className="text-xs text-blue-700 dark:text-blue-300">Ou <a href="/login" className="underline hover:no-underline font-medium">faça login</a> para usar seu perfil de agente</p>
+          <p className="text-xs text-muted-foreground">Ou <a href="/login" className="text-primary underline hover:no-underline font-medium">faça login</a> para usar seu perfil de agente</p>
         </div>
       )}
 
       {/* Cabeçalho operacional — título + contexto do turno */}
       <header className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <h2 className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">Gestor de Rondas</h2>
-          <p className="mt-0.5 text-sm text-muted-foreground">
-            Controle, acompanhamento e segurança em tempo real
-          </p>
+        <div className="flex items-center gap-3">
+          <BrasaoSentinela size={40} title="Gestor de Rondas — PlantãoPro AC" />
+          <div>
+            <h2 className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">Gestor de Rondas</h2>
+            <p className="mt-0.5 text-sm text-muted-foreground">
+              Controle, acompanhamento e segurança em tempo real
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
