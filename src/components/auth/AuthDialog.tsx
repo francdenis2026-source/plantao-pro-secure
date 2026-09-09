@@ -148,16 +148,20 @@ export function AuthDialog({
         {teamBranded && teamPoster ? (
           <div
             className={cn(
-              "relative w-full overflow-hidden bg-slate-950 shrink-0",
+              "relative w-full overflow-hidden shrink-0",
               variant === 'register'
                 ? "aspect-[16/5] sm:aspect-[16/5]"
                 : "aspect-[16/11] sm:aspect-[16/8] md:aspect-[16/7]"
             )}
+            style={{ background: `linear-gradient(135deg, ${teamColor!.secondary}, ${teamColor!.primary})` }}
           >
             <img
               src={teamPoster}
               alt={`Equipe ${teamKey}`}
-              className="absolute inset-0 h-full w-full object-cover object-[center_25%] sm:object-[center_30%]"
+              loading="eager"
+              decoding="async"
+              onLoad={(e) => { e.currentTarget.style.opacity = '1'; }}
+              className="absolute inset-0 h-full w-full object-cover object-[center_25%] sm:object-[center_30%] opacity-0 transition-opacity duration-300"
               style={{ filter: 'contrast(1.05) saturate(1.02) brightness(1)' }}
             />
 
