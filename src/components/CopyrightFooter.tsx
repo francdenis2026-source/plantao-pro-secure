@@ -67,6 +67,13 @@ export const CopyrightFooter = forwardRef<HTMLDivElement, CopyrightFooterProps>(
                 <span className="relative h-1.5 w-1.5 rounded-full bg-success" />
               </span>
 
+              {/* Jurisdição — discreto, no espírito de um rodapé de
+                  segurança pública (unidade + município de referência). */}
+              <span className="hidden min-[480px]:inline-flex items-center gap-1 pl-0.5 text-[9px] font-semibold tracking-[0.18em] text-muted-foreground/70">
+                <span className="text-muted-foreground/30">·</span>
+                <ShieldCheck className="h-2.5 w-2.5 text-primary/60" />
+                <span className="uppercase">Feijó · AC</span>
+              </span>
             </div>
 
 

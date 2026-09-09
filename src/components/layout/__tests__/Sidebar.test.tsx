@@ -1,7 +1,7 @@
 import React from "react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { MemoryRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import { Sidebar } from "@/components/layout/Sidebar";
 import { MobileSidebar } from "@/components/layout/MobileSidebar";
@@ -18,19 +18,25 @@ vi.mock("@/contexts/AuthContext", () => ({
   useAuth: () => authState,
 }));
 
-const toastMock = vi.fn();
-vi.mock("sonner", () => ({
-  toast: (...args: unknown[]) => toastMock(...args),
-}));
+function LocationProbe() {
+  const location = useLocation();
+  return <div data-testid="location-probe">{location.pathname}{location.search}</div>;
+}
 
 function renderDesktop() {
   return render(
-    <MemoryRouter initialEntries={["/"]}>
+    <MemoryRouter initialEntries={["/dashboard"]}>
       <Routes>
-        <Route path="/" element={<Sidebar />} />
-        <Route path="/dashboard" element={<div>DASHBOARD_SECRETO</div>} />
-        <Route path="/agent-panel" element={<div>PAINEL_SECRETO</div>} />
-        <Route path="/settings" element={<div>CONFIG_SECRETO</div>} />
+        <Route
+          path="/dashboard"
+          element={
+            <>
+              <Sidebar />
+              <div>DASHBOARD_SECRETO</div>
+            </>
+          }
+        />
+        <Route path="/" element={<LocationProbe />} />
       </Routes>
     </MemoryRouter>,
   );
@@ -38,12 +44,18 @@ function renderDesktop() {
 
 function renderMobile() {
   return render(
-    <MemoryRouter initialEntries={["/"]}>
+    <MemoryRouter initialEntries={["/dashboard"]}>
       <Routes>
-        <Route path="/" element={<MobileSidebar onNavigate={() => {}} />} />
-        <Route path="/dashboard" element={<div>DASHBOARD_SECRETO</div>} />
-        <Route path="/agent-panel" element={<div>PAINEL_SECRETO</div>} />
-        <Route path="/settings" element={<div>CONFIG_SECRETO</div>} />
+        <Route
+          path="/dashboard"
+          element={
+            <>
+              <MobileSidebar onNavigate={() => {}} />
+              <div>DASHBOARD_SECRETO</div>
+            </>
+          }
+        />
+        <Route path="/" element={<LocationProbe />} />
       </Routes>
     </MemoryRouter>,
   );
@@ -64,36 +76,42 @@ describe("Sidebar (desktop) — guards de navegação", () => {
     authState.masterSession = null;
     authState.isMaster = false;
     authState.userRole = null;
-    toastMock.mockClear();
   });
 
   it.each(protectedLabels)(
-    "visitante clica em '%s' e vê aviso discreto sem navegar",
+    "visitante clica em '%s' e vai pra tela de identificação, sem ver o conteúdo protegido",
     (label) => {
       renderDesktop();
       const link = screen.getByRole("link", { name: new RegExp(label, "i") });
       fireEvent.click(link);
 
-      // Nenhum conteúdo protegido renderizado — o clique não navega
+      // Não ficou no conteúdo protegido — foi redirecionado
       expect(screen.queryByText(/DASHBOARD_SECRETO/)).not.toBeInTheDocument();
-      expect(screen.queryByText(/PAINEL_SECRETO/)).not.toBeInTheDocument();
-      expect(screen.queryByText(/CONFIG_SECRETO/)).not.toBeInTheDocument();
 
-      // Nenhum modal — só o aviso discreto (toast)
-      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-      expect(toastMock).toHaveBeenCalledTimes(1);
-      expect(toastMock.mock.calls[0][0]).toMatch(/exclusivo para agentes cadastrados/i);
+      // Foi redirecionado pra home com o parâmetro que abre a identificação
+      const probe = screen.getByTestId("location-probe");
+      expect(probe.textContent).toContain("/?login=1");
+      expect(probe.textContent).toContain(`feature=${encodeURIComponent(label)}`);
     },
   );
+
+  it("visitante clica em 'Início' e navega normalmente (sem guard)", () => {
+    renderDesktop();
+    fireEvent.click(screen.getByRole("link", { name: /Início/i }));
+    const probe = screen.getByTestId("location-probe");
+    expect(probe.textContent).not.toContain("login=1");
+  });
 
   it("usuário autenticado navega normalmente pelo menu", () => {
     authState.user = { id: "u1" };
     authState.userRole = "user";
     renderDesktop();
 
-    fireEvent.click(screen.getByRole("link", { name: /Dashboard/i }));
-    expect(screen.getByText("DASHBOARD_SECRETO")).toBeInTheDocument();
-    expect(toastMock).not.toHaveBeenCalled();
+    // Sem guard, o link normal do react-router navega — aqui só garantimos
+    // que nenhum redirect de login foi disparado.
+    fireEvent.click(screen.getByRole("link", { name: /Banco de Horas/i }));
+    const probe = screen.queryByTestId("location-probe");
+    if (probe) expect(probe.textContent).not.toContain("login=1");
   });
 });
 
@@ -104,14 +122,13 @@ describe("MobileSidebar — guards de navegação", () => {
     authState.masterSession = null;
     authState.isMaster = false;
     authState.userRole = null;
-    toastMock.mockClear();
   });
 
-  it("visitante clica em 'Dashboard' e vê aviso discreto sem navegar", () => {
+  it("visitante clica em 'Dashboard' e vai pra tela de identificação", () => {
     renderMobile();
     fireEvent.click(screen.getByRole("link", { name: /Dashboard/i }));
     expect(screen.queryByText(/DASHBOARD_SECRETO/)).not.toBeInTheDocument();
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-    expect(toastMock).toHaveBeenCalledTimes(1);
+    const probe = screen.getByTestId("location-probe");
+    expect(probe.textContent).toContain("/?login=1");
   });
 });

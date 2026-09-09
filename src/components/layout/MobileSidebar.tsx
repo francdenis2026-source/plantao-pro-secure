@@ -1,6 +1,5 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { notifyRestrictedAccess } from '@/lib/restrictedAccess';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
 
 import {
@@ -15,6 +14,8 @@ import {
   Home,
   Building2,
   ShieldCheck,
+  CalendarDays,
+  ArrowLeftRight,
 } from 'lucide-react';
 import {
   SidebarNavItem,
@@ -27,7 +28,9 @@ const navItems: NavItemDef[] = [
   { icon: Home, label: 'Início', href: '/?home=1' },
   { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard' },
   { icon: UserCircle, label: 'Meu Painel', href: '/agent-panel' },
+  { icon: CalendarDays, label: 'Agenda', href: '/agenda' },
   { icon: ShieldCheck, label: 'Rondas', href: '/rondas' },
+  { icon: ArrowLeftRight, label: 'Permutas', href: '/agent-panel?tab=permutas' },
   { icon: Users, label: 'Agentes', href: '/agents' },
   { icon: Clock, label: 'Banco de Horas', href: '/overtime' },
   { icon: MapPin, label: 'Unidades', href: '/units' },
@@ -44,20 +47,25 @@ const masterItems: NavItemDef[] = [
   { icon: ClipboardCheck, label: 'Auditoria de Unidades', href: '/admin/units-audit' },
 ];
 
+// Itens livres pra visitante — o resto exige login (vê a tela de matrícula).
+const PUBLIC_LABELS = new Set(['Início', 'Rondas']);
+
 interface MobileSidebarProps {
   onNavigate: () => void;
 }
 
 export function MobileSidebar({ onNavigate }: MobileSidebarProps) {
   const { masterSession, user, isAdmin } = useAuth();
+  const navigate = useNavigate();
   const isAuthed = !!user || !!masterSession;
 
   const handleClick =
-    (label: string, isMaster = false) =>
+    (label: string, skipGuard = false) =>
     (e: React.MouseEvent<HTMLAnchorElement>) => {
-      if (!isAuthed && !isMaster) {
+      if (!isAuthed && !skipGuard && !PUBLIC_LABELS.has(label)) {
         e.preventDefault();
-        notifyRestrictedAccess(label);
+        onNavigate();
+        navigate(`/?login=1&feature=${encodeURIComponent(label)}`);
         return;
       }
       onNavigate();

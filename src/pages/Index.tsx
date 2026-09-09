@@ -142,6 +142,11 @@ export default function Index() {
 
   const [selectedTeam, setSelectedTeam] = useState<string | null>(null);
   const [showCpfCheck, setShowCpfCheck] = useState(false);
+  // Verificação disparada a partir de um item bloqueado da barra lateral
+  // (ex.: "Banco de Horas" sem estar logado) — se a matrícula não for
+  // encontrada, mostra aviso discreto em vez de abrir o cadastro, já que
+  // a intenção do visitante era acessar a função, não se cadastrar.
+  const [restrictedFeatureLabel, setRestrictedFeatureLabel] = useState<string | null>(null);
   const [showRegistration, setShowRegistration] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showMasterLogin, setShowMasterLogin] = useState(false);
@@ -271,6 +276,21 @@ export default function Index() {
     };
     window.addEventListener('open-master-login', handler);
     return () => window.removeEventListener('open-master-login', handler);
+  }, []);
+
+  // Chegou de um item bloqueado da barra lateral (visitante clicou em algo
+  // que exige login, em qualquer página do app) — abre direto a tela de
+  // identificação por matrícula, já sabendo qual função motivou o clique.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('login') !== '1') return;
+    const feature = params.get('feature');
+    setRestrictedFeatureLabel(feature || 'Esta função');
+    setSelectedTeam(null);
+    setCheckCpf('');
+    setFoundAgent(null);
+    setShowCpfCheck(true);
+    window.history.replaceState(null, '', window.location.pathname);
   }, []);
 
   useEffect(() => {
@@ -641,6 +661,16 @@ export default function Index() {
           requestAnimationFrame(() => setShowCpfCheck(false));
         }
 
+      } else if (restrictedFeatureLabel) {
+        // Veio de um item bloqueado da barra lateral — a intenção era usar
+        // a função, não se cadastrar. Aviso discreto, sem abrir formulário.
+        setShowCpfCheck(false);
+        toast({
+          title: 'Matrícula não encontrada',
+          description: `Não localizamos essa matrícula no sistema. ${restrictedFeatureLabel} é exclusivo para agentes cadastrados — se você já é agente, confira o número digitado; caso contrário, procure o administrador da sua unidade.`,
+          duration: 7000,
+        });
+        setRestrictedFeatureLabel(null);
       } else if (!registrationsEnabled) {
         // Matrícula não cadastrada, mas o administrador suspendeu novos
         // cadastros — aviso discreto, sem abrir o formulário.
@@ -1345,6 +1375,7 @@ export default function Index() {
     setShowMasterLogin(false);
     setShowAdminLogin(false);
     setSelectedTeam(null);
+    setRestrictedFeatureLabel(null);
     setCheckCpf('');
     setLoginCpf('');
     setLoginPassword('');
@@ -1755,7 +1786,7 @@ export default function Index() {
         onOpenChange={(open) => !open && closeAllDialogs()}
         variant="check"
         title="Identificação de Agente"
-        subtitle="Digite os 6 primeiros dígitos da sua matrícula"
+        subtitle={restrictedFeatureLabel ? `${restrictedFeatureLabel} exige login — digite sua matrícula` : 'Digite os 6 primeiros dígitos da sua matrícula'}
         team={selectedTeam}
       >
         <div className="space-y-5">

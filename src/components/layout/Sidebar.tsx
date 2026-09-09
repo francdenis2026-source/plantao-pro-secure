@@ -1,9 +1,8 @@
 import React, { forwardRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAgentProfile } from '@/hooks/useAgentProfile';
-import { notifyRestrictedAccess } from '@/lib/restrictedAccess';
 import { AppLogo } from '@/components/AppLogo';
 
 import {
@@ -18,6 +17,8 @@ import {
   Home,
   Building2,
   ShieldCheck,
+  CalendarDays,
+  ArrowLeftRight,
 } from 'lucide-react';
 import {
   SidebarNavItem,
@@ -30,7 +31,9 @@ const navItems: NavItemDef[] = [
   { icon: Home, label: 'Início', href: '/?home=1' },
   { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard' },
   { icon: UserCircle, label: 'Meu Painel', href: '/agent-panel' },
+  { icon: CalendarDays, label: 'Agenda', href: '/agenda' },
   { icon: ShieldCheck, label: 'Rondas', href: '/rondas' },
+  { icon: ArrowLeftRight, label: 'Permutas', href: '/agent-panel?tab=permutas' },
   { icon: Users, label: 'Agentes', href: '/agents' },
   { icon: Clock, label: 'Banco de Horas', href: '/overtime' },
   { icon: MapPin, label: 'Unidades', href: '/units' },
@@ -57,12 +60,16 @@ export const Sidebar = forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>
   (props, ref) => {
     const { masterSession, user, isAdmin } = useAuth();
     const { agent } = useAgentProfile();
+    const navigate = useNavigate();
     const isAuthed = !!user || !!masterSession;
 
+    // Visitante clicando em função bloqueada: leva direto pra tela de
+    // identificação por matrícula (não um aviso solto) — se ele já for
+    // agente, entra em dois passos; se não for, recebe a mensagem lá.
     const guard = (label: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
       if (!isAuthed) {
         e.preventDefault();
-        notifyRestrictedAccess(label);
+        navigate(`/?login=1&feature=${encodeURIComponent(label)}`);
       }
     };
 
@@ -123,7 +130,11 @@ export const Sidebar = forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>
         <nav className="flex-1 min-h-0 overflow-y-auto px-4 py-4 space-y-0.5">
           <SidebarSectionLabel>Navegação</SidebarSectionLabel>
           {navItems.map((item) => (
-            <SidebarNavItem key={item.href} item={item} onClick={guard(item.label)} />
+            <SidebarNavItem
+              key={item.href}
+              item={item}
+              onClick={item.label === 'Início' || item.label === 'Rondas' ? undefined : guard(item.label)}
+            />
           ))}
 
           {isAdmin && !masterSession && (
