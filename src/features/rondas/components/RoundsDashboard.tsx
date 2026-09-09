@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { WifiOff, Clock3, Sun, Moon, Users, Building2, MapPin, UserCheck, SplitSquareHorizontal } from 'lucide-react';
+import { WifiOff, Clock3, Sun, Moon, Users, Building2, MapPin, UserCheck, SplitSquareHorizontal, ShieldOff, CalendarPlus, CalendarClock, CalendarDays, Hourglass } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useAgentProfile } from '@/hooks/useAgentProfile';
@@ -8,6 +8,9 @@ import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
 import * as api from '../api';
 import { useRoundTimer } from '../useRoundTimer';
@@ -247,20 +250,57 @@ export function RoundsDashboard() {
   if (!shift) {
     return (
       <div className="space-y-4 p-4">
-        <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border p-10 text-center">
-          <p className="text-sm text-muted-foreground">Nenhum turno de rondas ativo para a equipe {team}.</p>
-          <Button onClick={() => setDividerOpen(true)}>Programar turno de rondas</Button>
-          <CreateShiftDialog open={dividerOpen} onOpenChange={setDividerOpen} unitId={unitId} team={team} createdBy={user?.id ?? null} onCreated={() => shiftQuery.refetch()} />
+        <div className="flex items-center gap-3">
+          <BrasaoSentinela size={40} title="Gestor de Rondas — PlantãoPro AC" />
+          <div>
+            <h2 className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">Gestor de Rondas</h2>
+            <p className="mt-0.5 text-sm text-muted-foreground">Controle, acompanhamento e segurança em tempo real</p>
+          </div>
         </div>
 
+        <div className="overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-card via-card to-primary/[0.07]">
+          <div className="flex flex-col items-center gap-5 px-6 py-14 text-center">
+            <div className="grid h-16 w-16 place-items-center rounded-2xl bg-primary/10 ring-1 ring-primary/25">
+              <ShieldOff className="h-8 w-8 text-primary" strokeWidth={1.8} />
+            </div>
+            <div className="space-y-1.5">
+              <h3 className="text-lg font-bold text-foreground">Nenhum turno em andamento</h3>
+              <p className="max-w-xs text-sm text-muted-foreground">
+                A equipe <span className="font-semibold text-foreground">{team}</span> ainda não tem uma escala de rondas ativa. Programe um turno pra começar a acompanhar em tempo real.
+              </p>
+            </div>
+            <Button size="lg" className="gap-2" onClick={() => setDividerOpen(true)}>
+              <CalendarPlus className="h-4 w-4" />
+              Programar turno de rondas
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-3 divide-x divide-border border-t border-border/60 bg-card/60">
+            {[
+              { Icon: Clock3, label: 'Quartos de hora', value: '15 a 60 min' },
+              { Icon: Users, label: 'Divisão', value: 'Por agente' },
+              { Icon: MapPin, label: 'Setores', value: 'Por unidade' },
+            ].map(({ Icon, label, value }) => (
+              <div key={label} className="flex flex-col items-center gap-1 px-3 py-3.5 text-center">
+                <Icon className="h-4 w-4 text-primary" strokeWidth={2} />
+                <span className="text-[10px] uppercase tracking-wide text-muted-foreground">{label}</span>
+                <span className="text-xs font-semibold text-foreground">{value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <CreateShiftDialog open={dividerOpen} onOpenChange={setDividerOpen} unitId={unitId} team={team} createdBy={user?.id ?? null} onCreated={() => shiftQuery.refetch()} />
+
         {scheduledRounds.length > 0 && (
-          <section className="rounded-xl border border-border bg-card p-4">
-            <h3 className="mb-3 text-[13px] font-semibold uppercase tracking-wide text-foreground">
+          <section className="rounded-2xl border border-border bg-card p-4">
+            <h3 className="mb-3 flex items-center gap-2 text-[13px] font-semibold uppercase tracking-wide text-foreground">
+              <CalendarClock className="h-4 w-4 text-primary" />
               Programações desta unidade
             </h3>
             <div className="space-y-2">
               {scheduledRounds.map((row) => (
-                <div key={row.id} className="flex items-center justify-between gap-3 rounded-lg border border-border px-3 py-2.5">
+                <div key={row.id} className="flex items-center justify-between gap-3 rounded-xl border border-border bg-background/40 px-3.5 py-3">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-semibold text-foreground">{row.name}</p>
                     <p className="text-xs text-muted-foreground">
@@ -574,7 +614,6 @@ function CreateShiftDialog({ open, onOpenChange, unitId, team, createdBy, onCrea
   const [durationMinutes, setDurationMinutes] = useState(12 * 60);
   const [intervalMinutes, setIntervalMinutes] = useState(15);
   const [saving, setSaving] = useState(false);
-  if (!open) return null;
 
   const handleCreate = async () => {
     setSaving(true);
@@ -602,48 +641,69 @@ function CreateShiftDialog({ open, onOpenChange, unitId, team, createdBy, onCrea
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" onClick={() => onOpenChange(false)}>
-      <div className="w-full max-w-sm rounded-xl border border-border bg-card p-5" onClick={(e) => e.stopPropagation()}>
-        <h3 className="text-base font-semibold text-foreground">Programar turno de rondas</h3>
-        <p className="mt-1 text-sm text-muted-foreground">Defina início, duração e o tamanho dos quartos de hora. Na próxima etapa você escolhe como dividir entre os agentes.</p>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-md gap-0 overflow-hidden p-0">
+        <div className="flex items-center gap-3 border-b border-border bg-primary/[0.06] px-6 py-5">
+          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary/15 ring-1 ring-primary/25">
+            <CalendarPlus className="h-5 w-5 text-primary" strokeWidth={2} />
+          </div>
+          <div>
+            <DialogTitle className="text-base">Programar turno de rondas</DialogTitle>
+            <DialogDescription className="text-xs">Defina início, duração e quartos de hora — a divisão entre agentes vem na próxima etapa.</DialogDescription>
+          </div>
+        </div>
 
-        <div className="mt-4 space-y-3">
+        <div className="space-y-4 px-6 py-5">
           <div className="space-y-1.5">
-            <label className="text-sm font-medium text-foreground">Início</label>
+            <Label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              <CalendarDays className="h-3.5 w-3.5 text-primary" /> Início
+            </Label>
             <input
               type="datetime-local"
               value={startAt}
               onChange={(e) => setStartAt(e.target.value)}
-              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium text-foreground">Duração</label>
-            <select
-              value={durationMinutes}
-              onChange={(e) => setDurationMinutes(Number(e.target.value))}
-              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
-            >
-              {DURATION_OPTIONS.map((o) => <option key={o.minutes} value={o.minutes}>{o.label}</option>)}
-            </select>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1.5">
+              <Label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                <Hourglass className="h-3.5 w-3.5 text-primary" /> Duração
+              </Label>
+              <Select value={String(durationMinutes)} onValueChange={(v) => setDurationMinutes(Number(v))}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {DURATION_OPTIONS.map((o) => <SelectItem key={o.minutes} value={String(o.minutes)}>{o.label}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1.5">
+              <Label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                <Clock3 className="h-3.5 w-3.5 text-primary" /> Quartos de hora
+              </Label>
+              <Select value={String(intervalMinutes)} onValueChange={(v) => setIntervalMinutes(Number(v))}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {INTERVAL_OPTIONS.map((o) => <SelectItem key={o.minutes} value={String(o.minutes)}>{o.label}</SelectItem>)}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium text-foreground">Quartos de hora</label>
-            <select
-              value={intervalMinutes}
-              onChange={(e) => setIntervalMinutes(Number(e.target.value))}
-              className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
-            >
-              {INTERVAL_OPTIONS.map((o) => <option key={o.minutes} value={o.minutes}>{o.label}</option>)}
-            </select>
+
+          <div className="flex items-start gap-2 rounded-lg border border-border bg-muted/30 px-3 py-2.5 text-xs text-muted-foreground">
+            <Users className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
+            <span>A equipe inteira é atribuída automaticamente ao criar — você escolhe a estratégia de divisão (blocos, rotativo ou manual) na próxima tela.</span>
           </div>
         </div>
 
-        <div className="mt-5 flex justify-end gap-2">
+        <DialogFooter className="border-t border-border bg-muted/20 px-6 py-4">
           <Button variant="outline" onClick={() => onOpenChange(false)}>Cancelar</Button>
-          <Button onClick={handleCreate} disabled={saving}>{saving ? 'Criando...' : 'Criar e dividir'}</Button>
-        </div>
-      </div>
-    </div>
+          <Button onClick={handleCreate} disabled={saving} className="gap-1.5">
+            {saving ? 'Criando...' : <>Criar e dividir <SplitSquareHorizontal className="h-4 w-4" /></>}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
