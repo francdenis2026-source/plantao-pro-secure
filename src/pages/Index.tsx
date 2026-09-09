@@ -290,7 +290,8 @@ export default function Index() {
 
     if (isMaster) navigate('/master', { replace: true });
     else if (isAdmin) navigate('/admin', { replace: true });
-    else navigate('/agent-panel', { replace: true });
+    // Agente comum: fica na homepage por padrão (não redireciona mais pro
+    // painel sozinho) — a home mostra o botão "Meu Painel" pra ele decidir.
   }, [user, isLoading, isMaster, isAdmin, userRole, navigate]);
 
   const LAST_CPF_KEY = 'plantaopro_last_cpf';
@@ -1032,7 +1033,9 @@ export default function Index() {
         title: `Acesso liberado, ${(foundAgent?.name || '').split(' ')[0] || 'Agente'}`,
         description: 'Autenticação confirmada. Boa jornada e proteja-se sempre.',
       });
-      navigate('/agent-panel', { replace: true });
+      // Fica na homepage — o botão "Meu Painel" leva ao painel quando o
+      // agente quiser, em vez de sair da home assim que loga.
+      setShowLogin(false);
     }
     
     setIsSubmitting(false);
@@ -1246,7 +1249,7 @@ export default function Index() {
           title: 'Acesso rápido confirmado',
           description: 'Sessão iniciada com credenciais do dispositivo.',
         });
-        navigate('/agent-panel', { replace: true });
+        setShowLogin(false);
       }
     } catch (error) {
       console.error('Quick login error:', error);
