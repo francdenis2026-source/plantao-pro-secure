@@ -10,7 +10,7 @@ const HIDDEN_KEY = 'beta-notice-hidden-v3';
 const DELAY_MS = 60_000;
 
 const POINTS = [
-  'Iniciativa independente de um agente socioeducativo — não é o aplicativo oficial da ISE nem representa o Governo do Acre.',
+  'Iniciativa independente de um agente socioeducativo — não é o aplicativo oficial ISE nem representa o Governo do Acre.',
   'Uso gratuito, sem garantia de disponibilidade contínua; a operação depende de apoio para manter servidor e hospedagem.',
   'Seguimos boas práticas de segurança (TLS 1.3, LGPD), mas o desenvolvedor não se responsabiliza por uso indevido dos dados inseridos.',
 ];

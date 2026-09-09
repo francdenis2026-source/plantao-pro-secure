@@ -161,12 +161,14 @@ export function AuthDialog({
               style={{ filter: 'contrast(1.05) saturate(1.02) brightness(1)' }}
             />
 
-            {/* Vinheta noir + gradiente base para legibilidade — mais sutil,
-                a foto fica visível em vez de escurecida quase toda. */}
+            {/* Vinheta bem leve — o título agora tem seu próprio fundo
+                (pílula no canto), então essa camada não precisa mais
+                escurecer a foto toda pra garantir contraste. Isso deixa o
+                nome da equipe e o lema (já impressos na arte) visíveis. */}
             <div className="absolute inset-0 pointer-events-none"
-                 style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0) 50%, rgba(2,6,23,0.35) 100%)' }} />
-            <div className="absolute inset-x-0 bottom-0 h-2/5 pointer-events-none"
-                 style={{ background: `linear-gradient(180deg, transparent 0%, rgba(2,6,23,0.55) 60%, rgba(2,6,23,0.92) 100%)` }} />
+                 style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0) 60%, rgba(2,6,23,0.22) 100%)' }} />
+            <div className="absolute inset-x-0 bottom-0 h-1/5 pointer-events-none"
+                 style={{ background: `linear-gradient(180deg, transparent 0%, rgba(2,6,23,0.35) 100%)` }} />
             <div className="absolute left-0 top-0 bottom-0 w-[3px]"
                  style={{ background: teamColor!.primary, opacity: 0.7 }} />
 
@@ -180,14 +182,16 @@ export function AuthDialog({
               </div>
             </div>
 
-            {/* Title — o pôster já identifica a equipe (nome + emblema
-                embutidos na arte), então não repetimos aqui. Subtítulo NÃO
-                fica aqui dentro — o próprio pôster já tem texto embutido
-                (lema da equipe) e os dois se sobrepunham, ilegíveis. Ele
-                aparece destacado logo abaixo, no espaço vazio antes do
-                campo de matrícula. */}
-            <div className="absolute bottom-0 inset-x-0 px-3 sm:px-4 pb-2.5 sm:pb-3">
-              <h2 className="text-[15px] sm:text-lg md:text-xl font-bold tracking-tight text-white leading-tight font-stencil line-clamp-1">
+            {/* Title — fica no canto INFERIOR DIREITO, longe do canto
+                esquerdo (onde o pôster já traz nome da equipe + lema
+                embutidos na própria arte) — assim os dois nunca colidem e
+                dá pra ler tanto o título quanto as informações da foto.
+                Fundo em pílula escura só atrás do texto, não a largura
+                toda, pra não tapar mais foto do que o necessário.
+                Subtítulo não fica aqui dentro — aparece destacado logo
+                abaixo, no espaço vazio antes do campo de matrícula. */}
+            <div className="absolute bottom-2.5 sm:bottom-3 right-3 sm:right-4 max-w-[62%] sm:max-w-[55%]">
+              <h2 className="rounded-md bg-slate-950/55 px-2.5 py-1 text-right text-[14px] sm:text-base md:text-lg font-bold tracking-tight text-white leading-tight font-stencil line-clamp-2 backdrop-blur-sm">
                 {title}
               </h2>
             </div>
