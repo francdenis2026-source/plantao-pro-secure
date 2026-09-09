@@ -137,11 +137,11 @@ export function AgentHeroPanel({ agentId, agentName, agentTeam }: AgentHeroPanel
       {/* Animated Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Gradient Orbs */}
-        <div className="absolute -top-20 -right-20 w-60 h-60 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        
+        <div className="absolute -top-20 -right-20 w-60 h-60 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-primary/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+
         {/* Scan Line Effect */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/5 to-transparent h-full animate-scan" 
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent h-full animate-scan"
           style={{ animation: 'scan 4s ease-in-out infinite' }} />
       </div>
 

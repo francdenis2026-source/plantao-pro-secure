@@ -664,8 +664,8 @@ export default function AgentPanel() {
                   compact ? 'px-1.5 py-0.5 md:px-2 md:py-1' : 'px-2 py-1 md:px-2.5 md:py-1.5'
                 )}>
                   <div className="flex items-center gap-1.5 md:gap-2 min-w-0">
-                    <div className="p-0.5 md:p-1 rounded-md bg-gradient-to-br from-primary via-primary to-orange-600 shadow-sm shadow-primary/30 ring-1 ring-primary/30 shrink-0">
-                      <Shield className="h-3 w-3 md:h-3.5 md:w-3.5 text-black" />
+                    <div className="p-0.5 md:p-1 rounded-md bg-gradient-to-br from-primary via-primary to-primary/70 shadow-sm shadow-primary/30 ring-1 ring-primary/30 shrink-0">
+                      <Shield className="h-3 w-3 md:h-3.5 md:w-3.5 text-primary-foreground" />
                     </div>
                     <div className="leading-tight min-w-0">
                       <h2 className="text-[10px] md:text-xs font-black text-primary-foreground tracking-wider uppercase truncate">

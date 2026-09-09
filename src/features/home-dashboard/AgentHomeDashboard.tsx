@@ -57,7 +57,7 @@ export function AgentHomeDashboard() {
               <Bell className="h-5 w-5" />
               {(countsQ.data?.notices ?? 0) > 0 && (
                 <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[9px] font-bold text-destructive-foreground">
-                  {countsQ.data?.notices}
+                  {(countsQ.data?.notices ?? 0) > 9 ? '9+' : countsQ.data?.notices}
                 </span>
               )}
             </button>
