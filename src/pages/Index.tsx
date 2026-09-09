@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, lazy, Suspense } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAgentProfile } from '@/hooks/useAgentProfile';
 import { useRegistrationsEnabled } from '@/hooks/useRegistrationsEnabled';
@@ -124,6 +124,7 @@ export default function Index() {
   const { agent } = useAgentProfile();
   const { enabled: registrationsEnabled } = useRegistrationsEnabled();
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
 
   /* Lembrete profissional (intervalo configurável em Configurações) — só quando logado. */
@@ -281,8 +282,12 @@ export default function Index() {
   // Chegou de um item bloqueado da barra lateral (visitante clicou em algo
   // que exige login, em qualquer página do app) — abre direto a tela de
   // identificação por matrícula, já sabendo qual função motivou o clique.
+  // Depende de `location.search`, não só roda no mount: clicar num item
+  // bloqueado enquanto JÁ está na home só troca a query string (mesma
+  // rota "/"), sem remontar a página — sem essa dependência o diálogo
+  // nunca abria nesse caso.
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(location.search);
     if (params.get('login') !== '1') return;
     const feature = params.get('feature');
     setRestrictedFeatureLabel(feature || 'Esta função');
@@ -291,7 +296,7 @@ export default function Index() {
     setFoundAgent(null);
     setShowCpfCheck(true);
     window.history.replaceState(null, '', window.location.pathname);
-  }, []);
+  }, [location.search]);
 
   useEffect(() => {
     if (isLoading || !user) return;
