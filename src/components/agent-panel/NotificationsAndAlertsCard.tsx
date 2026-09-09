@@ -19,7 +19,7 @@ export function NotificationsAndAlertsCard({ agentId }: NotificationsAndAlertsCa
           <div className="p-2 rounded-lg bg-gradient-to-br from-amber-500/30 to-orange-500/20 border border-amber-500/40">
             <BellRing className="h-5 w-5 text-amber-400" />
           </div>
-          <span className="bg-gradient-to-r from-amber-200 to-orange-300 bg-clip-text text-transparent font-bold">
+          <span className="text-primary font-bold">
             Notificações &amp; Alertas
           </span>
         </CardTitle>

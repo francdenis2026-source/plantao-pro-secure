@@ -783,9 +783,9 @@ export function ChatPanel({ agentId, unitId, team, agentName, agentRole, agentAv
                 iconBg: 'bg-blue-500/20'
               },
               leaders: {
-                active: 'bg-gradient-to-r from-purple-500 to-violet-500 text-white shadow-lg shadow-purple-500/30',
-                inactive: 'bg-zinc-800/80 text-zinc-400 hover:bg-zinc-700/80 hover:text-purple-400 border-zinc-700',
-                iconBg: 'bg-purple-500/20'
+                active: 'bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg shadow-primary/30',
+                inactive: 'bg-zinc-800/80 text-zinc-400 hover:bg-zinc-700/80 hover:text-primary border-zinc-700',
+                iconBg: 'bg-primary/20'
               },
               all: {
                 active: 'bg-gradient-to-r from-emerald-500 to-green-500 text-white shadow-lg shadow-emerald-500/30',

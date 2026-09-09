@@ -110,10 +110,7 @@ export function AnimatedLogo({ size = 'md', showText = true, animate = true }: A
             )}
             style={{ textShadow: assets.logoStyle.textShadow }}
           >
-            <span className={cn(
-              "bg-gradient-to-r bg-clip-text text-transparent bg-[length:200%_auto] animate-[shimmer_3s_linear_infinite]",
-              assets.logoStyle.gradient
-            )}>
+            <span className="text-primary">
               {appName.slice(0, letterIndex)}
             </span>
             <span className={cn(

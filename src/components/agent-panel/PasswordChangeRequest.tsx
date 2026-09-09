@@ -153,7 +153,7 @@ export function PasswordChangeRequest({ agentId, agentName }: PasswordChangeRequ
           variant="outline"
           size="sm"
           className={cn(
-            "gap-2 border-purple-500/40 text-purple-400 hover:bg-purple-500/10",
+            "gap-2 border-primary/40 text-primary hover:bg-primary/10",
             hasPendingRequest && "border-amber-500/40 text-amber-400"
           )}
         >
@@ -161,15 +161,15 @@ export function PasswordChangeRequest({ agentId, agentName }: PasswordChangeRequ
           {hasPendingRequest ? 'Solicitação Pendente' : 'Solicitar Nova Senha'}
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-purple-500/40 w-[95vw] max-w-md shadow-2xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
+      <DialogContent className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-primary/40 w-[95vw] max-w-md shadow-2xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
         <DialogHeader className="pb-3 border-b border-slate-700/50">
           <DialogTitle className="flex items-center gap-3 text-lg font-bold text-white">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/30 to-purple-500/10 border border-purple-500/40">
-              <Key className="h-5 w-5 text-purple-400" />
+            <div className="p-2 rounded-xl bg-gradient-to-br from-primary/30 to-primary/10 border border-primary/40">
+              <Key className="h-5 w-5 text-primary" />
             </div>
             <div>
               <span className="block">Solicitar Troca de Senha</span>
-              <span className="text-sm font-normal text-purple-400">{agentName}</span>
+              <span className="text-sm font-normal text-primary">{agentName}</span>
             </div>
           </DialogTitle>
           <DialogDescription className="text-sm text-slate-400 mt-2">
@@ -180,7 +180,7 @@ export function PasswordChangeRequest({ agentId, agentName }: PasswordChangeRequ
         <div className="py-4 space-y-4">
           {checkingStatus ? (
             <div className="flex items-center justify-center py-6">
-              <Loader2 className="h-6 w-6 animate-spin text-purple-400" />
+              <Loader2 className="h-6 w-6 animate-spin text-primary" />
             </div>
           ) : statusInfo && existingRequest ? (
             <div className={cn("p-4 rounded-xl border-2", statusInfo.bg)}>
@@ -223,7 +223,7 @@ export function PasswordChangeRequest({ agentId, agentName }: PasswordChangeRequ
                   value={reason}
                   onChange={(e) => setReason(e.target.value)}
                   placeholder="Ex: Esqueci minha senha atual, preciso de uma nova..."
-                  className="bg-slate-800/80 border-2 border-slate-600 text-white min-h-[100px] focus:border-purple-500/60"
+                  className="bg-slate-800/80 border-2 border-slate-600 text-white min-h-[100px] focus:border-primary/60"
                 />
               </div>
             </>
@@ -238,7 +238,7 @@ export function PasswordChangeRequest({ agentId, agentName }: PasswordChangeRequ
             <Button
               onClick={handleSubmit}
               disabled={loading || !reason.trim()}
-              className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700"
+              className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
             >
               {loading ? (
                 <>

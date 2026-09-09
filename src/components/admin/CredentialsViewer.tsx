@@ -277,8 +277,8 @@ export function CredentialsViewer() {
         <div className="flex items-start justify-between gap-3">
           <div>
             <CardTitle className="flex items-center gap-2 text-lg">
-              <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/30 to-purple-500/10 border border-purple-500/40">
-                <Key className="h-5 w-5 text-purple-400" />
+              <div className="p-2 rounded-xl bg-gradient-to-br from-primary/30 to-primary/10 border border-primary/40">
+                <Key className="h-5 w-5 text-primary" />
               </div>
               Credenciais dos Agentes
             </CardTitle>

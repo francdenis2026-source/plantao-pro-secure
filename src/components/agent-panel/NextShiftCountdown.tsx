@@ -422,14 +422,14 @@ export function NextShiftCountdown({ agentId, agentName, agentUnitId, agentTeam,
           : isSoon
             ? 'bg-gradient-to-br from-amber-500 to-orange-600'
             : isNight
-              ? 'bg-gradient-to-br from-indigo-600 to-slate-800'
+              ? 'bg-gradient-to-br from-primary/80 to-slate-800'
               : 'bg-gradient-to-br from-sky-500 to-blue-600',
         borderClass: isUrgent
           ? 'border-emerald-500/60 bg-gradient-to-r from-emerald-500/20 via-green-500/15 to-emerald-500/20 shadow-lg shadow-emerald-500/20'
           : isSoon
             ? 'border-amber-500/50 bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-amber-500/15 shadow-lg shadow-amber-500/15'
             : isNight
-              ? 'border-indigo-500/40 bg-gradient-to-r from-indigo-500/15 via-slate-800/40 to-indigo-500/15 shadow-lg shadow-indigo-500/10'
+              ? 'border-primary/40 bg-gradient-to-r from-primary/15 via-slate-800/40 to-primary/15 shadow-lg shadow-primary/10'
               : 'border-sky-500/40 bg-gradient-to-r from-sky-500/15 via-blue-500/10 to-sky-500/15 shadow-lg shadow-sky-500/10',
         animate: isUrgent,
       });

@@ -66,8 +66,8 @@ const categoryConfig: Record<AlarmCategory, {
     soundFrequencies: [587.33, 739.99, 880], // D5, F#5, A5 - Alert
     soundPattern: 'alert'
   },
-  ferias: { 
-    color: 'from-purple-500 to-violet-600', 
+  ferias: {
+    color: 'from-teal-500 to-blue-600',
     icon: '✈️', 
     label: 'Férias',
     soundFrequencies: [523.25, 659.25, 783.99, 1046.5], // C5, E5, G5, C6 - Celebration

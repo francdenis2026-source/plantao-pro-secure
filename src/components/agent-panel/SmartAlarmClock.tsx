@@ -238,7 +238,7 @@ export function SmartAlarmClock({ agentId }: SmartAlarmClockProps) {
           <div className="flex items-center justify-center gap-1">
             {/* Hours */}
             <div className="relative">
-              <div className="text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-cyan-100 to-cyan-300 tabular-nums tracking-tight">
+              <div className="text-5xl sm:text-6xl font-black text-primary tabular-nums tracking-tight">
                 {hours}
               </div>
               <div className="absolute inset-0 blur-xl bg-cyan-500/30" />
@@ -252,10 +252,10 @@ export function SmartAlarmClock({ agentId }: SmartAlarmClockProps) {
             
             {/* Minutes */}
             <div className="relative">
-              <div className="text-5xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-purple-100 to-purple-300 tabular-nums tracking-tight">
+              <div className="text-5xl sm:text-6xl font-black text-primary tabular-nums tracking-tight">
                 {minutes}
               </div>
-              <div className="absolute inset-0 blur-xl bg-purple-500/30" />
+              <div className="absolute inset-0 blur-xl bg-primary/30" />
             </div>
             
             {/* Seconds */}

@@ -42,7 +42,7 @@ const categoryConfig: Record<AlarmCategory, { color: string; icon: React.ReactNo
   bh: { color: 'from-amber-500 to-orange-600', icon: <Clock className="h-4 w-4" />, label: 'Banco de Horas' },
   folga: { color: 'from-green-500 to-emerald-600', icon: <Palmtree className="h-4 w-4" />, label: 'Folga' },
   permuta: { color: 'from-yellow-500 to-amber-600', icon: <RefreshCw className="h-4 w-4" />, label: 'Permuta' },
-  ferias: { color: 'from-purple-500 to-violet-600', icon: <Briefcase className="h-4 w-4" />, label: 'Férias' },
+  ferias: { color: 'from-teal-500 to-blue-600', icon: <Briefcase className="h-4 w-4" />, label: 'Férias' },
   reuniao: { color: 'from-slate-500 to-zinc-600', icon: <Bell className="h-4 w-4" />, label: 'Reunião' },
   personalizado: { color: 'from-rose-500 to-pink-600', icon: <Star className="h-4 w-4" />, label: 'Personalizado' },
 };

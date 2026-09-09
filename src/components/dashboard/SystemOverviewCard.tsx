@@ -165,8 +165,8 @@ export function SystemOverviewCard() {
             </p>
           </div>
 
-          <div className="p-3 rounded-lg bg-gradient-to-br from-purple-500/20 to-purple-600/10 border border-purple-500/30">
-            <div className="flex items-center gap-2 text-purple-400">
+          <div className="p-3 rounded-lg bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/30">
+            <div className="flex items-center gap-2 text-primary">
               <TrendingUp className="h-4 w-4" />
               <span className="text-xs">Taxa Ativa</span>
             </div>
