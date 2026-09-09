@@ -66,7 +66,7 @@ export function AgentQuickServicesMenu({ className, variant = 'floating' }: { cl
     ? [
         { label: 'Gestor de Rondas', description: 'Rondas em andamento', icon: ShieldCheck, href: '/rondas' },
         { label: 'Minha escala', description: 'Próximos plantões', icon: CalendarClock, href: '/agenda' },
-        { label: 'Central de trocas', description: 'Solicitar ou aceitar trocas', icon: ArrowLeftRight, href: '/agent-panel?tab=permutas' },
+        { label: 'Permutas', description: 'Solicitar ou aceitar trocas', icon: ArrowLeftRight, href: '/agent-panel?tab=permutas' },
         { label: 'Chat da equipe', description: 'Falar com sua equipe', icon: MessageCircle, href: '/agent-panel?tab=chat' },
         { label: 'Configurações', description: 'Preferências da conta', icon: Settings, href: '/settings' },
       ]

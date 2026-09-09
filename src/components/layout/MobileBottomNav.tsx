@@ -1,20 +1,24 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Home, CalendarDays, ShieldCheck, ArrowLeftRight, UserCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
+import { notifyRestrictedAccess } from '@/lib/restrictedAccess';
 
 interface BottomNavItem {
   icon: typeof Home;
   label: string;
   href: string;
   match: (pathname: string) => boolean;
+  /** Exige agente cadastrado — visitante vê aviso discreto e não navega. */
+  requiresAuth?: boolean;
 }
 
 const ITEMS: BottomNavItem[] = [
   { icon: Home, label: 'Início', href: '/', match: (p) => p === '/' },
-  { icon: CalendarDays, label: 'Escala', href: '/agenda', match: (p) => p.startsWith('/agenda') },
+  { icon: CalendarDays, label: 'Escala', href: '/agenda', match: (p) => p.startsWith('/agenda'), requiresAuth: true },
   { icon: ShieldCheck, label: 'Rondas', href: '/rondas', match: (p) => p.startsWith('/rondas') },
-  { icon: ArrowLeftRight, label: 'Trocas', href: '/agent-panel?tab=trocas', match: (p) => p.startsWith('/agent-panel') && p.includes('trocas') },
-  { icon: UserCircle, label: 'Perfil', href: '/agent-profile', match: (p) => p.startsWith('/agent-profile') },
+  { icon: ArrowLeftRight, label: 'Trocas', href: '/agent-panel?tab=trocas', match: (p) => p.startsWith('/agent-panel') && p.includes('trocas'), requiresAuth: true },
+  { icon: UserCircle, label: 'Perfil', href: '/agent-profile', match: (p) => p.startsWith('/agent-profile'), requiresAuth: true },
 ];
 
 /**
@@ -24,6 +28,8 @@ const ITEMS: BottomNavItem[] = [
  */
 export function MobileBottomNav() {
   const { pathname, search } = useLocation();
+  const { user, masterSession } = useAuth();
+  const isAuthed = !!user || !!masterSession;
   const fullPath = pathname + search;
 
   return (
@@ -34,10 +40,17 @@ export function MobileBottomNav() {
     >
       {ITEMS.map((item) => {
         const isActive = item.match(item.href.includes('?') ? fullPath : pathname);
+        const locked = item.requiresAuth && !isAuthed;
         return (
           <Link
             key={item.href}
             to={item.href}
+            onClick={(e) => {
+              if (locked) {
+                e.preventDefault();
+                notifyRestrictedAccess(item.label);
+              }
+            }}
             className={cn(
               'flex min-h-[44px] flex-1 flex-col items-center justify-center gap-0.5 py-1.5 text-[10px] font-medium transition-colors',
               isActive ? 'text-primary' : 'text-muted-foreground',

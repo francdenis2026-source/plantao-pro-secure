@@ -1445,14 +1445,20 @@ export default function Index() {
               Plantão<span className="text-primary">Pro</span> <span className="text-xs text-muted-foreground">AC</span>
             </span>
             {/* Selo ISE/Governo do Acre — único lugar na home onde aparece
-                (removido da foto do hero e do rodapé para não duplicar). */}
-            <img
-              src={iseAcreHeaderBadge}
-              alt="Instituto Socioeducativo · Governo do Estado do Acre"
-              className="ml-1 hidden h-8 w-8 shrink-0 object-contain opacity-90 sm:block"
-              loading="eager"
-              decoding="async"
-            />
+                (removido da foto do hero e do rodapé para não duplicar).
+                Fica colado à palavra "Socioeducativo", com leve balanço 3D. */}
+            <div className="ml-2 hidden shrink-0 items-center gap-1.5 sm:flex" style={{ perspective: '300px' }}>
+              <img
+                src={iseAcreHeaderBadge}
+                alt="Instituto Socioeducativo · Governo do Estado do Acre"
+                className="ise-badge-3d h-10 w-10 object-contain drop-shadow-sm"
+                loading="eager"
+                decoding="async"
+              />
+              <span className="text-[9px] font-bold uppercase leading-[1.1] tracking-[0.1em] text-muted-foreground">
+                Instituto<br />Socioeducativo
+              </span>
+            </div>
           </div>
 
           {/* Boas-vindas — nome + unidade quando logado, genérico quando

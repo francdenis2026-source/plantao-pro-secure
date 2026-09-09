@@ -1178,6 +1178,20 @@ div[style*="bottom: 0"][style*="right: 0"][style*="fixed"] {
   transform-style: preserve-3d;
 }
 
+/* Selo ISE do header — 3D bem sutil, só CSS (sem custo de performance). */
+@keyframes ise-badge-3d {
+  0%, 100% { transform: perspective(300px) rotateY(-6deg) rotateX(2deg); }
+  50%      { transform: perspective(300px) rotateY(6deg) rotateX(-2deg); }
+}
+.ise-badge-3d {
+  animation: ise-badge-3d 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ise-badge-3d { animation: none; }
+}
+
 /* ==================== ON-DUTY PROFESSIONAL ANIMATIONS ==================== */
 @keyframes duty-glow-pulse {
   0%, 100% { box-shadow: 0 0 0 0 hsl(var(--success) / 0.55), 0 0 40px 0 hsl(var(--success) / 0.15); }

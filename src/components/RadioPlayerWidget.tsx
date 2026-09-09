@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { Radio, Square, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { DEFAULT_STATION } from '@/lib/radioStations';
@@ -39,8 +40,21 @@ export function RadioPlayerWidget({
   const [usingFallback, setUsingFallback] = useState(false);
   const [nowPlaying, setNowPlaying] = useState<string | null>(null);
   const [hovering, setHovering] = useState(false);
+  const [tooltipPos, setTooltipPos] = useState<{ top: number; right: number } | null>(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const handleErrorRef = useRef(() => {});
+
+  // O header fica em barra fixa com overflow-hidden (pro fundo tático não
+  // vazar) — isso cortava o tooltip que aparecia logo abaixo do botão.
+  // Solução: calcula a posição na tela e renderiza via portal direto no
+  // body, fora do container que corta o overflow.
+  const updateTooltipPos = useCallback(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    setTooltipPos({ top: rect.bottom + 8, right: window.innerWidth - rect.right });
+  }, []);
 
   useEffect(() => {
     handleErrorRef.current = () => {
@@ -143,10 +157,30 @@ export function RadioPlayerWidget({
   const action = isPlaying ? 'Parar rádio' : isLoading ? 'Conectando…' : 'Tocar rádio';
   const tooltip = isPlaying ? (nowPlaying ?? 'Transmissão ao vivo') : action;
 
+  const tooltipNode = (
+    <div
+      role="status"
+      className={cn(
+        'pointer-events-none max-w-[240px] truncate rounded-md border border-border/70 bg-popover/95 px-2.5 py-1.5 text-[11px] text-popover-foreground shadow-lg backdrop-blur-sm',
+        'transition-all duration-300',
+        variant === 'header'
+          ? cn('fixed z-[200]', hovering ? 'translate-y-0 opacity-100' : '-translate-y-1 opacity-0')
+          : cn('absolute right-full top-1/2 z-[70] mr-2 -translate-y-1/2', hovering ? 'translate-x-0 opacity-100' : 'translate-x-1 opacity-0'),
+      )}
+      style={variant === 'header' && tooltipPos ? { top: tooltipPos.top, right: tooltipPos.right } : undefined}
+    >
+      {isPlaying && (
+        <span className="mr-1.5 inline-flex h-1.5 w-1.5 rounded-full bg-red-500 align-middle shadow-[0_0_6px_rgba(239,68,68,0.9)]" />
+      )}
+      {tooltip}
+    </div>
+  );
+
   return (
     <div
+      ref={wrapperRef}
       className={cn('relative', variant === 'header' && 'inline-flex')}
-      onMouseEnter={() => setHovering(true)}
+      onMouseEnter={() => { updateTooltipPos(); setHovering(true); }}
       onMouseLeave={() => setHovering(false)}
     >
       <button
@@ -183,21 +217,12 @@ export function RadioPlayerWidget({
         )}
       </button>
 
-      {/* Nome do programa/música — discreto, some ao tirar o mouse */}
-      <div
-        role="status"
-        className={cn(
-          'pointer-events-none absolute right-0 top-[calc(100%+8px)] z-[70] max-w-[240px] truncate rounded-md border border-border/70 bg-popover/95 px-2.5 py-1.5 text-[11px] text-popover-foreground shadow-lg backdrop-blur-sm',
-          'transition-all duration-300',
-          hovering ? 'translate-y-0 opacity-100' : 'pointer-events-none -translate-y-1 opacity-0',
-          variant === 'floating' && 'right-full top-1/2 mr-2 -translate-y-1/2 mt-0',
-        )}
-      >
-        {isPlaying && (
-          <span className="mr-1.5 inline-flex h-1.5 w-1.5 rounded-full bg-red-500 align-middle shadow-[0_0_6px_rgba(239,68,68,0.9)]" />
-        )}
-        {tooltip}
-      </div>
+      {/* Nome do programa/música — discreto, some ao tirar o mouse. No
+          header vai via portal (barra é overflow-hidden e cortava a
+          mensagem); no botão flutuante fica posicionado normalmente. */}
+      {variant === 'header'
+        ? (typeof document !== 'undefined' ? createPortal(tooltipNode, document.body) : null)
+        : tooltipNode}
 
       <style>{`
         @keyframes radioEq {

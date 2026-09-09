@@ -1,9 +1,9 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAgentProfile } from '@/hooks/useAgentProfile';
-import { RestrictedAccessDialog } from '@/components/auth/RestrictedAccessDialog';
+import { notifyRestrictedAccess } from '@/lib/restrictedAccess';
 import { AppLogo } from '@/components/AppLogo';
 
 import {
@@ -57,13 +57,12 @@ export const Sidebar = forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>
   (props, ref) => {
     const { masterSession, user, isAdmin } = useAuth();
     const { agent } = useAgentProfile();
-    const [restricted, setRestricted] = useState<string | null>(null);
     const isAuthed = !!user || !!masterSession;
 
     const guard = (label: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
       if (!isAuthed) {
         e.preventDefault();
-        setRestricted(label);
+        notifyRestrictedAccess(label);
       }
     };
 
@@ -172,12 +171,6 @@ export const Sidebar = forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>
             Online
           </span>
         </div>
-
-        <RestrictedAccessDialog
-          open={!!restricted}
-          onOpenChange={(o) => !o && setRestricted(null)}
-          targetLabel={restricted ?? undefined}
-        />
       </aside>
     );
   },

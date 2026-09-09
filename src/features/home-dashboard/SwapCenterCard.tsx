@@ -18,7 +18,7 @@ export function SwapCenterCard({ swaps, agentId }: { swaps: SwapRequestRow[]; ag
     <div className="rounded-2xl border border-border bg-card p-4">
       <div className="mb-3 flex items-center justify-between">
         <h3 className="flex items-center gap-1.5 text-sm font-semibold text-foreground">
-          <ArrowLeftRight className="h-4 w-4 text-primary" /> Central de trocas
+          <ArrowLeftRight className="h-4 w-4 text-primary" /> Permutas
         </h3>
         <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => navigate('/agent-panel?tab=permutas')}>Ver todas</Button>
       </div>

@@ -18,6 +18,11 @@ vi.mock("@/contexts/AuthContext", () => ({
   useAuth: () => authState,
 }));
 
+const toastMock = vi.fn();
+vi.mock("sonner", () => ({
+  toast: (...args: unknown[]) => toastMock(...args),
+}));
+
 function renderDesktop() {
   return render(
     <MemoryRouter initialEntries={["/"]}>
@@ -59,26 +64,25 @@ describe("Sidebar (desktop) — guards de navegação", () => {
     authState.masterSession = null;
     authState.isMaster = false;
     authState.userRole = null;
+    toastMock.mockClear();
   });
 
   it.each(protectedLabels)(
-    "visitante clica em '%s' e vê RestrictedAccessDialog sem navegar",
+    "visitante clica em '%s' e vê aviso discreto sem navegar",
     (label) => {
       renderDesktop();
       const link = screen.getByRole("link", { name: new RegExp(label, "i") });
       fireEvent.click(link);
 
-      // Nenhum conteúdo protegido renderizado
+      // Nenhum conteúdo protegido renderizado — o clique não navega
       expect(screen.queryByText(/DASHBOARD_SECRETO/)).not.toBeInTheDocument();
       expect(screen.queryByText(/PAINEL_SECRETO/)).not.toBeInTheDocument();
       expect(screen.queryByText(/CONFIG_SECRETO/)).not.toBeInTheDocument();
 
-      // Dialog profissional visível com atalho de login
-      expect(screen.getByRole("dialog")).toBeInTheDocument();
-      expect(screen.getByText(/Área Restrita/i)).toBeInTheDocument();
-      expect(screen.getByText(/credenciais da sua equipe/i)).toBeInTheDocument();
-      expect(screen.getByText(/unidade\/área/i)).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: /Entrar/i })).toBeInTheDocument();
+      // Nenhum modal — só o aviso discreto (toast)
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+      expect(toastMock).toHaveBeenCalledTimes(1);
+      expect(toastMock.mock.calls[0][0]).toMatch(/exclusivo para agentes cadastrados/i);
     },
   );
 
@@ -89,7 +93,7 @@ describe("Sidebar (desktop) — guards de navegação", () => {
 
     fireEvent.click(screen.getByRole("link", { name: /Dashboard/i }));
     expect(screen.getByText("DASHBOARD_SECRETO")).toBeInTheDocument();
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(toastMock).not.toHaveBeenCalled();
   });
 });
 
@@ -100,13 +104,14 @@ describe("MobileSidebar — guards de navegação", () => {
     authState.masterSession = null;
     authState.isMaster = false;
     authState.userRole = null;
+    toastMock.mockClear();
   });
 
-  it("visitante clica em 'Dashboard' e vê RestrictedAccessDialog sem navegar", () => {
+  it("visitante clica em 'Dashboard' e vê aviso discreto sem navegar", () => {
     renderMobile();
     fireEvent.click(screen.getByRole("link", { name: /Dashboard/i }));
     expect(screen.queryByText(/DASHBOARD_SECRETO/)).not.toBeInTheDocument();
-    expect(screen.getByRole("dialog")).toBeInTheDocument();
-    expect(screen.getByText(/credenciais da sua equipe/i)).toBeInTheDocument();
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(toastMock).toHaveBeenCalledTimes(1);
   });
 });

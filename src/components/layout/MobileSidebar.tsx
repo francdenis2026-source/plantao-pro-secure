@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { RestrictedAccessDialog } from '@/components/auth/RestrictedAccessDialog';
+import { notifyRestrictedAccess } from '@/lib/restrictedAccess';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
 
 import {
@@ -51,16 +50,14 @@ interface MobileSidebarProps {
 
 export function MobileSidebar({ onNavigate }: MobileSidebarProps) {
   const { masterSession, user, isAdmin } = useAuth();
-  const [restricted, setRestricted] = useState<string | null>(null);
   const isAuthed = !!user || !!masterSession;
-
 
   const handleClick =
     (label: string, isMaster = false) =>
     (e: React.MouseEvent<HTMLAnchorElement>) => {
       if (!isAuthed && !isMaster) {
         e.preventDefault();
-        setRestricted(label);
+        notifyRestrictedAccess(label);
         return;
       }
       onNavigate();
@@ -143,12 +140,6 @@ export function MobileSidebar({ onNavigate }: MobileSidebarProps) {
         </span>
         <span className="text-[10px] text-muted-foreground/60">© PlantaoPro</span>
       </div>
-
-      <RestrictedAccessDialog
-        open={!!restricted}
-        onOpenChange={(o) => !o && setRestricted(null)}
-        targetLabel={restricted ?? undefined}
-      />
     </div>
   );
 }
