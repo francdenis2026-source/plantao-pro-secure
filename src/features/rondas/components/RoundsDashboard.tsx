@@ -12,7 +12,6 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogFooter } f
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
-import rondasHeroPhoto from '@/assets/midias/hero-agentes-viatura.webp';
 import { teamPosters } from '@/lib/teamAssets';
 import { QuickRoundsMode } from './QuickRoundsMode';
 import * as api from '../api';
@@ -29,26 +28,23 @@ import { RoundHistory } from './RoundHistory';
 import { enqueuePatrolAction, flushPatrolQueue, getQueueLength } from '../offlineQueue';
 import type { PatrolSlot } from '../types';
 
-/** Hero compacto do Gestor de Rondas — foto real da equipe operacional (a
- * mesma usada em outras telas institucionais do app), com o título
- * sobreposto em vez de uma linha separada. Substitui o cabeçalho simples
- * anterior sem aumentar a altura total da página. */
+/** Cabeçalho compacto do Gestor de Rondas — sem foto (a imagem anterior
+ * destoava do restante da ferramenta). Gradiente institucional + um
+ * motivo sutil de radar (referência direta a "rondas"), só marca e título. */
 function RondasHero() {
   return (
-    <div className="relative h-24 overflow-hidden rounded-2xl sm:h-28">
-      <img
-        src={rondasHeroPhoto}
-        alt="Equipe de agentes socioeducativos em ronda, com viatura oficial"
-        loading="eager"
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-cover object-[50%_30%]"
-        draggable={false}
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{ background: 'linear-gradient(90deg, hsl(222 47% 5% / 0.92) 0%, hsl(222 47% 8% / 0.55) 55%, hsl(222 47% 8% / 0.15) 100%)' }}
-      />
+    <div
+      className="relative h-24 overflow-hidden rounded-2xl sm:h-28"
+      style={{ background: 'linear-gradient(120deg, hsl(222 47% 9%) 0%, hsl(213 58% 17%) 60%, hsl(220 84% 24%) 100%)' }}
+    >
+      <svg aria-hidden className="absolute -right-6 top-1/2 h-40 w-40 -translate-y-1/2 opacity-[0.14] sm:h-48 sm:w-48" viewBox="0 0 200 200" fill="none">
+        <circle cx="100" cy="100" r="94" stroke="white" strokeWidth="1.5" />
+        <circle cx="100" cy="100" r="64" stroke="white" strokeWidth="1.5" />
+        <circle cx="100" cy="100" r="34" stroke="white" strokeWidth="1.5" />
+        <line x1="100" y1="6" x2="100" y2="194" stroke="white" strokeWidth="1" />
+        <line x1="6" y1="100" x2="194" y2="100" stroke="white" strokeWidth="1" />
+        <path d="M100,100 L100,6 A94,94 0 0,1 166,34 Z" fill="hsl(199 89% 62%)" opacity="0.55" />
+      </svg>
       <div className="relative flex h-full items-center gap-3 px-4 sm:px-5">
         <BrasaoSentinela size={36} title="Gestor de Rondas — PlantãoPro AC" />
         <div>

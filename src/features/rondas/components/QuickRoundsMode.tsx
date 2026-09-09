@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Plus, X, Users, Clock3, History, Trash2, CheckCircle2, ArrowRight, CalendarClock, Zap, ShieldAlert, CalendarDays, Shield, Square } from 'lucide-react';
+import {
+  Plus, X, Users, Clock3, History, Trash2, CheckCircle2, ArrowRight, CalendarClock, Zap,
+  ShieldAlert, CalendarDays, Shield, Square, GripVertical, PartyPopper,
+} from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle,
   AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction,
@@ -68,6 +70,11 @@ function todayLabel(): string {
 const CHIP_COLORS = ['#2F6FED', '#D62839', '#10B981', '#F59E0B', '#8B5CF6', '#06B6D4', '#EC4899', '#84CC16'];
 const RING_R = 40;
 const RING_C = 2 * Math.PI * RING_R;
+/** Tempo que a tela de conclusão fica visível antes de fechar sozinha. */
+const AUTO_CLOSE_MS = 60_000;
+/** Frase que o agente precisa reescrever pra encerrar um rodízio ativo que
+ * não foi programado — evita fechar por engano no meio da ronda. */
+const CANCEL_PHRASE = 'ENCERRAR RONDA';
 
 interface QuickRoundsModeProps {
   unitId: string | null;
@@ -80,7 +87,9 @@ interface Session {
   endTime: string;
   durationMinutes: number;
   triggerAt: string; // ISO — quando o cronômetro efetivamente começa a contar
-  phase: 'waiting' | 'running';
+  phase: 'waiting' | 'running' | 'done';
+  wasScheduled: boolean;
+  finishedAt?: string; // ISO — setado quando phase vira 'done'
 }
 
 /** Barra superior destacada — equipe, data, quantidade de agentes, tempo de
@@ -114,6 +123,7 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const storageKey = `quick-rounds-session-${unitId ?? 'x'}-${team ?? 'x'}`;
+  const posKey = `${storageKey}-pos`;
 
   const [names, setNames] = useState<string[]>(['', '']);
   const [startTime, setStartTime] = useState(() => nowHm());
@@ -129,6 +139,38 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
   const [, forceTick] = useState(0);
   const savedRef = useRef(false);
   const [confirmScheduleOpen, setConfirmScheduleOpen] = useState(false);
+  const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
+  const [cancelPhrase, setCancelPhrase] = useState('');
+
+  // Posição da janela compacta (fase "aguardando") — arrastável, lembrada
+  // por unidade/equipe entre sessões.
+  const [pos, setPos] = useState(() => {
+    try {
+      const raw = localStorage.getItem(posKey);
+      return raw ? (JSON.parse(raw) as { x: number; y: number }) : { x: 16, y: 88 };
+    } catch {
+      return { x: 16, y: 88 };
+    }
+  });
+  const dragOffsetRef = useRef<{ dx: number; dy: number } | null>(null);
+
+  const onDragPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    dragOffsetRef.current = { dx: e.clientX - pos.x, dy: e.clientY - pos.y };
+    (e.currentTarget as Element).setPointerCapture(e.pointerId);
+  };
+  const onDragPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragOffsetRef.current) return;
+    const maxX = window.innerWidth - 260;
+    const maxY = window.innerHeight - 140;
+    const nx = Math.min(Math.max(0, e.clientX - dragOffsetRef.current.dx), Math.max(0, maxX));
+    const ny = Math.min(Math.max(0, e.clientY - dragOffsetRef.current.dy), Math.max(0, maxY));
+    setPos({ x: nx, y: ny });
+  };
+  const onDragPointerUp = () => {
+    if (!dragOffsetRef.current) return;
+    dragOffsetRef.current = null;
+    try { localStorage.setItem(posKey, JSON.stringify(pos)); } catch { /* ignore */ }
+  };
 
   const durationMinutes = diffMinutes(startTime, endTime);
   const activeNames = useMemo(() => names.map((n) => n.trim()).filter(Boolean), [names]);
@@ -148,7 +190,7 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
     } catch { /* ignore */ }
   };
 
-  // Cronômetro: 1 tick/s sempre que há sessão ativa (esperando ou rodando).
+  // Cronômetro: 1 tick/s sempre que há sessão ativa (esperando, rodando ou concluída).
   useEffect(() => {
     if (!session) return;
     const iv = window.setInterval(() => forceTick((t) => t + 1), 1000);
@@ -174,31 +216,48 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
   const currentIndex = session && session.phase === 'running' ? Math.min(Math.floor(elapsedMs / perAgentMs), sessionNames.length - 1) : -1;
   const isDone = session?.phase === 'running' && elapsedMs >= totalMs;
 
+  // Ao terminar o cronômetro, vira "done": some da tela de rodízio ativo e
+  // mostra um cartão compacto de conclusão por 1 minuto antes de fechar
+  // sozinha — dá tempo do supervisor ver que terminou sem travar a tela.
   useEffect(() => {
-    if (!isDone || !session || savedRef.current) return;
+    if (!isDone || !session) return;
+    persist({ ...session, phase: 'done', finishedAt: new Date().toISOString() });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDone]);
+
+  // Salva o histórico assim que conclui — de forma discreta (não é um
+  // registro definitivo: fica só pra consulta rápida e pode ser limpo).
+  useEffect(() => {
+    if (session?.phase !== 'done' || savedRef.current) return;
     savedRef.current = true;
     (async () => {
       if (user) {
         try {
           await api.saveQuickRoundHistory({
-            unit_id: unitId, team, agent_names: sessionNames,
-            duration_minutes: session.durationMinutes, per_agent_minutes: session.durationMinutes / sessionNames.length,
+            unit_id: unitId, team, agent_names: session.names,
+            duration_minutes: session.durationMinutes, per_agent_minutes: session.durationMinutes / session.names.length,
             started_at: session.triggerAt, created_by: user.id,
           });
           queryClient.invalidateQueries({ queryKey: ['quick-round-history', unitId, team] });
-          toast.success('Rodízio concluído — registrado no histórico.');
-        } catch (e: any) {
-          toast.error(e?.message ?? 'Rodízio concluído, mas não consegui salvar no histórico.');
-        }
-      } else {
-        toast.success('Rodízio concluído. Pronto para o próximo plantão.');
+        } catch { /* segue mesmo se não conseguir salvar o histórico */ }
       }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session?.phase]);
+
+  const finishedMs = session?.finishedAt ? new Date(session.finishedAt).getTime() : 0;
+  const closeInMs = session?.phase === 'done' ? Math.max(0, AUTO_CLOSE_MS - (now - finishedMs)) : 0;
+
+  // Fecha sozinha 1 minuto depois de concluir.
+  useEffect(() => {
+    if (session?.phase !== 'done') return;
+    if (closeInMs <= 0) {
       persist(null);
       setNames(['', '']);
       savedRef.current = false;
-    })();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDone]);
+  }, [session?.phase, closeInMs]);
 
   const addName = () => setNames((prev) => [...prev, '']);
   const removeName = (i: number) => setNames((prev) => prev.filter((_, idx) => idx !== i));
@@ -221,6 +280,7 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
     persist({
       names: activeNames, startTime, endTime, durationMinutes,
       triggerAt: triggerAt.toISOString(), phase: mode === 'now' ? 'running' : 'waiting',
+      wasScheduled: mode === 'scheduled',
     });
     if (backdatedMinutes > 1) {
       toast.success(`Rodízio iniciado — ${backdatedMinutes} min já contabilizados desde as ${startTime}.`);
@@ -242,11 +302,23 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
     startSession('scheduled');
   };
 
-  const handleCancel = () => {
+  const doCancel = () => {
     savedRef.current = true;
     persist(null);
+    setCancelDialogOpen(false);
+    setCancelPhrase('');
     toast.info('Rodízio cancelado — nada foi salvo.');
   };
+
+  const handleCancelClick = () => {
+    setCancelPhrase('');
+    setCancelDialogOpen(true);
+  };
+
+  // Só exige reescrever a frase quando a ronda está rodando e foi iniciada
+  // na hora (não programada) — programação e espera cancelam com um clique.
+  const requiresPhrase = session?.phase === 'running' && !session.wasScheduled;
+  const canConfirmCancel = !requiresPhrase || cancelPhrase.trim().toUpperCase() === CANCEL_PHRASE;
 
   const handleClearHistory = async () => {
     try {
@@ -258,23 +330,106 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
     }
   };
 
-  // ---------- Aguardando horário programado ----------
+  const cancelDialog = (
+    <AlertDialog open={cancelDialogOpen} onOpenChange={(v) => { setCancelDialogOpen(v); if (!v) setCancelPhrase(''); }}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle className="flex items-center gap-2">
+            <ShieldAlert className="h-5 w-5 text-destructive" />
+            {session?.phase === 'running' ? 'Você está em ronda' : 'Cancelar programação'}
+          </AlertDialogTitle>
+          <AlertDialogDescription className="space-y-3 text-left">
+            {session?.phase === 'running' ? (
+              <span className="block">
+                O rodízio ainda está em andamento. Encerrar agora interrompe o controle de tempo de todos os agentes escalados.
+              </span>
+            ) : (
+              <span className="block">
+                Essa ronda ainda não começou — o horário programado será cancelado e nada fica salvo.
+              </span>
+            )}
+            {requiresPhrase && (
+              <span className="block space-y-1.5">
+                <span className="block font-medium text-destructive">
+                  Para confirmar, digite <strong>{CANCEL_PHRASE}</strong> abaixo:
+                </span>
+                <Input
+                  autoFocus
+                  value={cancelPhrase}
+                  onChange={(e) => setCancelPhrase(e.target.value)}
+                  placeholder={CANCEL_PHRASE}
+                  className="h-9"
+                />
+              </span>
+            )}
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={() => setCancelPhrase('')}>Voltar</AlertDialogCancel>
+          <AlertDialogAction
+            onClick={doCancel}
+            disabled={!canConfirmCancel}
+            className="bg-destructive text-destructive-foreground hover:bg-destructive/90 disabled:opacity-40"
+          >
+            Encerrar definitivamente
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+
+  // ---------- Aguardando horário programado: janela compacta e arrastável ----------
   if (session && isWaiting) {
     return (
-      <section className="animate-in fade-in-0 slide-in-from-bottom-2 duration-500 overflow-hidden rounded-2xl border border-primary/25 bg-card">
-        <StatusStrip team={team} agentCount={sessionNames.length} perAgentMs={perAgentMs} />
-        <div className="flex items-center justify-between gap-3 px-4 py-2">
-          <h3 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-foreground">
-            <CalendarClock className="h-3.5 w-3.5 text-primary" /> Aguardando horário
-          </h3>
-          <Button variant="ghost" size="sm" className="h-7 gap-1.5 text-xs text-muted-foreground" onClick={handleCancel}>
-            <Square className="h-3 w-3" /> Cancelar
-          </Button>
+      <>
+        <div
+          className="fixed z-40 w-64 animate-in fade-in-0 zoom-in-95 select-none overflow-hidden rounded-2xl border border-primary/30 bg-card shadow-xl duration-300"
+          style={{ left: pos.x, top: pos.y }}
+        >
+          <div
+            onPointerDown={onDragPointerDown}
+            onPointerMove={onDragPointerMove}
+            onPointerUp={onDragPointerUp}
+            className="flex cursor-grab items-center justify-between gap-2 border-b border-primary/25 bg-primary/[0.09] px-3 py-1.5 active:cursor-grabbing"
+          >
+            <span className="flex items-center gap-1.5 text-[10.5px] font-semibold uppercase tracking-wide text-primary">
+              <GripVertical className="h-3.5 w-3.5" /> Aguardando · {team}
+            </span>
+            <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground" onClick={handleCancelClick}>
+              <Square className="h-3 w-3" />
+            </Button>
+          </div>
+          <div className="flex flex-col items-center gap-1 px-4 py-4 text-center">
+            <p className="text-[10.5px] uppercase tracking-wide text-muted-foreground">Inicia às {session.startTime}</p>
+            <p className="font-mono text-2xl font-bold tabular-nums text-primary">{fmtClock(triggerMs - now)}</p>
+            <p className="truncate text-[11px] text-muted-foreground">{sessionNames.join(' · ')}</p>
+          </div>
         </div>
-        <div className="flex flex-col items-center gap-1 border-t border-border px-6 py-5 text-center">
-          <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Inicia às {session.startTime}</p>
-          <p className="font-mono text-3xl font-bold tabular-nums text-primary">{fmtClock(triggerMs - now)}</p>
+        {cancelDialog}
+      </>
+    );
+  }
+
+  // ---------- Concluída: cartão compacto por 1 minuto, depois fecha sozinha ----------
+  if (session && session.phase === 'done') {
+    return (
+      <section className="animate-in fade-in-0 zoom-in-95 duration-500 overflow-hidden rounded-2xl border border-emerald-500/30 bg-card">
+        <div className="flex items-center justify-between gap-3 border-b border-emerald-500/25 bg-emerald-500/[0.08] px-4 py-2">
+          <h3 className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-emerald-500">
+            <PartyPopper className="h-3.5 w-3.5" /> Rodízio concluído
+          </h3>
+          <span className="text-[10.5px] tabular-nums text-muted-foreground">fecha em {fmtClock(closeInMs)}</span>
+        </div>
+        <div className="flex flex-col items-center gap-1.5 px-6 py-5 text-center">
+          <CheckCircle2 className="h-8 w-8 text-emerald-500" />
+          <p className="text-sm font-semibold text-foreground">Equipe {team} — turno encerrado</p>
           <p className="text-xs text-muted-foreground">{sessionNames.join(' · ')}</p>
+          <Button
+            variant="outline" size="sm" className="mt-2 h-7 gap-1.5 text-xs"
+            onClick={() => { persist(null); setNames(['', '']); savedRef.current = false; }}
+          >
+            Fechar agora
+          </Button>
         </div>
       </section>
     );
@@ -302,8 +457,8 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
             </span>
             Rodízio em andamento
           </h3>
-          <Button variant="ghost" size="sm" className="h-7 gap-1.5 text-xs text-muted-foreground" onClick={handleCancel}>
-            <Square className="h-3 w-3" /> Cancelar
+          <Button variant="ghost" size="sm" className="h-7 gap-1.5 text-xs text-muted-foreground" onClick={handleCancelClick}>
+            <Square className="h-3 w-3" /> Encerrar
           </Button>
         </div>
 
@@ -367,6 +522,7 @@ export function QuickRoundsMode({ unitId, team }: QuickRoundsModeProps) {
             );
           })}
         </div>
+        {cancelDialog}
       </section>
     );
   }
