@@ -256,9 +256,9 @@ export function AgentHeroPanel({ agentId, agentName, agentTeam }: AgentHeroPanel
               label: 'Folgas', 
               value: stats.pendingLeaves.toString(), 
               icon: Star, 
-              color: 'from-purple-500/20 to-purple-600/10',
-              iconColor: 'text-purple-400',
-              borderColor: 'border-purple-500/30'
+              color: 'from-primary/20 to-primary/10',
+              iconColor: 'text-primary',
+              borderColor: 'border-primary/30'
             },
           ].map((stat, index) => (
             <div

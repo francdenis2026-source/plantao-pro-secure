@@ -281,7 +281,7 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
                     <TeamEmblem team={team} size="lg" />
                   </div>
                   <div className="flex items-center gap-2 min-w-0 flex-1 flex-wrap">
-                    <span className="font-black text-lg md:text-xl bg-gradient-to-r from-primary to-orange-300 bg-clip-text text-transparent truncate leading-tight">
+                    <span className="font-black text-lg md:text-xl text-primary truncate leading-tight">
                       Equipe {team}
                     </span>
                     <Badge className="text-[11px] bg-primary/20 text-primary border-primary/40 px-2 py-0 h-5 shrink-0 font-bold">
@@ -337,12 +337,12 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
 
                 if (leavesToday.length > 0 || upcomingLeaves.length > 0) {
                   return (
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500/15 to-indigo-500/10 border border-purple-500/30">
+                    <div className="p-3 rounded-xl bg-gradient-to-br from-primary/15 to-primary/10 border border-primary/30">
                       {leavesToday.length > 0 && (
                         <div className="mb-3">
                           <div className="flex items-center gap-2 mb-2">
-                            <Palmtree className="h-4 w-4 text-purple-400" />
-                            <span className="text-xs font-bold text-purple-300 uppercase tracking-wide">
+                            <Palmtree className="h-4 w-4 text-primary" />
+                            <span className="text-xs font-bold text-primary uppercase tracking-wide">
                               De folga hoje ({leavesToday.length})
                             </span>
                           </div>
@@ -372,10 +372,10 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
                         </div>
                       )}
                       {upcomingLeaves.length > 0 && (
-                        <div className={leavesToday.length > 0 ? 'pt-2 border-t border-purple-500/20' : ''}>
+                        <div className={leavesToday.length > 0 ? 'pt-2 border-t border-primary/20' : ''}>
                           <div className="flex items-center gap-2 mb-2">
-                            <Star className="h-3.5 w-3.5 text-indigo-400" />
-                            <span className="text-[11px] font-semibold text-indigo-300">Próximos 7 dias:</span>
+                            <Star className="h-3.5 w-3.5 text-primary" />
+                            <span className="text-[11px] font-semibold text-primary">Próximos 7 dias:</span>
                           </div>
                           <div className="flex flex-wrap gap-2">
                             {upcomingLeaves.slice(0, 6).map(leave => {
@@ -413,7 +413,7 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
 
               {/* Birthday Alerts - Compact */}
               {birthdayAlerts.length > 0 && (
-                <div className="p-2 bg-gradient-to-r from-pink-500/15 to-purple-500/15 rounded-lg border border-pink-500/25">
+                <div className="p-2 bg-gradient-to-r from-pink-500/15 to-primary/15 rounded-lg border border-pink-500/25">
                   <div className="flex items-center gap-1.5 flex-wrap">
                     <Cake className="h-3 w-3 text-pink-400 shrink-0" />
                     {birthdayAlerts.map((alert, index) => (
@@ -552,7 +552,7 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
 
       {/* Leave Details Dialog */}
       <Dialog open={!!selectedLeave} onOpenChange={(o) => !o && setSelectedLeave(null)}>
-        <DialogContent className="bg-gradient-to-br from-slate-950 to-slate-900 border-2 border-purple-500/40 max-w-md">
+        <DialogContent className="bg-gradient-to-br from-slate-950 to-slate-900 border-2 border-primary/40 max-w-md">
           {selectedLeave && (() => {
             const info = leaveTypeInfo[selectedLeave.leave_type] || leaveTypeInfo.special;
             const member = members.find(m => m.id === selectedLeave.agent_id);
@@ -569,7 +569,7 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
             return (
               <>
                 <DialogHeader>
-                  <DialogTitle className="flex items-center gap-2 text-purple-200">
+                  <DialogTitle className="flex items-center gap-2 text-primary">
                     <span className={`inline-flex items-center justify-center h-8 w-8 rounded-lg ${info.color}`}>
                       {info.icon}
                     </span>
@@ -648,8 +648,8 @@ export function TeamMembersCard({ unitId, team, currentAgentId, currentAgentName
 
                   {/* Motivo */}
                   {selectedLeave.reason && (
-                    <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/30">
-                      <p className="text-[10px] uppercase tracking-wider text-purple-300 font-semibold mb-1">Motivo / Observação</p>
+                    <div className="p-3 rounded-lg bg-primary/10 border border-primary/30">
+                      <p className="text-[10px] uppercase tracking-wider text-primary font-semibold mb-1">Motivo / Observação</p>
                       <p className="text-sm text-slate-200 whitespace-pre-wrap">{selectedLeave.reason}</p>
                     </div>
                   )}

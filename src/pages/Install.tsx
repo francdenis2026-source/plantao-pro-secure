@@ -73,7 +73,7 @@ export default function Install() {
           </div>
 
           <div>
-            <h2 className="text-3xl font-black bg-gradient-to-r from-primary to-primary bg-clip-text text-transparent">
+            <h2 className="text-3xl font-black text-primary">
               PlantãoPro
             </h2>
             <p className="text-muted-foreground mt-2">

@@ -133,7 +133,7 @@ export default function Dashboard() {
                   { icon3d: 'building' as Icon3DName, text: 'Unidades',        color: 'text-blue-400',   bg: 'from-blue-500/20 to-blue-600/10',   route: '/units' },
                   { icon3d: 'team'     as Icon3DName, text: 'Agentes',         color: 'text-green-400',  bg: 'from-green-500/20 to-green-600/10', route: '/agents' },
                   { icon3d: 'clock'    as Icon3DName, text: 'Banco de Horas',  color: 'text-amber-400',  bg: 'from-amber-500/20 to-amber-600/10', route: '/overtime' },
-                  { icon3d: 'shield'   as Icon3DName, text: 'Configurações',   color: 'text-purple-400', bg: 'from-purple-500/20 to-purple-600/10', route: '/settings' },
+                  { icon3d: 'shield'   as Icon3DName, text: 'Configurações',   color: 'text-primary', bg: 'from-primary/20 to-primary/10', route: '/settings' },
                 ]).map((feature, i) => (
                   <div
                     key={i}

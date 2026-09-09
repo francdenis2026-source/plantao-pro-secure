@@ -744,7 +744,7 @@ Documento gerado automaticamente pelo PlantãoPro
             <div className="p-2.5 rounded-xl bg-gradient-to-br from-orange-500/30 to-primary/20 border border-orange-500/40">
               <ArrowRightLeft className="h-6 w-6 md:h-7 md:w-7 text-orange-400" />
             </div>
-            <span className="font-bold bg-gradient-to-r from-orange-200 to-amber-300 bg-clip-text text-transparent">
+            <span className="font-bold text-orange-300">
               Permutas de Plantão
             </span>
             {pendingForMe.length > 0 && (

@@ -77,7 +77,7 @@ export function ChatAndAlertSettings({ agentId, onClose }: ChatAndAlertSettingsP
             <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500/30 to-blue-500/20 border border-cyan-500/40">
               <MessageCircle className="h-5 w-5 text-cyan-400" />
             </div>
-            <span className="bg-gradient-to-r from-cyan-200 to-blue-300 bg-clip-text text-transparent font-bold">
+            <span className="text-primary font-bold">
               Chat e Alertas
             </span>
           </CardTitle>

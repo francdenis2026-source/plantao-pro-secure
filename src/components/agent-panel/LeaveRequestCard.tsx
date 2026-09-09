@@ -498,17 +498,17 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
 
 
   return (
-    <Card className="card-night-purple bg-gradient-to-br from-[hsl(222,60%,3%)] via-[hsl(222,55%,5%)] to-[hsl(270,40%,8%)] border-3 border-purple-500/50 transition-all duration-300 hover:border-purple-400/70 group relative">
+    <Card className="bg-gradient-to-br from-[hsl(222,60%,3%)] via-[hsl(222,55%,5%)] to-[hsl(222,40%,8%)] border-3 border-primary/50 transition-all duration-300 hover:border-primary/70 group relative">
       {/* Glow Effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
       <CardHeader className="pb-4 relative">
         <div className="flex items-center justify-between gap-3">
           <CardTitle className="flex items-center gap-3 text-xl md:text-2xl">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-purple-500/30 to-violet-500/20 border border-purple-500/40">
-              <CalendarOff className="h-6 w-6 md:h-7 md:w-7 text-purple-400" />
+            <div className="p-2.5 rounded-xl bg-gradient-to-br from-primary/30 to-primary/20 border border-primary/40">
+              <CalendarOff className="h-6 w-6 md:h-7 md:w-7 text-primary" />
             </div>
-            <span className="font-bold bg-gradient-to-r from-purple-200 to-violet-300 bg-clip-text text-transparent">
+            <span className="font-bold text-primary">
               Folgas Programadas
             </span>
           </CardTitle>
@@ -525,8 +525,8 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
       </CardHeader>
       <CardContent className="space-y-5 relative">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 bg-slate-800/80 border-2 border-purple-500/30 rounded-xl p-1.5 h-auto">
-            <TabsTrigger value="minhas" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-violet-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-purple-500/30 rounded-lg py-2.5 px-4 font-semibold transition-all duration-200">
+          <TabsList className="grid w-full grid-cols-2 bg-slate-800/80 border-2 border-primary/30 rounded-xl p-1.5 h-auto">
+            <TabsTrigger value="minhas" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-primary/80 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-primary/30 rounded-lg py-2.5 px-4 font-semibold transition-all duration-200">
               <User className="h-4 w-4 md:h-5 md:w-5 mr-2" />
               <span className="text-sm md:text-base">Minhas Folgas</span>
             </TabsTrigger>
@@ -1027,18 +1027,18 @@ export function LeaveRequestCard({ agentId, agentTeam, agentUnitId }: LeaveReque
 
       {/* Leave Details Dialog — Professional */}
       <Dialog open={showDetailsDialog} onOpenChange={(o) => { setShowDetailsDialog(o); if (!o) setConfirmCancelId(null); }}>
-        <DialogContent className="max-w-md w-[calc(100vw-1rem)] bg-slate-950 border border-purple-500/30 p-0 gap-0 overflow-hidden">
-          <DialogHeader className="px-4 py-3 border-b border-slate-800 bg-gradient-to-r from-purple-950/60 to-slate-950">
+        <DialogContent className="max-w-md w-[calc(100vw-1rem)] bg-slate-950 border border-primary/30 p-0 gap-0 overflow-hidden">
+          <DialogHeader className="px-4 py-3 border-b border-slate-800 bg-gradient-to-r from-primary/20 to-slate-950">
             <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-lg bg-purple-500/20 border border-purple-500/40">
-                <CalendarOff className="h-4 w-4 text-purple-300" />
+              <div className="p-1.5 rounded-lg bg-primary/20 border border-primary/40">
+                <CalendarOff className="h-4 w-4 text-primary" />
               </div>
               <div className="min-w-0">
                 <DialogTitle className="text-sm font-semibold text-white leading-tight">
                   Detalhes da Folga
                 </DialogTitle>
                 {detailsDate && (
-                  <DialogDescription className="text-[11px] text-purple-300/80 font-mono mt-0.5">
+                  <DialogDescription className="text-[11px] text-primary/80 font-mono mt-0.5">
                     {format(detailsDate, "EEEE, dd/MM/yyyy", { locale: ptBR })}
                   </DialogDescription>
                 )}

@@ -1095,17 +1095,17 @@ export function BHTracker({ agentId, compact = false, isAdmin = false }: BHTrack
           >
             <div className="flex items-center justify-between mb-1.5">
               <div className="flex items-center gap-1.5">
-                <span className="text-[11px] font-bold text-purple-300">2ª Quinzena</span>
+                <span className="text-[11px] font-bold text-primary">2ª Quinzena</span>
                 <span className="text-[10px] text-slate-500">(16-31)</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-bold text-purple-300 tabular-nums">{secondFortnightBalance.toFixed(1)}h</span>
-                <span className="text-[11px] text-purple-400/70 tabular-nums">R$ {(secondFortnightBalance * hourlyRate).toFixed(2)}</span>
+                <span className="text-sm font-bold text-primary tabular-nums">{secondFortnightBalance.toFixed(1)}h</span>
+                <span className="text-[11px] text-primary/70 tabular-nums">R$ {(secondFortnightBalance * hourlyRate).toFixed(2)}</span>
               </div>
             </div>
             <div className="h-1.5 bg-slate-700/50 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-gradient-to-r from-purple-500 to-purple-400 rounded-full transition-all"
+              <div
+                className="h-full bg-gradient-to-r from-primary to-primary/70 rounded-full transition-all"
                 style={{ width: `${Math.min((secondFortnightBalance / (bhLimit2nd || bhLimitLegacy)) * 100, 100)}%` }}
               />
             </div>

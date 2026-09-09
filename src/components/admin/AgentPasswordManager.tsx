@@ -233,7 +233,7 @@ export function AgentPasswordManager({ agent, onSuccess }: AgentPasswordManagerP
           <Button 
             onClick={handleResetPassword}
             disabled={isLoading || !newPassword || newPassword !== confirmPassword}
-            className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-500 hover:to-violet-500"
+            className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
           >
             {isLoading ? (
               <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Redefinindo...</>
