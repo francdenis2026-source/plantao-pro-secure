@@ -112,38 +112,22 @@ export function CinematicBrandHero({
         </div>
       </div>
 
-      {/* Coluna de imagem — espaço generoso pra mostrar detalhe de verdade
-          (rostos, viatura, unidade), não um recorte apertado atrás do
-          texto. Transição larga e em várias etapas com a coluna de
-          texto, em vez de uma linha de corte. */}
-      <div className="relative order-1 h-64 sm:h-80 lg:order-2 lg:h-auto lg:min-h-[460px]">
+      {/* Coluna de imagem — fundo no mesmo tom sólido da seção, e a foto
+          some suavemente sobre ele via máscara (mask-image) em vez de uma
+          camada de gradiente colorido por cima — sem efeito de "sujeira"
+          na emenda com o texto. */}
+      <div
+        className="relative order-1 h-56 sm:h-72 lg:order-2 lg:h-auto lg:min-h-[380px]"
+        style={{ background: "hsl(222 20% 6%)" }}
+      >
         <img
           src={IMG_URL}
           alt="Agentes da Socioeducação do Acre em frente à unidade e viatura oficial"
           draggable={false}
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 h-full w-full select-none object-cover object-[62%_35%] lg:object-[58%_32%]"
+          className="hero-photo-fade-lg absolute inset-0 h-full w-full select-none object-cover object-[62%_35%] lg:object-[58%_32%]"
           style={{ filter: "saturate(0.9) contrast(1.02)" }}
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-0 w-24 lg:w-40"
-          style={{
-            background: "linear-gradient(90deg, hsl(222 20% 6%) 0%, hsl(222 20% 6% / 0.82) 22%, hsl(222 22% 7% / 0.5) 42%, hsl(222 24% 8% / 0.22) 65%, transparent 100%)",
-          }}
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-16 lg:hidden"
-          style={{
-            background: "linear-gradient(180deg, hsl(222 20% 6%) 0%, hsl(222 20% 6% / 0.7) 32%, transparent 100%)",
-          }}
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-px"
-          style={{ background: "linear-gradient(90deg, transparent, hsl(var(--primary) / 0.5) 50%, transparent)" }}
         />
       </div>
     </section>

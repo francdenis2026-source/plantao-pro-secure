@@ -1708,11 +1708,17 @@ export default function Index() {
         }}
       />
 
-      {/* Selo do desenvolvedor foi movido para a barra do rodapé */}
-
-
       {/* Divisor entre seção institucional e rodapé */}
       <SectionDivider />
+
+      {/* Assinatura do desenvolvedor — só no mobile (no desktop ela já
+          aparece dentro do rodapé completo). Fica no fluxo normal da
+          página (não fixa) pra nunca sobrepor conteúdo enquanto rola —
+          só aparece uma vez, no fim de tudo, com espaço pra não colidir
+          com a faixa fina fixa do rodapé. */}
+      <div className="flex justify-center pb-10 pt-1 sm:hidden">
+        <MadeInFeijoBadge inline size="sm" />
+      </div>
 
       {/* Mobile-only beta notice */}
       <div className="hidden sm:block">
@@ -1783,13 +1789,6 @@ export default function Index() {
           <Lock className="h-3 w-3" strokeWidth={2.2} />
           <span>Master</span>
         </button>
-      </div>
-
-      {/* Assinatura do desenvolvedor — só no mobile (no desktop ela já
-          aparece dentro do rodapé completo). Fica numa camada discreta,
-          flutuando por cima do conteúdo mas abaixo da faixa fina fixa. */}
-      <div className="sm:hidden">
-        <MadeInFeijoBadge size="sm" />
       </div>
 
 

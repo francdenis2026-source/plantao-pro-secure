@@ -3079,4 +3079,34 @@ body.rm-low-motion > #root { filter: none !important; }
   background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.55) 50%, transparent);
 }
 
+/* Fotos das heroes da home — a foto se dissolve no fundo (que já é da
+   mesma cor) através da própria transparência da imagem (mask-image),
+   em vez de uma camada de gradiente colorido por cima dela. Isso evita
+   o efeito "sujo"/artificial de tingir a foto com uma cor na emenda —
+   ela some de verdade, sem sobreposição visível de luz ou cor.
+   Mobile: desvanece a partir do topo. Desktop (sm+): a partir da
+   esquerda, onde encontra o painel de texto. */
+.hero-photo-fade {
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 26%);
+  mask-image: linear-gradient(180deg, transparent 0%, black 26%);
+}
+@media (min-width: 640px) {
+  .hero-photo-fade {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 24%);
+    mask-image: linear-gradient(90deg, transparent 0%, black 24%);
+  }
+}
+/* Mesma ideia, mas pro banner cuja coluna de imagem só vira lateral a
+   partir do breakpoint lg (a de cima muda em sm). */
+.hero-photo-fade-lg {
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 22%);
+  mask-image: linear-gradient(180deg, transparent 0%, black 22%);
+}
+@media (min-width: 1024px) {
+  .hero-photo-fade-lg {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 22%);
+    mask-image: linear-gradient(90deg, transparent 0%, black 22%);
+  }
+}
+
 

@@ -100,7 +100,7 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
           transição larga e gradual em vez de uma linha de corte. */}
       <div className="relative overflow-hidden rounded-2xl border border-border grid grid-cols-1 sm:grid-cols-[1.05fr_1fr]">
         <div
-          className="relative z-10 order-2 flex flex-col justify-center gap-6 px-6 py-7 sm:order-1 sm:px-10 sm:py-12"
+          className="relative z-10 order-2 flex flex-col justify-center gap-5 px-6 py-6 sm:order-1 sm:px-10 sm:py-8"
           style={{ background: 'linear-gradient(155deg, hsl(222 47% 7%) 0%, hsl(217 50% 11%) 55%, hsl(213 55% 14%) 100%)' }}
         >
           <div className="max-w-lg">
@@ -118,40 +118,22 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
           <OperationalStatusRibbon />
         </div>
 
-        <div className="relative order-1 h-56 sm:order-2 sm:h-auto sm:min-h-[340px]">
-          {/* Foto com espaço generoso — mostra o agente, a unidade e o
-              brasão do Acre com nitidez, não é um recorte apertado. */}
+        {/* Coluna de imagem — fundo no MESMO gradiente do painel de texto,
+            e a foto some suavemente sobre ele via máscara (mask-image),
+            não uma camada de cor por cima. Isso evita o efeito "sujo" de
+            tingir a foto — ela literalmente se dissolve no fundo que já
+            é da mesma cor, sem sobreposição visível. */}
+        <div
+          className="relative order-1 h-48 sm:order-2 sm:h-auto sm:min-h-[260px]"
+          style={{ background: 'linear-gradient(155deg, hsl(222 47% 7%) 0%, hsl(217 50% 11%) 55%, hsl(213 55% 14%) 100%)' }}
+        >
           <img
             src={heroBanner}
             alt="Agente da Socioeducação do Acre, com o brasão do Governo do Acre ao fundo, em unidade operacional"
             loading="eager"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover object-[78%_30%] sm:object-[72%_28%]"
+            className="hero-photo-fade absolute inset-0 h-full w-full object-cover object-[78%_30%] sm:object-[72%_28%]"
             draggable={false}
-          />
-          {/* Transição larga e em várias etapas — a foto "nasce" do fundo
-              do painel de texto de forma gradual, sem linha de corte. */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-40"
-            style={{
-              background: 'linear-gradient(90deg, hsl(213 55% 14%) 0%, hsl(213 55% 14% / 0.82) 22%, hsl(215 52% 12% / 0.55) 42%, hsl(217 50% 10% / 0.25) 65%, transparent 100%)',
-            }}
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 top-0 h-16 sm:hidden"
-            style={{
-              background: 'linear-gradient(180deg, hsl(222 47% 7%) 0%, hsl(222 47% 7% / 0.75) 30%, hsl(222 47% 7% / 0.35) 60%, transparent 100%)',
-            }}
-          />
-          {/* Vinheta sutil pra unificar o tom da foto com a paleta da marca */}
-          <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: 'hsl(220 60% 18% / 0.1)' }} />
-          {/* Linha de base — pequeno acento pra fechar a foto com elegância */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-px"
-            style={{ background: 'linear-gradient(90deg, transparent, hsl(var(--primary) / 0.55) 50%, transparent)' }}
           />
         </div>
       </div>
@@ -178,27 +160,27 @@ export function SplitOperationalHero({ onTeamClick }: Props) {
       </div>
 
       {/* Quick metrics strip */}
-      <div className="mt-4 grid grid-cols-3 gap-3">
-        <div className="rounded-xl border border-border bg-card p-3.5">
-          <Building2 className="h-4 w-4 text-primary" strokeWidth={2.2} />
-          <p className="mt-2 text-xl font-bold tabular-nums text-foreground">{metrics.loading ? '—' : fmt2(metrics.units)}</p>
-          <p className="text-[11px] text-muted-foreground">Unidades</p>
+      <div className="mt-3 grid grid-cols-3 gap-2.5">
+        <div className="rounded-xl border border-border bg-card px-3 py-2.5">
+          <Building2 className="h-3.5 w-3.5 text-primary" strokeWidth={2.2} />
+          <p className="mt-1.5 text-lg font-bold tabular-nums text-foreground">{metrics.loading ? '—' : fmt2(metrics.units)}</p>
+          <p className="text-[10.5px] text-muted-foreground">Unidades</p>
         </div>
-        <div className="rounded-xl border border-border bg-card p-3.5">
-          <Users2 className="h-4 w-4 text-primary" strokeWidth={2.2} />
-          <p className="mt-2 text-xl font-bold tabular-nums text-foreground">{metrics.loading ? '—' : fmt2(metrics.agentsRegistered || metrics.agentsActive)}</p>
-          <p className="text-[11px] text-muted-foreground">Agentes cadastrados</p>
+        <div className="rounded-xl border border-border bg-card px-3 py-2.5">
+          <Users2 className="h-3.5 w-3.5 text-primary" strokeWidth={2.2} />
+          <p className="mt-1.5 text-lg font-bold tabular-nums text-foreground">{metrics.loading ? '—' : fmt2(metrics.agentsRegistered || metrics.agentsActive)}</p>
+          <p className="text-[10.5px] text-muted-foreground">Agentes cadastrados</p>
         </div>
-        <div className="rounded-xl border border-border bg-card p-3.5">
-          <Radio className="h-4 w-4 text-primary" strokeWidth={2.2} />
-          <p className="mt-2 text-xl font-bold tabular-nums text-foreground">{fmt2(onlineAgents)}</p>
-          <p className="text-[11px] text-muted-foreground">Online agora</p>
+        <div className="rounded-xl border border-border bg-card px-3 py-2.5">
+          <Radio className="h-3.5 w-3.5 text-primary" strokeWidth={2.2} />
+          <p className="mt-1.5 text-lg font-bold tabular-nums text-foreground">{fmt2(onlineAgents)}</p>
+          <p className="text-[10.5px] text-muted-foreground">Online agora</p>
         </div>
       </div>
 
       {/* Team selector */}
-      <div className="mt-6">
-        <div className="mb-3 flex items-center justify-between">
+      <div className="mt-4">
+        <div className="mb-2.5 flex items-center justify-between">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-foreground">Selecionar equipe</h2>
           <span className="text-xs font-medium text-muted-foreground">4 equipes</span>
         </div>
