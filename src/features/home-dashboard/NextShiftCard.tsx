@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Calendar, MapPin, Users, ArrowRight, Moon, Sun } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useServerTime } from '@/hooks/useServerTime';
 import type { NextShift } from './useHomeDashboardData';
 
@@ -15,8 +16,8 @@ function fmtCountdown(ms: number): string {
 }
 
 export function NextShiftCard({
-  shift, unitName, team,
-}: { shift: NextShift | null | undefined; unitName: string | null; team: string | null }) {
+  shift, unitName, team, isLoading,
+}: { shift: NextShift | null | undefined; unitName: string | null; team: string | null; isLoading?: boolean }) {
   const navigate = useNavigate();
   const now = useServerTime(30_000);
 
@@ -36,6 +37,22 @@ export function NextShiftCard({
   const radius = 38;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - progressPct / 100);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-full flex-col rounded-2xl border border-border/60 p-5">
+        <Skeleton className="h-3 w-28" />
+        <div className="mt-4 flex flex-1 items-center justify-between gap-5">
+          <div className="min-w-0 flex-1 space-y-3">
+            <Skeleton className="h-8 w-40" />
+            <Skeleton className="h-4 w-24" />
+          </div>
+          <Skeleton className="h-20 w-20 shrink-0 rounded-full sm:h-24 sm:w-24" />
+        </div>
+        <Skeleton className="mt-5 h-10 w-full rounded-md" />
+      </div>
+    );
+  }
 
   if (!shift) {
     return (

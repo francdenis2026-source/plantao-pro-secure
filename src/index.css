@@ -211,6 +211,18 @@
     background-color: hsl(var(--background));
   }
 
+  /* Fundação global de foco — muita coisa no app usa <button>/<a> "crus"
+     (sem os componentes shadcn, que já trazem seu próprio ring). Sem uma
+     base como essa, esses elementos ficam sem indicação de foco visível
+     nenhuma pro teclado, ou dependem do outline default do navegador
+     (inconsistente entre eles). Não conflita com os componentes que já
+     definem seu próprio focus-visible — só complementa quem não tem. */
+  :is(button, a, [role="button"], input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
   body {
     @apply text-foreground antialiased;
     font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;

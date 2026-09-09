@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
-import { MapPin, Users, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MapPin, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 import type { NextShift } from './useHomeDashboardData';
 
 const DOW = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB'];
@@ -11,8 +12,8 @@ function toDateStr(d: Date) {
 }
 
 export function WeekStrip({
-  shifts, unitName, team,
-}: { shifts: NextShift[]; unitName?: string | null; team?: string | null }) {
+  shifts, unitName, team, isLoading,
+}: { shifts: NextShift[]; unitName?: string | null; team?: string | null; isLoading?: boolean }) {
   const days = useMemo(() => {
     const start = new Date();
     start.setHours(0, 0, 0, 0);
@@ -34,17 +35,30 @@ export function WeekStrip({
   const selectedDate = days.find((d) => toDateStr(d) === selected) ?? days[0];
   const isSelectedToday = toDateStr(selectedDate) === toDateStr(new Date());
 
+  if (isLoading) {
+    return (
+      <div className="rounded-2xl border border-border/60 p-4">
+        <div className="mb-3 flex items-center justify-between">
+          <Skeleton className="h-4 w-24" />
+          <Skeleton className="h-3 w-20" />
+        </div>
+        <div className="grid grid-cols-7 gap-1.5">
+          {Array.from({ length: 7 }).map((_, i) => (
+            <Skeleton key={i} className="h-16 rounded-lg" />
+          ))}
+        </div>
+        <Skeleton className="mt-3 h-16 w-full rounded-lg" />
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-2xl border border-border bg-card p-4">
       <div className="mb-3 flex items-center justify-between">
         <h3 className="text-sm font-semibold text-foreground">Minha semana</h3>
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <span>{MONTHS[days[0].getMonth()]} {days[0].getFullYear()}</span>
-          <div className="flex items-center gap-0.5">
-            <button className="rounded p-0.5 hover:bg-muted" aria-label="Semana anterior"><ChevronLeft className="h-3.5 w-3.5" /></button>
-            <button className="rounded p-0.5 hover:bg-muted" aria-label="Próxima semana"><ChevronRight className="h-3.5 w-3.5" /></button>
-          </div>
-        </div>
+        {/* Só a semana atual é carregada por enquanto — sem paginação real,
+            então não mostramos setas de navegação que não fariam nada. */}
+        <span className="text-xs text-muted-foreground">{MONTHS[days[0].getMonth()]} {days[0].getFullYear()}</span>
       </div>
 
       <div className="grid grid-cols-7 gap-1.5">

@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { History, LayoutGrid, CalendarDays, ArrowLeftRight, Users, MessageCircle, ShieldCheck, HelpCircle } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 import type { ActivityRow } from './useHomeDashboardData';
 
 function fmtRelative(iso: string): string {
@@ -21,7 +22,7 @@ const ACTION_LABEL: Record<string, string> = {
   logout: 'saiu do sistema',
 };
 
-export function ActivityAndQuickAccess({ activity }: { activity: ActivityRow[] }) {
+export function ActivityAndQuickAccess({ activity, isLoading }: { activity: ActivityRow[]; isLoading?: boolean }) {
   const navigate = useNavigate();
   const quickLinks = [
     { label: 'Minha escala', icon: CalendarDays, href: '/agenda' },
@@ -38,7 +39,19 @@ export function ActivityAndQuickAccess({ activity }: { activity: ActivityRow[] }
         <h3 className="mb-3 flex items-center gap-1.5 text-sm font-semibold text-foreground">
           <History className="h-4 w-4 text-primary" /> Atividade recente
         </h3>
-        {activity.length === 0 ? (
+        {isLoading ? (
+          <div className="space-y-3">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="flex items-start gap-2">
+                <Skeleton className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full" />
+                <div className="min-w-0 flex-1 space-y-1.5">
+                  <Skeleton className="h-3.5 w-3/4" />
+                  <Skeleton className="h-3 w-16" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : activity.length === 0 ? (
           <p className="py-4 text-center text-sm text-muted-foreground">Sem atividade recente.</p>
         ) : (
           <div className="space-y-2.5">

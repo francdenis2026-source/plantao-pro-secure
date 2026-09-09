@@ -79,18 +79,31 @@ export function AgentHomeDashboard() {
 
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
             <div className="lg:col-span-2">
-              <NextShiftCard shift={nextShiftQ.data} unitName={agent?.unit?.name ?? null} team={agent?.team ?? null} />
+              <NextShiftCard
+                shift={nextShiftQ.data}
+                unitName={agent?.unit?.name ?? null}
+                team={agent?.team ?? null}
+                isLoading={nextShiftQ.isLoading}
+              />
             </div>
             <QuickActionsCard />
           </div>
 
-          <HomeKpiRow counts={countsQ.data ?? { today: 0, upcoming: 0, swaps: 0, notices: 0 }} />
+          <HomeKpiRow
+            counts={countsQ.data ?? { today: 0, upcoming: 0, swaps: 0, notices: 0 }}
+            isLoading={countsQ.isLoading}
+          />
 
-          <WeekStrip shifts={weekShiftsQ.data ?? []} unitName={agent?.unit?.name} team={agent?.team} />
+          <WeekStrip
+            shifts={weekShiftsQ.data ?? []}
+            unitName={agent?.unit?.name}
+            team={agent?.team}
+            isLoading={weekShiftsQ.isLoading}
+          />
 
-          <SwapCenterCard swaps={swapsQ.data ?? []} agentId={agent?.id} />
+          <SwapCenterCard swaps={swapsQ.data ?? []} agentId={agent?.id} isLoading={swapsQ.isLoading} />
 
-          <ActivityAndQuickAccess activity={activityQ.data ?? []} />
+          <ActivityAndQuickAccess activity={activityQ.data ?? []} isLoading={activityQ.isLoading} />
 
           <div className="flex justify-center pt-2">
             <DeveloperSignature compact />

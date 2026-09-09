@@ -1,6 +1,25 @@
 import { Calendar, CalendarDays, ArrowLeftRight, Bell } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
-export function HomeKpiRow({ counts }: { counts: { today: number; upcoming: number; swaps: number; notices: number } }) {
+export function HomeKpiRow({
+  counts, isLoading,
+}: { counts: { today: number; upcoming: number; swaps: number; notices: number }; isLoading?: boolean }) {
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="rounded-xl border border-border/60 p-4">
+            <div className="flex items-center justify-between">
+              <Skeleton className="h-3 w-12" />
+              <Skeleton className="h-7 w-7 rounded-full" />
+            </div>
+            <Skeleton className="mt-3 h-6 w-16" />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   const items = [
     {
       label: 'Hoje', value: counts.today, unit: counts.today === 1 ? 'plantão' : 'plantões', icon: Calendar,

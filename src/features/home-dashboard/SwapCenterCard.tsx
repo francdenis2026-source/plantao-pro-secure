@@ -1,7 +1,8 @@
-import { ArrowLeftRight, Check, MoreHorizontal } from 'lucide-react';
+import { ArrowLeftRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Skeleton } from '@/components/ui/skeleton';
 import type { SwapRequestRow } from './useHomeDashboardData';
 
 function fmtShift(s: { shift_date: string; start_time: string; end_time: string } | null | undefined): string {
@@ -11,7 +12,9 @@ function fmtShift(s: { shift_date: string; start_time: string; end_time: string 
   return `${dm} · ${s.start_time.slice(0, 5)} – ${s.end_time.slice(0, 5)}`;
 }
 
-export function SwapCenterCard({ swaps, agentId }: { swaps: SwapRequestRow[]; agentId?: string }) {
+export function SwapCenterCard({
+  swaps, agentId, isLoading,
+}: { swaps: SwapRequestRow[]; agentId?: string; isLoading?: boolean }) {
   const navigate = useNavigate();
 
   return (
@@ -23,7 +26,22 @@ export function SwapCenterCard({ swaps, agentId }: { swaps: SwapRequestRow[]; ag
         <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => navigate('/agent-panel?tab=permutas')}>Ver todas</Button>
       </div>
 
-      {swaps.length === 0 ? (
+      {isLoading ? (
+        <div className="space-y-3">
+          {Array.from({ length: 2 }).map((_, i) => (
+            <div key={i} className="rounded-xl border border-border bg-muted/30 p-3.5">
+              <div className="flex items-center gap-2.5">
+                <Skeleton className="h-8 w-8 shrink-0 rounded-full" />
+                <div className="min-w-0 flex-1 space-y-1.5">
+                  <Skeleton className="h-3.5 w-28" />
+                  <Skeleton className="h-3 w-20" />
+                </div>
+              </div>
+              <Skeleton className="mt-3 h-8 w-full rounded-md" />
+            </div>
+          ))}
+        </div>
+      ) : swaps.length === 0 ? (
         <p className="py-4 text-center text-sm text-muted-foreground">Nenhuma troca pendente.</p>
       ) : (
         <div className="space-y-3">
@@ -56,17 +74,12 @@ export function SwapCenterCard({ swaps, agentId }: { swaps: SwapRequestRow[]; ag
                 </div>
               </div>
 
-              <div className="mt-3 flex items-center gap-2">
-                {s.requester_id !== agentId && (
-                  <Button size="sm" className="h-8 flex-1 gap-1 bg-emerald-600 text-white hover:bg-emerald-600/90">
-                    <Check className="h-3.5 w-3.5" /> Aceitar
-                  </Button>
-                )}
-                <Button size="sm" variant="outline" className="h-8 flex-1" onClick={() => navigate('/agent-panel?tab=permutas')}>
-                  Ver detalhes
-                </Button>
-                <Button size="sm" variant="ghost" className="h-8 w-8 shrink-0 p-0" aria-label="Mais opções">
-                  <MoreHorizontal className="h-4 w-4" />
+              {/* Aceitar/recusar de verdade acontece na tela de Permutas —
+                  aqui é só o resumo, então o único destino é levar pra lá
+                  (nada de botão de ação que não faz nada). */}
+              <div className="mt-3">
+                <Button size="sm" variant="outline" className="h-8 w-full" onClick={() => navigate('/agent-panel?tab=permutas')}>
+                  {s.requester_id === agentId ? 'Ver detalhes' : 'Analisar solicitação'}
                 </Button>
               </div>
             </div>
