@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import heroCommand from '@/assets/midias/hero-agentes-viatura.png';
+import heroCommand from '@/assets/midias/hero-agentes-viatura.webp';
 import heroUnits from '@/assets/midias/unit-cs-acre.png';
 import icon3dShield from '@/assets/icon3d-shield.webp';
 import icon3dBuilding from '@/assets/icon3d-building.webp';

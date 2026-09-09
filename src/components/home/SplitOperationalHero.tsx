@@ -7,7 +7,7 @@ import { useOperationalMetrics } from '@/hooks/useOperationalMetrics';
 import { useOnlineAgents } from '@/hooks/useOnlineAgents';
 import { useVisitorPresence } from '@/hooks/useVisitorPresence';
 
-import heroBanner from '@/assets/midias/hero-banner.png';
+import heroBanner from '@/assets/midias/hero-banner.webp';
 import teamAlfaPhoto from '@/assets/midias/team-alfa.png';
 import teamBravoPhoto from '@/assets/midias/team-bravo.png';
 import teamCharliePhoto from '@/assets/midias/team-charlie.png';

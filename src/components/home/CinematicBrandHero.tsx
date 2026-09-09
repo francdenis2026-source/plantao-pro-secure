@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import heroAgentesViatura from "@/assets/midias/hero-agentes-viatura.png";
+import heroAgentesViatura from "@/assets/midias/hero-agentes-viatura.webp";
 
 // Foto institucional oficial (fornecida pelo usuário) — equipe e viatura do
 // Sistema Socioeducativo do Acre.

@@ -4,7 +4,7 @@ import { getThemeAssets } from '@/lib/themeAssets';
 import { teamPosters, teamColors } from '@/lib/teamAssets';
 import { cn } from '@/lib/utils';
 import { CommandRoomBackground } from '@/components/home/CommandRoomBackground';
-import heroAgentesViatura from '@/assets/midias/hero-agentes-viatura.png';
+import heroAgentesViatura from '@/assets/midias/hero-agentes-viatura.webp';
 
 // Foto institucional oficial (fornecida pelo usuário) — substitui o asset
 // quebrado do CDN do Lovable usado como fundo de todo painel autenticado.

@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
-import heroAssetUrl from '@/assets/midias/hero-agentes-viatura.png';
+import heroAssetUrl from '@/assets/midias/hero-agentes-viatura.webp';
 
 interface MasterLoginDialogProps {
   open: boolean;

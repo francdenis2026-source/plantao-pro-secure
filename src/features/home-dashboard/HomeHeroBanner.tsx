@@ -1,4 +1,4 @@
-import heroPhoto from '@/assets/midias/hero-agentes-viatura.png';
+import heroPhoto from '@/assets/midias/hero-agentes-viatura.webp';
 
 function greeting(): string {
   const h = new Date().getHours();

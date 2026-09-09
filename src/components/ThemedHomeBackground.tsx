@@ -2,7 +2,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { useEffect, useState, useMemo } from 'react';
 import { getThemeAssets } from '@/lib/themeAssets';
 import { teamPosters, teamPostersWebp, teamColors, homeBackground } from '@/lib/teamAssets';
-import realisticHomeBg from '@/assets/midias/hero-agentes-viatura.png';
+import realisticHomeBg from '@/assets/midias/hero-agentes-viatura.webp';
 
 
 

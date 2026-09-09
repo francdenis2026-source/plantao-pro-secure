@@ -10,7 +10,7 @@ import { NotificationsPanel } from '@/components/agent-panel/NotificationsPanel'
 import { FontSizeControl } from '@/components/FontSizeControl';
 import { cn } from '@/lib/utils';
 import { TeamEmblem } from '@/components/TeamEmblem';
-import panelHeaderBg from '@/assets/midias/hero-agentes-viatura.png';
+import panelHeaderBg from '@/assets/midias/hero-agentes-viatura.webp';
 
 interface Agent {
   id: string;

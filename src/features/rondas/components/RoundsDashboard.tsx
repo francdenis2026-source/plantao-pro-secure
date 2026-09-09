@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient, keepPreviousData } from '@tanstack/react-query';
 import { WifiOff, Clock3, Sun, Moon, Users, Building2, MapPin, UserCheck, SplitSquareHorizontal, ShieldOff, CalendarPlus, CalendarClock, CalendarDays, Hourglass } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogFooter } f
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
+import rondasHeroPhoto from '@/assets/midias/hero-agentes-viatura.webp';
 import { teamPosters } from '@/lib/teamAssets';
 import { QuickRoundsMode } from './QuickRoundsMode';
 import * as api from '../api';
@@ -27,6 +28,37 @@ import { ShiftDivider } from './ShiftDivider';
 import { RoundHistory } from './RoundHistory';
 import { enqueuePatrolAction, flushPatrolQueue, getQueueLength } from '../offlineQueue';
 import type { PatrolSlot } from '../types';
+
+/** Hero compacto do Gestor de Rondas — foto real da equipe operacional (a
+ * mesma usada em outras telas institucionais do app), com o título
+ * sobreposto em vez de uma linha separada. Substitui o cabeçalho simples
+ * anterior sem aumentar a altura total da página. */
+function RondasHero() {
+  return (
+    <div className="relative h-24 overflow-hidden rounded-2xl sm:h-28">
+      <img
+        src={rondasHeroPhoto}
+        alt="Equipe de agentes socioeducativos em ronda, com viatura oficial"
+        loading="eager"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover object-[50%_30%]"
+        draggable={false}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{ background: 'linear-gradient(90deg, hsl(222 47% 5% / 0.92) 0%, hsl(222 47% 8% / 0.55) 55%, hsl(222 47% 8% / 0.15) 100%)' }}
+      />
+      <div className="relative flex h-full items-center gap-3 px-4 sm:px-5">
+        <BrasaoSentinela size={36} title="Gestor de Rondas — PlantãoPro AC" />
+        <div>
+          <h2 className="text-xl font-bold leading-tight text-white sm:text-2xl">Gestor de Rondas</h2>
+          <p className="mt-0.5 text-xs text-white/75">Controle, acompanhamento e segurança em tempo real</p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 /**
  * Central operacional de rondas. Hierarquia visual (Seção 20/53):
@@ -78,6 +110,10 @@ export function RoundsDashboard() {
     queryFn: () => api.getActiveShift(unitId!, team!),
     enabled: !!unitId && !!team,
     refetchInterval: 30_000,
+    // Mantém o conteúdo da equipe anterior visível enquanto busca a nova
+    // — sem isso, trocar de equipe piscava a tela inteira pro esqueleto
+    // de carregamento a cada clique, mesmo numa conexão rápida.
+    placeholderData: keepPreviousData,
   });
   const shift = shiftQuery.data ?? null;
 
@@ -86,6 +122,7 @@ export function RoundsDashboard() {
     queryFn: () => api.listShiftSlots(shift!.id),
     enabled: !!shift?.id,
     refetchInterval: 15_000,
+    placeholderData: keepPreviousData,
   });
   const slots = slotsQuery.data ?? [];
 
@@ -252,13 +289,7 @@ export function RoundsDashboard() {
   if (!shift) {
     return (
       <div className="space-y-3 p-3">
-        <div className="flex items-center gap-3">
-          <BrasaoSentinela size={40} title="Gestor de Rondas — PlantãoPro AC" />
-          <div>
-            <h2 className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">Gestor de Rondas</h2>
-            <p className="mt-0.5 text-sm text-muted-foreground">Controle, acompanhamento e segurança em tempo real</p>
-          </div>
-        </div>
+        <RondasHero />
 
         {!user && (
           <div className="space-y-2.5 rounded-xl border border-primary/25 bg-primary/[0.06] p-3.5 animate-in fade-in-0 slide-in-from-bottom-2 duration-500">
@@ -446,17 +477,10 @@ export function RoundsDashboard() {
         </div>
       )}
 
-      {/* Cabeçalho operacional — título + contexto do turno */}
+      <RondasHero />
+
+      {/* Cabeçalho operacional — contexto do turno */}
       <header className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-        <div className="flex items-center gap-3">
-          <BrasaoSentinela size={40} title="Gestor de Rondas — PlantãoPro AC" />
-          <div>
-            <h2 className="text-2xl font-bold leading-tight text-foreground sm:text-3xl">Gestor de Rondas</h2>
-            <p className="mt-0.5 text-sm text-muted-foreground">
-              Controle, acompanhamento e segurança em tempo real
-            </p>
-          </div>
-        </div>
 
         <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:items-center">
           {[

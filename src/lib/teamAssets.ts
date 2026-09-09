@@ -13,7 +13,7 @@ import alfaEmblem from '@/assets/teams/alfa-shield-v2.webp';
 import bravoEmblem from '@/assets/teams/bravo-helmet-v2.webp';
 import charlieEmblem from '@/assets/teams/charlie-optics-v2.webp';
 import deltaEmblem from '@/assets/teams/delta-radio-v2.webp';
-import panelsBg from '@/assets/midias/hero-agentes-viatura.png';
+import panelsBg from '@/assets/midias/hero-agentes-viatura.webp';
 import homeBackgroundAsset from '@/assets/home-background.png.asset.json';
 const homeBackground = homeBackgroundAsset.url;
 import homeBackgroundWebp from '@/assets/home-background.webp';
