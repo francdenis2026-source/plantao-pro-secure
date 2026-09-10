@@ -19,8 +19,8 @@ const SelectTrigger = React.forwardRef<
     className={cn(
       // Base styles - professional tactical look
       "flex h-11 w-full items-center justify-between gap-2",
-      "rounded-lg border-2 border-slate-600/50",
-      "bg-slate-800/90 backdrop-blur-sm",
+      "rounded-lg border-2 border-slate-700/50",
+      "bg-slate-800/80 backdrop-blur-sm",
       "px-4 py-2.5 text-sm font-medium text-slate-100",
       // Placeholder styling
       "placeholder:text-slate-400",
@@ -29,7 +29,7 @@ const SelectTrigger = React.forwardRef<
       "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-slate-900",
       "focus:border-primary/70",
       // Hover state
-      "hover:bg-slate-700/90 hover:border-slate-500/70",
+      "hover:bg-slate-700 hover:border-slate-500/70",
       // Disabled state
       "disabled:cursor-not-allowed disabled:opacity-50",
       // Icon alignment
@@ -96,8 +96,8 @@ const SelectContent = React.forwardRef<
       className={cn(
         // Base container
         "relative z-[100] max-h-[320px] min-w-[12rem] origin-[--radix-select-content-transform-origin] overflow-hidden",
-        "rounded-lg border-2 border-slate-600/70",
-        "bg-slate-800/95 backdrop-blur-md",
+        "rounded-lg border-2 border-slate-700/50",
+        "bg-slate-800/80 backdrop-blur-md",
         "text-slate-100 shadow-2xl shadow-black/40",
         // Animations
         "data-[state=open]:animate-in data-[state=closed]:animate-out",
@@ -160,7 +160,7 @@ const SelectItem = React.forwardRef<
       "text-slate-200",
       // Hover/Focus state
       "focus:bg-primary/20 focus:text-primary-foreground",
-      "hover:bg-slate-700/80",
+      "hover:bg-slate-700",
       // Highlighted state (keyboard navigation)
       "data-[highlighted]:bg-primary/20 data-[highlighted]:text-primary-foreground",
       // Selected state
