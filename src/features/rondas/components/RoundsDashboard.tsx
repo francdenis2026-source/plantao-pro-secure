@@ -345,29 +345,33 @@ export function RoundsDashboard({ onShiftActiveChange }: RoundsDashboardProps = 
             <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               <div>
                 <label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">Equipe</label>
-                <select
-                  value={guestTeam || 'ALFA'}
-                  onChange={(e) => setGuestTeam(e.target.value || 'ALFA')}
-                  className="mt-1 w-full rounded-md border border-primary/25 bg-card px-3 py-2 text-sm text-foreground"
-                >
-                  <option value="ALFA">ALFA</option>
-                  <option value="BRAVO">BRAVO</option>
-                  <option value="CHARLIE">CHARLIE</option>
-                  <option value="DELTA">DELTA</option>
-                </select>
+                <Select value={guestTeam || 'ALFA'} onValueChange={(v) => setGuestTeam(v || 'ALFA')}>
+                  <SelectTrigger className="mt-1 h-9 border-primary/25 bg-card text-sm text-foreground">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="ALFA">ALFA</SelectItem>
+                    <SelectItem value="BRAVO">BRAVO</SelectItem>
+                    <SelectItem value="CHARLIE">CHARLIE</SelectItem>
+                    <SelectItem value="DELTA">DELTA</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div>
                 <label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">Unidade</label>
-                <select
-                  value={guestUnitId || ''}
-                  onChange={(e) => setGuestUnitId(e.target.value || null)}
-                  className="mt-1 w-full rounded-md border border-primary/25 bg-card px-3 py-2 text-sm text-foreground"
-                >
-                  {unitsForPicker.length === 0 && <option value={guestUnitId ?? ''}>Carregando unidades…</option>}
-                  {unitsForPicker.map((u) => (
-                    <option key={u.id} value={u.id}>{u.name}</option>
-                  ))}
-                </select>
+                <Select value={guestUnitId || '__loading__'} onValueChange={(v) => setGuestUnitId(v || null)}>
+                  <SelectTrigger className="mt-1 h-9 border-primary/25 bg-card text-sm text-foreground">
+                    <SelectValue placeholder="Carregando unidades…" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {unitsForPicker.length === 0 && (
+                      <SelectItem value="__loading__" disabled>Carregando unidades…</SelectItem>
+                    )}
+                    {unitsForPicker.map((u) => (
+                      <SelectItem key={u.id} value={u.id}>{u.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
             {guestTeam && teamPosters[guestTeam] && (
@@ -488,29 +492,33 @@ export function RoundsDashboard({ onShiftActiveChange }: RoundsDashboardProps = 
           <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
             <div>
               <label className="text-xs font-medium text-muted-foreground">Equipe</label>
-              <select
-                value={guestTeam || 'ALFA'}
-                onChange={(e) => setGuestTeam(e.target.value || 'ALFA')}
-                className="w-full rounded-md border border-primary/25 bg-card px-3 py-2 text-sm mt-1 text-foreground"
-              >
-                <option value="ALFA">ALFA</option>
-                <option value="BRAVO">BRAVO</option>
-                <option value="CHARLIE">CHARLIE</option>
-                <option value="DELTA">DELTA</option>
-              </select>
+              <Select value={guestTeam || 'ALFA'} onValueChange={(v) => setGuestTeam(v || 'ALFA')}>
+                <SelectTrigger className="mt-1 h-9 border-primary/25 bg-card text-sm text-foreground">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ALFA">ALFA</SelectItem>
+                  <SelectItem value="BRAVO">BRAVO</SelectItem>
+                  <SelectItem value="CHARLIE">CHARLIE</SelectItem>
+                  <SelectItem value="DELTA">DELTA</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div>
               <label className="text-xs font-medium text-muted-foreground">Unidade</label>
-              <select
-                value={guestUnitId || ''}
-                onChange={(e) => setGuestUnitId(e.target.value || null)}
-                className="w-full rounded-md border border-primary/25 bg-card px-3 py-2 text-sm mt-1 text-foreground"
-              >
-                {unitsForPicker.length === 0 && <option value={guestUnitId ?? ''}>Carregando unidades…</option>}
-                {unitsForPicker.map((u) => (
-                  <option key={u.id} value={u.id}>{u.name}</option>
-                ))}
-              </select>
+              <Select value={guestUnitId || '__loading__'} onValueChange={(v) => setGuestUnitId(v || null)}>
+                <SelectTrigger className="mt-1 h-9 border-primary/25 bg-card text-sm text-foreground">
+                  <SelectValue placeholder="Carregando unidades…" />
+                </SelectTrigger>
+                <SelectContent>
+                  {unitsForPicker.length === 0 && (
+                    <SelectItem value="__loading__" disabled>Carregando unidades…</SelectItem>
+                  )}
+                  {unitsForPicker.map((u) => (
+                    <SelectItem key={u.id} value={u.id}>{u.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
