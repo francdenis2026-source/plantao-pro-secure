@@ -25,7 +25,7 @@ const SelectTrigger = React.forwardRef<
       // Placeholder styling
       "placeholder:text-slate-400",
       // Focus states
-      "ring-offset-background transition-all duration-200",
+      "ring-offset-background transition-[background-color,border-color,box-shadow] duration-200 ease-out",
       "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-slate-900",
       "focus:border-primary/70",
       // Hover state
@@ -95,7 +95,7 @@ const SelectContent = React.forwardRef<
       ref={ref}
       className={cn(
         // Base container
-        "relative z-[100] max-h-[320px] min-w-[12rem] overflow-hidden",
+        "relative z-[100] max-h-[320px] min-w-[12rem] origin-[--radix-select-content-transform-origin] overflow-hidden",
         "rounded-lg border-2 border-slate-600/70",
         "bg-slate-800/95 backdrop-blur-md",
         "text-slate-100 shadow-2xl shadow-black/40",
@@ -155,7 +155,7 @@ const SelectItem = React.forwardRef<
       // Base styles
       "relative flex w-full cursor-pointer select-none items-center",
       "rounded-md py-2.5 pl-9 pr-3 text-sm font-medium",
-      "outline-none transition-all duration-150",
+      "outline-none transition-colors duration-150 ease-out",
       // Default state
       "text-slate-200",
       // Hover/Focus state
