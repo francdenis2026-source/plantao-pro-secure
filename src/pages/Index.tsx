@@ -230,6 +230,8 @@ export default function Index() {
     message: string;
     type: 'error' | 'warning' | 'auth' | 'password' | 'team';
     unit?: string;
+    agentName?: string;
+    agentTeam?: string;
   }>({ open: false, title: '', message: '', type: 'auth' });
   
   // Lockout timer state
@@ -539,9 +541,11 @@ export default function Index() {
           setErrorDialog({
             open: true,
             title: 'ACESSO RESTRITO',
-            message: `⚠️ ATENÇÃO, AGENTE ${data.name.split(' ')[0].toUpperCase()}!\n\nVocê está cadastrado na EQUIPE ${data.team}.\n\nPor protocolo de segurança, o acesso é permitido apenas pela equipe designada.\n\nSelecione o card da EQUIPE ${data.team} para continuar.`,
-            type: 'warning',
+            message: 'Por protocolo de segurança, o acesso é permitido apenas pela equipe designada. Selecione o card da sua equipe na tela inicial para continuar.',
+            type: 'team',
             unit: unitLabel || undefined,
+            agentName: data.name,
+            agentTeam: data.team,
           });
         }
       } catch (error) {
@@ -652,9 +656,11 @@ export default function Index() {
           setErrorDialog({
             open: true,
             title: 'ACESSO RESTRITO',
-            message: `Você está registrado na EQUIPE ${existingAgent.team}.\n\nRetorne à tela inicial e selecione o card correto da sua equipe para acessar o sistema.\n\nPara mudar de equipe, solicite desligamento no seu painel.`,
+            message: 'Esta matrícula pertence a outra equipe. Volte à tela inicial e selecione o card correto para entrar — para mudar de equipe, solicite desligamento no seu painel.',
             type: 'team',
             unit: unitLabel,
+            agentName: existingAgent.name,
+            agentTeam: existingAgent.team,
           });
         } else {
           // Tudo OK - abrir o diálogo de senha ANTES de fechar o de CPF para
@@ -2392,6 +2398,8 @@ export default function Index() {
         message={errorDialog.message}
         type={errorDialog.type}
         unit={errorDialog.unit}
+        agentName={errorDialog.agentName}
+        agentTeam={errorDialog.agentTeam}
       />
       
       {/* Lockout Timer Dialog */}
