@@ -68,11 +68,18 @@ function RondasHero() {
   );
 }
 
+interface RoundsDashboardProps {
+  /** Avisa quem hospeda o painel (ex.: o modal da home) se existe um turno
+   * ativo — usado para travar o fechamento acidental do Gestor de Rondas
+   * enquanto uma ronda está em andamento, mesmo para visitantes sem login. */
+  onShiftActiveChange?: (active: boolean) => void;
+}
+
 /**
  * Central operacional de rondas. Hierarquia visual (Seção 20/53):
  * ronda atual > timer > próximas > timeline > agentes > ocorrências > KPIs.
  */
-export function RoundsDashboard() {
+export function RoundsDashboard({ onShiftActiveChange }: RoundsDashboardProps = {}) {
   const { agent } = useAgentProfile();
   const { user } = useAuth();
   const queryClient = useQueryClient();
@@ -124,6 +131,15 @@ export function RoundsDashboard() {
     placeholderData: keepPreviousData,
   });
   const shift = shiftQuery.data ?? null;
+
+  // Reporta a existência de um turno ativo pra fora — o modal da home usa
+  // isso pra travar o botão de fechar (mesmo sem login) enquanto a ronda
+  // criada continua rodando, evitando fechamento acidental.
+  useEffect(() => {
+    onShiftActiveChange?.(!!shift);
+    return () => onShiftActiveChange?.(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shift]);
 
   const slotsQuery = useQuery({
     queryKey: ['patrol-slots', shift?.id],
@@ -311,6 +327,7 @@ export function RoundsDashboard() {
   if (shiftQuery.isLoading) {
     return (
       <div className="space-y-3 p-3">
+        <RondasHero />
         <Skeleton className="h-40 w-full rounded-xl" />
         <Skeleton className="h-24 w-full rounded-xl" />
       </div>
@@ -448,6 +465,13 @@ export function RoundsDashboard() {
 
   return (
     <div className="space-y-3 p-3">
+      {/* RondasHero fica sempre na mesma posição em todos os estados
+          (carregando / sem turno / com turno) para que o React reaproveite
+          o mesmo elemento de imagem ao trocar de equipe — sem isso, a troca
+          desmontava e remontava a foto, gerando o "flash" branco e o atraso
+          percebido na transição. */}
+      <RondasHero />
+
       {!isOnline && (
         <div className="flex items-center gap-2 rounded-lg border border-warning/40 bg-warning/10 px-3 py-2 text-sm text-warning">
           <WifiOff className="h-4 w-4" /> Sem conexão — as ações serão reenviadas quando a rede voltar.
@@ -507,8 +531,6 @@ export function RoundsDashboard() {
           <p className="text-xs text-muted-foreground">Ou <a href="/login" className="text-primary underline hover:no-underline font-medium">faça login</a> para usar seu perfil de agente</p>
         </div>
       )}
-
-      <RondasHero />
 
       {/* Cabeçalho operacional — contexto do turno */}
       <header className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
