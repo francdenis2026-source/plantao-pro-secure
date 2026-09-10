@@ -163,16 +163,19 @@ export default function About() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="w-full flex-shrink-0 border-t border-primary/15 bg-background/95 backdrop-blur-xl">
+      {/* Footer — fundo sempre azul-marinho escuro, de propósito, nos dois
+          temas (mesmo padrão do rodapé institucional em CopyrightFooter.tsx),
+          então o crédito do desenvolvedor usa branco sólido, cor única, em
+          vez de tokens que invertem com o tema. */}
+      <footer className="w-full flex-shrink-0 border-t border-primary/25 bg-[#080d1a] backdrop-blur-xl">
         <div className="container max-w-6xl px-3 py-2">
-          <p className="text-center text-[9.5px] leading-relaxed text-foreground/60">
+          <p className="text-center text-[9.5px] leading-relaxed text-white/55">
             Iniciativa independente de um agente socioeducativo — não é o aplicativo oficial do ISE nem representa o Governo do Estado do Acre. Uso gratuito e sem garantia de disponibilidade contínua. Seguimos boas práticas de segurança (TLS 1.3, LGPD).
           </p>
-          <div className="mt-1.5 flex items-center justify-center gap-1.5 text-[11px] font-medium text-foreground">
+          <div className="mt-1.5 flex items-center justify-center gap-1.5 text-[11px] font-medium text-white">
             <Code2 className="h-3 w-3 text-primary" />
-            <span>Desenvolvido por <strong className="font-semibold text-primary">Franc Denis</strong></span>
-            <span className="text-foreground/40">·</span>
+            <span>Desenvolvido por Franc Denis</span>
+            <span className="text-white/40">·</span>
             <MapPin className="h-3 w-3 text-primary" />
             <span>Feijó / AC · © {new Date().getFullYear()}</span>
           </div>
