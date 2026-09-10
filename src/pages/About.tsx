@@ -169,10 +169,10 @@ export default function About() {
           <p className="text-center text-[9.5px] leading-relaxed text-foreground/60">
             Iniciativa independente de um agente socioeducativo — não é o aplicativo oficial do ISE nem representa o Governo do Estado do Acre. Uso gratuito e sem garantia de disponibilidade contínua. Seguimos boas práticas de segurança (TLS 1.3, LGPD).
           </p>
-          <div className="mt-1.5 flex items-center justify-center gap-1.5 text-[10.5px] text-foreground/80">
+          <div className="mt-1.5 flex items-center justify-center gap-1.5 text-[11px] font-medium text-foreground">
             <Code2 className="h-3 w-3 text-primary" />
             <span>Desenvolvido por <strong className="font-semibold text-primary">Franc Denis</strong></span>
-            <span className="text-foreground/30">·</span>
+            <span className="text-foreground/40">·</span>
             <MapPin className="h-3 w-3 text-primary" />
             <span>Feijó / AC · © {new Date().getFullYear()}</span>
           </div>
