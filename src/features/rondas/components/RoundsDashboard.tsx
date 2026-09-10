@@ -346,7 +346,7 @@ export function RoundsDashboard({ onShiftActiveChange }: RoundsDashboardProps = 
               <div>
                 <label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">Equipe</label>
                 <Select value={guestTeam || 'ALFA'} onValueChange={(v) => setGuestTeam(v || 'ALFA')}>
-                  <SelectTrigger className="mt-1 h-9 border-primary/25 bg-card text-sm text-foreground">
+                  <SelectTrigger className="mt-1 h-9 border-slate-700 bg-slate-800/90 text-sm text-white">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -360,7 +360,7 @@ export function RoundsDashboard({ onShiftActiveChange }: RoundsDashboardProps = 
               <div>
                 <label className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">Unidade</label>
                 <Select value={guestUnitId || '__loading__'} onValueChange={(v) => setGuestUnitId(v || null)}>
-                  <SelectTrigger className="mt-1 h-9 border-primary/25 bg-card text-sm text-foreground">
+                  <SelectTrigger className="mt-1 h-9 border-slate-700 bg-slate-800/90 text-sm text-white">
                     <SelectValue placeholder="Carregando unidades…" />
                   </SelectTrigger>
                   <SelectContent>
@@ -493,7 +493,7 @@ export function RoundsDashboard({ onShiftActiveChange }: RoundsDashboardProps = 
             <div>
               <label className="text-xs font-medium text-muted-foreground">Equipe</label>
               <Select value={guestTeam || 'ALFA'} onValueChange={(v) => setGuestTeam(v || 'ALFA')}>
-                <SelectTrigger className="mt-1 h-9 border-primary/25 bg-card text-sm text-foreground">
+                <SelectTrigger className="mt-1 h-9 border-slate-700 bg-slate-800/90 text-sm text-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -507,7 +507,7 @@ export function RoundsDashboard({ onShiftActiveChange }: RoundsDashboardProps = 
             <div>
               <label className="text-xs font-medium text-muted-foreground">Unidade</label>
               <Select value={guestUnitId || '__loading__'} onValueChange={(v) => setGuestUnitId(v || null)}>
-                <SelectTrigger className="mt-1 h-9 border-primary/25 bg-card text-sm text-foreground">
+                <SelectTrigger className="mt-1 h-9 border-slate-700 bg-slate-800/90 text-sm text-white">
                   <SelectValue placeholder="Carregando unidades…" />
                 </SelectTrigger>
                 <SelectContent>
