@@ -61,7 +61,12 @@ export function ShiftDivider({ open, onOpenChange, startAt, endAt, intervalMinut
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg">
+      <DialogContent
+        className="max-w-lg"
+        onPointerDownOutside={(e) => e.preventDefault()}
+        onInteractOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>Dividir turno</DialogTitle>
           <DialogDescription>Gera os quartos de hora e distribui os agentes escalados.</DialogDescription>
