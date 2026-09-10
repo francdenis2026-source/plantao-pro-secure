@@ -13,14 +13,25 @@ export function useRoundsRequireAuth() {
   const [loading, setLoading] = useState(true);
 
   const load = async () => {
-    const { data } = await supabase
-      .from('system_settings')
-      .select('value')
-      .eq('key', KEY)
-      .maybeSingle();
-    const value = data?.value as { enabled?: boolean } | null;
-    setRequireAuthState(value?.enabled === true);
-    setLoading(false);
+    // try/finally é essencial aqui: sem ele, uma falha de rede (comum no
+    // mobile) deixava setLoading(false) sem executar e a tela do Gestor
+    // de Rondas ficava travada no spinner pra sempre. Em erro, assume
+    // acesso aberto (comportamento padrão) em vez de travar a ferramenta.
+    try {
+      const { data, error } = await supabase
+        .from('system_settings')
+        .select('value')
+        .eq('key', KEY)
+        .maybeSingle();
+      if (error) throw error;
+      const value = data?.value as { enabled?: boolean } | null;
+      setRequireAuthState(value?.enabled === true);
+    } catch (err) {
+      console.error('useRoundsRequireAuth: falha ao carregar configuração', err);
+      setRequireAuthState(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
