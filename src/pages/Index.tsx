@@ -78,7 +78,7 @@ import { useHomeCardOrder, type HomeCardId } from '@/hooks/useHomeCardOrder';
 
 import { CommandRoomBackground } from '@/components/home/CommandRoomBackground';
 import { BrasaoSentinela } from '@/components/BrasaoSentinela';
-import iseAcreHeaderBadge from '@/assets/logo-ise-socioeducativo.png';
+import iseAcreHeaderBadge from '@/assets/logo-ise-socioeducativo.webp';
 import { OperatorHeaderControls } from '@/components/layout/OperatorHeaderControls';
 import { LiveClock } from '@/components/LiveClock';
 import { getServerDate } from '@/hooks/useServerTime';

@@ -8,10 +8,10 @@ import { useOnlineAgents } from '@/hooks/useOnlineAgents';
 import { useVisitorPresence } from '@/hooks/useVisitorPresence';
 
 import heroBanner from '@/assets/midias/hero-banner.webp';
-import teamAlfaPhoto from '@/assets/midias/team-alfa.png';
-import teamBravoPhoto from '@/assets/midias/team-bravo.png';
-import teamCharliePhoto from '@/assets/midias/team-charlie.png';
-import teamDeltaPhoto from '@/assets/midias/team-delta.png';
+import teamAlfaPhoto from '@/assets/midias/team-alfa.webp';
+import teamBravoPhoto from '@/assets/midias/team-bravo.webp';
+import teamCharliePhoto from '@/assets/midias/team-charlie.webp';
+import teamDeltaPhoto from '@/assets/midias/team-delta.webp';
 
 import { TEAM_COLORS, type TeamKey } from '@/lib/teamColors';
 

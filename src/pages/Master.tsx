@@ -84,7 +84,7 @@ import { cn } from '@/lib/utils';
 import { getMasterToken, setMasterToken } from '@/lib/masterSession';
 import { adminClient } from '@/lib/adminClient';
 import { Bell } from 'lucide-react';
-import iseAcreBadgeUrl from '@/assets/logo-ise-socioeducativo.png';
+import iseAcreBadgeUrl from '@/assets/logo-ise-socioeducativo.webp';
 const iseAcreBadge = iseAcreBadgeUrl;
 const iseAcreBadgeWebp = iseAcreBadgeUrl;
 import { PanelNav } from '@/components/ui/panel-nav';
