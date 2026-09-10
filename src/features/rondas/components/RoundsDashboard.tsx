@@ -349,7 +349,7 @@ export function RoundsDashboard({ onShiftActiveChange }: RoundsDashboardProps = 
                   <SelectTrigger className="mt-1 h-9 border-slate-700 bg-slate-800/90 text-sm text-white">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent side="bottom" avoidCollisions={false}>
                     <SelectItem value="ALFA">ALFA</SelectItem>
                     <SelectItem value="BRAVO">BRAVO</SelectItem>
                     <SelectItem value="CHARLIE">CHARLIE</SelectItem>
@@ -363,7 +363,7 @@ export function RoundsDashboard({ onShiftActiveChange }: RoundsDashboardProps = 
                   <SelectTrigger className="mt-1 h-9 border-slate-700 bg-slate-800/90 text-sm text-white">
                     <SelectValue placeholder="Carregando unidades…" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent side="bottom" avoidCollisions={false}>
                     {unitsForPicker.length === 0 && (
                       <SelectItem value="__loading__" disabled>Carregando unidades…</SelectItem>
                     )}
@@ -496,7 +496,7 @@ export function RoundsDashboard({ onShiftActiveChange }: RoundsDashboardProps = 
                 <SelectTrigger className="mt-1 h-9 border-slate-700 bg-slate-800/90 text-sm text-white">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent side="bottom" avoidCollisions={false}>
                   <SelectItem value="ALFA">ALFA</SelectItem>
                   <SelectItem value="BRAVO">BRAVO</SelectItem>
                   <SelectItem value="CHARLIE">CHARLIE</SelectItem>
@@ -510,7 +510,7 @@ export function RoundsDashboard({ onShiftActiveChange }: RoundsDashboardProps = 
                 <SelectTrigger className="mt-1 h-9 border-slate-700 bg-slate-800/90 text-sm text-white">
                   <SelectValue placeholder="Carregando unidades…" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent side="bottom" avoidCollisions={false}>
                   {unitsForPicker.length === 0 && (
                     <SelectItem value="__loading__" disabled>Carregando unidades…</SelectItem>
                   )}

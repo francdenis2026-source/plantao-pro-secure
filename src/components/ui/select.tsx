@@ -24,9 +24,15 @@ const SelectTrigger = React.forwardRef<
       "px-4 py-2.5 text-sm font-medium text-slate-100",
       // Placeholder styling
       "placeholder:text-slate-400",
-      // Focus states
+      // Focus states — outline-none nos dois pseudo-estados (focus E
+      // focus-visible) porque a regra global de foco em index.css (aplicada
+      // depois dos utilitários do Tailwind na cascata) sobrescreveria um
+      // "focus:outline-none" sozinho quando o foco volta pro trigger via
+      // teclado/Radix, duplicando o indicador (o anel do :focus-visible
+      // global + o ring do proprio componente ficavam ambos visiveis, um
+      // "retangulo" extra ao redor do seletor, mais evidente no tema claro).
       "ring-offset-background transition-[background-color,border-color,box-shadow] duration-200 ease-out",
-      "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-slate-900",
+      "focus:outline-none focus-visible:!outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2",
       "focus:border-primary/70",
       // Hover state
       "hover:bg-slate-700 hover:border-slate-500/70",
