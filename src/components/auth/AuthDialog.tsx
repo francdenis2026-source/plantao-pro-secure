@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
-import logoShieldUrl from '@/assets/logo-ise-socioeducativo.png';
+import logoShieldUrl from '@/assets/logo-ise-socioeducativo.webp';
 const logoShield = logoShieldUrl;
 const logoShieldWebp = logoShieldUrl;
 import { getTeamPoster, getTeamColors } from '@/lib/teamAssets';

@@ -1,9 +1,13 @@
 // Team image assets — pôsteres oficiais reais (fornecidos pelo usuário),
 // substituindo os assets quebrados do CDN do Lovable.
-import alfaPoster from '@/assets/midias/team-alfa.png';
-import bravoPoster from '@/assets/midias/team-bravo.png';
-import charliePoster from '@/assets/midias/team-charlie.png';
-import deltaPoster from '@/assets/midias/team-delta.png';
+//
+// Convertidos de PNG (~460-510KB cada, causando o "flash de cor sólida
+// antes da foto carregar" ao clicar nos cards de equipe) para WebP
+// (~37-52KB, mesma qualidade visual, ~12x menor).
+import alfaPoster from '@/assets/midias/team-alfa.webp';
+import bravoPoster from '@/assets/midias/team-bravo.webp';
+import charliePoster from '@/assets/midias/team-charlie.webp';
+import deltaPoster from '@/assets/midias/team-delta.webp';
 const alfaPosterWebp = alfaPoster;
 const bravoPosterWebp = bravoPoster;
 const charliePosterWebp = charliePoster;

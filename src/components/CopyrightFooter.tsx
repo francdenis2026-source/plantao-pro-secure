@@ -1,7 +1,7 @@
 import { forwardRef, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 import { ShieldCheck, MapPin, Cpu, Radio, Lock } from 'lucide-react';
-import iseAcreBadgeUrl from '@/assets/logo-ise-socioeducativo.png';
+import iseAcreBadgeUrl from '@/assets/logo-ise-socioeducativo.webp';
 import { MadeInFeijoBadge } from './MadeInFeijoBadge';
 
 import { DeveloperSignature } from './DeveloperSignature';
