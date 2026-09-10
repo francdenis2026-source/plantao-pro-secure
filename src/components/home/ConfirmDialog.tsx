@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -44,6 +44,12 @@ interface ConfirmDialogProps {
   onSecondary?: () => void;
   /** Extra content between description and buttons (e.g. animated bell). */
   children?: ReactNode;
+  /**
+   * Quando definido, a ação secundária (destrutiva) só fica habilitada
+   * depois que o usuário digitar exatamente esta frase — evita fechar/
+   * abortar por um clique acidental num alvo de destino de um segundo.
+   */
+  typedConfirmation?: { phrase: string; instruction?: string };
 }
 
 function ConfirmIcon({ variant, color }: { variant: ConfirmVariant; color: string }) {
@@ -123,7 +129,15 @@ export function ConfirmDialog({
   secondaryLabel,
   onSecondary,
   children,
+  typedConfirmation,
 }: ConfirmDialogProps) {
+  const [typedValue, setTypedValue] = useState('');
+  useEffect(() => {
+    if (open) setTypedValue('');
+  }, [open]);
+  const typedMatches = !typedConfirmation
+    || typedValue.trim().toUpperCase() === typedConfirmation.phrase.trim().toUpperCase();
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -155,6 +169,26 @@ export function ConfirmDialog({
 
         {children && <div className="flex flex-col items-center gap-1.5">{children}</div>}
 
+        {typedConfirmation && (
+          <div className="space-y-1">
+            <label className="block font-mono text-[9.5px] uppercase tracking-[0.16em] text-slate-400">
+              {typedConfirmation.instruction ?? `Digite "${typedConfirmation.phrase}" para confirmar`}
+            </label>
+            <input
+              type="text"
+              value={typedValue}
+              onChange={(e) => setTypedValue(e.target.value)}
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="characters"
+              spellCheck={false}
+              placeholder={typedConfirmation.phrase}
+              className="w-full rounded-md border bg-slate-900/70 px-2.5 py-1.5 font-mono text-[12px] uppercase tracking-[0.1em] text-slate-100 outline-none transition-colors placeholder:text-slate-600 placeholder:normal-case"
+              style={{ borderColor: typedMatches && typedValue ? `${accent}88` : 'rgba(100,116,139,0.4)' }}
+            />
+          </div>
+        )}
+
         <div className={cn('grid gap-2', secondaryLabel ? 'grid-cols-2' : 'grid-cols-1')}>
           <button
             type="button"
@@ -183,7 +217,13 @@ export function ConfirmDialog({
             <button
               type="button"
               onClick={onSecondary}
-              className="inline-flex items-center justify-center gap-1.5 h-8 rounded-md border border-slate-700/70 bg-slate-900/60 font-mono text-[10.5px] font-semibold uppercase tracking-[0.14em] text-slate-300 hover:text-slate-100 hover:border-slate-500 transition-colors"
+              disabled={typedConfirmation ? !typedMatches || !typedValue : false}
+              className={cn(
+                'inline-flex items-center justify-center gap-1.5 h-8 rounded-md border border-slate-700/70 bg-slate-900/60 font-mono text-[10.5px] font-semibold uppercase tracking-[0.14em] text-slate-300 transition-colors',
+                typedConfirmation && (!typedMatches || !typedValue)
+                  ? 'cursor-not-allowed opacity-40'
+                  : 'hover:text-slate-100 hover:border-slate-500',
+              )}
             >
               <svg viewBox="0 0 24 24" className="h-3 w-3" aria-hidden>
                 <path

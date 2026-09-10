@@ -44,8 +44,16 @@ export default function RondasCommand() {
   const blocked = !checkingAccess && requireAuth && !isAuthed;
 
   return (
-    <div className="min-h-[100dvh] bg-background">
-      <header className="sticky top-0 z-10 border-b border-border bg-background/95 px-4 py-3 backdrop-blur">
+    // h-[100dvh] flex-col + overflow-y-auto no <main> — o body do site fica
+    // travado em position:fixed/overflow:hidden no mobile (index.html), então
+    // toda página fora do AppShell precisa da própria rolagem interna, senão
+    // conteúdo abaixo da dobra fica inacessível (era exatamente o bug: a
+    // tela "travava" sem dar pra navegar até os controles/formulário).
+    <div className="flex h-[100dvh] flex-col bg-background overflow-hidden">
+      <header
+        className="sticky top-0 z-10 shrink-0 border-b border-border bg-background/95 px-4 py-3 backdrop-blur"
+        style={{ paddingTop: 'calc(0.75rem + env(safe-area-inset-top, 0px))' }}
+      >
         <div className="mx-auto flex max-w-5xl items-center gap-3">
           <BackButton />
           <div>
@@ -54,7 +62,10 @@ export default function RondasCommand() {
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-5xl" style={{ paddingBottom: 'calc(56px + env(safe-area-inset-bottom))' }}>
+      <main
+        className="mx-auto w-full max-w-5xl flex-1 overflow-y-auto overscroll-y-contain [-webkit-overflow-scrolling:touch]"
+        style={{ paddingBottom: 'calc(56px + env(safe-area-inset-bottom))' }}
+      >
         {checkingAccess ? (
           <div className="flex min-h-[70dvh] items-center justify-center">
             <Loader2 className="h-6 w-6 animate-spin text-primary" />

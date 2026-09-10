@@ -148,6 +148,33 @@ const DEFAULT_CADENCE_MIN = 30;
 const CADENCE_KEY = 'plantaopro_rounds_cadence_v1';
 
 /**
+ * Espelho local da sessão ativa de rondas — cobre o caso do usuário sem
+ * login (a ferramenta é acessível anônima pela home): sem uid, nada era
+ * salvo em round_sessions, então fechar a aba/reabrir perdia a ronda em
+ * andamento por completo. Grava a mesma "forma" de dado do hydrateFrom
+ * (Supabase), mas em localStorage — restaurado no mount quando não há
+ * usuário autenticado.
+ */
+const ANON_SESSION_KEY = 'plantaopro_rounds_anon_session_v1';
+interface AnonRoundSession {
+  team: string; mode: string; start_time: string; end_time: string;
+  interval_min: number; rows: Array<{ name: string }>;
+  server_started_at: string; is_active: boolean;
+}
+function readAnonSession(): AnonRoundSession | null {
+  try {
+    const raw = localStorage.getItem(ANON_SESSION_KEY);
+    return raw ? (JSON.parse(raw) as AnonRoundSession) : null;
+  } catch { return null; }
+}
+function writeAnonSession(s: AnonRoundSession | null) {
+  try {
+    if (s) localStorage.setItem(ANON_SESSION_KEY, JSON.stringify(s));
+    else localStorage.removeItem(ANON_SESSION_KEY);
+  } catch { /* ignore */ }
+}
+
+/**
  * Expande a lista de agentes para o modo Proporcional.
  * Regra: nRondas = arredondar(totalMin / cadenceMin), com piso = nAgentes
  * (garante mínimo de 1 ronda por agente). Distribui as rondas ciclicamente
@@ -2552,6 +2579,7 @@ export function RoundsManager({ customTrigger }: { customTrigger?: React.ReactNo
     }
     if (live.done) {
       setRunning(false);
+      writeAnonSession(null);
       setSummaryData({ totalSec: Math.round(live.elapsed), completed: schedule.rows.length });
       setSummarySaved(false);
       setSummaryOpen(true);
@@ -2613,7 +2641,26 @@ export function RoundsManager({ customTrigger }: { customTrigger?: React.ReactNo
       await syncServerClock();
       const { data: userData } = await supabase.auth.getUser();
       const uid = userData?.user?.id;
-      if (!uid || cancelled) return;
+      if (cancelled) return;
+      if (!uid) {
+        // Sem login: restaura do espelho local em vez do Supabase, pra
+        // fechar a aba/reabrir (mesmo navegador) continuar de onde parou.
+        const anon = readAnonSession();
+        if (anon?.is_active) {
+          setTeam(anon.team as TeamKey);
+          setMode(sanitizeMode(anon.mode));
+          setStartTime(anon.start_time);
+          setEndTime(anon.end_time);
+          setIntervalMin(anon.interval_min);
+          if (anon.rows?.length) setAgents(anon.rows.map((r) => r.name));
+          sessionIdRef.current = null;
+          startedAtRef.current = new Date(anon.server_started_at).getTime();
+          notifiedRef.current = new Set();
+          firedRef.current = new Set();
+          setRunning(true);
+        }
+        return;
+      }
       const { data } = await supabase
         .from('round_sessions')
         .select('*')
@@ -2687,6 +2734,17 @@ export function RoundsManager({ customTrigger }: { customTrigger?: React.ReactNo
     setRunning(true);
     setIsPaused(false);
     pauseSnapshotRef.current = null;
+    // Espelho local da sessão — grava sempre (logado ou não), pra fechar a
+    // aba/reabrir continuar exatamente na mesma temporização/divisão em vez
+    // de perder a ronda. Serve de restauração garantida mesmo se o usuário
+    // estiver offline ou sem conta.
+    writeAnonSession({
+      team, mode, start_time: startTime, end_time: endTime,
+      interval_min: intervalMin,
+      rows: schedule.rows.map((r) => ({ name: r.name })),
+      server_started_at: new Date(anchorMs).toISOString(),
+      is_active: true,
+    });
     // Log resumido (cache local) — equipe + data da ronda realizada
     try { appendTeamLog(team); } catch { /* ignore */ }
     // Rodízio profissional de cores — próxima ronda usará paleta diferente.
@@ -2900,6 +2958,7 @@ export function RoundsManager({ customTrigger }: { customTrigger?: React.ReactNo
         total_remaining_seconds: totalRemainingSeconds,
         reason: 'user_abort',
       });
+      writeAnonSession(null);
     }
     setConfirmExit(false);
     setRunning(false);
@@ -4560,6 +4619,11 @@ export function RoundsManager({ customTrigger }: { customTrigger?: React.ReactNo
         onPrimary={() => setConfirmExit(false)}
         secondaryLabel={running && live && !live.done ? 'Abortar mesmo assim' : 'Sim, sair'}
         onSecondary={confirmAndClose}
+        typedConfirmation={
+          running && live && !live.done
+            ? { phrase: 'ABORTAR', instruction: 'Digite ABORTAR para confirmar o encerramento da ronda em execução' }
+            : undefined
+        }
       />
 
       {/* Removido: dialog "Encerrar a operação agora?" — era um pedido de
