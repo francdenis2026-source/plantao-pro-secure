@@ -271,6 +271,32 @@ serve(async (req) => {
       return json({ success: true, data });
     }
 
+    // Apaga registros de auditoria de acesso. Aceita, em ordem de precedência:
+    // ids (lista pontual) > agentId (todo o histórico de um agente) > all (limpa tudo).
+    if (action === "access_logs_delete") {
+      const ids = Array.isArray(body?.ids) ? body.ids.filter((v: unknown) => typeof v === "string") : null;
+      const agentId = typeof body?.agentId === "string" ? body.agentId : null;
+      const all = body?.all === true;
+
+      if (ids && ids.length > 0) {
+        const { error } = await admin.from("access_logs").delete().in("id", ids);
+        if (error) return json({ success: false, error: error.message }, 400);
+        return json({ success: true, data: { deleted: ids.length } });
+      }
+      if (agentId) {
+        const { error } = await admin.from("access_logs").delete().eq("agent_id", agentId);
+        if (error) return json({ success: false, error: error.message }, 400);
+        return json({ success: true, data: {} });
+      }
+      if (all) {
+        // neq com um UUID impossível funciona como "delete all" seguro (evita DELETE sem WHERE).
+        const { error } = await admin.from("access_logs").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+        if (error) return json({ success: false, error: error.message }, 400);
+        return json({ success: true, data: {} });
+      }
+      return json({ success: false, error: "Informe ids, agentId ou all=true." }, 400);
+    }
+
     return json({ success: false, error: "Ação desconhecida." }, 400);
   } catch (err) {
     console.error("master-admin error", err);
