@@ -44,8 +44,13 @@ export default function About() {
       <div className="fixed inset-0 -z-10 bg-cover bg-center" style={{ backgroundImage: `url(${aboutHero})` }} aria-hidden />
       <div className="fixed inset-0 -z-10 bg-gradient-to-b from-background/92 via-background/95 to-background" aria-hidden />
 
-      {/* Header */}
-      <header className="w-full border-b border-primary/15 bg-background/80 backdrop-blur-xl flex-shrink-0">
+      {/* Header — paddingTop cobre a status bar do PWA instalado (notch do
+          iPhone / barra de status do Android), senão o botão Voltar fica
+          escondido atrás dela quando o app roda em modo standalone. */}
+      <header
+        className="w-full border-b border-primary/15 bg-background/80 backdrop-blur-xl flex-shrink-0"
+        style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
+      >
         <div className="container flex h-10 max-w-6xl items-center justify-between px-3">
           <Button variant="ghost" size="sm" onClick={() => navigate(-1)} className="h-7 gap-1.5 px-2 text-xs text-muted-foreground hover:bg-primary/10 hover:text-primary">
             <ArrowLeft className="h-3.5 w-3.5" /> Voltar

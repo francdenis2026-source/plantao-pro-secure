@@ -102,10 +102,11 @@ export function MadeInFeijoBadge({
           Franc Denis
         </span>
 
-        {/* Cidade e ano */}
+        {/* Cidade e ano — mesmo peso/contraste do nome, pra ficar tão
+            legível quanto ele (só o rótulo "Developed by" fica discreto) */}
         <span aria-hidden className="text-primary/40 leading-none">·</span>
         <span
-          className={cn('font-mono font-semibold uppercase text-slate-400 leading-none', sizeMap.tag)}
+          className={cn('font-mono font-bold uppercase text-slate-200 leading-none', sizeMap.tag)}
           style={{ fontFamily: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace" }}
         >
           Feijó/AC · 2026

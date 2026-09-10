@@ -1,10 +1,9 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import { Radio, Square, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { DEFAULT_STATION } from '@/lib/radioStations';
-
-type PlayState = 'idle' | 'loading' | 'playing' | 'error';
+import { radioPlayer } from '@/lib/radioPlayerStore';
 
 /** Barras de equalizador animadas — só aparecem enquanto toca. */
 function Equalizer({ className }: { className?: string }) {
@@ -36,14 +35,14 @@ export function RadioPlayerWidget({
   className?: string;
   variant?: 'floating' | 'header';
 }) {
-  const [state, setState] = useState<PlayState>('idle');
-  const [usingFallback, setUsingFallback] = useState(false);
-  const [nowPlaying, setNowPlaying] = useState<string | null>(null);
+  // Estado compartilhado — vive fora do React (src/lib/radioPlayerStore.ts)
+  // pra sobreviver a qualquer desmontagem deste widget (ex.: trocar de
+  // rota some com a instância do header e monta a do dock global, ou
+  // vice-versa — antes disso derrubava o áudio em reprodução).
+  const { state, nowPlaying } = useSyncExternalStore(radioPlayer.subscribe, radioPlayer.getSnapshot);
   const [visible, setVisible] = useState(false);
   const [tooltipPos, setTooltipPos] = useState<{ top: number; right: number } | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const handleErrorRef = useRef(() => {});
   const hideTimerRef = useRef<number | null>(null);
 
   // No mobile não existe "hover" — o toque dispara um mouseenter fantasma
@@ -74,101 +73,7 @@ export function RadioPlayerWidget({
     setTooltipPos({ top: rect.bottom + 8, right: window.innerWidth - rect.right });
   }, []);
 
-  useEffect(() => {
-    handleErrorRef.current = () => {
-      setUsingFallback((prev) => {
-        if (!prev) return true; // primeira falha: tenta o espelho
-        setState('error');
-        return prev;
-      });
-    };
-  }, []);
-
-  useEffect(() => {
-    const audio = new Audio();
-    audio.preload = 'none';
-    audioRef.current = audio;
-    const onPlaying = () => setState('playing');
-    const onWaiting = () => setState('loading');
-    const onError = () => handleErrorRef.current();
-    audio.addEventListener('playing', onPlaying);
-    audio.addEventListener('waiting', onWaiting);
-    audio.addEventListener('error', onError);
-    return () => {
-      audio.removeEventListener('playing', onPlaying);
-      audio.removeEventListener('waiting', onWaiting);
-      audio.removeEventListener('error', onError);
-      audio.pause();
-    };
-  }, []);
-
-  // "Tocando agora" via SSE — reconecta a cada 30s se a conexão cair.
-  useEffect(() => {
-    let es: EventSource | null = null;
-    let retry: ReturnType<typeof setTimeout> | null = null;
-    let disposed = false;
-
-    const connect = () => {
-      if (disposed) return;
-      try {
-        es = new EventSource(DEFAULT_STATION.metadataUrl);
-        es.onmessage = (ev) => {
-          try {
-            const data = JSON.parse(ev.data);
-            const title = data?.streamTitle || data?.title;
-            const clean = typeof title === 'string' ? title.trim() : '';
-            // A Zeno manda "-" (ou vazio) quando não há metadado de faixa;
-            // nesse caso mantemos o rótulo genérico em vez de exibir lixo.
-            setNowPlaying(clean && clean !== '-' ? clean : null);
-          } catch {
-            /* payload não-JSON: ignora */
-          }
-        };
-        es.onerror = () => {
-          es?.close();
-          es = null;
-          if (!disposed) retry = setTimeout(connect, 30_000);
-        };
-      } catch {
-        retry = setTimeout(connect, 30_000);
-      }
-    };
-    connect();
-
-    return () => {
-      disposed = true;
-      es?.close();
-      if (retry) clearTimeout(retry);
-    };
-  }, []);
-
-  const play = useCallback((fallback: boolean) => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    setState('loading');
-    audio.src = fallback ? DEFAULT_STATION.fallbackUrl : DEFAULT_STATION.streamUrl;
-    audio.play().catch(() => handleErrorRef.current());
-  }, []);
-
-  useEffect(() => {
-    if (usingFallback) play(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usingFallback]);
-
-  const stop = useCallback(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.pause();
-    audio.removeAttribute('src');
-    audio.load();
-    setUsingFallback(false);
-    setState('idle');
-  }, []);
-
-  const toggle = () => {
-    if (state === 'playing' || state === 'loading') stop();
-    else play(false);
-  };
+  const toggle = radioPlayer.toggle;
 
   const isPlaying = state === 'playing';
   const isLoading = state === 'loading';
