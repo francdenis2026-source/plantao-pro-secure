@@ -42,7 +42,11 @@ export function IncidentDialog({ open, onOpenChange, onSubmit }: IncidentDialogP
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent
+        onPointerDownOutside={(e) => e.preventDefault()}
+        onInteractOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>Registrar ocorrência</DialogTitle>
           <DialogDescription>Vinculada à ronda atual. Fica no histórico permanentemente.</DialogDescription>

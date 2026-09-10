@@ -778,6 +778,16 @@ export default function AgentPanel() {
                   agentTeam={agent.team}
                 />
 
+                {/* Status de plantão em tempo real — antes só aparecia na aba
+                    "Plantões"; trazido pra cá pra ser a primeira coisa que o
+                    agente vê ao entrar no painel: contagem até o próximo
+                    plantão (se ainda não começou), tempo decorrido/restante
+                    em destaque (se já estiver em serviço), ou o próximo
+                    plantão (assim que o atual for encerrado). */}
+                <Suspense fallback={<ModuleFallback compact={compact} />}>
+                  <ProfessionalShiftTimer agentId={agent.id} />
+                </Suspense>
+
                 {/* Profile Completion Alert */}
                 <ProfileCompletionAlert agentId={agent.id} agentName={agent.name} />
 

@@ -848,7 +848,12 @@ function CreateShiftDialog({ open, onOpenChange, unitId, team, createdBy, onCrea
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md gap-0 overflow-hidden p-0">
+      <DialogContent
+        className="max-w-md gap-0 overflow-hidden p-0"
+        onPointerDownOutside={(e) => e.preventDefault()}
+        onInteractOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={(e) => e.preventDefault()}
+      >
         <div className="flex items-center gap-3 border-b border-border bg-primary/[0.06] px-6 py-5">
           <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary/15 ring-1 ring-primary/25">
             <CalendarPlus className="h-5 w-5 text-primary" strokeWidth={2} />
