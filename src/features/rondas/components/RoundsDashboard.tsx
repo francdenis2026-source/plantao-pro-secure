@@ -29,29 +29,39 @@ import { ShiftDivider } from './ShiftDivider';
 import { RoundHistory } from './RoundHistory';
 import { enqueuePatrolAction, flushPatrolQueue, getQueueLength } from '../offlineQueue';
 import type { PatrolSlot } from '../types';
+import roundsHeroImage from '@/assets/midias/hero-agentes-viatura.webp';
 
-/** Cabeçalho compacto do Gestor de Rondas — sem foto (a imagem anterior
- * destoava do restante da ferramenta). Gradiente institucional + um
- * motivo sutil de radar (referência direta a "rondas"), só marca e título. */
+/** Cabeçalho institucional do Gestor de Rondas — foto profissional dos
+ * agentes em operação (viatura da Socioeducação do Acre) com degradê para
+ * garantir contraste do título em qualquer tema. */
 function RondasHero() {
   return (
-    <div
-      className="relative h-24 overflow-hidden rounded-2xl sm:h-28"
-      style={{ background: 'linear-gradient(120deg, hsl(222 47% 9%) 0%, hsl(213 58% 17%) 60%, hsl(220 84% 24%) 100%)' }}
-    >
-      <svg aria-hidden className="absolute -right-6 top-1/2 h-40 w-40 -translate-y-1/2 opacity-[0.14] sm:h-48 sm:w-48" viewBox="0 0 200 200" fill="none">
-        <circle cx="100" cy="100" r="94" stroke="white" strokeWidth="1.5" />
-        <circle cx="100" cy="100" r="64" stroke="white" strokeWidth="1.5" />
-        <circle cx="100" cy="100" r="34" stroke="white" strokeWidth="1.5" />
-        <line x1="100" y1="6" x2="100" y2="194" stroke="white" strokeWidth="1" />
-        <line x1="6" y1="100" x2="194" y2="100" stroke="white" strokeWidth="1" />
-        <path d="M100,100 L100,6 A94,94 0 0,1 166,34 Z" fill="hsl(199 89% 62%)" opacity="0.55" />
-      </svg>
-      <div className="relative flex h-full items-center gap-3 px-4 sm:px-5">
+    <div className="relative h-36 overflow-hidden rounded-2xl sm:h-44">
+      <img
+        src={roundsHeroImage}
+        alt="Agentes da Socioeducação do Acre em viatura operacional"
+        loading="eager"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover object-[50%_35%]"
+        draggable={false}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{ background: 'linear-gradient(180deg, hsl(222 47% 8% / 0.1) 0%, hsl(222 47% 6% / 0.55) 55%, hsl(222 47% 5% / 0.92) 100%)' }}
+      />
+      <div className="relative flex h-full items-end gap-3 px-4 pb-3 sm:px-5 sm:pb-4">
         <BrasaoSentinela size={36} title="Gestor de Rondas — PlantãoPro AC" />
         <div>
-          <h2 className="text-xl font-bold leading-tight text-white sm:text-2xl">Gestor de Rondas</h2>
-          <p className="mt-0.5 text-xs text-white/75">Controle, acompanhamento e segurança em tempo real</p>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/20 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-primary-foreground ring-1 ring-primary/40 backdrop-blur-sm">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            </span>
+            Operação em tempo real
+          </span>
+          <h2 className="mt-1 text-xl font-bold leading-tight text-white drop-shadow-sm sm:text-2xl">Gestor de Rondas</h2>
+          <p className="mt-0.5 text-xs text-white/80">Controle, acompanhamento e segurança em tempo real</p>
         </div>
       </div>
     </div>
