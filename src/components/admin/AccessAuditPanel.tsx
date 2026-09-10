@@ -10,9 +10,19 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { format, formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { Search, Shield, Clock, LogIn, LogOut, Activity, Users, Loader2, FileDown, Filter } from 'lucide-react';
+import { Search, Shield, Clock, LogIn, LogOut, Activity, Users, Loader2, FileDown, Filter, Trash2, Timer } from 'lucide-react';
 import { toast } from 'sonner';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -37,9 +47,29 @@ type AgentStat = {
   last_login: string | null;
   last_activity: string | null;
   active_days: number;
+  /** Soma do tempo entre cada login e o logout seguinte (sessões fechadas). */
+  total_duration_ms: number;
 };
 
-type MasterActionPayload = Record<string, string | number | boolean | null | undefined>;
+/** Alvo pendente de exclusão — controla o AlertDialog de confirmação único
+ * reaproveitado por todos os pontos de apagar (evento, agente, filtro, tudo). */
+type DeleteTarget =
+  | { kind: 'one'; id: string; label: string }
+  | { kind: 'agent'; agentId: string; name: string }
+  | { kind: 'filtered' }
+  | { kind: 'all' }
+  | null;
+
+function formatDurationMs(ms: number): string {
+  if (!ms || ms <= 0) return '—';
+  const totalMinutes = Math.round(ms / 60000);
+  const h = Math.floor(totalMinutes / 60);
+  const m = totalMinutes % 60;
+  if (h > 0) return `${h}h ${m}min`;
+  return `${m}min`;
+}
+
+type MasterActionPayload = Record<string, string | number | boolean | null | undefined | string[]>;
 
 async function callMasterAdmin<T>(action: string, payload: MasterActionPayload = {}): Promise<T> {
   const token = getMasterToken();
@@ -70,6 +100,8 @@ export function AccessAuditPanel() {
   const [logs, setLogs] = useState<LogRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<DeleteTarget>(null);
+  const [deleting, setDeleting] = useState(false);
 
   // Filters
   const [search, setSearch] = useState('');
@@ -162,6 +194,7 @@ export function AccessAuditPanel() {
         last_login: null,
         last_activity: null,
         active_days: 0,
+        total_duration_ms: 0,
       };
       const a = (l.action || '').toLowerCase();
       if (a.includes('login') && !a.includes('logout')) {
@@ -183,10 +216,78 @@ export function AccessAuditPanel() {
       const s = byAgent.get(k);
       if (s) s.active_days = v.size;
     }
+
+    // Tempo na plataforma: soma o intervalo entre cada login e o próximo
+    // logout do mesmo agente, em ordem cronológica (sessões ainda abertas —
+    // sem logout registrado — não entram na soma, só nas fechadas).
+    const eventsByAgent = new Map<string, LogRow[]>();
+    for (const l of filteredLogs) {
+      if (!l.agent_id) continue;
+      const arr = eventsByAgent.get(l.agent_id) || [];
+      arr.push(l);
+      eventsByAgent.set(l.agent_id, arr);
+    }
+    for (const [agentId, events] of eventsByAgent) {
+      const sorted = [...events].sort((a, b) => a.created_at.localeCompare(b.created_at));
+      let openLoginMs: number | null = null;
+      let total = 0;
+      for (const ev of sorted) {
+        const a = (ev.action || '').toLowerCase();
+        const t = new Date(ev.created_at).getTime();
+        if (a.includes('login') && !a.includes('logout')) {
+          openLoginMs = t;
+        } else if (a.includes('logout') && openLoginMs != null) {
+          total += Math.max(0, t - openLoginMs);
+          openLoginMs = null;
+        }
+      }
+      const s = byAgent.get(agentId);
+      if (s) s.total_duration_ms = total;
+    }
+
     return Array.from(byAgent.values()).sort((a, b) =>
       (b.last_activity || '').localeCompare(a.last_activity || '')
     );
   }, [filteredLogs]);
+
+  const deleteLogs = async (ids: string[] | 'all' | { agentId: string }) => {
+    setDeleting(true);
+    try {
+      const token = getMasterToken();
+      if (token) {
+        if (ids === 'all') await callMasterAdmin('access_logs_delete', { all: true });
+        else if (typeof ids === 'object' && 'agentId' in ids) await callMasterAdmin('access_logs_delete', { agentId: ids.agentId });
+        else await callMasterAdmin('access_logs_delete', { ids });
+      } else {
+        let query = supabase.from('access_logs').delete();
+        if (ids === 'all') query = query.neq('id', '00000000-0000-0000-0000-000000000000');
+        else if (typeof ids === 'object' && 'agentId' in ids) query = query.eq('agent_id', ids.agentId);
+        else query = query.in('id', ids);
+        const { error } = await query;
+        if (error) throw error;
+      }
+
+      if (ids === 'all') setLogs([]);
+      else if (typeof ids === 'object' && 'agentId' in ids) setLogs((prev) => prev.filter((l) => l.agent_id !== ids.agentId));
+      else setLogs((prev) => prev.filter((l) => !ids.includes(l.id)));
+
+      toast.success('Registro(s) de acesso apagado(s).');
+    } catch (e: any) {
+      console.error('[AccessAuditPanel] delete error', e);
+      toast.error(e?.message || 'Falha ao apagar log(s) de acesso.');
+    } finally {
+      setDeleting(false);
+      setDeleteTarget(null);
+    }
+  };
+
+  const confirmDelete = () => {
+    if (!deleteTarget) return;
+    if (deleteTarget.kind === 'one') void deleteLogs([deleteTarget.id]);
+    else if (deleteTarget.kind === 'agent') void deleteLogs({ agentId: deleteTarget.agentId });
+    else if (deleteTarget.kind === 'filtered') void deleteLogs(filteredLogs.map((l) => l.id));
+    else if (deleteTarget.kind === 'all') void deleteLogs('all');
+  };
 
   const clearFilters = () => {
     setSearch('');
@@ -319,17 +420,27 @@ export function AccessAuditPanel() {
               Histórico profissional de logins, logouts, tempo de acesso e última atividade por agente.
             </CardDescription>
           </div>
-          <Button
-            onClick={exportPDF}
-            disabled={exporting || loading}
-            className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-black font-bold"
-          >
-            {exporting ? (
-              <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Gerando...</>
-            ) : (
-              <><FileDown className="h-4 w-4 mr-2" /> Exportar PDF</>
-            )}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setDeleteTarget({ kind: 'all' })}
+              disabled={loading || logs.length === 0}
+              className="border-red-500/40 text-red-400 hover:bg-red-500/10 hover:text-red-300"
+            >
+              <Trash2 className="h-4 w-4 mr-2" /> Apagar tudo
+            </Button>
+            <Button
+              onClick={exportPDF}
+              disabled={exporting || loading}
+              className="bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-black font-bold"
+            >
+              {exporting ? (
+                <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Gerando...</>
+              ) : (
+                <><FileDown className="h-4 w-4 mr-2" /> Exportar PDF</>
+              )}
+            </Button>
+          </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -392,7 +503,16 @@ export function AccessAuditPanel() {
                 {filteredLogs.length} evento{filteredLogs.length === 1 ? '' : 's'}
               </Badge>
               <Button variant="outline" size="sm" onClick={clearFilters} className="h-9">
-                Limpar
+                Limpar filtros
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setDeleteTarget({ kind: 'filtered' })}
+                disabled={filteredLogs.length === 0}
+                className="h-9 border-red-500/40 text-red-400 hover:bg-red-500/10 hover:text-red-300"
+              >
+                <Trash2 className="h-3.5 w-3.5 mr-1.5" /> Apagar filtrados
               </Button>
             </div>
           </div>
@@ -442,16 +562,31 @@ export function AccessAuditPanel() {
                                   <Clock className="h-3 w-3 text-amber-400" />
                                   {s.active_days} dia{s.active_days === 1 ? '' : 's'} ativo{s.active_days === 1 ? '' : 's'}
                                 </span>
+                                <span className="flex items-center gap-1">
+                                  <Timer className="h-3 w-3 text-sky-400" />
+                                  {formatDurationMs(s.total_duration_ms)} na plataforma
+                                </span>
                               </div>
                             </div>
-                            <div className="text-right text-xs">
-                              <div className="text-slate-300">
-                                <span className="text-muted-foreground">Último login:</span>{' '}
-                                {s.last_login ? format(new Date(s.last_login), 'dd/MM/yyyy HH:mm', { locale: ptBR }) : '—'}
+                            <div className="flex items-center gap-3">
+                              <div className="text-right text-xs">
+                                <div className="text-slate-300">
+                                  <span className="text-muted-foreground">Último login:</span>{' '}
+                                  {s.last_login ? format(new Date(s.last_login), 'dd/MM/yyyy HH:mm', { locale: ptBR }) : '—'}
+                                </div>
+                                <div className="text-slate-400">
+                                  {s.last_activity ? `Ativo ${formatDistanceToNow(new Date(s.last_activity), { addSuffix: true, locale: ptBR })}` : '—'}
+                                </div>
                               </div>
-                              <div className="text-slate-400">
-                                {s.last_activity ? `Ativo ${formatDistanceToNow(new Date(s.last_activity), { addSuffix: true, locale: ptBR })}` : '—'}
-                              </div>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                title={`Apagar todo o histórico de ${s.name}`}
+                                onClick={() => setDeleteTarget({ kind: 'agent', agentId: s.agent_id, name: s.name })}
+                                className="h-8 w-8 shrink-0 text-red-400 hover:bg-red-500/10 hover:text-red-300"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
                             </div>
                           </div>
                         </CardContent>
@@ -471,12 +606,13 @@ export function AccessAuditPanel() {
                       <TableHead>Agente</TableHead>
                       <TableHead>Ação</TableHead>
                       <TableHead>IP</TableHead>
+                      <TableHead className="text-right">Ações</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {filteredLogs.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={4} className="text-center text-muted-foreground py-8">
+                        <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
                           Nenhum evento encontrado
                         </TableCell>
                       </TableRow>
@@ -489,6 +625,21 @@ export function AccessAuditPanel() {
                           <TableCell className="font-medium">{l.agent?.name || '—'}</TableCell>
                           <TableCell><Badge variant="outline" className="text-[10px]">{l.action}</Badge></TableCell>
                           <TableCell className="font-mono text-xs text-muted-foreground">{l.ip_address || '—'}</TableCell>
+                          <TableCell className="text-right">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              title="Apagar este registro"
+                              onClick={() => setDeleteTarget({
+                                kind: 'one',
+                                id: l.id,
+                                label: `${l.action} — ${l.agent?.name || 'agente desconhecido'} em ${format(new Date(l.created_at), 'dd/MM/yyyy HH:mm', { locale: ptBR })}`,
+                              })}
+                              className="h-7 w-7 text-red-400 hover:bg-red-500/10 hover:text-red-300"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </Button>
+                          </TableCell>
                         </TableRow>
                       ))
                     )}
@@ -499,6 +650,34 @@ export function AccessAuditPanel() {
           </Tabs>
         )}
       </CardContent>
+
+      <AlertDialog open={deleteTarget != null} onOpenChange={(v) => !v && setDeleteTarget(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <Trash2 className="h-5 w-5 text-red-400" />
+              Apagar log{deleteTarget?.kind === 'one' ? '' : 's'} de acesso?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {deleteTarget?.kind === 'one' && <>Isso apaga permanentemente o registro: <span className="font-medium text-foreground">{deleteTarget.label}</span>.</>}
+              {deleteTarget?.kind === 'agent' && <>Isso apaga permanentemente <span className="font-medium text-foreground">todo o histórico de acessos</span> de <span className="font-medium text-foreground">{deleteTarget.name}</span>.</>}
+              {deleteTarget?.kind === 'filtered' && <>Isso apaga permanentemente os <span className="font-medium text-foreground">{filteredLogs.length} evento{filteredLogs.length === 1 ? '' : 's'}</span> que correspondem aos filtros atuais.</>}
+              {deleteTarget?.kind === 'all' && <>Isso apaga permanentemente <span className="font-medium text-foreground">todo o histórico de acessos</span> de todos os agentes ({logs.length} registro{logs.length === 1 ? '' : 's'}).</>}
+              {' '}Essa ação não pode ser desfeita.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleting}>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmDelete}
+              disabled={deleting}
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
+              {deleting ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Apagando...</> : 'Apagar'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Card>
   );
 }
