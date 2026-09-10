@@ -268,7 +268,7 @@ export function ScheduledRoundsManager() {
             {rows.map(r => {
               const unit = units.find(u => u.id === r.unit_id);
               return (
-                <div key={r.id} className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 p-3 rounded-lg bg-slate-900/60 border border-slate-700/60 overflow-hidden">
+                <div key={r.id} className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 p-3 rounded-lg bg-slate-900 border border-slate-700 overflow-hidden">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-semibold text-slate-100 truncate max-w-full">{r.name}</span>
@@ -278,7 +278,7 @@ export function ScheduledRoundsManager() {
                       <Badge variant="outline" className="border-blue-500/40 text-blue-300">
                         Equipe {r.team}
                       </Badge>
-                      {unit && <Badge variant="outline" className="border-slate-600 text-slate-300">{unit.name}</Badge>}
+                      {unit && <Badge variant="outline" className="border-border text-slate-300">{unit.name}</Badge>}
                       {!r.is_enabled && <Badge variant="destructive">Desativado</Badge>}
                     </div>
                     <div className="mt-1 text-xs text-slate-400 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-4 gap-y-0.5 min-w-0">

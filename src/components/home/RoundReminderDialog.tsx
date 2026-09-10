@@ -184,6 +184,7 @@ export function RoundReminderDialog({
   return (
     <AlertDialog open={open} onOpenChange={(o) => !o && onDismiss()}>
       <AlertDialogContent
+        data-tactical-dark
         className="rm-reminder max-w-md p-0 overflow-hidden border-2"
         style={{
           borderColor: `${accent}90`,
