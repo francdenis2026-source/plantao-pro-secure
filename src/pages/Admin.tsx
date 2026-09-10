@@ -16,6 +16,7 @@ const AnnouncementsCard = lazy(() => import('@/components/dashboard/Announcement
 const ActivityLogsCard = lazy(() => import('@/components/dashboard/ActivityLogsCard').then(m => ({ default: m.ActivityLogsCard })));
 const SystemOverviewCard = lazy(() => import('@/components/dashboard/SystemOverviewCard').then(m => ({ default: m.SystemOverviewCard })));
 const RegistrationsToggleCard = lazy(() => import('@/components/admin/RegistrationsToggleCard').then(m => ({ default: m.RegistrationsToggleCard })));
+const RoundsAccessToggleCard = lazy(() => import('@/components/admin/RoundsAccessToggleCard').then(m => ({ default: m.RoundsAccessToggleCard })));
 const AdvertisementsManager = lazy(() => import('@/components/admin/AdvertisementsManager').then(m => ({ default: m.AdvertisementsManager })));
 const DynamicScreensManager = lazy(() => import('@/components/admin/DynamicScreensManager').then(m => ({ default: m.DynamicScreensManager })));
 const ScheduledRoundsManager = lazy(() => import('@/components/admin/ScheduledRoundsManager').then(m => ({ default: m.ScheduledRoundsManager })));
@@ -401,6 +402,7 @@ export default function Admin() {
                       <ActivityLogsCard />
                     </div>
                     <RegistrationsToggleCard />
+                    <RoundsAccessToggleCard />
                     <TeamShiftsPanel />
                   </Suspense>
                 </TabsContent>
