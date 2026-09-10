@@ -95,7 +95,10 @@ export function RoundHistoryDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="rm-history w-[calc(100vw-1.5rem)] max-w-md sm:max-w-lg bg-slate-950 border border-slate-800 p-0 overflow-hidden rounded-lg">
+      <DialogContent
+        data-tactical-dark
+        className="rm-history w-[calc(100vw-1.5rem)] max-w-md sm:max-w-lg bg-slate-950 border border-slate-800 p-0 overflow-hidden rounded-lg"
+      >
         {/* Header compacto — sem hero exagerado */}
         <DialogHeader className="px-3 pt-3 pb-2 border-b border-slate-800">
           <DialogTitle className="flex items-center gap-2 text-slate-100">
