@@ -1719,7 +1719,7 @@ export default function Index() {
           só aparece uma vez, no fim de tudo, com espaço pra não colidir
           com a faixa fina fixa do rodapé. */}
       <div className="flex justify-center pb-10 pt-1 sm:hidden">
-        <MadeInFeijoBadge inline size="sm" />
+        <MadeInFeijoBadge inline size="md" />
       </div>
 
       {/* Mobile-only beta notice */}
