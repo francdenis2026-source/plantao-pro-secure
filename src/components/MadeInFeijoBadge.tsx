@@ -51,6 +51,7 @@ export function MadeInFeijoBadge({
       className={cn(wrapperClass, className)}
     >
       <div
+        data-tactical-dark
         className={cn(
           'inline-flex items-center rounded-md border border-primary/30 bg-[linear-gradient(180deg,hsl(220_40%_7%/0.95),hsl(222_45%_4%/0.98))] shadow-[0_1px_0_hsl(45_95%_55%/0.15)_inset,0_2px_8px_rgba(0,0,0,0.35)]',
           sizeMap.pad,
